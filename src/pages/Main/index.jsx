@@ -1,7 +1,12 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const Index = () => {
-  return <div>main</div>;
+const Container = styled.div`
+
+`
+
+const Main = () => {
+  return <Container>main</Container>;
 };
 
-export default Index;
+export default Main;

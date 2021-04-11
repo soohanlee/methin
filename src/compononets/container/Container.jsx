@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import sizes from 'configs/size';
+import sizes from 'configs/sizes';
 
 const Container = styled.div`
   position: fixed;

@@ -12,5 +12,4 @@ export const LOCAL_STORAGE_KEYS = {
 export const COOKIE_KEYS = {
   UserRefreshToken: '__user_refresh_token__',
   UserAccessToken: '__user_access_token__',
-  ProjectId: '__project__id__',
 };
