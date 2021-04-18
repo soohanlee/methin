@@ -18,6 +18,7 @@ function App() {
 
   // 테마 같은 경우 다크테마 라이트테마 변경이 가능하게 확장하기 위해 아래같이 설정.
   const location = useLocation();
+  console.log(location);
 
   return (
     <ThemeProvider theme={LightTheme}>
