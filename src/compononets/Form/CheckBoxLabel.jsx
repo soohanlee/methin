@@ -9,12 +9,8 @@ function onChange(e) {
 
 // ReactDOM.render(<Checkbox onChange={onChange}>Checkbox</Checkbox>, document.getElementById('container'));
 
-const CheckBoxLabel = ({label}) => {
-  return (
-    <Checkbox onChange={onChange}>{label}</Checkbox>
-  );
+const CheckBoxLabel = ({ label }) => {
+  return <Checkbox onChange={onChange}>{label}</Checkbox>;
 };
 
 export default CheckBoxLabel;
-
-
