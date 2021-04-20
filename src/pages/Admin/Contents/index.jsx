@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { ROUTE_PATH } from 'configs/config';
 
 import EditProduct from 'pages/Admin/Contents/product/EditProduct';
+import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 
 const Container = styled.div`
   flex: 1;
@@ -21,6 +22,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.editProduct}`}
           component={EditProduct}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.registerProduct}`}
+          component={RegisterProduct}
         />
       </Switch>
     </Container>
