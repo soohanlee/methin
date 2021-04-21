@@ -4,7 +4,6 @@ import 'antd/dist/antd.css';
 import QuestionCircleOutlined from '@ant-design/icons/QuestionCircleOutlined';
 import PageHeaderBtn from 'compononets/Form/PageHeaderBtn';
 
-
 const EditTitles = styled.div`
   width: 100%;
   height: 7rem;
@@ -28,7 +27,9 @@ const QuestionIcon = styled(QuestionCircleOutlined)`
   font-size: 25px;
 `;
 
-const PageBtn = styled(PageHeaderBtn)``;
+const PageBtn = styled(PageHeaderBtn)`
+  padding: 0px;
+`;
 
 const EditTitle = () => {
   return (

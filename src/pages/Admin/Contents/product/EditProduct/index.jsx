@@ -4,12 +4,13 @@ import EditCategory from 'pages/Admin/Contents/product/EditProduct/EditCategory'
 import EditProductSetting from 'pages/Admin/Contents/product/EditProduct/EditProductSetting';
 
 const EditProduct = () => {
-  return <>
-  <EditTitle/>
-     <EditCategory/> 
-     <EditProductSetting/> 
+  return (
+    <>
+      <EditTitle />
+      <EditCategory />
+      <EditProductSetting />
     </>
-
+  );
 };
 
 export default EditProduct;
