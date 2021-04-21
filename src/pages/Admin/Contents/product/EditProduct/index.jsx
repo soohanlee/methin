@@ -33,7 +33,6 @@ const EditProduct = () => {
     <TitleTexts>
       <TitleText>상품 조회/수정 </TitleText>
       <iconSize>
-
       </iconSize>
     <Test />
     </TitleTexts>

@@ -18,27 +18,26 @@ function App() {
 
   // 테마 같은 경우 다크테마 라이트테마 변경이 가능하게 확장하기 위해 아래같이 설정.
   const location = useLocation();
-  console.log(location)
+  console.log(location);
 
   return (
     <ThemeProvider theme={LightTheme}>
       <GlobalStyle theme={LightTheme} />
       <Container>
-        {
-          location.pathname.includes(ROUTE_PATH.admin.main) ? 
+        {location.pathname.includes(ROUTE_PATH.admin.main) ? (
           <Switch>
             <Route path={ROUTE_PATH.admin.main} component={Admin} />
           </Switch>
-          : 
+        ) : (
           <>
             <Navigation />
             <Switch>
               {/* 라우트 예시 */}
               <Route exact path={ROUTE_PATH.main} component={Main} />
             </Switch>
-            <Footer /> 
+            <Footer />
           </>
-        }
+        )}
       </Container>
     </ThemeProvider>
   );
