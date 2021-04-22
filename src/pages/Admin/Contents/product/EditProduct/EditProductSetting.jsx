@@ -11,7 +11,7 @@ import BasicDatePicker from 'compononets/Form/BasicDatePicker';
 
 const EditProductSettings = styled.div`
   width: 100%;
-  height: 83%;
+  height: 77rem;
   background-color: #ffffff;
   border: 1px solid gray;
   padding-left: 5rem;
@@ -25,12 +25,23 @@ const TapTerm = css`
   border-bottom: 1px solid gray;
   display: flex;
   padding-top: 1.5rem;
+  justify-content: ${(props) => props.justify};
+
 `;
 
 const Propertys = styled.div`
   display: flex;
   padding-left: 8rem;
+  justify-content: center;
   align-items: center;
+  justify-content: space-between;
+  width : ${(props) => props.width};
+  
+`;
+
+const Line = styled.div`
+  display: flex;
+padding-left : 35%;
 `;
 
 const TwoLine = styled.div`
@@ -42,12 +53,6 @@ const TwoLine = styled.div`
 const Search = styled.div`
   ${TapTerm};
   height: 15rem;
-`;
-
-const SetList = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const CheckBoxLabelStyled = styled(CheckBoxLabel)`
@@ -89,6 +94,7 @@ const Category = styled.div`
 const BasicDropBoxStyled = styled(BasicDropBox)`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+  padding-left: ${(props) => props.paddingleft};
   margin-left: ${(props) => props.marginleft};
   margin-right: 5rem;
 `;
@@ -226,7 +232,7 @@ const SetDateTerm = () => {
         <BasicButtonStyled label="1개월" width="8rem" height="4rem" />
         <BasicButtonStyled label="3개월" width="8rem" height="4rem" />
         <BasicButtonStyled label="6개월" width="8rem" height="4rem" />
-        <BasicButtonStyled label="1년" />
+        <BasicButtonStyled label="1년" width="8rem" height="4rem" />
         <BasicDatePickerStyled />
         ~
         <BasicDatePickerStyled />
@@ -237,13 +243,13 @@ const SetDateTerm = () => {
 
 const SetSelect = () => {
   return (
-    <Select>
-      <Propertys>
+    <Select justify = "center" >
+      <Propertys width = "150rem">
+        <Line>
         <BasicButtonStyled
           label="검색"
           width="13rem"
           height="5rem"
-          marginleft="50rem"
           type="primary"
         />
         <BasicButtonStyled
@@ -252,11 +258,13 @@ const SetSelect = () => {
           height="5rem"
           marginleft="2rem"
         />
+        </Line>
+        
         <BasicDropBoxStyled
           label="상세검색"
           width="13rem"
           height="5rem"
-          marginleft="60rem"
+          
         />
       </Propertys>
     </Select>
