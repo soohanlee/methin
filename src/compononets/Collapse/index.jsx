@@ -5,6 +5,10 @@ import styled from 'styled-components';
 
 const { Panel } = Collapse;
 
+const CustomCollapse = styled(Collapse)`
+  background: #fff;
+`;
+
 const Container = styled.div`
   margin-bottom: 1rem;
 `;
@@ -12,11 +16,11 @@ const Container = styled.div`
 const CustonCollapse = ({ header, extra, children }) => {
   return (
     <Container>
-      <Collapse defaultActiveKey={['1']} expandIconPosition={'right'}>
+      <CustomCollapse defaultActiveKey={['1']} expandIconPosition={'right'}>
         <Panel header={header} key={'1'} extra={extra}>
           {children}
         </Panel>
-      </Collapse>
+      </CustomCollapse>
     </Container>
   );
 };

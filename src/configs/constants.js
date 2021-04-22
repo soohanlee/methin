@@ -15,3 +15,7 @@ export const leftNavigationMenu = [
     ],
   },
 ];
+
+export const DateFormat = {
+  Default: 'YYYY-MM-DD',
+};
