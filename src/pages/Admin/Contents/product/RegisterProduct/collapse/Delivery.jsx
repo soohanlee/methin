@@ -159,6 +159,7 @@ const Delivery = () => {
     alert(`${shipment}를 저장합니다.`);
     localStorage.setItem('shipment', shipment);
   };
+
   return (
     <CustomCollapse header="배송" extra={'뭔가옴'}>
       <LabelContents title="배송여부">

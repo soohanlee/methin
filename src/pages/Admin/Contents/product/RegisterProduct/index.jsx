@@ -1,5 +1,6 @@
 import * as React from 'react';
 import 'antd/dist/antd.css';
+import { Button } from 'antd';
 import styled from 'styled-components';
 
 import {
@@ -20,6 +21,10 @@ import {
 const Container = styled.div``;
 
 const RegisterProduct = () => {
+  const handleRegisterProductButtonClick = () => {
+    console.log('저장 클릭');
+  };
+
   return (
     <Container>
       <Category />
@@ -34,6 +39,7 @@ const RegisterProduct = () => {
       <Delivery />
       <ReturnExchange />
       <AS />
+      <Button onClick={handleRegisterProductButtonClick}>저장</Button>
     </Container>
   );
 };
