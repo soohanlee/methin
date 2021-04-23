@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Menu, Dropdown, Button, message, Space, Tooltip } from 'antd';
@@ -28,10 +28,10 @@ const menu = (
   </Menu>
 );
 
-const BasicDropBox = ({ label, className }) => {
+const BasicDropBox = ({ label, className , ref}) => {
   return (
     <>
-      <Dropdown className={className} overlay={menu}>
+      <Dropdown className={className} ref={ref} overlay={menu}>
         <Button>
           {label} <DownOutlined />
         </Button>
