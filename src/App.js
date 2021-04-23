@@ -14,7 +14,7 @@ import Admin from 'pages/Admin';
 
 function App() {
   // 처음 페이지 들어왔을때 로딩
-  // const [isLoading, setIsLoading] = React.useState(true);
+  // const [isLoading, setIs Loading] = React.useState(true);
 
   // 테마 같은 경우 다크테마 라이트테마 변경이 가능하게 확장하기 위해 아래같이 설정.
   const location = useLocation();

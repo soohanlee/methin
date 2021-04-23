@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
 import { ROUTE_PATH } from 'configs/config';
 
-import EditProduct from 'pages/Admin/Contents/product/EditProduct';
 import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
+import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';
+import EditConnectProduct from 'pages/Admin/Contents/product/connectProduct/EditConnectProduct';
 
 const Container = styled.div`
   flex: 1;
@@ -27,6 +28,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.registerProduct}`}
           component={RegisterProduct}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.connectProduct}`}
+          component={EditConnectProduct}
         />
       </Switch>
     </Container>

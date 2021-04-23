@@ -11,7 +11,7 @@ import BasicDatePicker from 'compononets/Form/BasicDatePicker';
 
 const EditProductSettings = styled.div`
   width: 100%;
-  height: 77rem;
+  height: 67rem;
   background-color: #ffffff;
   border: 1px solid gray;
   padding-left: 5rem;
@@ -31,12 +31,10 @@ const TapTerm = css`
 
 const Propertys = styled.div`
   display: flex;
-  padding-left: 8rem;
-  justify-content: center;
+  padding-left: 4rem;
   align-items: center;
   justify-content: space-between;
   width : ${(props) => props.width};
-  
 `;
 
 const Line = styled.div`
@@ -64,7 +62,8 @@ const CheckBoxLabelStyled = styled(CheckBoxLabel)`
 
 const TextAndInput = styled.div`
   margin-left: 20px;
-  margin-bottom: 3rem;
+  margin-bottom: 8rem;
+  
   display: flex;
   align-items: center;
   width: 30rem;
@@ -79,15 +78,11 @@ const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
 `;
 
 const Title = styled.div`
-  width: 10rem;
+  width: 15rem;
   margin-top: 1rem;
 `;
 
 const SalesStatus = styled.div`
-  ${TapTerm};
-`;
-
-const Category = styled.div`
   ${TapTerm};
 `;
 
@@ -134,20 +129,11 @@ const Select = styled.div`
 const SetSearch = () => {
   // const [productNumber, setProductNumber] = useState("")
   const productNumberRef = useRef(null); //상품 번호
-  const sellerProductCode = useRef(null); //판매자 상품 코드
+  const connectProductID = useRef(null); //연관상품 ID
 
   const productSearchDesc = useRef(null); //상품 복수 검색
 
-  const productName = useRef(null); //상품명
-  const modelName = useRef(null); //모델명
-  const makeName = useRef(null); //제조사명
-  const brandeName = useRef(null); //브랜드명
-
-  console.log(productNumberRef)
-
-  const testClick = () => {
-    console.log(productNumberRef.current.state.checked)
-  }
+  const titleProductNmae = useRef(null); //대표 상품명
 
   return (
     <Search>
@@ -156,107 +142,72 @@ const SetSearch = () => {
         {/* <div onClick={testClick}>asdfasdf</div> */}
         <TwoLine>
           <CheckBoxLabelStyled label="상품번호" ref={productNumberRef} />
-          <CheckBoxLabelStyled label="판매자 상품 코드" ref={sellerProductCode}/>
+          <CheckBoxLabelStyled label="연관상품 ID" ref={connectProductID}/>
         </TwoLine>
         <TextAreaBoxStyled
           label="복수 검색
           (enter 또는 &#34;,&#34;로 구분)"
           ref={productSearchDesc}
         />
-        <TwoLine>
-          <TextAndInput>
-            <BasicTextInputBoxStyled label="상품명"  ref={productName}/>
-          </TextAndInput>
-          <TextAndInput>
-            <BasicTextInputBoxStyled label="모델명" ref={modelName} />
-          </TextAndInput>
-        </TwoLine>
-
-        <TwoLine>
-          <TextAndInput>
-            <BasicTextInputBoxStyled label="제조사명" ref={makeName}/>
-          </TextAndInput>
-          <TextAndInput>
-            <BasicTextInputBoxStyled label="브랜드명" ref={brandeName}/>
-          </TextAndInput>
-        </TwoLine>
+        <TextAndInput>
+          <BasicTextInputBoxStyled label="대표 상품명"  ref={titleProductNmae}/>
+        </TextAndInput>
       </Propertys>
     </Search>
   );
 };
 
-const SetSalesStatus = () => {
+const SetStatus = () => {
 
-  const allSalesCheck = useRef(null); //전체체크
-  const saleNowCheck = useRef(null); //판매중 체크
-  const soldOutCheck = useRef(null); //품절 체크
-  const stopSaleCheck = useRef(null); //판매중지 체크
-  const endSaleCheck = useRef(null); //판매종료 체크
+  const allExhibitCheck = useRef(null); //전체체크
+  const exhibitStandbyCheck = useRef(null); //전시대기 체크
+  const exhibitingCheck = useRef(null); //전시중 체크
+  const stopExhibitCheck = useRef(null); //전시중지 체크
 
   return (
     <SalesStatus>
-      <Title>판매상태</Title>
+      <Title>연관상품 전시상태</Title>
       <Propertys>
-        <CheckBoxLabelStyled label="전체" ref={allSalesCheck}/>
-        <CheckBoxLabelStyled label="판매중" ref={saleNowCheck}/>
-        <CheckBoxLabelStyled label="품절" ref={soldOutCheck}/>
-        <CheckBoxLabelStyled label="판매중지" ref={stopSaleCheck}/>
-        <CheckBoxLabelStyled label="판매종료" ref={endSaleCheck}/>
+        <CheckBoxLabelStyled label="전체" ref={allExhibitCheck}/>
+        <CheckBoxLabelStyled label="전시대기" ref={exhibitStandbyCheck}/>
+        <CheckBoxLabelStyled label="전시중" ref={exhibitingCheck}/>
+        <CheckBoxLabelStyled label="전시중지" ref={stopExhibitCheck}/>
       </Propertys>
     </SalesStatus>
-  );
-};
-
-const SetCategory = () => {
-  const bigGroup = useRef(null); //대분류
-  const middleGroup = useRef(null); //중분류
-  const smallGroup = useRef(null); //소분류
-  const attributeGroup = useRef(null); //세분류
-  return (
-    <Category>
-      <Title>카테고리</Title>
-      <Propertys>
-        <BasicDropBoxStyled label="대분류" width="20rem" ref={bigGroup} />
-        <BasicDropBoxStyled label="중분류" width="20rem" ref={middleGroup}/>
-        <BasicDropBoxStyled label="소분류" width="20rem" ref={smallGroup}/>
-        <BasicDropBoxStyled label="세분류" width="20rem" ref={attributeGroup}/>
-
-      </Propertys>
-    </Category>
   );
 };
 
 const SetChannel = () => {
 
   const allChannelCheck = useRef(null); //전체
-  const smartstoreCheck = useRef(null); //스마트스토어
-  const shopingCheck = useRef(null); //쇼핑윈도
 
   return (
     <Channel>
-      <Title>채널</Title>
+      <Title>연관상품 노출채널</Title>
       <Propertys>
         <CheckBoxLabelStyled label="전체" ref={allChannelCheck}/>
-        <CheckBoxLabelStyled label="스마트 스토어" ref={smartstoreCheck}/>
-        <CheckBoxLabelStyled label="쇼핑윈도" ref={shopingCheck}/>
       </Propertys>
     </Channel>
   );
 };
 
-const SetPayment = () => {
+const SetType = () => {
 
-  const allPaymentCheck = useRef(null); //전체
-  const possibleProductCheck = useRef(null); //결제가능상품
-  const impossibleProductCheck = useRef(null); //결제불가능 상품
+  const allTypeCheck = useRef(null); //전체
+  const stylistProductCheck = useRef(null); //코디 상품
+  const bestWidthProductCheck = useRef(null); //함께 사면 좋은 상품
+  const discountWidthProductCheck = useRef(null); //함께 사면 할인 상품
+  const similarProductCheck = useRef(null); //유사한 상품
 
   return (
     <Payment>
-      <Title>결제여부</Title>
+      <Title>연관상품 유형</Title>
       <Propertys>
-        <CheckBoxLabelStyled label="전체" ref={allPaymentCheck}/>
-        <CheckBoxLabelStyled label="결제가능 상품" ref={possibleProductCheck}/>
-        <CheckBoxLabelStyled label="결제불가능 상품" ref={impossibleProductCheck}/>
+        <CheckBoxLabelStyled label="전체" ref={allTypeCheck}/>
+        <CheckBoxLabelStyled label="코디 상품" ref={stylistProductCheck}/>
+        <CheckBoxLabelStyled label="함께 사면 좋은 상품" ref={bestWidthProductCheck}/>
+        <CheckBoxLabelStyled label="함께 사면 할인 상품" ref={discountWidthProductCheck}/>
+        <CheckBoxLabelStyled label="유사한 상품" ref={similarProductCheck}/>
       </Propertys>
     </Payment>
   );
@@ -276,9 +227,8 @@ const SetDateTerm = () => {
 
   return (
     <DateTerm>
-      <Title>기간</Title>
+      <Title>연관상품 등록일</Title>
       <Propertys>
-        <BasicDropBoxStyled label="상품등록일" width="13rem" height="7rem" ref={productRegistDropbox}/>
         <BasicButtonStyled label="오늘" width="8rem" height="4rem" ref={dayBtn}/>
         <BasicButtonStyled label="1주일" width="8rem" height="4rem" ref={weekBtn}/>
         <BasicButtonStyled label="1개월" width="8rem" height="4rem" ref={monthBtn}/>
@@ -304,7 +254,6 @@ const SetSelect = () => {
   }
 
   const searchBtn = useRef(null); //검색
-  const detailSearchBtn = useRef(null); //상세검색
 
   return (
     <Select justify = "center" >
@@ -326,26 +275,19 @@ const SetSelect = () => {
           onClick = {setResetBtn}
         />
         </Line>
-        <BasicDropBoxStyled
-          label="상세검색"
-          width="13rem"
-          height="5rem"
-          ref={detailSearchBtn}
-        />
       </Propertys>
     </Select>
   );
 };
 
-const EditProductSetting = () => {
+const EditConnectProductSetting = () => {
   return (
     <>
       <EditProductSettings>
         {SetSearch()}
-        {SetSalesStatus()}
-        {SetCategory()}
+        {SetStatus()}
         {SetChannel()}
-        {SetPayment()}
+        {SetType()}
         {SetDateTerm()}
         {SetSelect()}
       </EditProductSettings>
@@ -353,4 +295,4 @@ const EditProductSetting = () => {
   );
 };
 
-export default EditProductSetting;
+export default EditConnectProductSetting;
