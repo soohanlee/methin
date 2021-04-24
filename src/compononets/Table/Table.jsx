@@ -48,9 +48,23 @@ import { Table as OriginTable } from 'antd';
 
 // https://ant.design/components/table/#components-table-demo-grouping-columns table antd doc
 
+const rowSelection = {
+  onChange: (selectedRowKeys, selectedRows) => {
+    console.log(
+      `selectedRowKeys: ${selectedRowKeys}`,
+      'selectedRows: ',
+      selectedRows,
+    );
+  },
+  getCheckboxProps: (record) => ({
+    disabled: record.name === 'Disabled User',
+    // Column configuration not to be checked
+    name: record.name,
+  }),
+};
+
 const Table = ({ selectionType, className, columns, data, ...props }) => {
   // selectionType = 'checkbox' | 'radio' 타입은 둘중 하나로 들어와야합니다.
-  const [selectionType] = useState(selectionType);
 
   const renderTable = () => {
     if (selectionType) {
