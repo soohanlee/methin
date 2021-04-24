@@ -8,7 +8,7 @@ const EditTitles = styled.div`
   width: 100%;
   height: 7rem;
   background-color: #ffffff;
-  border: 1px solid gray;
+  border: 1px solid #f0f0f0;
   padding-left: 40px;
   margin-bottom: 1.5rem;
 `;

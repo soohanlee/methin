@@ -13,7 +13,7 @@ const EditProductSettings = styled.div`
   width: 100%;
   height: 77rem;
   background-color: #ffffff;
-  border: 1px solid gray;
+  border: 1px solid #f0f0f0;
   padding-left: 5rem;
   padding-right: 5rem;
 `;
@@ -22,7 +22,7 @@ const TapTerm = css`
   width: 100%;
   height: 10rem;
   background-color: #ffffff;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid #f0f0f0;
   display: flex;
   padding-top: 1.5rem;
   justify-content: ${(props) => props.justify};

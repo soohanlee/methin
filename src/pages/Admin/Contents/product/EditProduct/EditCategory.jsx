@@ -13,7 +13,7 @@ const EditCategorys = styled.div`
   width: 100%;
   height: 12rem;
   background-color: #ffffff;
-  border: 1px solid gray;
+  border: 1px solid #f0f0f0;
   display: flex;
   justify-content: center;
 
