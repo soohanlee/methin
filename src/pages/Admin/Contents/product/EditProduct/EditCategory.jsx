@@ -9,8 +9,6 @@ import WarningTwoTone from '@ant-design/icons/WarningTwoTone';
 import CloseCircleTwoTone from '@ant-design/icons/CloseCircleTwoTone';
 import CheckCircleTwoTone from '@ant-design/icons/CheckCircleTwoTone';
 
-import { Row, Col } from 'antd';
-
 const EditCategorys = styled.div`
   width: 100%;
   height: 12rem;
@@ -34,10 +32,6 @@ const CategoryTexts = styled.div``;
 
 const TitleText = styled.div``;
 const SubTitleText = styled.div``;
-
-const QuestionIcon = styled.div`
-  font-size: 25px;
-`;
 
 const Icon = css`
   font-size: 6rem;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { Input as OriginInput, Radio, Select, Checkbox, text } from 'antd';
+import { Input as OriginInput } from 'antd';
 import CustomCollapse from 'compononets/Collapse';
 import LabelContents from 'compononets/Label/LabelContents';
 

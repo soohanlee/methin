@@ -10,7 +10,7 @@ export const ROUTE_PATH = {
     registerProduct: '/register-product',
     registerAllProduct: '/register-all-product',
     connectProduct: '/connect-product',
-    editDestination: '/edit-destination',
+    deliveryProduct: '/delivery-product',
   },
 };
 
