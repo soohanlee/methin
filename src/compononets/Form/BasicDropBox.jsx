@@ -1,13 +1,7 @@
-import React, {forwardRef} from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import 'antd/dist/antd.css';
-import { Menu, Dropdown, Button, message, Space, Tooltip } from 'antd';
+import { Menu, Dropdown, Button, message } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
-
-function handleButtonClick(e) {
-  message.info('Click on left button.');
-  console.log('click left button', e);
-}
 
 function handleMenuClick(e) {
   message.info('Click on menu item.');
@@ -28,7 +22,7 @@ const menu = (
   </Menu>
 );
 
-const BasicDropBox = ({ label, className , ref}) => {
+const BasicDropBox = ({ label, className, ref }) => {
   return (
     <>
       <Dropdown className={className} ref={ref} overlay={menu}>

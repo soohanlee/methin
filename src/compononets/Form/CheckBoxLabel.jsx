@@ -1,16 +1,14 @@
-import React, {forwardRef} from 'react';
-import ReactDOM from 'react-dom';
+import React, { forwardRef } from 'react';
 import 'antd/dist/antd.css';
 import { Checkbox } from 'antd';
-import styled from 'styled-components';
 
 // function onChange(e) {
 //   console.log(`checked = ${e.target.checked}`);
 // }
 
-const CheckBoxLabel = ({className, label}, ref) => {
+const CheckBoxLabel = ({ className, label }, ref) => {
   return (
-    <Checkbox  ref={ref} className={className}>
+    <Checkbox ref={ref} className={className}>
       {label}
     </Checkbox>
   );

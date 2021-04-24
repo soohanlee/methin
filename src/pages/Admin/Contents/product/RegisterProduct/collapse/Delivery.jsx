@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Radio,
-  Select as OriginSelect,
-  Checkbox,
-  Input as OriginInput,
-} from 'antd';
+import { Radio, Select as OriginSelect, Input as OriginInput } from 'antd';
 import styled from 'styled-components';
 
 import { changeNumberDigits, removeRest } from 'utils/common';
