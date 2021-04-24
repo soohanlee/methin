@@ -9,15 +9,16 @@ const EditDeliveryTitles = styled.div`
   width: 100%;
   height: 23rem;
   background-color: #ffffff;
-  border: 1px solid gray;
+  border: 1px solid #f0f0f0;
   margin-bottom: 1.5rem;
 `;
 
 const TitleTexts = styled.div`
   display: flex;
   height: 7rem;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #f0f0f0;
   align-items: center;
+  background-color: ${(props) => props.backColor};
 `;
 
 const TitleText = styled.div`
@@ -101,7 +102,7 @@ const editDeliveryProductSetting = () => {
       <TitleTexts>
         <TitleText>배송비 묶음그룹 관리 </TitleText>
       </TitleTexts>
-      <TitleTexts>
+      <TitleTexts backColor="#F8F9FD">
         <SubText>검색어 </SubText>
         {SetMenu()}
       </TitleTexts>
