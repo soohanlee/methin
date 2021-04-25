@@ -12,6 +12,7 @@ export const ROUTE_PATH = {
     connectProduct: '/connect-product',
     deliveryProduct: '/delivery-product',
     noticeManage: '/notice-manage',
+    manageSale: '/manage-sale',
   },
 };
 

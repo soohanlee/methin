@@ -6,9 +6,12 @@ const { Option } = Select;
 
 const BasicSelectBox = ({ className, list, onChange, ...props }) => {
   const renderOption = (list) => {
-    return list.map(({ value, label }) => {
-      return <Option value={value}>{label}</Option>;
-    });
+    return (
+      list &&
+      list.map(({ value, label }) => {
+        return <Option value={value}>{label}</Option>;
+      })
+    );
   };
 
   return (

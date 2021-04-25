@@ -9,6 +9,7 @@ import EditConnectProduct from 'pages/Admin/Contents/product/connectProduct/Edit
 import DeliveryProduct from 'pages/Admin/Contents/product/deliveryProduct/deliveryProduct';
 import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnce';
 import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/Index';
+import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
 
 const Container = styled.div`
   flex: 1;
@@ -51,6 +52,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.noticeManage}`}
           component={NoticeManage}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.manageSale}`}
+          component={OrderManage}
         />
       </Switch>
     </Container>
