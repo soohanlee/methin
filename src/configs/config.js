@@ -13,6 +13,7 @@ export const ROUTE_PATH = {
     deliveryProduct: '/delivery-product',
     noticeManage: '/notice-manage',
     manageSale: '/manage-sale',
+    checkOutstanding: '/check-outstanding',
   },
 };
 
