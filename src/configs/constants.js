@@ -2,6 +2,7 @@ import { ROUTE_PATH } from 'configs/config';
 
 export const leftNavigationMenuTitle = {
   manageProduct: '상품관리',
+  manageSale: '판매관리',
 };
 
 export const leftNavigationMenu = [
@@ -15,6 +16,10 @@ export const leftNavigationMenu = [
       { title: '배송정보 관리', path: ROUTE_PATH.admin.deliveryProduct },
       { title: '공지사항 관리', path: ROUTE_PATH.admin.noticeManage },
     ],
+  },
+  {
+    title: leftNavigationMenuTitle.manageSale,
+    submenuList: [{ title: '주문조회', path: ROUTE_PATH.admin.manageSale }],
   },
 ];
 

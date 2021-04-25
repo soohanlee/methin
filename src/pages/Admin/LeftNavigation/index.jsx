@@ -33,6 +33,8 @@ const LeftNavigation = () => {
   const renderMenu = () => {
     return leftNavigationMenu.map(({ title, submenuList }) => {
       const subMenuItem = submenuList.map(({ title, path }) => {
+        console.log('title', title);
+        console.log('path', path);
         return (
           <Menu.Item key={path} onClick={() => handleMoveLink(`/admin${path}`)}>
             {title}
