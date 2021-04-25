@@ -7,7 +7,7 @@ const EditConnectProduct = () => {
     <>
       <EditConnectProductTitle />
       <EditConnectProductSetting />
-      //상품목록 들어올 예정
+      {/* 상품목록 들어올 예정 */}
     </>
   );
 };

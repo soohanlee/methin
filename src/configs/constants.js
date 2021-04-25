@@ -13,6 +13,7 @@ export const leftNavigationMenu = [
       { title: '상품 일괄등록', path: ROUTE_PATH.admin.registerAllProduct },
       { title: '연관상품 관리', path: ROUTE_PATH.admin.connectProduct },
       { title: '배송정보 관리', path: ROUTE_PATH.admin.deliveryProduct },
+      { title: '공지사항 관리', path: ROUTE_PATH.admin.noticeManage },
     ],
   },
 ];

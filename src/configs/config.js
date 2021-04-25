@@ -11,6 +11,7 @@ export const ROUTE_PATH = {
     registerAllProduct: '/register-all-product',
     connectProduct: '/connect-product',
     deliveryProduct: '/delivery-product',
+    noticeManage: '/notice-manage',
   },
 };
 

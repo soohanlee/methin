@@ -6,8 +6,9 @@ import { ROUTE_PATH } from 'configs/config';
 import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';
 import EditConnectProduct from 'pages/Admin/Contents/product/connectProduct/EditConnectProduct';
-import deliveryProduct from 'pages/Admin/Contents/product/deliveryProduct/deliveryProduct';
+import DeliveryProduct from 'pages/Admin/Contents/product/deliveryProduct/deliveryProduct';
 import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnce';
+import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/Index';
 
 const Container = styled.div`
   flex: 1;
@@ -44,7 +45,12 @@ const Contents = () => {
         <Route
           exact
           path={`${prePath}${ROUTE_PATH.admin.deliveryProduct}`}
-          component={deliveryProduct}
+          component={DeliveryProduct}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.noticeManage}`}
+          component={NoticeManage}
         />
       </Switch>
     </Container>
