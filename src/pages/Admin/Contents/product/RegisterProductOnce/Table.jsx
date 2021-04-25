@@ -11,7 +11,7 @@ const columns = [
   {
     title: '처리상태',
     dataIndex: 'state',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href={'www.naver.com'}>{text}</a>,
   },
   {
     title: '실패사유',

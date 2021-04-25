@@ -4,26 +4,22 @@ import { Select } from 'antd';
 
 const { Option } = Select;
 
-const BasicSelectBox = ({ label, className, ref }) => {
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
+const BasicSelectBox = ({ className, list, onChange, ...props }) => {
+  const renderOption = (list) => {
+    return list.map(({ value, label }) => {
+      return <Option value={value}>{label}</Option>;
+    });
+  };
 
   return (
     <>
       <Select
         className={className}
-        ref={ref}
-        defaultValue={label}
-        onChange={handleChange}
+        defaultValue={list ? list[0].value : '선택'}
+        onChange={onChange}
+        props={props}
       >
-        <Option value={label}>{label}</Option>
-        <Option value="jack">Jack</Option>
-        <Option value="lucy">Lucy</Option>
-        <Option value="disabled" disabled>
-          Disabled
-        </Option>
-        <Option value="Yiminghe">yiminghe</Option>
+        {renderOption(list)}
       </Select>
     </>
   );
