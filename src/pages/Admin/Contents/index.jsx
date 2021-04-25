@@ -7,6 +7,7 @@ import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';
 import EditConnectProduct from 'pages/Admin/Contents/product/connectProduct/EditConnectProduct';
 import deliveryProduct from 'pages/Admin/Contents/product/deliveryProduct/deliveryProduct';
+import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnce';
 
 const Container = styled.div`
   flex: 1;
@@ -29,6 +30,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.registerProduct}`}
           component={RegisterProduct}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.registerAllProduct}`}
+          component={RegisterProductOnce}
         />
         <Route
           exact
