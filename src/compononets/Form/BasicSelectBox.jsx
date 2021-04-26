@@ -1,10 +1,15 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Select } from 'antd';
+import styled from 'styled-components';
+import { Select as OriginSelectBox } from 'antd';
 
-const { Option } = Select;
+const { Option } = OriginSelectBox;
 
-const BasicSelectBox = ({ className, list, onChange, ...props }) => {
+const Select = styled(OriginSelectBox)`
+  min-width: 150px;
+`;
+
+const BasicSelectBox = ({ className, list, onChange, disabled, ...props }) => {
   const renderOption = (list) => {
     return (
       list &&
@@ -20,6 +25,7 @@ const BasicSelectBox = ({ className, list, onChange, ...props }) => {
         className={className}
         defaultValue={list ? list[0].value : '선택'}
         onChange={onChange}
+        disabled={disabled}
         props={props}
       >
         {renderOption(list)}

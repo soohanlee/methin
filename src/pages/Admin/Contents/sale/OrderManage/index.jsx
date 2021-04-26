@@ -7,6 +7,7 @@ import BasicSelectBox from 'compononets/Form/BasicSelectBox';
 import BasicDatePicker from 'compononets/Form/BasicDatePicker';
 import Table from 'compononets/Table/Table';
 
+// 주문통합검색
 const SelectBox = styled(BasicSelectBox)`
   width: 300px;
 `;
