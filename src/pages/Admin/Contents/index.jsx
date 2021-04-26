@@ -11,6 +11,7 @@ import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnc
 import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/Index';
 import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
 import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingPayment';
+import OrderConfirm from 'pages/Admin/Contents/sale/OrderConfirm';
 
 const Container = styled.div`
   flex: 1;
@@ -63,6 +64,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.checkOutstanding}`}
           component={CheckOutStandingPayment}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.orderConfirm}`}
+          component={OrderConfirm}
         />
       </Switch>
     </Container>

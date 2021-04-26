@@ -14,6 +14,7 @@ export const ROUTE_PATH = {
     noticeManage: '/notice-manage',
     manageSale: '/manage-sale',
     checkOutstanding: '/check-outstanding',
+    orderConfirm: '/order-confirm',
   },
 };
 

@@ -9,6 +9,7 @@ const Conatiner = styled.div`
 
 const Title = styled.div`
   width: 180px;
+  font-size: 1.5rem;
 `;
 
 const Contents = styled.div`
