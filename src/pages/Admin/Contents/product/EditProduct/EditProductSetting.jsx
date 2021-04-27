@@ -2,12 +2,12 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import { css } from 'styled-components';
-import CheckBoxLabel from 'compononets/Form/CheckBoxLabel';
-import TextAreaBox from 'compononets/Form/TextAreaBox';
-import BasicTextInputBox from 'compononets/Form/BasicTextInputBox';
-import BasicDropBox from 'compononets/Form/BasicDropBox';
-import BasicButton from 'compononets/Form/BasicButton';
-import BasicDatePicker from 'compononets/Form/BasicDatePicker';
+import CheckBoxLabel from 'pages/Admin/components/Form/CheckBoxLabel';
+import TextAreaBox from 'pages/Admin/components/Form/TextAreaBox';
+import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
+import BasicDropBox from 'pages/Admin/components/Form/BasicDropBox';
+import BasicButton from 'pages/Admin/components/Form/BasicButton';
+import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 
 const EditProductSettings = styled.div`
   width: 100%;

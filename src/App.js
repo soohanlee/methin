@@ -6,10 +6,10 @@ import { LightTheme } from 'configs/theme';
 import { ROUTE_PATH } from 'configs/config';
 import GlobalStyle from 'configs/globalStyle';
 
-import Container from './compononets/container/Container';
+import Container from './components/container/Container';
 import Main from 'pages/Main';
-import Navigation from 'compononets/Navigation';
-import Footer from 'compononets/Footer';
+import Navigation from 'components/Navigation';
+import Footer from 'components/Footer';
 import Admin from 'pages/Admin';
 
 function App() {

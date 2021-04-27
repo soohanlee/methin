@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
-import Table from 'compononets/Table/Table';
-import BasicDropBox from 'compononets/Form/BasicDropBox';
-import BasicButton from 'compononets/Form/BasicButton';
+import Table from 'pages/Admin/components/Table/Table';
+import BasicDropBox from 'pages/Admin/components/Form/BasicDropBox';
+import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
 
 const EditDeliveryTitlesCss = css`

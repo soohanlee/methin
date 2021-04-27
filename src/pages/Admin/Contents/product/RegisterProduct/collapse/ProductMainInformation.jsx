@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Input, Radio, Select } from 'antd';
 
 import CustomCollapse from 'pages/Admin/components/Collapse';
-import LabelContents from 'compononets/Label/LabelContents';
+import LabelContents from 'pages/Admin/components/Label/LabelContents';
 
 import Calendar from 'pages/Admin/components/Calendar';
 import moment from 'moment';

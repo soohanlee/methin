@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Button, Radio, Input as OriginInput } from 'antd';
 
-import LabelContents from 'compononets/Label/LabelContents';
-import BasicSelectBox from 'compononets/Form/BasicSelectBox';
-import BasicDatePicker from 'compononets/Form/BasicDatePicker';
+import LabelContents from 'pages/Admin/components/Label/LabelContents';
+import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 
 const SelectBox = styled(BasicSelectBox)`
   margin-right: 1rem;

@@ -4,7 +4,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import ImgCrop from 'antd-img-crop';
 
 import CustomCollapse from 'pages/Admin/components/Collapse';
-import LabelContents from 'compononets/Label/LabelContents';
+import LabelContents from 'pages/Admin/components/Label/LabelContents';
 
 const ProductImage = () => {
   const [videoTitle, setVideoTitle] = useState('');

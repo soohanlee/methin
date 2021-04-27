@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Radio, Input } from 'antd';
 
-import LabelContents from 'compononets/Label/LabelContents';
-import BasicSelectBox from 'compononets/Form/BasicSelectBox';
-import BasicDatePicker from 'compononets/Form/BasicDatePicker';
-import Table from 'compononets/Table/Table';
+import LabelContents from 'pages/Admin/components/Label/LabelContents';
+import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import Table from 'pages/Admin/components/Table/Table';
 
 // 주문통합검색
 const SelectBox = styled(BasicSelectBox)`

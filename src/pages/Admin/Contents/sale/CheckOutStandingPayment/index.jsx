@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Table from 'compononets/Table/Table';
+import Table from 'pages/Admin/components/Table/Table';
 import { Button } from 'antd';
 
 // 미결제 확인

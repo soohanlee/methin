@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Input as OriginInput } from 'antd';
 import CustomCollapse from 'pages/Admin/components/Collapse';
-import LabelContents from 'compononets/Label/LabelContents';
+import LabelContents from 'pages/Admin/components/Label/LabelContents';
 
 const Input = styled(OriginInput)`
   max-width: 300px;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
-import Table from 'compononets/Table/Table';
+import Table from 'pages/Admin/components/Table/Table';
 
 const Container = styled.div`
   background: #fff;

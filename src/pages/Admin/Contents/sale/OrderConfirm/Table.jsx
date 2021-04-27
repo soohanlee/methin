@@ -2,9 +2,9 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton, Input } from 'antd';
 
-import LabelContents from 'compononets/Label/LabelContents';
-import BasicSelectBox from 'compononets/Form/BasicSelectBox';
-import OriginTable from 'compononets/Table/Table';
+import LabelContents from 'pages/Admin/components/Label/LabelContents';
+import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import OriginTable from 'pages/Admin/components/Table/Table';
 
 const Container = styled.div`
   background: #fff;

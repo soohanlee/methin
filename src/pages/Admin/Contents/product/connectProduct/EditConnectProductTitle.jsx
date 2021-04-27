@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import QuestionCircleOutlined from '@ant-design/icons/QuestionCircleOutlined';
-import PageHeaderBtn from 'compononets/Form/PageHeaderBtn';
+import PageHeaderBtn from 'pages/Admin/components/Form/PageHeaderBtn';
 
 const EditTitles = styled.div`
   width: 100%;

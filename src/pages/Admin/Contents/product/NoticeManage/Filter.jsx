@@ -2,11 +2,11 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Radio, Button } from 'antd';
 
-import BasicSelectBox from 'compononets/Form/BasicSelectBox';
-import LabelContents from 'compononets/Label/LabelContents';
-import { Input as OriginInput } from 'compononets/styled/Input';
+import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import LabelContents from 'pages/Admin/components/Label/LabelContents';
+import { Input as OriginInput } from 'pages/Admin/components/styled/Input';
 
-import BasicDatePicker from 'compononets/Form/BasicDatePicker';
+import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 
 const Container = styled.div`
   padding: 2rem;

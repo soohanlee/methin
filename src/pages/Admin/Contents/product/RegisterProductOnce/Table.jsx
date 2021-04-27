@@ -1,6 +1,6 @@
 import React from 'react';
 
-import OriginTable from 'compononets/Table/Table';
+import OriginTable from 'pages/Admin/components/Table/Table';
 import styled from 'styled-components';
 
 const CustomTable = styled(OriginTable)`

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { changeNumberDigits, removeRest } from 'utils/common';
 
-import LabelContents from 'compononets/Label/LabelContents';
+import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import CustomCollapse from 'pages/Admin/components/Collapse';
 
 const Select = styled(OriginSelect)`

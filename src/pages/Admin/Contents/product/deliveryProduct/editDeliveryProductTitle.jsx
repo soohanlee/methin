@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
-import PageHeaderBtn from 'compononets/Form/PageHeaderBtn';
+import PageHeaderBtn from 'pages/Admin/components/Form/PageHeaderBtn';
 
 const EditDeliveryTitles = styled.div`
   width: 100%;

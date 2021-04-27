@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { changeNumberDigits, removeRest } from 'utils/common';
 
 import CustomCollapse from 'pages/Admin/components/Collapse';
-import LabelContents from 'compononets/Label/LabelContents';
+import LabelContents from 'pages/Admin/components/Label/LabelContents';
 
 const { Option } = Select;
 

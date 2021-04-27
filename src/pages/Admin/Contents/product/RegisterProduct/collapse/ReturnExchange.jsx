@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Input as OriginInput, Select } from 'antd';
 
 import CustomCollapse from 'pages/Admin/components/Collapse';
-import LabelContents from 'compononets/Label/LabelContents';
+import LabelContents from 'pages/Admin/components/Label/LabelContents';
 
 import { changeNumberDigits, removeRest } from 'utils/common';
 

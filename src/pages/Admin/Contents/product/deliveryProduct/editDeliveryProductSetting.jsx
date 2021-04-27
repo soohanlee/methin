@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
-import BasicSelectBox from 'compononets/Form/BasicSelectBox';
-import BasicTextInputBox from 'compononets/Form/BasicTextInputBox';
-import BasicButton from 'compononets/Form/BasicButton';
+import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
+import BasicButton from 'pages/Admin/components/Form/BasicButton';
 
 const EditDeliveryTitles = styled.div`
   width: 100%;
