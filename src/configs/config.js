@@ -16,6 +16,7 @@ export const ROUTE_PATH = {
     manageSale: '/manage-sale',
     checkOutstanding: '/check-outstanding',
     orderConfirm: '/order-confirm',
+    deliveryStatusManage: '/delivery-status-manage',
   },
 };
 

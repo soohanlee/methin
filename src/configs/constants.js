@@ -24,6 +24,7 @@ export const leftNavigationMenu = [
       { title: '주문조회', path: ROUTE_PATH.admin.manageSale },
       { title: '미결제 확인', path: ROUTE_PATH.admin.checkOutstanding },
       { title: '발송(주문)확인/발송관리', path: ROUTE_PATH.admin.orderConfirm },
+      { title: '배송현황 관리', path: ROUTE_PATH.admin.deliveryStatusManage },
     ],
   },
 ];

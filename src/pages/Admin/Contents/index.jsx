@@ -13,6 +13,7 @@ import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/Index';
 import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
 import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingPayment';
 import OrderConfirm from 'pages/Admin/Contents/sale/OrderConfirm';
+import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage';
 
 const Container = styled.div`
   flex: 1;
@@ -75,6 +76,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.orderConfirm}`}
           component={OrderConfirm}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.deliveryStatusManage}`}
+          component={DeliveryStatusManage}
         />
       </Switch>
     </Container>
