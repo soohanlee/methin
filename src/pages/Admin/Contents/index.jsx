@@ -7,6 +7,7 @@ import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';
 import EditConnectProduct from 'pages/Admin/Contents/product/connectProduct/EditConnectProduct';
 import DeliveryProduct from 'pages/Admin/Contents/product/deliveryProduct/deliveryProduct';
+import TemplateProduct from 'pages/Admin/Contents/product/templateProduct/templateProduct';
 import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnce';
 import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/Index';
 import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
@@ -49,6 +50,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.deliveryProduct}`}
           component={DeliveryProduct}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.templateProduct}`}
+          component={TemplateProduct}
         />
         <Route
           exact

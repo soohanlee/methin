@@ -31,19 +31,28 @@ const TitleText = styled.div`
   color: #66dd89;
 `;
 
-const categoryTextArray = ['배송비 묶음그룹 관리'];
+const categoryTextArray = [
+  '배송비 템플릿 관리',
+  '카테고리 템플릿 관리',
+  'AS 템플릿 관리',
+  '이벤트 템플릿 관리',
+  '문의 템플릿 관리',
+  '상품정보제공고시 템플릿 관리',
+];
 
 const SetCaterogy = () => {
-  const CategoryClick = () => {
-    alert('카테고리 클릭');
+  const CategoryClick = (e) => {
+    alert(e.target.innerText);
   };
 
   const result = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < categoryTextArray.length; i++) {
     result.push(
       <>
         <CategoryType>
-          <TitleText onClick={CategoryClick}>{categoryTextArray[i]}</TitleText>
+          <TitleText name={categoryTextArray[i]} onClick={CategoryClick}>
+            {categoryTextArray[i]}
+          </TitleText>
         </CategoryType>
       </>,
     );
@@ -51,7 +60,7 @@ const SetCaterogy = () => {
   return result;
 };
 
-const editDeliveryProductCategory = () => {
+const editTemplateProductCategory = () => {
   return (
     <>
       <EditCategorys>{SetCaterogy()}</EditCategorys>
@@ -59,4 +68,4 @@ const editDeliveryProductCategory = () => {
   );
 };
 
-export default editDeliveryProductCategory;
+export default editTemplateProductCategory;
