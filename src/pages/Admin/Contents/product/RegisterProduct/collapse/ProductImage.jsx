@@ -3,7 +3,7 @@ import { Input, Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import ImgCrop from 'antd-img-crop';
 
-import CustomCollapse from 'compononets/Collapse';
+import CustomCollapse from 'pages/Admin/components/Collapse';
 import LabelContents from 'compononets/Label/LabelContents';
 
 const ProductImage = () => {

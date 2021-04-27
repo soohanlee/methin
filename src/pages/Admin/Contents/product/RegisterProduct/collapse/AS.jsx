@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { Input as OriginInput } from 'antd';
-import CustomCollapse from 'compononets/Collapse';
+import CustomCollapse from 'pages/Admin/components/Collapse';
 import LabelContents from 'compononets/Label/LabelContents';
 
 const Input = styled(OriginInput)`

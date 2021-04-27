@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomCollapse from 'compononets/Collapse';
+import CustomCollapse from 'pages/Admin/components/Collapse';
 
 const ProductInformationProvisionNotice = () => {
   return (
