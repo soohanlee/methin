@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Input, Radio, Select } from 'antd';
 
-import CustomCollapse from 'compononets/Collapse';
+import CustomCollapse from 'pages/Admin/components/Collapse';
 import LabelContents from 'compononets/Label/LabelContents';
 
-import Calendar from 'compononets/Calendar';
+import Calendar from 'pages/Admin/components/Calendar';
 import moment from 'moment';
 // import { DateFormat } from 'configs/constants';
 
