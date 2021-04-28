@@ -21,7 +21,7 @@ const DollarCircleTwoToneIcon = styled(DollarCircleTwoTone)`
 const Container = styled.div``;
 
 // 배송 현황 관리
-const OrderCancel = () => {
+const OrderReturn = () => {
   return (
     <Container>
       <BoardHeader list={list} />
@@ -31,30 +31,50 @@ const OrderCancel = () => {
   );
 };
 
-export default OrderCancel;
+export default OrderReturn;
 
 const list = [
   {
     title: '먼저 확인해주세요!',
     itemList: [
       {
-        label: '취소지연 (자동 환불대기)',
-        value: 'cancelDelay',
+        label: '반품지연',
+        value: 'returnDelay',
+        img: <AppstoreTwoToneIcon />,
+      },
+      {
+        label: '자동 환불대기',
+        value: 'autoReturnWaiting',
+        img: <AppstoreTwoToneIcon />,
+      },
+      {
+        label: '환불보류',
+        value: 'returnHold',
         img: <AppstoreTwoToneIcon />,
       },
     ],
   },
   {
-    title: '취소진행중, 완료 주문건을 확인해 주세요!',
+    title: '반품처리를 진행해주세요!',
     itemList: [
       {
-        label: '취소요청',
-        value: 'cancelRequest',
+        label: '반품요청',
+        value: 'returnRequest',
         img: <AppstoreTwoToneIcon />,
       },
       {
-        label: '취소완료(최근 3일)',
-        value: 'cancelSuccess',
+        label: '반품수거중',
+        value: 'returnCollecting',
+        img: <AppstoreTwoToneIcon />,
+      },
+      {
+        label: '반품수거완료',
+        value: 'returnCollectSuccess',
+        img: <AppstoreTwoToneIcon />,
+      },
+      {
+        label: '반품완료(최근3일)',
+        value: 'returnSuccess',
         img: <AppstoreTwoToneIcon />,
       },
     ],

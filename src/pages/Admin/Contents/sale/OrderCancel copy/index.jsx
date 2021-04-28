@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import BoardHeader from 'pages/Admin/components/BoardHeader';
+import BoardHeader from 'pages/Admin/Contents/sale/OrderReturn/node_modules/pages/Admin/components/BoardHeader';
 import Filter from './Filter';
 import Table from './Table';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
@@ -39,7 +39,7 @@ const list = [
     itemList: [
       {
         label: '취소지연 (자동 환불대기)',
-        value: 'cancelDelay',
+        value: 'todayDelay',
         img: <AppstoreTwoToneIcon />,
       },
     ],
@@ -47,14 +47,10 @@ const list = [
   {
     title: '취소진행중, 완료 주문건을 확인해 주세요!',
     itemList: [
-      {
-        label: '취소요청',
-        value: 'cancelRequest',
-        img: <AppstoreTwoToneIcon />,
-      },
+      { label: '취소요청', value: 'todayStart', img: <AppstoreTwoToneIcon /> },
       {
         label: '취소완료(최근 3일)',
-        value: 'cancelSuccess',
+        value: 'prePurchase',
         img: <AppstoreTwoToneIcon />,
       },
     ],

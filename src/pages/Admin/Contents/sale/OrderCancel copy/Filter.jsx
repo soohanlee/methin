@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Button, Radio, Input as OriginInput } from 'antd';
 
-import LabelContents from 'pages/Admin/components/Label/LabelContents';
-import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
-import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import LabelContents from 'pages/Admin/Contents/sale/OrderReturn/node_modules/pages/Admin/components/Label/LabelContents';
+import BasicSelectBox from 'pages/Admin/Contents/sale/OrderReturn/node_modules/pages/Admin/components/Form/BasicSelectBox';
+import BasicDatePicker from 'pages/Admin/Contents/sale/OrderReturn/node_modules/pages/Admin/components/Form/BasicDatePicker';
 
 const SelectBox = styled(BasicSelectBox)`
   margin-right: 1rem;
@@ -103,7 +103,7 @@ const Filter = () => {
 export default Filter;
 
 const searchPeriodList = [
-  { label: '클레임 요청일', value: 'cancelDate' },
+  { label: '클레임 요청일', value: 'paymentDate' },
   { label: '결제일', value: 'settlementDay' },
 ];
 

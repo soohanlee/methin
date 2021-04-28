@@ -103,7 +103,7 @@ const Filter = () => {
 export default Filter;
 
 const searchPeriodList = [
-  { label: '클레임 요청일', value: 'cancelDate' },
+  { label: '반품 요청일', value: 'returnDate' },
   { label: '결제일', value: 'settlementDay' },
 ];
 
@@ -119,8 +119,9 @@ const detailList = [
 
 const orderStateList = [
   { label: '전체', value: 'all' },
-  { label: '취소요청', value: 'orderCancelRequest' },
-  { label: '취소중', value: 'orderCancelling' },
-  { label: '취소완료', value: 'orderCancelSuccess' },
-  { label: '취소철회', value: 'orderCancelWithdrawal' },
+  { label: '반품요청', value: 'orderReturnRequest' },
+  { label: '수거중', value: 'orderCollecting' },
+  { label: '수거완료', value: 'orderCollectSuccess' },
+  { label: '반품완료', value: 'orderReturnSuccess' },
+  { label: '반품철회', value: 'orderReturnWithdrawal' },
 ];

@@ -14,6 +14,8 @@ import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
 import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingPayment';
 import OrderConfirm from 'pages/Admin/Contents/sale/OrderConfirm';
 import OrderCancel from 'pages/Admin/Contents/sale/OrderCancel';
+import OrderReturn from 'pages/Admin/Contents/sale/OrderReturn';
+
 import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage';
 
 const Container = styled.div`
@@ -82,6 +84,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.orderCancel}`}
           component={OrderCancel}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.orderReturn}`}
+          component={OrderReturn}
         />
         <Route
           exact
