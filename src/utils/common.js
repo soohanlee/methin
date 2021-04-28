@@ -11,3 +11,11 @@ export function getLocalStorageData(name) {
     return undefined;
   }
 }
+
+export function changeNumberDigits(value) {
+  return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
+}
+
+export function removeRest(value) {
+  return value.replace(/,/gi, '');
+}

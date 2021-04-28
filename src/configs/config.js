@@ -3,6 +3,23 @@ export const ROUTE_PATH = {
   login: '/login',
   signup: '/console',
   findId: '/findId',
+  admin: {
+    main: '/admin',
+    test: '/test',
+    editProduct: '/edit-product',
+    registerProduct: '/register-product',
+    registerAllProduct: '/register-all-product',
+    connectProduct: '/connect-product',
+    deliveryProduct: '/delivery-product',
+    templateProduct: '/template-product',
+    noticeManage: '/notice-manage',
+    manageSale: '/manage-sale',
+    checkOutstanding: '/check-outstanding',
+    orderConfirm: '/order-confirm',
+    orderCancel: '/order-cancel',
+    orderReturn: '/order-return',
+    deliveryStatusManage: '/delivery-status-manage',
+  },
 };
 
 export const LOCAL_STORAGE_KEYS = {
