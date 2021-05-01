@@ -48,10 +48,6 @@ const Filter = () => {
     console.log(value);
   };
 
-  const handleWaitingForShipmentChange = (value) => {
-    console.log(value);
-  };
-
   const handleStartDateChange = (value) => {
     console.log(value);
   };
