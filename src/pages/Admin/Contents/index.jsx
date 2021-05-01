@@ -17,6 +17,7 @@ import OrderCancel from 'pages/Admin/Contents/sale/OrderCancel';
 import OrderReturn from 'pages/Admin/Contents/sale/OrderReturn';
 
 import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage';
+import ReviewManage from 'pages/Admin/Contents/review/ReviewManage';
 
 const Container = styled.div`
   flex: 1;
@@ -94,6 +95,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.deliveryStatusManage}`}
           component={DeliveryStatusManage}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.reviewManage}`}
+          component={ReviewManage}
         />
       </Switch>
     </Container>

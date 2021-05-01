@@ -49,7 +49,7 @@ const SetCaterogy = () => {
   for (let i = 0; i < categoryTextArray.length; i++) {
     result.push(
       <>
-        <CategoryType>
+        <CategoryType key={i}>
           <TitleText name={categoryTextArray[i]} onClick={CategoryClick}>
             {categoryTextArray[i]}
           </TitleText>
