@@ -31,7 +31,6 @@ const TapTerm = css`
 const Propertys = styled.div`
   display: flex;
   padding-left: 8rem;
-  justify-content: center;
   align-items: center;
   justify-content: space-between;
   width: ${(props) => props.width};

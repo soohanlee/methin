@@ -90,12 +90,12 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.orderReturn}`}
           component={OrderReturn}
-        />  
+        />
         <Route
-        exact
-        path={`${prePath}${ROUTE_PATH.admin.SaleDisturb}`}
-        component={SaleDisturb}
-      />
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.orderDisturb}`}
+          component={SaleDisturb}
+        />
         <Route
           exact
           path={`${prePath}${ROUTE_PATH.admin.deliveryStatusManage}`}
