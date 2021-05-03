@@ -11,7 +11,7 @@ import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 
 const EditProductSettings = styled.div`
   width: 100%;
-  height: 77rem;
+  height: 63rem;
   background-color: #ffffff;
   border: 1px solid #f0f0f0;
   padding-left: 5rem;
@@ -20,7 +20,7 @@ const EditProductSettings = styled.div`
 
 const TapTerm = css`
   width: 100%;
-  height: 10rem;
+  height: 7rem;
   background-color: #ffffff;
   border-bottom: 1px solid #f0f0f0;
   display: flex;
@@ -111,6 +111,7 @@ const BasicButtonStyled = styled(BasicButton)`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   margin-left: ${(props) => props.marginleft};
+  margin-top: ${(props) => props.margintop};
 `;
 
 const BasicDatePickerStyled = styled(BasicDatePicker)`
@@ -354,6 +355,7 @@ const SetSelect = () => {
             height="5rem"
             type="primary"
             ref={searchBtn}
+            margintop = "5rem"
             onClick={setSearchBtn}
           />
           <BasicButtonStyled
@@ -361,13 +363,15 @@ const SetSelect = () => {
             width="13rem"
             height="5rem"
             marginleft="2rem"
+            margintop = "5rem"
             onClick={setResetBtn}
           />
         </Line>
-        <BasicDropBoxStyled
+        <BasicButtonStyled
           label="상세검색"
           width="13rem"
           height="5rem"
+          margintop = "5rem"
           ref={detailSearchBtn}
         />
       </Propertys>
