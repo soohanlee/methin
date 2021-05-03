@@ -14,7 +14,7 @@ const RegistertBox = styled.div`
 `;
 
 const SelectBox = styled(BasicSelectBox)`
-  width: 2rem;
+  width: 10rem;
   margin-bottom: ${(props) => props.marginbottom};
 `;
 
@@ -126,7 +126,7 @@ const InquiryConditionsBox = styled.div`
 `;
 
 const InquiryConditions = styled.div`
-  width: 35%;
+  width: 60rem;
   height: 100%;
 
   display: flex;

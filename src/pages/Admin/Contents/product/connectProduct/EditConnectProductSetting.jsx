@@ -10,7 +10,7 @@ import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 
 const EditProductSettings = styled.div`
   width: 100%;
-  height: 67rem;
+  height:55rem;
   background-color: #ffffff;
   border: 1px solid #f0f0f0;
   padding-left: 5rem;
@@ -19,7 +19,7 @@ const EditProductSettings = styled.div`
 
 const TapTerm = css`
   width: 100%;
-  height: 10rem;
+  height: 7rem;
   background-color: #ffffff;
   border-bottom: 1px solid #f0f0f0;
   display: flex;

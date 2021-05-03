@@ -33,7 +33,7 @@ const SetButton = (label) => {
 const editTemplateProductTable = () => {
   return (
     <>
-      <TableStyled />
+      <TableStyled  columns={columns} selectionType={'checkbox'}/>
       <EditDeliveryMenuBtn>
         {SetButton('등록')}
         {SetButton('선택삭제')}
@@ -43,3 +43,26 @@ const editTemplateProductTable = () => {
 };
 
 export default editTemplateProductTable;
+
+const columns = [
+  {
+    title: 'ID',
+    dataIndex: 'ID',
+  },
+  {
+    title: '템플릿명',
+    dataIndex: 'templateName',
+  },
+  {
+    title: '수정',
+    dataIndex: 'modify',
+  },
+  {
+    title: '등록일',
+    dataIndex: 'registrationDate',
+  },
+  {
+    title: '수정일',
+    dataIndex: 'modifyDate',
+  }
+];

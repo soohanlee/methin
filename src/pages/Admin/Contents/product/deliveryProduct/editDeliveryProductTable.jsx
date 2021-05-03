@@ -61,9 +61,56 @@ const editDeliveryProductTable = () => {
         </TitleTexts>
       </EditDeliveryTitles>
       <EditDeliveryMenuBtn>{SetButton('+ 묶음그룹 추가')}</EditDeliveryMenuBtn>
-      <TableStyled />
+      <TableStyled columns={columns} selectionType={'checkbox'}/>
     </>
   );
 };
+
+const columns = [
+  {
+    title: '수정',
+    dataIndex: 'modify',
+  },
+  {
+    title: '삭제',
+    dataIndex: 'delete',
+  },
+  {
+    title: '그룹번호',
+    dataIndex: 'groupNumber',
+  },
+  {
+    title: '그룹명',
+    dataIndex: 'groupName',
+  },
+  {
+    title: '계산방식',
+    dataIndex: 'calculationMethod',
+  },
+  {
+    title: '권역구분',
+    dataIndex: 'areaClassification',
+  },
+  {
+    title: '권역2 추가배송비',
+    dataIndex: 'addDrivePrice2',
+  },
+  {
+    title: '권역3 추가배송비',
+    dataIndex: 'addDrivePrice3',
+  },
+  {
+    title: '사용여부',
+    dataIndex: 'useStatus',
+  },
+  {
+    title: '등록일',
+    dataIndex: 'registrationDate',
+  },
+  {
+    title: '수정일',
+    dataIndex: 'modifyDate',
+  }
+];
 
 export default editDeliveryProductTable;
