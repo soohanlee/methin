@@ -6,7 +6,7 @@ import { Select as OriginSelectBox } from 'antd';
 const { Option } = OriginSelectBox;
 
 const Select = styled(OriginSelectBox)`
-  min-width: 150px;
+  width: 15rem;
 `;
 
 const BasicSelectBox = ({ className, list, onChange, disabled, ...props }) => {
