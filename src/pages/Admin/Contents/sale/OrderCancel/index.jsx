@@ -16,11 +16,15 @@ const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
 
 const Container = styled.div``;
 
+const categoryTypeClick = (value) => {
+  alert(value);
+};
+
 // 배송 현황 관리
 const OrderCancel = () => {
   return (
     <Container>
-      <BoardHeader list={list} />
+      <BoardHeader onClick={categoryTypeClick} list={list} />
       <Filter />
       <Table />
     </Container>

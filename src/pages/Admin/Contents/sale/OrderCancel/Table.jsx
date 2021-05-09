@@ -30,29 +30,51 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
+const setExcelDown = () => {
+  alert('엑셀다운');
+};
+const setSuccessCancel = () => {
+  alert('취소완료');
+};
+const setRejectCancel = () => {
+  alert('취소거부');
+};
+
+const setBuyCancel = () => {
+  alert('구매 확정후 취소처리 바로가기');
+};
+
+const setSuccessCancelProcess = () => {
+  alert('취소완료처리');
+};
+
+const setRejectCancelProcess = () => {
+  alert('취소거부처리');
+};
+
 const Table = () => {
   return (
     <Container>
       <HeaderContainer>
         <Title>목록(총 0개)</Title>
         <ButtonContainer>
-          <Button>엑셀다운</Button>
+          <Button onClick={setExcelDown}>엑셀다운</Button>
         </ButtonContainer>
       </HeaderContainer>
       <HeaderContainer>
         <ButtonContainer>
-          <Button>취소완료</Button>
-          <Button>취소거부</Button>
+          <Button onClick={setSuccessCancel}>취소완료</Button>
+          <Button onClick={setRejectCancel}>취소거부</Button>
         </ButtonContainer>
-        <Button>구매 확정 후 취소처리 바로가기</Button>
+        <Button onClick={setBuyCancel}>구매 확정 후 취소처리 바로가기</Button>
       </HeaderContainer>
 
       <OriginTable data={data} columns={columns} selectionType="checkbox" />
 
       <ButtomContainer>
         <LabelContents title="취소처리">
-          <Button>취소 완료처리</Button>
-          <Button>취소 거부처리</Button>
+          <Button onClick={setSuccessCancelProcess}>취소 완료처리</Button>
+          <Button onClick={setRejectCancelProcess}>취소 거부처리</Button>
         </LabelContents>
       </ButtomContainer>
     </Container>

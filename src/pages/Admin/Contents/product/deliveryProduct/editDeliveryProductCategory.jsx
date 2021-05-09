@@ -34,8 +34,8 @@ const TitleText = styled.div`
 const categoryTextArray = ['배송비 묶음그룹 관리'];
 
 const SetCaterogy = () => {
-  const CategoryClick = () => {
-    alert('카테고리 클릭');
+  const CategoryClick = (e) => {
+    alert(e.target.innerText);
   };
 
   const result = [];
