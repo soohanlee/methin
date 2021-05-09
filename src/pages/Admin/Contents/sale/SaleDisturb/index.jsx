@@ -14,7 +14,7 @@ const RegistertBox = styled.div`
 `;
 
 const SelectBox = styled(BasicSelectBox)`
-  width: 10rem;
+  width: ${(props) => props.width};
   margin-bottom: ${(props) => props.marginbottom};
 `;
 
@@ -67,6 +67,11 @@ const Content = styled.div`
   width: 80%;
   padding: 2rem;
 `;
+
+const regist = () => {
+  alert('등록');
+};
+
 const RegistertionConditions = () => {
   const registrationConditions = useRef(null);
 
@@ -77,7 +82,11 @@ const RegistertionConditions = () => {
         <Box>
           <Title>등록조건</Title>
           <Content>
-            <SelectBox list={ResisterTypeList} marginbottom="1rem" />
+            <SelectBox
+              list={ResisterTypeList}
+              width="15rem"
+              marginbottom="1rem"
+            />
             <InputBox
               ref={registrationConditions}
               height="10rem"
@@ -105,7 +114,12 @@ const RegistertionConditions = () => {
         </Box>
       </Registert>
       <ButtonBox>
-        <BasicButtonStyled label="등록" width="8rem" height="4rem" />
+        <BasicButtonStyled
+          onClick={regist}
+          label="등록"
+          width="8rem"
+          height="4rem"
+        />
       </ButtonBox>
     </RegistertBox>
   );
@@ -133,6 +147,11 @@ const InquiryConditions = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
+const search = () => {
+  alert('조회하기');
+};
+
 const DisturbSales = () => {
   const disturbSales = useRef(null);
 
@@ -142,9 +161,9 @@ const DisturbSales = () => {
       <InquiryConditionsBox>
         <InquiryConditions>
           <div>조회조건</div>
-          <SelectBox list={InquiryConditionsTypeList} />
+          <SelectBox width="10rem" list={InquiryConditionsTypeList} />
           <InputBox ref={disturbSales} width="30rem" />
-          <BasicButtonStyled label="조회하기" width="10rem" />
+          <BasicButtonStyled onClick={search} label="조회하기" width="10rem" />
         </InquiryConditions>
       </InquiryConditionsBox>
     </DisturbSalesBox>

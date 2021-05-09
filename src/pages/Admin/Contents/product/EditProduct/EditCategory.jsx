@@ -22,10 +22,11 @@ const EditCategorys = styled.div`
 `;
 
 const CategoryType = styled.div`
-  width: 30rem;
+  width: 17rem;
   display: flex;
-  justify-content: center;
   align-items: center;
+  cursor: Pointer;
+  margin-right: 10rem;
 `;
 
 const CategoryTexts = styled.div``;
@@ -69,7 +70,7 @@ const SetCaterogy = () => {
   for (let i = 0; i < 5; i++) {
     result.push(
       <>
-        <CategoryType>
+        <CategoryType onClick={() => categoryTypeClick(categoryTextArray[i])}>
           {categoryTypeArray[i]}
           <CategoryTexts>
             <TitleText>{categoryTextArray[i]}</TitleText>
@@ -80,6 +81,10 @@ const SetCaterogy = () => {
     );
   }
   return result;
+};
+
+const categoryTypeClick = (value) => {
+  alert(value);
 };
 
 const EditCategory = () => {

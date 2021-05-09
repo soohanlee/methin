@@ -23,14 +23,24 @@ const Button = styled(OriginButton)`
   margin-right: 0.5rem;
 `;
 
+const setSelectRelease = () => {
+  alert('선택건 해제하기');
+};
+
+const setConfirmationCancel = () => {
+  alert('선택건 해제하기');
+};
+
 const Table = () => {
   return (
     <Container>
       <HeaderContainer>
         <ButtonContainer>
-          <Button>선택건 해제하기</Button>
+          <Button onClick={setSelectRelease}>선택건 해제하기</Button>
         </ButtonContainer>
-        <Button>구매 확정 후 취소처리 바로가기</Button>
+        <Button onClick={setConfirmationCancel}>
+          구매 확정 후 취소처리 바로가기
+        </Button>
       </HeaderContainer>
 
       <OriginTable data={data} columns={columns} selectionType="checkbox" />

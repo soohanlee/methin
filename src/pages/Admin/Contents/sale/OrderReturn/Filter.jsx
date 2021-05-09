@@ -56,6 +56,10 @@ const Filter = () => {
     console.log(value);
   };
 
+  const search = () => {
+    alert('검색');
+  };
+
   return (
     <Container>
       <LabelContents title="조회기간">
@@ -90,7 +94,7 @@ const Filter = () => {
       </LabelContents>
 
       <ButtonContainer>
-        <Button>검색</Button>
+        <Button onClick={search}>검색</Button>
       </ButtonContainer>
     </Container>
   );

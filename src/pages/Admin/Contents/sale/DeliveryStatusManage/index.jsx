@@ -20,11 +20,16 @@ const DollarCircleTwoToneIcon = styled(DollarCircleTwoTone)`
 
 const Container = styled.div``;
 
+const categoryBtn = (e) => {
+  console.log(e);
+  alert(e);
+};
+
 // 배송 현황 관리
 const DeliveryStatusManage = () => {
   return (
     <Container>
-      <BoardHeader list={list} />
+      <BoardHeader onClick={categoryBtn} list={list} />
       <Filter />
       <Table />
     </Container>
