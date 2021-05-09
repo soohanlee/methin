@@ -7,8 +7,8 @@ import OriginTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 
 const BasicSelectBoxStyled = styled(BasicSelectBox)`
-  width : 12rem;
-  margin-right : 0.5rem;
+  width: 12rem;
+  margin-right: 0.5rem;
 `;
 
 const Container = styled.div`
@@ -37,29 +37,51 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
+const setExcelDown = () => {
+  alert('엑셀다운');
+};
+
+const setSelectDelete = () => {
+  alert('선택삭제');
+};
+const setDiscount = () => {
+  alert('즉시할인 설정');
+};
+const setChangeSalePrice = () => {
+  alert('판매가 변경');
+};
+const setChangeSaleDate = () => {
+  alert('판매기간 변경');
+};
+const setModifySave = () => {
+  alert('수정저장');
+};
+
 const Table = () => {
   return (
     <Container>
       <HeaderContainer>
         <Title>상품목록(총 0개)</Title>
         <ButtonContainer>
-        <BasicSelectBoxStyled list={SortViewList}></BasicSelectBoxStyled>
-        <BasicSelectBoxStyled list={CountList}></BasicSelectBoxStyled>
-          <Button>엑셀다운</Button>
+          <BasicSelectBoxStyled list={SortViewList}></BasicSelectBoxStyled>
+          <BasicSelectBoxStyled list={CountList}></BasicSelectBoxStyled>
+          <Button onClick={setExcelDown}>엑셀다운</Button>
         </ButtonContainer>
       </HeaderContainer>
       <HeaderContainer>
-      <ButtonContainer>
-          <Button>선택삭제</Button>
+        <ButtonContainer>
+          <Button onClick={setSelectDelete}>선택삭제</Button>
           <BasicSelectBoxStyled list={SaleList}></BasicSelectBoxStyled>
           <BasicSelectBoxStyled list={ExhibitionList}></BasicSelectBoxStyled>
-          <Button>즉시할인 설정</Button>
-          <Button>판매가 변경</Button>
-          <Button>판매기간 변경</Button>
+          <Button onClick={setDiscount}>즉시할인 설정</Button>
+          <Button onClick={setChangeSalePrice}>판매가 변경</Button>
+          <Button onClick={setChangeSaleDate}>판매기간 변경</Button>
           <BasicSelectBoxStyled list={DriveList}></BasicSelectBoxStyled>
-          <BasicSelectBoxStyled list={SelectizeControlList}></BasicSelectBoxStyled>
-      </ButtonContainer>
-        <Button>수정저장</Button>
+          <BasicSelectBoxStyled
+            list={SelectizeControlList}
+          ></BasicSelectBoxStyled>
+        </ButtonContainer>
+        <Button onClick={setModifySave}>수정저장</Button>
       </HeaderContainer>
 
       <OriginTable data={data} columns={columns} selectionType="checkbox" />
@@ -113,16 +135,21 @@ const columns = [
   {
     title: '판매가',
     dataIndex: 'salePrice',
-  },{
+  },
+  {
     title: '할인가',
     dataIndex: 'reducedPrice',
-  },,{
+  },
+  ,
+  {
     title: '카테고리',
     dataIndex: 'category',
-  },{
+  },
+  {
     title: '연관상품 등록일',
     dataIndex: 'connectProductRegistrationDate',
-  },{
+  },
+  {
     title: '연관상품 수정일',
     dataIndex: 'connectProductModifyDate',
   },

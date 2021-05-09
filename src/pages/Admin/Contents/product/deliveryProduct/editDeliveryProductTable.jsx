@@ -51,6 +51,10 @@ const SetButton = (label) => {
   return <BasicButton label={label}></BasicButton>;
 };
 
+const setRegistConnectProduct = () => {
+  alert('묶음그룹 추가');
+};
+
 const editDeliveryProductTable = () => {
   return (
     <>
@@ -60,8 +64,10 @@ const editDeliveryProductTable = () => {
           <BasicDropBoxStyled label="50 개씩" />
         </TitleTexts>
       </EditDeliveryTitles>
-      <EditDeliveryMenuBtn>{SetButton('+ 묶음그룹 추가')}</EditDeliveryMenuBtn>
-      <TableStyled columns={columns} selectionType={'checkbox'}/>
+      <EditDeliveryMenuBtn onClick={setRegistConnectProduct}>
+        {SetButton('+ 묶음그룹 추가')}
+      </EditDeliveryMenuBtn>
+      <TableStyled columns={columns} selectionType={'checkbox'} />
     </>
   );
 };
@@ -110,7 +116,7 @@ const columns = [
   {
     title: '수정일',
     dataIndex: 'modifyDate',
-  }
+  },
 ];
 
 export default editDeliveryProductTable;

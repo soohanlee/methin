@@ -342,6 +342,10 @@ const SetSelect = () => {
     alert('초기화 버튼 클릭');
   };
 
+  const setDetailSearchBtn = () => {
+    alert('상세검색');
+  };
+
   const searchBtn = useRef(null); //검색
   const detailSearchBtn = useRef(null); //상세검색
 
@@ -355,7 +359,7 @@ const SetSelect = () => {
             height="5rem"
             type="primary"
             ref={searchBtn}
-            margintop = "5rem"
+            margintop="5rem"
             onClick={setSearchBtn}
           />
           <BasicButtonStyled
@@ -363,7 +367,7 @@ const SetSelect = () => {
             width="13rem"
             height="5rem"
             marginleft="2rem"
-            margintop = "5rem"
+            margintop="5rem"
             onClick={setResetBtn}
           />
         </Line>
@@ -371,8 +375,9 @@ const SetSelect = () => {
           label="상세검색"
           width="13rem"
           height="5rem"
-          margintop = "5rem"
+          margintop="5rem"
           ref={detailSearchBtn}
+          onClick={setDetailSearchBtn}
         />
       </Propertys>
     </Select>

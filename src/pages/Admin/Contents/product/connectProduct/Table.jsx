@@ -6,7 +6,6 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import OriginTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 
-
 const Container = styled.div`
   background: #fff;
   padding: 3rem;
@@ -32,23 +31,33 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
+const setExcelDown = () => {
+  alert('엑셀다운');
+};
+const setSlectDelete = () => {
+  alert('선택삭제');
+};
+const setRegistConnectProduct = () => {
+  alert('연관상품 등록');
+};
+
 const Table = () => {
   return (
     <Container>
       <HeaderContainer>
         <Title>상품목록(총 0개)</Title>
         <ButtonContainer>
-        <BasicSelectBox list={sortViewList}></BasicSelectBox>
-        <BasicSelectBox list={CountList}></BasicSelectBox>
-          <Button>엑셀다운</Button>
+          <BasicSelectBox list={sortViewList}></BasicSelectBox>
+          <BasicSelectBox list={CountList}></BasicSelectBox>
+          <Button onClick={setExcelDown}>엑셀다운</Button>
         </ButtonContainer>
       </HeaderContainer>
       <HeaderContainer>
         <ButtonContainer>
-          <Button>선택삭제</Button>
+          <Button onClick={setSlectDelete}>선택삭제</Button>
           <BasicSelectBox list={ExhibitionList}></BasicSelectBox>
         </ButtonContainer>
-        <Button>연관상품 등록</Button>
+        <Button onClick={setRegistConnectProduct}>연관상품 등록</Button>
       </HeaderContainer>
 
       <OriginTable data={data} columns={columns} selectionType="checkbox" />
@@ -102,16 +111,21 @@ const columns = [
   {
     title: '판매가',
     dataIndex: 'salePrice',
-  },{
+  },
+  {
     title: '할인가',
     dataIndex: 'reducedPrice',
-  },,{
+  },
+  ,
+  {
     title: '카테고리',
     dataIndex: 'category',
-  },{
+  },
+  {
     title: '연관상품 등록일',
     dataIndex: 'connectProductRegistrationDate',
-  },{
+  },
+  {
     title: '연관상품 수정일',
     dataIndex: 'connectProductModifyDate',
   },
