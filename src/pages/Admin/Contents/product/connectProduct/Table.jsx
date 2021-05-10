@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
 
-import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import OriginTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 
@@ -25,10 +24,6 @@ const ButtonContainer = styled.div`
 
 const Button = styled(OriginButton)`
   margin-right: 0.5rem;
-`;
-
-const ButtomContainer = styled.div`
-  margin-top: 4rem;
 `;
 
 const setExcelDown = () => {

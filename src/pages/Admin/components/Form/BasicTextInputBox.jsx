@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import 'antd/dist/antd.css';
 import { Input } from 'antd';
 import styled from 'styled-components';
 
-const BasicTextInputBox = ({ textSize, label, className, ref }) => {
+const BasicTextInputBox = ({ textSize, label, className }, ref) => {
   const Label = styled.div`
     margin-top: 0.7rem;
     margin-left: 1rem;
@@ -24,4 +24,4 @@ const BasicTextInputBox = ({ textSize, label, className, ref }) => {
     </TextInput>
   );
 };
-export default BasicTextInputBox;
+export default forwardRef(BasicTextInputBox);

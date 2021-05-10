@@ -31,13 +31,8 @@ export const leftNavigationMenu = [
       { title: '반품관리', path: ROUTE_PATH.admin.orderReturn },
     ],
   },
-  ,
   {
     title: leftNavigationMenuTitle.reviewManage,
     submenuList: [{ title: '문의관리', path: ROUTE_PATH.admin.reviewManage }],
   },
 ];
-
-export const DateFormat = {
-  Default: 'YYYY-MM-DD',
-};

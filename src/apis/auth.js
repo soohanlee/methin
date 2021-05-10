@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { requestConfig } from 'apis/config';
 
+const { REACT_APP_BASE_URL: baseUrl } = process.env;
+
 export const logInWithCreds = async (userName, password) => {
-  const response = await axios.post('/api/auth/sign-in', {
+  const response = await axios.post(`${baseUrl}/api/auth/sign-in`, {
     id: userName,
     password: password,
   });
