@@ -32,3 +32,7 @@ export const COOKIE_KEYS = {
   UserRefreshToken: '__user_refresh_token__',
   UserAccessToken: '__user_access_token__',
 };
+
+export const DateFormat = {
+  Default: 'YYYY-MM-DD',
+};

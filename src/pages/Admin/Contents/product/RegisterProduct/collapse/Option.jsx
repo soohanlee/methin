@@ -12,10 +12,6 @@ const SelectBox = styled(BasicSelectBox)`
   margin-right: 1rem;
 `;
 
-const AddButton = styled.button`
-  display: inline;
-`;
-
 const Label = styled.div``;
 
 const InputBox = styled.div`
@@ -25,7 +21,7 @@ const InputBox = styled.div`
 
 const Option = () => {
   const optionNameRef = useRef(null);
-  const optionValueRef = useRef(null);
+  // const optionValueRef = useRef(null);
   const saveInputRef = useRef(null);
 
   const [tags, setTags] = useState([]);

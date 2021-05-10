@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Calendar, Input, Popover } from 'antd';
 import moment from 'moment';
-import { DateFormat } from 'configs/constants';
+import { DateFormat } from 'configs/config';
 
 const Container = styled.div`
   position: relative;

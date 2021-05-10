@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import { Button, Input } from 'antd';
+import { Button } from 'antd';
 import OriginTextAreaBox from 'pages/Admin/components/Form/TextAreaBox';
 
 const Container = styled.div`
