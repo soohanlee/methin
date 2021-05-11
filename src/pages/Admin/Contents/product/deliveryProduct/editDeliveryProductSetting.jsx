@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
+import { allDeliveryProduct, searchDeliveryProduct } from 'apis/delivery';
 
 const EditDeliveryTitles = styled.div`
   width: 100%;
@@ -50,6 +51,10 @@ const BasicButtonStyled = styled(BasicButton)`
   margin-left: ${(props) => props.marginleft};
 `;
 
+const getAllDeliveryData = () => {
+  const result = allDeliveryProduct();
+};
+
 const EditDeliveryProductSetting = () => {
   const [searchValue, setSearchValue] = useState('');
   let groupNameSelectBox = useRef(null); //배송비 묶음그룹 명 셀렉트박스
@@ -63,23 +68,26 @@ const EditDeliveryProductSetting = () => {
 
   useEffect(() => {
     if (searchValue === '') {
-      setSearchValue('soohan');
+      getAllDeliveryData();
+      setSearchValue('deliveryPriceNames');
     }
 
-    return () => console.log('soohan 나감');
+    return () => {
+      setSearchValue('deliveryPriceNames');
+    }
   }, []);
 
   const RenderSetMenu = () => {
     return (
       <>
         <SelectBoxStyled
-          label="배송비 묶음그룹 명"
+          label="배송비 묶음그룹명"
           width="20rem"
           marginleft="20rem"
           onChange={handleSelectChange}
           list={[
-            { value: 'soohan', label: 'soohan' },
-            { value: 'bumhee', label: 'bumhee' },
+            { value: 'deliveryPriceNames', label: '배송비 묶음그룹명' },
+            { value: 'deliveryPriceNumbers', label: '배송비 묶음그룹번호' },
           ]}
         />
         <BasicTextInputBoxStyled label="" ref={groupNameInputBox} />
@@ -89,7 +97,7 @@ const EditDeliveryProductSetting = () => {
 
   const RenderSetSelect = () => {
     const setSearchBtn = () => {
-      console.log('groupNameSelectBox', searchValue);
+      const result = searchDeliveryProduct(searchValue);
     };
 
     const setResetBtn = () => {

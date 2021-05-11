@@ -1,10 +1,12 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import Table from 'pages/Admin/components/Table/Table';
-import BasicDropBox from 'pages/Admin/components/Form/BasicDropBox';
+import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
+import DeliveryModifyModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryModifyModal';
+import DeliveryDeleteModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryDeleteModal';
 
 const EditDeliveryTitlesCss = css`
   width: 100%;
@@ -39,7 +41,7 @@ const TitleText = styled.div`
 
 const TableStyled = styled(Table)``;
 
-const BasicDropBoxStyled = styled(BasicDropBox)`
+const BasicSelectBoxStyled = styled(BasicSelectBox)`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   padding-left: ${(props) => props.paddingleft};
@@ -55,68 +57,110 @@ const setRegistConnectProduct = () => {
   alert('묶음그룹 추가');
 };
 
-const editDeliveryProductTable = () => {
+const EditDeliveryProductTable = () => {
+  const [visible,setVisible] = useState(false);
+  const [deleteVisible,setDeleteVisible] = useState(false);
+  
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const showDeleteModal = () => {
+    setDeleteVisible(true);
+  };
+
+  const columns = [
+    {
+      title: '수정',
+      dataIndex: 'modify',
+      render: (text) => <BasicButton onClick = {showModal} label = {text}></BasicButton>
+    },
+    {
+      title: '삭제',
+      dataIndex: 'delete',
+      render: (text) => <BasicButton onClick = {showDeleteModal} label = {text}></BasicButton>
+    },
+    {
+      title: '그룹번호',
+      dataIndex: 'groupNumber',
+    },
+    {
+      title: '그룹명',
+      dataIndex: 'groupName',
+    },
+    {
+      title: '계산방식',
+      dataIndex: 'calculationMethod',
+    },
+    {
+      title: '권역구분',
+      dataIndex: 'areaClassification',
+    },
+    {
+      title: '권역2 추가배송비',
+      dataIndex: 'areaClassification2',
+    },
+    {
+      title: '권역3 추가배송비',
+      dataIndex: 'areaClassification3',
+    },
+    {
+      title: '사용여부',
+      dataIndex: 'useStatus',
+    },
+    {
+      title: '등록일',
+      dataIndex: 'registrationDate',
+    },
+    {
+      title: '수정일',
+      dataIndex: 'modifyDate',
+    },
+  ];
+
   return (
     <>
+    <DeliveryModifyModal visible = {visible} setVisible = {setVisible} title = '배송비묶음그룹'/>
+    <DeliveryDeleteModal visible = {deleteVisible} setVisible = {setDeleteVisible} title = '삭제되었습니다.'/>
+
       <EditDeliveryTitles>
         <TitleTexts>
           <TitleText>조회 건수 (총 N 건) </TitleText>
-          <BasicDropBoxStyled label="50 개씩" />
+          <BasicSelectBoxStyled width  = '12rem' list = {list}/>
         </TitleTexts>
       </EditDeliveryTitles>
       <EditDeliveryMenuBtn onClick={setRegistConnectProduct}>
         {SetButton('+ 묶음그룹 추가')}
       </EditDeliveryMenuBtn>
-      <TableStyled columns={columns} selectionType={'checkbox'} />
+
+      <TableStyled columns={columns} data = {data} selectionType={'checkbox'} />
     </>
   );
 };
 
-const columns = [
+const data = [
   {
-    title: '수정',
-    dataIndex: 'modify',
-  },
-  {
-    title: '삭제',
-    dataIndex: 'delete',
-  },
-  {
-    title: '그룹번호',
-    dataIndex: 'groupNumber',
-  },
-  {
-    title: '그룹명',
-    dataIndex: 'groupName',
-  },
-  {
-    title: '계산방식',
-    dataIndex: 'calculationMethod',
-  },
-  {
-    title: '권역구분',
-    dataIndex: 'areaClassification',
-  },
-  {
-    title: '권역2 추가배송비',
-    dataIndex: 'addDrivePrice2',
-  },
-  {
-    title: '권역3 추가배송비',
-    dataIndex: 'addDrivePrice3',
-  },
-  {
-    title: '사용여부',
-    dataIndex: 'useStatus',
-  },
-  {
-    title: '등록일',
-    dataIndex: 'registrationDate',
-  },
-  {
-    title: '수정일',
-    dataIndex: 'modifyDate',
+    key: '1',
+    modify:'수정',
+    delete:'삭제',
+    groupNumber: '123124125',
+    groupName: '기본 배송비 묶음그룹',
+    calculationMethod: '최소부과',
+    areaClassification: '',
+    areaClassification2: '',
+    areaClassification3: '',
+    useStatus:'사용',
+    registrationDate:'2021.04.23',
+    modifyDate:'-'
   },
 ];
 
-export default editDeliveryProductTable;
+
+const list = [
+  { value: 'ten', label: '10개씩' },
+  { value: 'fifty', label: '50개씩' },
+  { value: 'hundred', label: '100개씩' },
+  { value: 'fiveHundred', label: '500개씩' },
+];
+
+export default EditDeliveryProductTable;
