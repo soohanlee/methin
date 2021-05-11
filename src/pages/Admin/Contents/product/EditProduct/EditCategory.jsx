@@ -65,29 +65,28 @@ const categoryTypeArray = [
 
 const categoryTextArray = ['전체', '판매중', '품절', '판매중지', '판매종료'];
 
-const SetCaterogy = () => {
-  const result = [];
-  for (let i = 0; i < 5; i++) {
-    result.push(
-      <>
-        <CategoryType onClick={() => categoryTypeClick(categoryTextArray[i])}>
-          {categoryTypeArray[i]}
-          <CategoryTexts>
-            <TitleText>{categoryTextArray[i]}</TitleText>
-            <SubTitleText>8 건</SubTitleText>
-          </CategoryTexts>
-        </CategoryType>
-      </>,
-    );
-  }
-  return result;
-};
+const EditCategory = ({ count }) => {
+  const SetCaterogy = () => {
+    const result = [];
+    for (let i = 0; i < 5; i++) {
+      result.push(
+        <>
+          <CategoryType onClick={() => categoryTypeClick(categoryTextArray[i])}>
+            {categoryTypeArray[i]}
+            <CategoryTexts>
+              <TitleText>{categoryTextArray[i]}</TitleText>
+              <SubTitleText>{count} 건</SubTitleText>
+            </CategoryTexts>
+          </CategoryType>
+        </>,
+      );
+    }
+    return result;
+  };
 
-const categoryTypeClick = (value) => {
-  alert(value);
-};
-
-const EditCategory = () => {
+  const categoryTypeClick = (value) => {
+    alert(value);
+  };
   return (
     <>
       <EditCategorys>{SetCaterogy()}</EditCategorys>
