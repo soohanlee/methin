@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Input } from 'antd';
 import styled from 'styled-components';
 
-const BasicTextInputBox = ({ textSize, label, className }, ref) => {
+const BasicTextInputBox = ({ onChange, textSize, label, className }, ref) => {
   const Label = styled.div`
     margin-top: 0.7rem;
     margin-left: 1rem;
@@ -20,7 +20,7 @@ const BasicTextInputBox = ({ textSize, label, className }, ref) => {
   return (
     <TextInput>
       <Label textSize={textSize}>{label}</Label>
-      <Input className={className} ref={ref}></Input>
+      <Input onChange={onChange} className={className} ref={ref}></Input>
     </TextInput>
   );
 };
