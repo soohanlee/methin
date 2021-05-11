@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
+
 import 'antd/dist/antd.css';
 import { DatePicker } from 'antd';
 
-const BasicDatePicker = ({ picker, className, onChange }) => {
+const BasicDatePicker = ({ onChange, picker, className }, ref) => {
   return (
-    <DatePicker className={className} onChange={onChange} picker={picker} />
+    <DatePicker
+      onChange={onChange}
+      ref={ref}
+      className={className}
+      picker={picker}
+    />
   );
 };
 
-export default BasicDatePicker;
+export default forwardRef(BasicDatePicker);
