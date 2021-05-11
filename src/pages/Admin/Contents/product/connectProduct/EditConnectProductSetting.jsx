@@ -280,14 +280,14 @@ const SetType = (
 };
 
 const SetDateTerm = () => {
-  const dayBtnRef = useRef(null); //오늘
-  const weekBtnRef = useRef(null); //1주일
-  const monthBtnRef = useRef(null); //1개월
-  const threeMonthBtnRef = useRef(null); //3개월
-  const sixMonthBtnRef = useRef(null); //6개월
-  const yearBtnRef = useRef(null); //1년
-  const startDateRef = useRef(null); //상품 등록 시작일
-  const endDateRef = useRef(null); //상품 등록 정지일
+  const dayBtn = useRef(null); //오늘
+  const weekBtn = useRef(null); //1주일
+  const monthBtn = useRef(null); //1개월
+  const threeMonthBtn = useRef(null); //3개월
+  const sixMonthBtn = useRef(null); //6개월
+  const yearBtn = useRef(null); //1년
+  const startDate = useRef(null); //상품 등록 시작일
+  const endDate = useRef(null); //상품 등록 정지일
 
   return (
     <DateTerm>
