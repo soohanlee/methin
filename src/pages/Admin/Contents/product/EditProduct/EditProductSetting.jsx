@@ -11,7 +11,7 @@ import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 
 const EditProductSettings = styled.div`
   width: 100%;
-  height: 63rem;
+  height: 50rem;
   background-color: #ffffff;
   border: 1px solid #f0f0f0;
   padding-left: 5rem;
@@ -130,13 +130,8 @@ const Select = styled.div`
 const SetSearch = () => {
   // const [productNumber, setProductNumber] = useState("")
   const productNumberRef = useRef(null); //상품 번호
-  const sellerProductCode = useRef(null); //판매자 상품 코드
-
   const productSearchDesc = useRef(null); //상품 복수 검색
-
   const productName = useRef(null); //상품명
-  const modelName = useRef(null); //모델명
-  const makeName = useRef(null); //제조사명
   const brandeName = useRef(null); //브랜드명
   return (
     <Search>
@@ -144,10 +139,6 @@ const SetSearch = () => {
       <Propertys>
         <TwoLine>
           <CheckBoxLabelStyled label="상품번호" ref={productNumberRef} />
-          <CheckBoxLabelStyled
-            label="판매자 상품 코드"
-            ref={sellerProductCode}
-          />
         </TwoLine>
         <TextAreaBoxStyled
           label="복수 검색
@@ -160,30 +151,6 @@ const SetSearch = () => {
               textSize="10rem"
               label="상품명"
               ref={productName}
-            />
-          </TextAndInput>
-          <TextAndInput>
-            <BasicTextInputBoxStyled
-              textSize="10rem"
-              label="모델명"
-              ref={modelName}
-            />
-          </TextAndInput>
-        </TwoLine>
-
-        <TwoLine>
-          <TextAndInput>
-            <BasicTextInputBoxStyled
-              textSize="12rem"
-              label="제조사명"
-              ref={makeName}
-            />
-          </TextAndInput>
-          <TextAndInput>
-            <BasicTextInputBoxStyled
-              textSize="12rem"
-              label="브랜드명"
-              ref={brandeName}
             />
           </TextAndInput>
         </TwoLine>
@@ -224,47 +191,8 @@ const SetCategory = () => {
       <Propertys>
         <BasicDropBoxStyled label="대분류" width="20rem" ref={bigGroup} />
         <BasicDropBoxStyled label="중분류" width="20rem" ref={middleGroup} />
-        <BasicDropBoxStyled label="소분류" width="20rem" ref={smallGroup} />
-        <BasicDropBoxStyled label="세분류" width="20rem" ref={attributeGroup} />
       </Propertys>
     </Category>
-  );
-};
-
-const SetChannel = () => {
-  const allChannelCheck = useRef(null); //전체
-  const smartstoreCheck = useRef(null); //스마트스토어
-  const shopingCheck = useRef(null); //쇼핑윈도
-
-  return (
-    <Channel>
-      <Title>채널</Title>
-      <Propertys>
-        <CheckBoxLabelStyled label="전체" ref={allChannelCheck} />
-        <CheckBoxLabelStyled label="스마트 스토어" ref={smartstoreCheck} />
-        <CheckBoxLabelStyled label="쇼핑윈도" ref={shopingCheck} />
-      </Propertys>
-    </Channel>
-  );
-};
-
-const SetPayment = () => {
-  const allPaymentCheck = useRef(null); //전체
-  const possibleProductCheck = useRef(null); //결제가능상품
-  const impossibleProductCheck = useRef(null); //결제불가능 상품
-
-  return (
-    <Payment>
-      <Title>결제여부</Title>
-      <Propertys>
-        <CheckBoxLabelStyled label="전체" ref={allPaymentCheck} />
-        <CheckBoxLabelStyled label="결제가능 상품" ref={possibleProductCheck} />
-        <CheckBoxLabelStyled
-          label="결제불가능 상품"
-          ref={impossibleProductCheck}
-        />
-      </Propertys>
-    </Payment>
   );
 };
 
@@ -342,10 +270,6 @@ const SetSelect = () => {
     alert('초기화 버튼 클릭');
   };
 
-  const setDetailSearchBtn = () => {
-    alert('상세검색');
-  };
-
   const searchBtn = useRef(null); //검색
   const detailSearchBtn = useRef(null); //상세검색
 
@@ -371,14 +295,6 @@ const SetSelect = () => {
             onClick={setResetBtn}
           />
         </Line>
-        <BasicButtonStyled
-          label="상세검색"
-          width="13rem"
-          height="5rem"
-          margintop="5rem"
-          ref={detailSearchBtn}
-          onClick={setDetailSearchBtn}
-        />
       </Propertys>
     </Select>
   );
@@ -391,8 +307,6 @@ const EditProductSetting = () => {
         {SetSearch()}
         {SetSalesStatus()}
         {SetCategory()}
-        {SetChannel()}
-        {SetPayment()}
         {SetDateTerm()}
         {SetSelect()}
       </EditProductSettings>

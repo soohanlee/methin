@@ -50,7 +50,6 @@ const Table = () => {
       <HeaderContainer>
         <ButtonContainer>
           <Button onClick={setSlectDelete}>선택삭제</Button>
-          <BasicSelectBox list={ExhibitionList}></BasicSelectBox>
         </ButtonContainer>
         <Button onClick={setRegistConnectProduct}>연관상품 등록</Button>
       </HeaderContainer>
@@ -82,10 +81,6 @@ const columns = [
   {
     title: '연관상품 전시상태',
     dataIndex: 'relatedProductExhibitionStatus',
-  },
-  {
-    title: '검수결과확인',
-    dataIndex: 'checkInspectionResults',
   },
   {
     title: '상품번호',
@@ -151,12 +146,6 @@ const data = [
     age: 99,
     address: 'Sidney No. 1 Lake Park',
   },
-];
-
-const ExhibitionList = [
-  { label: '전시변경', value: 'changeExhibition' },
-  { label: '전시중', value: 'exhibitioning' },
-  { label: '전시중지', value: 'stopExhibition' },
 ];
 
 const sortViewList = [

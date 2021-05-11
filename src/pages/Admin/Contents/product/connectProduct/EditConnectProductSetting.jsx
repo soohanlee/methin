@@ -223,31 +223,8 @@ const EditConnectProductSetting = () => {
     );
   };
 
-  ///////////////////////////SetChannel//////////////////////////
-  const allChannelCheckRef = useRef(null); //전체
-  ///////////////////////////SetChannel//////////////////////////
-  const renderSetChannel = () => {
-    const allChannelCheckRefOnChange = () => {
-      console.log(allChannelCheckRef.current.state.checked);
-    };
-
-    return (
-      <Channel>
-        <Title>연관상품 노출채널</Title>
-        <Propertys>
-          <CheckBoxLabelStyled
-            onChange={allChannelCheckRefOnChange}
-            label="전체"
-            ref={allChannelCheckRef}
-          />
-        </Propertys>
-      </Channel>
-    );
-  };
-
   ///////////////////////////SetType//////////////////////////////
   const allTypeCheckRef = useRef(null); //전체
-  const stylistProductCheckRef = useRef(null); //코디 상품
   const bestWidthProductCheckRef = useRef(null); //함께 사면 좋은 상품
   const discountWidthProductCheckRef = useRef(null); //함께 사면 할인 상품
   const similarProductCheckRef = useRef(null); //유사한 상품
@@ -255,9 +232,6 @@ const EditConnectProductSetting = () => {
   const renderSetType = () => {
     const allTypeCheckRefOnChange = () => {
       console.log(allTypeCheckRef.current.state.checked);
-    };
-    const stylistProductCheckRefOnChange = () => {
-      console.log(stylistProductCheckRef.current.state.checked);
     };
     const bestWidthProductCheckRefOnChange = () => {
       console.log(bestWidthProductCheckRef.current.state.checked);
@@ -277,11 +251,6 @@ const EditConnectProductSetting = () => {
             onChange={allTypeCheckRefOnChange}
             label="전체"
             ref={allTypeCheckRef}
-          />
-          <CheckBoxLabelStyled
-            onChange={stylistProductCheckRefOnChange}
-            label="코디 상품"
-            ref={stylistProductCheckRef}
           />
           <CheckBoxLabelStyled
             onChange={bestWidthProductCheckRefOnChange}
@@ -430,7 +399,6 @@ const EditConnectProductSetting = () => {
       <EditProductSettings>
         {renderSetSearch()}
         {renderSetStatus()}
-        {renderSetChannel()}
         {renderSetType()}
         {renderSetDateTerm()}
         {renderSetSelect()}
