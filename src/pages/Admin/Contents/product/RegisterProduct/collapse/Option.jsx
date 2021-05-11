@@ -7,6 +7,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import CustomCollapse from 'pages/Admin/components/Collapse';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import Table from 'pages/Admin/components/Table/Table';
 
 const SelectBox = styled(BasicSelectBox)`
   margin-right: 1rem;
@@ -140,6 +141,7 @@ const Option = () => {
       <LabelContents title="옵션목록">
         <SelectBox list={optionSortList} onChange={handleOptionSortChange} />
       </LabelContents>
+      <Table columns={columns} />
     </CustomCollapse>
   );
 };
@@ -156,4 +158,39 @@ const optionSortList = [
   { label: '가나다순', value: 'two' },
   { label: '낮은가격순', value: 'three' },
   { label: '높은가격순', value: 'four' },
+];
+
+const columns = [
+  {
+    title: '옵션명',
+    dataIndex: 'productOrderNumber',
+  },
+  {
+    title: '옵션가',
+    dataIndex: 'orderNumber',
+  },
+  {
+    title: '재고수량',
+    dataIndex: 'deliveryWayBuyer',
+  },
+  {
+    title: '판매상태',
+    dataIndex: 'deliveryWay',
+  },
+  {
+    title: '택배사',
+    dataIndex: 'address',
+  },
+  {
+    title: '관리코드',
+    dataIndex: 'address',
+  },
+  {
+    title: '사용여부',
+    dataIndex: 'address',
+  },
+  {
+    title: '삭제',
+    dataIndex: 'address',
+  },
 ];

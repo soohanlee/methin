@@ -170,37 +170,12 @@ const Price = ({ price, setPrice, salePrice, setSalePrice, sale, setSale }) => {
             <Radio.Button value="setting">설정함</Radio.Button>
             <Radio.Button value="noSetting">설정안함</Radio.Button>
           </Radio.Group>
-          {sale === 'setting' && (
-            <CheckContainer>
-              <Checkbox
-                onChange={(e) => handleAllSaleChange(e)}
-                value={'all'}
-                checked={isAllSale}
-              >
-                전체 할인
-              </Checkbox>
-              <Checkbox
-                onChange={(e) => handlePCSaleChange(e)}
-                value={'pc'}
-                checked={isPCSale}
-              >
-                PC만 할인
-              </Checkbox>
-              <Checkbox
-                onChange={(e) => handleMobileSaleChange(e)}
-                value={'mobile'}
-                checked={isMobileSale}
-              >
-                모바일만 할인
-              </Checkbox>
-            </CheckContainer>
-          )}
         </ItemContainer>
       </LabelContents>
 
-      {sale === 'setting' && isAllSale && !isPCSale && !isMobileSale && (
+      {sale === 'setting' && (
         <>
-          <LabelContents title="전체 할인">
+          <LabelContents title="할인">
             <Input
               onChange={handleSaleTypePriceChange}
               addonAfter={selectAfter}
@@ -210,38 +185,6 @@ const Price = ({ price, setPrice, salePrice, setSalePrice, sale, setSale }) => {
             />
           </LabelContents>
           <LabelContents title="할인가">{salePrice}원</LabelContents>
-        </>
-      )}
-
-      {sale === 'setting' && isPCSale && (
-        <>
-          <LabelContents title="pc 할인">
-            <Input
-              onChange={handleSaleTypePriceChange}
-              addonAfter={selectAfter}
-              value={saleTypePrice}
-              onBlur={handleSaleTypeBlur}
-              onFocus={handleSaleTypeFocus}
-            />
-          </LabelContents>
-          <LabelContents title="pc 할인가">{salePrice}원</LabelContents>
-        </>
-      )}
-
-      {sale === 'setting' && isMobileSale && (
-        <>
-          <LabelContents title="모바일 할인">
-            <Input
-              onChange={handleMobileSaleTypePriceChange}
-              addonAfter={mobileSelectAfter}
-              value={mobileSaleTypePrice}
-              onBlur={handleMobileSaleTypeBlur}
-              onFocus={handleMobileSaleTypeFocus}
-            />
-          </LabelContents>
-          <LabelContents title="모바일 할인가">
-            {mobileSalePrice}원
-          </LabelContents>
         </>
       )}
 

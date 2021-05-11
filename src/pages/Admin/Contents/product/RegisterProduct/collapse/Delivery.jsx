@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { Radio, Select as OriginSelect, Input as OriginInput } from 'antd';
+import {
+  Radio,
+  Select as OriginSelect,
+  Input as OriginInput,
+  Button,
+} from 'antd';
 import styled from 'styled-components';
 
 import { changeNumberDigits, removeRest } from 'utils/common';
@@ -195,6 +200,7 @@ const Delivery = () => {
           <Option value="quantity">수량별</Option>
           <Option value="section">구간별</Option>
         </Select>
+        <Button>배송비 묶음 그룹 선택</Button>
       </LabelContents>
       {deliveryFee === 'free' && renderSectionFeeComent()}
 
@@ -281,15 +287,7 @@ const Delivery = () => {
           {renderSectionFeeComent()}
         </>
       )}
-      <LabelContents title="별도 설치비">
-        <Radio.Group
-          value={installFee}
-          onChange={(e) => setInstallFee(e.target.value)}
-        >
-          <Radio.Button value="yes">있음</Radio.Button>
-          <Radio.Button value="no">없음</Radio.Button>
-        </Radio.Group>
-      </LabelContents>
+
       <LabelContents title="출고지">
         <Input
           value={shipment}

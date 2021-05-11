@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Input as OriginInput, Select } from 'antd';
+import { Input as OriginInput, Select, Button } from 'antd';
 
 import CustomCollapse from 'pages/Admin/components/Collapse';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
@@ -82,6 +82,7 @@ const ReturnExchange = () => {
           addonAfter={<div onClick={handleShipmentSaveButtonClick}>저장</div>}
           placeholder="반품/교환지 입력"
         />
+        <Button>판매자 주소록 버튼</Button>
       </LabelContents>
     </CustomCollapse>
   );
