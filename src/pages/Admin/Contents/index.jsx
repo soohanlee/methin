@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
 import { ROUTE_PATH } from 'configs/config';
+import { adminLeftNavigationSize } from 'configs/constants';
 
 import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';
@@ -20,14 +21,14 @@ import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage
 import ReviewManage from 'pages/Admin/Contents/review/ReviewManage';
 
 const Container = styled.div`
-  flex: 1;
+  width: 100%;
+  min-width: 150rem;
   padding: 3rem;
   overflow-y: scroll;
 `;
 
 const Contents = () => {
   const prePath = ROUTE_PATH.admin.main;
-
   return (
     <Container>
       <Switch>

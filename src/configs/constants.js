@@ -36,3 +36,5 @@ export const leftNavigationMenu = [
     submenuList: [{ title: '문의관리', path: ROUTE_PATH.admin.reviewManage }],
   },
 ];
+
+export const adminLeftNavigationSize = 256;
