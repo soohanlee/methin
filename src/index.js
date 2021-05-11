@@ -10,6 +10,8 @@ const { REACT_APP_BASE_URL: baseUrl } = process.env;
 axios.defaults.baseURL = baseUrl;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
+require('./utils/notification');
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>

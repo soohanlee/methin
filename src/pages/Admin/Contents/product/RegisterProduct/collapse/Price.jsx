@@ -22,17 +22,13 @@ const Input = styled(OriginInput)`
   max-width: 300px;
 `;
 
-const Price = () => {
-  const [price, setPrice] = useState('');
-  const [sale, setSale] = useState('setting'); //setting, noSetting
-
+const Price = ({ price, setPrice, salePrice, setSalePrice, sale, setSale }) => {
   const [isAllSale, setIsAllSale] = useState(false);
   const [isPCSale, setIsPCSale] = useState(false);
   const [isMobileSale, setIsMobileSale] = useState(false);
 
   const [saleType, setSaleType] = useState('won'); // won, percentage
   const [saleTypePrice, setSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
-  const [salePrice, setSalePrice] = useState(''); //할인된 가격
 
   const [mobileSaleType, setMobileSaleType] = useState('won'); // won, percentage
   const [mobileSaleTypePrice, setMobileSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격

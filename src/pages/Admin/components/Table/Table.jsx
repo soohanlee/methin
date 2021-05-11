@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table as OriginTable } from 'antd';
+import styled from 'styled-components';
 
 // 컬럼 예시 테이블 헤드
 // const columns = [
@@ -48,6 +49,10 @@ import { Table as OriginTable } from 'antd';
 
 // https://ant.design/components/table/#components-table-demo-grouping-columns table antd doc
 
+const CustomTable = styled(OriginTable)`
+  overflow: auto;
+`;
+
 const Table = ({
   selectionType,
   className,
@@ -57,6 +62,13 @@ const Table = ({
   ...props
 }) => {
   // selectionType = 'checkbox' | 'radio' 타입은 둘중 하나로 들어와야합니다.
+
+  const customColumns =
+    columns &&
+    columns.map((item) => {
+      return { ...item, width: 100 };
+    });
+
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -72,36 +84,23 @@ const Table = ({
     }),
   };
 
-  const renderTable = () => {
-    if (selectionType) {
-      return (
-        <OriginTable
-          className={className}
-          rowSelection={{
-            type: selectionType,
-            ...rowSelection,
-          }}
-          columns={columns}
-          dataSource={data}
-          bordered
-          onChange={onChange}
-          {...props}
-        />
-      );
-    } else {
-      return (
-        <OriginTable
-          className={className}
-          columns={columns}
-          dataSource={data}
-          bordered
-          {...props}
-        />
-      );
-    }
-  };
-
-  return renderTable();
+  return (
+    <CustomTable
+      className={className}
+      rowSelection={
+        selectionType && {
+          type: selectionType,
+          ...rowSelection,
+        }
+      }
+      columns={customColumns}
+      dataSource={data}
+      bordered
+      onChange={onChange}
+      scroll={{ x: '100vw', y: 500 }}
+      {...props}
+    />
+  );
 };
 
 export default Table;

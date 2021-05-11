@@ -4,7 +4,11 @@ import { MailOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 // import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
-import { leftNavigationMenu, leftNavigationMenuTitle } from 'configs/constants';
+import {
+  leftNavigationMenu,
+  leftNavigationMenuTitle,
+  adminLeftNavigationSize,
+} from 'configs/constants';
 
 const { SubMenu } = Menu;
 
@@ -52,7 +56,7 @@ const LeftNavigation = () => {
       mode="inline"
       openKeys={openKeys}
       onOpenChange={onOpenChange}
-      style={{ width: 256 }}
+      style={{ width: adminLeftNavigationSize }}
     >
       {renderMenu()}
     </Menu>

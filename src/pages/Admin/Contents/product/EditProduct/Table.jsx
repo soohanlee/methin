@@ -52,11 +52,11 @@ const setModifySave = () => {
   alert('수정저장');
 };
 
-const Table = () => {
+const Table = ({ table, count }) => {
   return (
     <Container>
       <HeaderContainer>
-        <Title>상품목록(총 0개)</Title>
+        <Title>상품목록(총 {count}개)</Title>
         <ButtonContainer>
           <BasicSelectBoxStyled list={SortViewList}></BasicSelectBoxStyled>
           <BasicSelectBoxStyled list={CountList}></BasicSelectBoxStyled>
@@ -79,7 +79,7 @@ const Table = () => {
         <Button onClick={setModifySave}>수정저장</Button>
       </HeaderContainer>
 
-      <OriginTable data={data} columns={columns} selectionType="checkbox" />
+      <OriginTable data={table} columns={columns} selectionType="checkbox" />
     </Container>
   );
 };
@@ -129,7 +129,7 @@ const columns = [
   },
   {
     title: '판매가',
-    dataIndex: 'salePrice',
+    dataIndex: 'price',
   },
   {
     title: '할인가',
@@ -142,38 +142,11 @@ const columns = [
   },
   {
     title: '연관상품 등록일',
-    dataIndex: 'connectProductRegistrationDate',
+    dataIndex: 'created_at',
   },
   {
     title: '연관상품 수정일',
     dataIndex: 'connectProductModifyDate',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
   },
 ];
 
