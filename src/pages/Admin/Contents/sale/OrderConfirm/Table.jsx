@@ -41,7 +41,7 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = () => {
+const Table = ({ data }) => {
   const invoiceNumber = useRef(null);
 
   return (
@@ -64,7 +64,11 @@ const Table = () => {
         </LabelContents>
       </SearchContainer>
 
-      <OriginTable data={data} columns={columns} selectionType="checkbox" />
+      <OriginTable
+        data={data && data}
+        columns={columns}
+        selectionType="checkbox"
+      />
 
       <ButtonContainer>
         <Button>선택건 주문서 출력</Button>
@@ -100,10 +104,6 @@ export default Table;
 
 const columns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-  },
-  {
     title: '주문번호',
     dataIndex: 'orderNumber',
   },
@@ -132,39 +132,124 @@ const columns = [
     dataIndex: 'address',
   },
   {
-    title: '판매채널',
+    title: '구매자명',
     dataIndex: 'address',
   },
   {
-    title: '톡톡하기',
+    title: '구매자ID',
     dataIndex: 'address',
   },
-];
-
-const data = [
   {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
+    title: '수취인명',
+    dataIndex: 'address',
   },
   {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
+    title: '주문상태',
+    dataIndex: 'address',
   },
   {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
+    title: '결제일',
+    dataIndex: 'address',
   },
   {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
+    title: '상품번호',
+    dataIndex: 'address',
+  },
+  {
+    title: '상품명',
+    dataIndex: 'address',
+  },
+  {
+    title: '상품종류',
+    dataIndex: 'address',
+  },
+  {
+    title: '옵션정보',
+    dataIndex: 'address',
+  },
+  {
+    title: '수량',
+    dataIndex: 'address',
+  },
+  {
+    title: '옵션가격',
+    dataIndex: 'address',
+  },
+  {
+    title: '상품가격',
+    dataIndex: 'address',
+  },
+  {
+    title: '총 주문 금액',
+    dataIndex: 'address',
+  },
+  {
+    title: '발주확인일',
+    dataIndex: 'address',
+  },
+  {
+    title: '발송기한',
+    dataIndex: 'address',
+  },
+  {
+    title: '발송처리일',
+    dataIndex: 'address',
+  },
+  {
+    title: '송장출력일',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송비 형태',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송비 묶음 번호',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송비 유형',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송비 합계',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송비 할인액',
+    dataIndex: 'address',
+  },
+  {
+    title: '수취인 연락처',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송지',
+    dataIndex: 'address',
+  },
+  {
+    title: '구매자 연락처',
+    dataIndex: 'address',
+  },
+  {
+    title: '우편번호',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송메세지',
+    dataIndex: 'address',
+  },
+  {
+    title: '출고지',
+    dataIndex: 'address',
+  },
+  {
+    title: '결제수단',
+    dataIndex: 'address',
+  },
+  {
+    title: '주문일시',
+    dataIndex: 'address',
   },
 ];
 

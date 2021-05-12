@@ -85,10 +85,6 @@ export default Table;
 
 const columns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-  },
-  {
     title: '주문번호',
     dataIndex: 'orderNumber',
   },
@@ -109,20 +105,8 @@ const columns = [
     dataIndex: 'orderCancelDate',
   },
   {
-    title: '접수채널',
-    dataIndex: 'receiveChannel',
-  },
-  {
-    title: '톡톡하기',
-    dataIndex: 'address',
-  },
-  {
     title: '취소사유',
     dataIndex: 'cancelReason',
-  },
-  {
-    title: '취소승인일',
-    dataIndex: 'orderCancelApprovalDate',
   },
 ];
 

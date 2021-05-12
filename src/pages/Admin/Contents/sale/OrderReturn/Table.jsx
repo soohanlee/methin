@@ -127,10 +127,6 @@ export default Table;
 
 const columns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-  },
-  {
     title: '주문번호',
     dataIndex: 'orderNumber',
   },
@@ -157,14 +153,6 @@ const columns = [
   {
     title: '반품요청일',
     dataIndex: 'orderReturnDate',
-  },
-  {
-    title: '접수채널',
-    dataIndex: 'receiveChannel',
-  },
-  {
-    title: '톡톡하기',
-    dataIndex: 'address',
   },
 ];
 

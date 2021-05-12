@@ -74,20 +74,20 @@ export default Table;
 
 const columns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-  },
-  {
     title: '주문번호',
     dataIndex: 'orderNumber',
   },
   {
-    title: '배송방법(구매자 요청)',
+    title: '발송처리일',
     dataIndex: 'deliveryWayBuyer',
   },
   {
-    title: '배송방법',
+    title: '주문상태',
     dataIndex: 'deliveryWay',
+  },
+  {
+    title: '배송방법',
+    dataIndex: 'address',
   },
   {
     title: '택배사',
@@ -106,11 +106,87 @@ const columns = [
     dataIndex: 'address',
   },
   {
-    title: '판매채널',
+    title: '구매자명',
     dataIndex: 'address',
   },
   {
-    title: '톡톡하기',
+    title: '구매자ID',
+    dataIndex: 'address',
+  },
+  {
+    title: '수취인명',
+    dataIndex: 'address',
+  },
+  {
+    title: '상품번호',
+    dataIndex: 'address',
+  },
+  {
+    title: '상품명',
+    dataIndex: 'address',
+  },
+  {
+    title: '옵션정보',
+    dataIndex: 'address',
+  },
+  {
+    title: '수량',
+    dataIndex: 'address',
+  },
+  {
+    title: '상품가격',
+    dataIndex: 'address',
+  },
+  {
+    title: '옵션가격',
+    dataIndex: 'address',
+  },
+  {
+    title: '총 주문금액',
+    dataIndex: 'address',
+  },
+  {
+    title: '결제일',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송비 묶음번호',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송비 형태',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송비 유형',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송비 합계',
+    dataIndex: 'address',
+  },
+  {
+    title: '제주/도서 추가배송비',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송비 할인액',
+    dataIndex: 'address',
+  },
+  {
+    title: '수취인 연락처',
+    dataIndex: 'address',
+  },
+  {
+    title: '배송지',
+    dataIndex: 'address',
+  },
+  {
+    title: '구매자 연락처',
+    dataIndex: 'address',
+  },
+  {
+    title: '우편번호',
     dataIndex: 'address',
   },
 ];
