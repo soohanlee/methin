@@ -20,6 +20,7 @@ export const ROUTE_PATH = {
     orderDisturb: '/order-disturb',
     deliveryStatusManage: '/delivery-status-manage',
     reviewManage: '/review-manage',
+    registerNotice: '/register-notice',
   },
 };
 

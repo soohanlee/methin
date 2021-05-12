@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Radio, Button } from 'antd';
+import { useHistory } from 'react-router';
+import { ROUTE_PATH } from 'configs/config';
 
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
@@ -66,6 +68,7 @@ const displayList = [
 
 const Filter = () => {
   const titleRef = useRef(null);
+  const history = useHistory();
 
   const [dateRange, setDateRange] = useState('today');
 
@@ -89,8 +92,16 @@ const Filter = () => {
     console.log(value);
   };
 
+  const handleRegisterNotice = () => {
+    console.log(history);
+    history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
+  };
+
   return (
     <Container>
+      <LabelContents title="상품 공지사항 조회">
+        <Button onClick={handleRegisterNotice}>새 상품 공지사항 등록</Button>
+      </LabelContents>
       <LabelContents title="검색어">
         <BasicSelectBox
           list={searchNameList}
