@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import { css } from 'styled-components';
@@ -10,7 +10,7 @@ import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 
 const EditProductSettings = styled.div`
   width: 100%;
-  height: 55rem;
+  height: 46rem;
   background-color: #ffffff;
   border: 1px solid #f0f0f0;
   padding-left: 5rem;
@@ -120,8 +120,8 @@ const EditConnectProductSetting = () => {
   //////////////SetSearch/////////////////////////////////////
   const productNumberRef = useRef(null); //상품 번호
   const connectProductIDRef = useRef(null); //연관상품 ID
-  const productSearchDescRef = useRef(null); //상품 복수 검색
-  const titleProductNmaeRef = useRef(null); //대표 상품명
+  const [productSearchDescState,setProductSearchDescState] = useState(''); //상품 복수 검색
+  const titleProductNameRef = useRef(null); //대표 상품명
   //////////////SetSearch/////////////////////////////////////
   const renderSetSearch = () => {
     const productNumberOnChange = () => {
@@ -130,11 +130,8 @@ const EditConnectProductSetting = () => {
     const connectProductIDOnChange = () => {
       console.log(connectProductIDRef.current.state.checked);
     };
-    const constproductSearchDescOnChange = () => {
-      console.log(productSearchDescRef.current.resizableTextArea.props.value);
-    };
-    const titleProductNmaeOnChange = () => {
-      console.log(titleProductNmaeRef.current.state.value);
+    const constproductSearchDescOnChange = (e) => {
+      setProductSearchDescState(e.target.defaultValue)
     };
 
     return (
@@ -158,14 +155,13 @@ const EditConnectProductSetting = () => {
             onChange={constproductSearchDescOnChange}
             label="복수 검색
           (enter 또는 &#34;,&#34;로 구분)"
-            ref={productSearchDescRef}
+            // ref={productSearchDescRef}
           />
           <TextAndInput>
             <BasicTextInputBoxStyled
-              onChange={titleProductNmaeOnChange}
               textSize="17rem"
               label="대표 상품명"
-              ref={titleProductNmaeRef}
+              ref={titleProductNameRef}
             />
           </TextAndInput>
         </Propertys>
@@ -223,31 +219,8 @@ const EditConnectProductSetting = () => {
     );
   };
 
-  ///////////////////////////SetChannel//////////////////////////
-  const allChannelCheckRef = useRef(null); //전체
-  ///////////////////////////SetChannel//////////////////////////
-  const renderSetChannel = () => {
-    const allChannelCheckRefOnChange = () => {
-      console.log(allChannelCheckRef.current.state.checked);
-    };
-
-    return (
-      <Channel>
-        <Title>연관상품 노출채널</Title>
-        <Propertys>
-          <CheckBoxLabelStyled
-            onChange={allChannelCheckRefOnChange}
-            label="전체"
-            ref={allChannelCheckRef}
-          />
-        </Propertys>
-      </Channel>
-    );
-  };
-
   ///////////////////////////SetType//////////////////////////////
   const allTypeCheckRef = useRef(null); //전체
-  const stylistProductCheckRef = useRef(null); //코디 상품
   const bestWidthProductCheckRef = useRef(null); //함께 사면 좋은 상품
   const discountWidthProductCheckRef = useRef(null); //함께 사면 할인 상품
   const similarProductCheckRef = useRef(null); //유사한 상품
@@ -255,9 +228,6 @@ const EditConnectProductSetting = () => {
   const renderSetType = () => {
     const allTypeCheckRefOnChange = () => {
       console.log(allTypeCheckRef.current.state.checked);
-    };
-    const stylistProductCheckRefOnChange = () => {
-      console.log(stylistProductCheckRef.current.state.checked);
     };
     const bestWidthProductCheckRefOnChange = () => {
       console.log(bestWidthProductCheckRef.current.state.checked);
@@ -277,11 +247,6 @@ const EditConnectProductSetting = () => {
             onChange={allTypeCheckRefOnChange}
             label="전체"
             ref={allTypeCheckRef}
-          />
-          <CheckBoxLabelStyled
-            onChange={stylistProductCheckRefOnChange}
-            label="코디 상품"
-            ref={stylistProductCheckRef}
           />
           <CheckBoxLabelStyled
             onChange={bestWidthProductCheckRefOnChange}
@@ -397,10 +362,6 @@ const EditConnectProductSetting = () => {
       alert('초기화 버튼 클릭');
     };
 
-    const dayBtnOnChange = () => {
-      console.log(allTypeCheckRef.current.state.checked);
-    };
-
     return (
       <Select justify="center">
         <Propertys width="150rem">
@@ -430,7 +391,6 @@ const EditConnectProductSetting = () => {
       <EditProductSettings>
         {renderSetSearch()}
         {renderSetStatus()}
-        {renderSetChannel()}
         {renderSetType()}
         {renderSetDateTerm()}
         {renderSetSelect()}

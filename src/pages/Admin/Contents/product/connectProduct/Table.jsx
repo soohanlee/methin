@@ -4,6 +4,7 @@ import { Button as OriginButton } from 'antd';
 
 import OriginTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import BasicButton from 'pages/Admin/components/Form/BasicButton';
 
 const Container = styled.div`
   background: #fff;
@@ -50,7 +51,6 @@ const Table = () => {
       <HeaderContainer>
         <ButtonContainer>
           <Button onClick={setSlectDelete}>선택삭제</Button>
-          <BasicSelectBox list={ExhibitionList}></BasicSelectBox>
         </ButtonContainer>
         <Button onClick={setRegistConnectProduct}>연관상품 등록</Button>
       </HeaderContainer>
@@ -66,6 +66,9 @@ const columns = [
   {
     title: '수정',
     dataIndex: 'modify',
+    render: (text) => (
+      <BasicButton  label={text}></BasicButton>
+    ),
   },
   {
     title: '연관상품 ID',
@@ -82,10 +85,6 @@ const columns = [
   {
     title: '연관상품 전시상태',
     dataIndex: 'relatedProductExhibitionStatus',
-  },
-  {
-    title: '검수결과확인',
-    dataIndex: 'checkInspectionResults',
   },
   {
     title: '상품번호',
@@ -111,7 +110,6 @@ const columns = [
     title: '할인가',
     dataIndex: 'reducedPrice',
   },
-  ,
   {
     title: '카테고리',
     dataIndex: 'category',
@@ -129,34 +127,21 @@ const columns = [
 const data = [
   {
     key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
+    modify: '수정',
+    connectProductID: '1',
+    type: 'type',
+    image: 'image',
+    relatedProductExhibitionStatus: '연관상품전시상태',
+    ProductNumber: '상품번호',
+    representativeProductName: '대표상품명',
+    saleStatus: '판매상태',
+    exhibitionStatus: '전시상태',
+    salePrice: '판매가',
+    reducedPrice: '할인가',
+    category: '카테고리',
+    connectProductRegistrationDate: '연관상품 등록일',
+    connectProductModifyDate: '연관상품 수정일',
   },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
-  },
-];
-
-const ExhibitionList = [
-  { label: '전시변경', value: 'changeExhibition' },
-  { label: '전시중', value: 'exhibitioning' },
-  { label: '전시중지', value: 'stopExhibition' },
 ];
 
 const sortViewList = [
@@ -172,3 +157,4 @@ const CountList = [
   { label: '300개씩', value: 'threeHundredCount' },
   { label: '500개씩', value: 'fiveHundredCount' },
 ];
+
