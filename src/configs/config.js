@@ -9,7 +9,6 @@ export const ROUTE_PATH = {
     editProduct: '/edit-product',
     registerProduct: '/register-product',
     registerAllProduct: '/register-all-product',
-    connectProduct: '/connect-product',
     deliveryProduct: '/delivery-product',
     templateProduct: '/template-product',
     noticeManage: '/notice-manage',

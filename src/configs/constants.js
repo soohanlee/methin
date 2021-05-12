@@ -13,7 +13,6 @@ export const leftNavigationMenu = [
       { title: '상품 조회/수정', path: ROUTE_PATH.admin.editProduct },
       { title: '상품 등록', path: ROUTE_PATH.admin.registerProduct },
       { title: '상품 일괄등록', path: ROUTE_PATH.admin.registerAllProduct },
-      { title: '연관상품 관리', path: ROUTE_PATH.admin.connectProduct },
       { title: '배송정보 관리', path: ROUTE_PATH.admin.deliveryProduct },
       { title: '템플릿 관리', path: ROUTE_PATH.admin.templateProduct },
       { title: '공지사항 관리', path: ROUTE_PATH.admin.noticeManage },
