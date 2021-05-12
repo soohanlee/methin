@@ -33,16 +33,6 @@ const ButtomContainer = styled.div`
 const setExcelDown = () => {
   alert('엑셀다운');
 };
-const setSuccessCancel = () => {
-  alert('취소완료');
-};
-const setRejectCancel = () => {
-  alert('취소거부');
-};
-
-const setBuyCancel = () => {
-  alert('구매 확정후 취소처리 바로가기');
-};
 
 const setSuccessCancelProcess = () => {
   alert('취소완료처리');
@@ -61,13 +51,6 @@ const Table = () => {
           <Button onClick={setExcelDown}>엑셀다운</Button>
         </ButtonContainer>
       </HeaderContainer>
-      <HeaderContainer>
-        <ButtonContainer>
-          <Button onClick={setSuccessCancel}>취소완료</Button>
-          <Button onClick={setRejectCancel}>취소거부</Button>
-        </ButtonContainer>
-        <Button onClick={setBuyCancel}>구매 확정 후 취소처리 바로가기</Button>
-      </HeaderContainer>
 
       <OriginTable data={data} columns={columns} selectionType="checkbox" />
 
@@ -84,10 +67,6 @@ const Table = () => {
 export default Table;
 
 const columns = [
-  {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-  },
   {
     title: '주문번호',
     dataIndex: 'orderNumber',
@@ -109,20 +88,8 @@ const columns = [
     dataIndex: 'orderCancelDate',
   },
   {
-    title: '접수채널',
-    dataIndex: 'receiveChannel',
-  },
-  {
-    title: '톡톡하기',
-    dataIndex: 'address',
-  },
-  {
     title: '취소사유',
     dataIndex: 'cancelReason',
-  },
-  {
-    title: '취소승인일',
-    dataIndex: 'orderCancelApprovalDate',
   },
 ];
 

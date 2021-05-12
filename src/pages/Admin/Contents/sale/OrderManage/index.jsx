@@ -138,16 +138,11 @@ const detailList = [
 
 const columns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-    render: (text) => <a href={'www.naver.com'}>{text}</a>,
-  },
-  {
     title: '주문번호',
     dataIndex: 'orderNumber',
   },
   {
-    title: '주문일시',
+    title: '주문날짜',
     dataIndex: 'orderDate',
   },
   {
@@ -155,11 +150,31 @@ const columns = [
     dataIndex: 'orderState',
   },
   {
-    title: '클레임상태',
+    title: '상품번호',
     dataIndex: 'claimState',
   },
   {
-    title: '상품번호',
+    title: '상품명',
+    dataIndex: 'productNumber',
+  },
+  {
+    title: '옵션',
+    dataIndex: 'productNumber',
+  },
+  {
+    title: '수량',
+    dataIndex: 'productNumber',
+  },
+  {
+    title: '구매자명',
+    dataIndex: 'productNumber',
+  },
+  {
+    title: '구매자 ID',
+    dataIndex: 'productNumber',
+  },
+  {
+    title: '수취인명',
     dataIndex: 'productNumber',
   },
 ];

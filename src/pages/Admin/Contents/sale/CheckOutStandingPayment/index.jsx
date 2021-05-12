@@ -48,28 +48,83 @@ export default CheckOutStandingPayment;
 
 const columns = [
   {
-    title: '상품주문번호',
+    title: '주문번호',
     dataIndex: 'productOrderNumber',
-    render: (text) => <a href={'www.naver.com'}>{text}</a>,
   },
   {
-    title: '주문번호',
+    title: '주문날짜',
     dataIndex: 'orderNumber',
   },
   {
-    title: '주문일시',
+    title: '구매자명',
     dataIndex: 'orderDate',
   },
   {
-    title: '구매자명',
+    title: '구매자ID',
     dataIndex: 'buyerName',
   },
   {
-    title: '구매자ID',
+    title: '수취인명',
     dataIndex: 'buyerID',
   },
   {
-    title: '판매채널',
+    title: '결제',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '입금기한',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '상품번호',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '상품명',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '옵션',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '수량',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '상품가격',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '옵션가격',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '총 주문금액',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '배송비 형태',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '배송비 묶음번호',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '배송비 유형',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '배송비 합계',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '배송비 할인액',
+    dataIndex: 'saleChanel',
+  },
+  {
+    title: '결제수단',
     dataIndex: 'saleChanel',
   },
 ];

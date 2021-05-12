@@ -33,21 +33,7 @@ const ButtomContainer = styled.div`
 const setExcelDown = () => {
   alert('엑셀다운');
 };
-const setAllReturnProductProcess = () => {
-  alert('반품처리 한번에 하기');
-};
-const setReturnComplete = () => {
-  alert('반품완료처리');
-};
-const setChangeTrade = () => {
-  alert('교환으로 변경');
-};
-const setConfirmationProductCancelProcess = () => {
-  alert('구매 확정 후 취소처리 바로가기');
-};
-const setRegistReturnProduct = () => {
-  alert('판매자 직접 반품 접수 바로가기');
-};
+
 const setCollectionComplete = () => {
   alert('수거 완료처리');
 };
@@ -82,24 +68,6 @@ const Table = () => {
           <Button onClick={setExcelDown}>엑셀다운</Button>
         </ButtonContainer>
       </HeaderContainer>
-      <HeaderContainer>
-        <ButtonContainer>
-          <Button onClick={setAllReturnProductProcess}>
-            반품처리 한번에 하기
-          </Button>
-          <Button onClick={setReturnComplete}>반품완료처리</Button>
-          <Button onClick={setReturnReject}>반품거부처리</Button>
-          <Button onClick={setChangeTrade}>교환으로 변경</Button>
-        </ButtonContainer>
-        <ButtonContainer>
-          <Button onClick={setConfirmationProductCancelProcess}>
-            구매 확정 후 취소처리 바로가기
-          </Button>
-          <Button onClick={setRegistReturnProduct}>
-            판매자 직접 반품 접수 바로가기
-          </Button>
-        </ButtonContainer>
-      </HeaderContainer>
 
       <OriginTable data={data} columns={columns} selectionType="checkbox" />
 
@@ -127,10 +95,6 @@ export default Table;
 
 const columns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-  },
-  {
     title: '주문번호',
     dataIndex: 'orderNumber',
   },
@@ -157,14 +121,6 @@ const columns = [
   {
     title: '반품요청일',
     dataIndex: 'orderReturnDate',
-  },
-  {
-    title: '접수채널',
-    dataIndex: 'receiveChannel',
-  },
-  {
-    title: '톡톡하기',
-    dataIndex: 'address',
   },
 ];
 

@@ -84,11 +84,6 @@ const list = [
         img: <AppstoreTwoToneIcon />,
       },
       {
-        label: '예약구매 지연',
-        value: 'preOrderDelay',
-        img: <DollarCircleTwoToneIcon />,
-      },
-      {
         label: '신규주문 지연',
         value: 'newOrderDelay',
         img: <AppstoreTwoToneIcon />,
@@ -108,18 +103,12 @@ const list = [
         value: 'changeDelivery',
         img: <AppstoreTwoToneIcon />,
       },
-      {
-        label: '자동처리 예정',
-        value: 'autoProcessing',
-        img: <AppstoreTwoToneIcon />,
-      },
     ],
   },
   {
     title: '발송처리를 진행해 주세요!',
     itemList: [
       { label: '오늘출발', value: 'todayStart', img: <AppstoreTwoToneIcon /> },
-      { label: '예약구매', value: 'prePurchase', img: <AppstoreTwoToneIcon /> },
       { label: '신규주문', value: 'newOrder', img: <AppstoreTwoToneIcon /> },
       {
         label: '발주확인 완료',
