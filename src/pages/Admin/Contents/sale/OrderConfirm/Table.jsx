@@ -46,16 +46,6 @@ const Table = ({ data }) => {
 
   return (
     <Container>
-      <HeaderContainer>
-        <ButtonContainer>
-          <Button>발주확인</Button>
-          <Button>발송처리</Button>
-          <Button>엑셀 일괄 발송처리</Button>
-          <Button>발송지연 처리</Button>
-          <Button>판매취소</Button>
-        </ButtonContainer>
-        <Button>구매 확정 후 취소처리 바로가기</Button>
-      </HeaderContainer>
       <SearchContainer>
         <LabelContents title="배송정보 한번에 입력하기">
           <PeirodSelectBox list={deliveryTypeList} />

@@ -35,16 +35,6 @@ export default OrderCancel;
 
 const list = [
   {
-    title: '먼저 확인해주세요!',
-    itemList: [
-      {
-        label: '취소지연 (자동 환불대기)',
-        value: 'cancelDelay',
-        img: <AppstoreTwoToneIcon />,
-      },
-    ],
-  },
-  {
     title: '취소진행중, 완료 주문건을 확인해 주세요!',
     itemList: [
       {

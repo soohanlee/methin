@@ -47,11 +47,6 @@ const list = [
         value: 'todayDelay',
         img: <AppstoreTwoToneIcon />,
       },
-      {
-        label: '구매확정연장',
-        value: 'preOrderDelay',
-        img: <DollarCircleTwoToneIcon />,
-      },
     ],
   },
   {
@@ -59,11 +54,6 @@ const list = [
     itemList: [
       { label: '배송중', value: 'todayStart', img: <AppstoreTwoToneIcon /> },
       { label: '배송완료', value: 'prePurchase', img: <AppstoreTwoToneIcon /> },
-      {
-        label: '구매확정요청',
-        value: 'newOrder',
-        img: <AppstoreTwoToneIcon />,
-      },
     ],
   },
 ];

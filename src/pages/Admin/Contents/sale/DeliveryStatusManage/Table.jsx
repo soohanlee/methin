@@ -40,14 +40,6 @@ const Table = () => {
           <Button>엑셀다운</Button>
         </ButtonContainer>
       </HeaderContainer>
-      <HeaderContainer>
-        <ButtonContainer>
-          <Button>송장수정</Button>
-          <Button>판매자 직접 반품</Button>
-          <Button>판매자 직접교환</Button>
-        </ButtonContainer>
-        <Button>구매 확정 후 취소처리 바로가기</Button>
-      </HeaderContainer>
 
       <OriginTable data={data} columns={columns} selectionType="checkbox" />
 
