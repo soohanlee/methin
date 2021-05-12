@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import { css } from 'styled-components';
@@ -10,7 +10,7 @@ import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 
 const EditProductSettings = styled.div`
   width: 100%;
-  height: 55rem;
+  height: 46rem;
   background-color: #ffffff;
   border: 1px solid #f0f0f0;
   padding-left: 5rem;
@@ -120,8 +120,8 @@ const EditConnectProductSetting = () => {
   //////////////SetSearch/////////////////////////////////////
   const productNumberRef = useRef(null); //상품 번호
   const connectProductIDRef = useRef(null); //연관상품 ID
-  const productSearchDescRef = useRef(null); //상품 복수 검색
-  const titleProductNmaeRef = useRef(null); //대표 상품명
+  const [productSearchDescState,setProductSearchDescState] = useState(''); //상품 복수 검색
+  const titleProductNameRef = useRef(null); //대표 상품명
   //////////////SetSearch/////////////////////////////////////
   const renderSetSearch = () => {
     const productNumberOnChange = () => {
@@ -130,11 +130,8 @@ const EditConnectProductSetting = () => {
     const connectProductIDOnChange = () => {
       console.log(connectProductIDRef.current.state.checked);
     };
-    const constproductSearchDescOnChange = () => {
-      console.log(productSearchDescRef.current.resizableTextArea.props.value);
-    };
-    const titleProductNmaeOnChange = () => {
-      console.log(titleProductNmaeRef.current.state.value);
+    const constproductSearchDescOnChange = (e) => {
+      setProductSearchDescState(e.target.defaultValue)
     };
 
     return (
@@ -158,14 +155,13 @@ const EditConnectProductSetting = () => {
             onChange={constproductSearchDescOnChange}
             label="복수 검색
           (enter 또는 &#34;,&#34;로 구분)"
-            ref={productSearchDescRef}
+            // ref={productSearchDescRef}
           />
           <TextAndInput>
             <BasicTextInputBoxStyled
-              onChange={titleProductNmaeOnChange}
               textSize="17rem"
               label="대표 상품명"
-              ref={titleProductNmaeRef}
+              ref={titleProductNameRef}
             />
           </TextAndInput>
         </Propertys>
@@ -364,10 +360,6 @@ const EditConnectProductSetting = () => {
 
     const setResetBtn = () => {
       alert('초기화 버튼 클릭');
-    };
-
-    const dayBtnOnChange = () => {
-      console.log(allTypeCheckRef.current.state.checked);
     };
 
     return (

@@ -24,7 +24,7 @@ const TapTerm = css`
   background-color: #ffffff;
   border-bottom: 1px solid #f0f0f0;
   display: flex;
-  padding-top: 1.5rem;
+  align-items: center;
   justify-content: ${(props) => props.justify};
 `;
 
@@ -55,13 +55,13 @@ const Search = styled.div`
 const CheckBoxLabelStyled = styled(CheckBoxLabel)`
   margin: 0px;
   padding: 1rem;
+  padding-bottom : 0px;
+  padding-top : 0px;
   width: 20rem;
-  margin-bottom: 2rem;
 `;
 
 const TextAndInput = styled.div`
   margin-left: 20px;
-  margin-bottom: 3rem;
   display: flex;
   align-items: center;
   width: 30rem;
@@ -104,6 +104,7 @@ const Payment = styled.div`
 
 const DateTerm = styled.div`
   ${TapTerm};
+  padding-top : 3rem;
   border-bottom: 0px;
 `;
 
@@ -137,15 +138,12 @@ const SetSearch = () => {
     <Search>
       <Title>검색어</Title>
       <Propertys>
-        <TwoLine>
           <CheckBoxLabelStyled label="상품번호" ref={productNumberRef} />
-        </TwoLine>
         <TextAreaBoxStyled
           label="복수 검색
           (enter 또는 &#34;,&#34;로 구분)"
           ref={productSearchDesc}
         />
-        <TwoLine>
           <TextAndInput>
             <BasicTextInputBoxStyled
               textSize="10rem"
@@ -153,7 +151,6 @@ const SetSearch = () => {
               ref={productName}
             />
           </TextAndInput>
-        </TwoLine>
       </Propertys>
     </Search>
   );
