@@ -18,6 +18,7 @@ import OrderReturn from 'pages/Admin/Contents/sale/OrderReturn';
 import SaleDisturb from 'pages/Admin/Contents/sale/SaleDisturb';
 import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage';
 import ReviewManage from 'pages/Admin/Contents/review/ReviewManage';
+import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice';
 
 const Container = styled.div`
   width: 100%;
@@ -60,6 +61,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.noticeManage}`}
           component={NoticeManage}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.registerNotice}`}
+          component={RegisterNotice}
         />
         <Route
           exact

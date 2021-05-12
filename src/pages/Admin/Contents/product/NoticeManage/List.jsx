@@ -26,6 +26,8 @@ const BodyContainer = styled.div`
   padding: 2rem;
 `;
 
+const DeleteButton = styled(Button)``;
+
 const columns = [
   {
     title: '수정',
@@ -40,12 +42,22 @@ const columns = [
     dataIndex: 'devide',
   },
   {
-    title: 'state',
+    title: '상태',
     dataIndex: 'address',
   },
   {
     title: '제목',
     dataIndex: 'title',
+  },
+  {
+    title: '등록일',
+    dataIndex: 'registerDate',
+  },
+  {
+    title: '삭제일',
+    dataIndex: '',
+    key: 'x',
+    render: () => <DeleteButton>삭제</DeleteButton>,
   },
 ];
 
@@ -80,7 +92,7 @@ const List = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>상품 공지사항 목록 (총 {data.length}개)</Title>
+        <Title>상품 공지사항 목록 (총 {0}개)</Title>
       </TitleContainer>
       <BodyContainer>
         <ButtonContainer>
