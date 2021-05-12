@@ -6,7 +6,6 @@ import { adminLeftNavigationSize } from 'configs/constants';
 
 import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';
-import EditConnectProduct from 'pages/Admin/Contents/product/connectProduct/EditConnectProduct';
 import DeliveryProduct from 'pages/Admin/Contents/product/deliveryProduct/deliveryProduct';
 import TemplateProduct from 'pages/Admin/Contents/product/templateProduct/templateProduct';
 import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnce';
@@ -46,11 +45,6 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.registerAllProduct}`}
           component={RegisterProductOnce}
-        />
-        <Route
-          exact
-          path={`${prePath}${ROUTE_PATH.admin.connectProduct}`}
-          component={EditConnectProduct}
         />
         <Route
           exact

@@ -66,17 +66,7 @@ const Table = ({ table, count }) => {
       <HeaderContainer>
         <ButtonContainer>
           <Button onClick={setSelectDelete}>선택삭제</Button>
-          <BasicSelectBoxStyled list={SaleList}></BasicSelectBoxStyled>
-          <BasicSelectBoxStyled list={ExhibitionList}></BasicSelectBoxStyled>
-          <Button onClick={setDiscount}>즉시할인 설정</Button>
-          <Button onClick={setChangeSalePrice}>판매가 변경</Button>
-          <Button onClick={setChangeSaleDate}>판매기간 변경</Button>
-          <BasicSelectBoxStyled list={DriveList}></BasicSelectBoxStyled>
-          <BasicSelectBoxStyled
-            list={SelectizeControlList}
-          ></BasicSelectBoxStyled>
         </ButtonContainer>
-        <Button onClick={setModifySave}>수정저장</Button>
       </HeaderContainer>
 
       <OriginTable data={table} columns={columns} selectionType="checkbox" />
@@ -92,32 +82,12 @@ const columns = [
     dataIndex: 'modify',
   },
   {
-    title: '연관상품 ID',
-    dataIndex: 'connectProductID',
-  },
-  {
-    title: '유형',
-    dataIndex: 'type',
-  },
-  {
-    title: '이미지',
-    dataIndex: 'image',
-  },
-  {
-    title: '연관상품 전시상태',
-    dataIndex: 'relatedProductExhibitionStatus',
-  },
-  {
-    title: '검수결과확인',
-    dataIndex: 'checkInspectionResults',
-  },
-  {
     title: '상품번호',
     dataIndex: 'ProductNumber',
   },
   {
-    title: '대표 상품명',
-    dataIndex: 'representativeProductName',
+    title: '상품명',
+    dataIndex: 'productName',
   },
   {
     title: '판매상태',
@@ -127,26 +97,95 @@ const columns = [
     title: '전시상태',
     dataIndex: 'exhibitionStatus',
   },
+  //-------
+  {
+    title: '재고수량',
+    dataIndex: 'inventoryCount',
+  },
   {
     title: '판매가',
-    dataIndex: 'price',
+    dataIndex: 'salePrice',
   },
   {
     title: '할인가',
-    dataIndex: 'reducedPrice',
+    dataIndex: ' reducedPrice',
+  },
+  {
+    title: '판매자할인',
+    dataIndex: 'sellerDiscount',
+  },
+  {
+    title: '옵션',
+    dataIndex: 'option',
+  },
+  {
+    title: '추가상품',
+    dataIndex: 'addProduct',
+  },
+  {
+    title: '상품속성',
+    dataIndex: 'ProductProperty',
   },
   ,
   {
-    title: '카테고리',
-    dataIndex: 'category',
+    title: '최소구매수량',
+    dataIndex: 'minimumPurchaseQuantity',
   },
   {
-    title: '연관상품 등록일',
-    dataIndex: 'created_at',
+    title: '최대구매수량',
+    dataIndex: 'maxmumPurchaseQuantity',
   },
   {
-    title: '연관상품 수정일',
-    dataIndex: 'connectProductModifyDate',
+    title: '배송비유형',
+    dataIndex: 'deliveryPriceType',
+  },
+  ,
+  {
+    title: '배송비결제방식',
+    dataIndex: 'deliveryPriceMethod',
+  },
+  ,
+  {
+    title: '기본배송비',
+    dataIndex: 'defaultPrice',
+  },
+  {
+    title: '반품배송비',
+    dataIndex: 'returnPrice',
+  },
+  {
+    title: '교환배송비',
+    dataIndex: 'changePrice',
+  },
+  ,
+  {
+    title: '대분류',
+    dataIndex: 'largeClassification',
+  },
+  ,
+  {
+    title: '중분류',
+    dataIndex: 'middleClassification',
+  },
+  {
+    title: '소분류',
+    dataIndex: 'smallClassification',
+  },
+  {
+    title: '판매시작일',
+    dataIndex: 'startSaleDate',
+  },
+  {
+    title: '판매종료일',
+    dataIndex: 'endSaleDate',
+  },
+  {
+    title: '상품등록일',
+    dataIndex: 'addProductDate',
+  },
+  {
+    title: '최종수정일',
+    dataIndex: 'finalModifyDate',
   },
 ];
 
