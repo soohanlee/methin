@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 
 const DeliveryDeleteModal = (property) => {
-  console.log(property);
   return (
     <>
       <Modal

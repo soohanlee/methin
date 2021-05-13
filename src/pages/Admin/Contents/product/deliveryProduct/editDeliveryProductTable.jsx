@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import Table from 'pages/Admin/components/Table/Table';
@@ -7,7 +7,7 @@ import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
 import DeliveryModifyModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryModifyModal';
 import DeliveryDeleteModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryDeleteModal';
-
+import {changeNumberDigits} from 'utils/common';
 const EditDeliveryTitlesCss = css`
   width: 100%;
   height: 7rem;
@@ -49,17 +49,45 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 5rem;
 `;
 
-const SetButton = (label) => {
-  return <BasicButton label={label}></BasicButton>;
-};
-
-const setRegistConnectProduct = () => {
-  alert('묶음그룹 추가');
-};
-
-const EditDeliveryProductTable = () => {
+const EditDeliveryProductTable = ({result}) => {
   const [visible, setVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
+  const [data,setDatas] = useState([]);
+  useEffect(async() => {
+    console.log(result)
+    result.map(async(num,index)=>{
+      const tempData = {
+        key: index,
+        modify: '수정',
+        delete: '삭제',
+        groupNumber: '123124125',
+        groupName: '기본 배송비 묶음그룹',
+        calculationMethod: '최소부과',
+        areaClassification: '',
+        areaClassification2: '',
+        areaClassification3: '',
+        useStatus: '사용',
+        registrationDate: changeNumberDigits(num.created_at),
+        modifyDate: '-',
+      };
+    setDatas(data.concat(tempData));
+
+    })
+
+    console.log(data)
+
+}, [result]);
+
+  const SetButton = (label) => {
+    return <BasicButton label={label}></BasicButton>;
+  };
+
+  const setRegistConnectProduct = () => {
+    console.log(result)
+    console.log(data)
+
+    alert('묶음그룹 추가');
+  };
 
   const showModal = () => {
     setVisible(true);
@@ -143,22 +171,7 @@ const EditDeliveryProductTable = () => {
   );
 };
 
-const data = [
-  {
-    key: '1',
-    modify: '수정',
-    delete: '삭제',
-    groupNumber: '123124125',
-    groupName: '기본 배송비 묶음그룹',
-    calculationMethod: '최소부과',
-    areaClassification: '',
-    areaClassification2: '',
-    areaClassification3: '',
-    useStatus: '사용',
-    registrationDate: '2021.04.23',
-    modifyDate: '-',
-  },
-];
+
 
 const list = [
   { value: 'ten', label: '10개씩' },
