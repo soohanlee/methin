@@ -12,6 +12,10 @@ import Navigation from 'components/Navigation';
 import Footer from 'components/Footer';
 import Admin from 'pages/Admin';
 import Login from 'pages/auths/Login';
+import SignUp from 'pages/auths/sign-up';
+import styled from 'styled-components';
+
+const UserContainer = styled.div``;
 
 function App() {
   // 처음 페이지 들어왔을때 로딩
@@ -34,8 +38,10 @@ function App() {
             <Switch>
               {/* 라우트 예시 */}
               <Route exact path={ROUTE_PATH.main} component={Main} />
-              <Route path={ROUTE_PATH.admin.login} component={Login} />
+              <Route exact path={ROUTE_PATH.login} component={Login} />
+              <Route exact path={ROUTE_PATH.signup} component={SignUp} />
             </Switch>
+
             <Footer />
           </>
         )}

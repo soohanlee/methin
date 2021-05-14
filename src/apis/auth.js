@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { requestConfig } from 'apis/config';
 
-const { REACT_APP_BASE_URL: baseUrl } = process.env;
-
 export const logInWithCreds = async (userName, password) => {
-  const response = await axios.post(`${baseUrl}/api/auth/sign-in`, {
+  const response = await axios.post(`/api/auth/sign-in`, {
     id: userName,
     password: password,
   });
@@ -29,4 +27,8 @@ export const checkAccessToken = () => {
 
 export const getAccessToken = () => {
   return requestConfig.headers.Authorization;
+};
+
+export const signup = async (data) => {
+  return await axios.post(`api/auth/sign-up`, data);
 };
