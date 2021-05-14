@@ -49,12 +49,12 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 5rem;
 `;
 
-const EditDeliveryProductTable = ({updateDeliveryData,deleteDeliveryData,result}) => {
+const EditDeliveryProductTable = ({groupNamesRef,setUseStatusState,setCalculationWayState,setAddPriceState,updateDeliveryDetailData,deleteDeliveryData,result}) => {
   const [visible, setVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [data,setDatas] = useState([]);
-  const [dataProperty,setDataProperty] = useState([]);
-  const [index,setInde] = useState([]);
+  const [index,setIndex] = useState([]);
+
   useEffect(async() => {
     setDatas(result)
     console.log(data)
@@ -68,30 +68,36 @@ const EditDeliveryProductTable = ({updateDeliveryData,deleteDeliveryData,result}
     alert('묶음그룹 추가');
   };
 
-  const showModal = (index,data) => {
-    setDataProperty(data)
-    setInde(index);
+  const showModal = (_index) => {
+    console.log(_index)
+    setIndex(_index);
     setVisible(true);
   };
 
   const showDeleteModal = (index) => {
     deleteDeliveryData(index);
     // setDeleteVisible(true);
-
   };
+
+  const modifyDataSave=()=>{
+    const data = {
+      body : groupNamesRef.current.state.value,
+    }
+    updateDeliveryDetailData(index,data)
+  }
 
   const columns = [
     {
-      dataIndex: 'modify',
-      render: (index) => (
+      dataIndex: 'id',
+      render: (id) => (
         // <BasicButton onClick={showModal} label={text}></BasicButton>
-        <BasicButton onClick={()=>{showModal(index)}} label = '수정'></BasicButton>
+        <BasicButton onClick={()=>{showModal(id)}} label = '수정'></BasicButton>
       ),
     },
     {
-      dataIndex: 'delete',
-      render: (index) => (
-        <BasicButton onClick={()=>showDeleteModal(index)} label = '삭제'></BasicButton>
+      dataIndex: 'id',
+      render: (id) => (
+        <BasicButton onClick={()=>showDeleteModal(id)} label = '삭제'></BasicButton>
         // <BasicButton onClick={showDeleteModal} label={text}></BasicButton>
       ),
     },
@@ -131,8 +137,13 @@ const EditDeliveryProductTable = ({updateDeliveryData,deleteDeliveryData,result}
       <DeliveryModifyModal
         visible={visible}
         setVisible={setVisible}
-        onClick = {()=>{updateDeliveryData(index,dataProperty)}}
+        onClick = {modifyDataSave}
         title="배송비묶음그룹"
+        
+        groupNamesRef = {groupNamesRef}
+        setUseStatusState = {setUseStatusState}
+        setCalculationWayState = {setCalculationWayState}
+        setAddPriceState = {setAddPriceState}
       />
       <DeliveryDeleteModal
         visible={deleteVisible}

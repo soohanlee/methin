@@ -1,9 +1,10 @@
 import 'antd/dist/antd.css';
-import React, { useState } from 'react';
 import {  Modal  } from 'antd';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import CheckBoxLabel from 'pages/Admin/components/Form/CheckBoxLabel';
+import 'antd/dist/antd.css';
+import { Radio } from 'antd';
 
 const DeliveryModalBox = styled.div`
 padding : 2rem;
@@ -25,11 +26,21 @@ margin-right : 3rem;
 `;
 
 const DeliveryModifyModal = (property) => {
-  console.log(property);
-
   const okClick=()=>{
     property.setVisible(false);
     property.onClick();
+  }
+
+  const onUseBtnClick=(e)=>{
+    property.setUseStatusState(e.target.value);
+  }
+
+  const onCalculationWayBtnClick=(e)=>{
+    property.setCalculationWayState(e.target.value);
+  }
+
+  const onAddPriceBtnClick=(e)=>{
+    property.setAddPriceState(e.target.value);
   }
 
   return (
@@ -47,26 +58,32 @@ const DeliveryModifyModal = (property) => {
         <DeliveryModalBox>
           <DeliveryModalContent>
             <ContentTitle>묶음그룹명</ContentTitle>
-            <BasicTextInputBox></BasicTextInputBox>
+            <BasicTextInputBox ref = {property.groupNamesRef}></BasicTextInputBox>
           </DeliveryModalContent>
             
           <DeliveryModalContent>
           <ContentTitle>사용여부</ContentTitle>
-          <CheckBoxLabel label = '사용'></CheckBoxLabel>
-          <CheckBoxLabel label = '사용안함'></CheckBoxLabel>
-          <CheckBoxLabel label = '기본 그룹으로 설정'></CheckBoxLabel>
+          <Radio.Group onChange = {onUseBtnClick}>
+            <Radio value='use'>사용</Radio>
+            <Radio value='notuse'>사용안함</Radio>
+            <Radio value='default'>기본 그룹으로 설정</Radio>
+          </Radio.Group>
           </DeliveryModalContent>
 
           <DeliveryModalContent>
           <ContentTitle>계산방식</ContentTitle>
-          <CheckBoxLabel label = '묶음 그룹에서 가장 작은 배송비로 부가'></CheckBoxLabel>
-          <CheckBoxLabel label = '묶음 그룹에서 가장 큰 배송비로 부가'></CheckBoxLabel>
+          <Radio.Group onChange = {onCalculationWayBtnClick}>
+            <Radio value='min'>묶음 그룹에서 가장 작은 배송비로 부가</Radio>
+            <Radio value='max'>묶음 그룹에서 가장 큰 배송비로 부가</Radio>
+          </Radio.Group>
           </DeliveryModalContent>
 
           <DeliveryModalContent>
           <ContentTitle>제주/도서산간 추가배송비</ContentTitle>
-          <CheckBoxLabel label = '설정함'></CheckBoxLabel>
-          <CheckBoxLabel label = '설정안함'></CheckBoxLabel>
+          <Radio.Group onChange = {onAddPriceBtnClick}>
+            <Radio value='use'>설정함</Radio>
+            <Radio value='notuse'>설정안함</Radio>
+          </Radio.Group>
           </DeliveryModalContent>
         </DeliveryModalBox>
       </Modal>

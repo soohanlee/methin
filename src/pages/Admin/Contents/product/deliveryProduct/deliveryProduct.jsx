@@ -1,4 +1,4 @@
-import {useState,useEffect } from 'react';
+import {useState,useEffect,useRef } from 'react';
 import 'antd/dist/antd.css';
 import EditDeliveryProductSetting from 'pages/Admin/Contents/product/deliveryProduct/editDeliveryProductSetting';
 import EditDeliveryProductCategory from 'pages/Admin/Contents/product/deliveryProduct/editDeliveryProductCategory';
@@ -8,11 +8,15 @@ import EditDeliveryProductTable from 'pages/Admin/Contents/product/deliveryProdu
 import { updateDeliveryDetail, allDeliveryProduct, searchDeliveryProduct,deleteDeliveryDetail } from 'apis/delivery';
 import { notification } from 'utils/notification';
 
-
-
 const DeliveryProduct = () => {
   const [tableData, setTableData] = useState([]);
   const [allTableData, setAllTableData] = useState([]);
+
+  //테이블데이터
+  const groupNamesRef = useRef(null);
+  const [useStatusState,setUseStatusState] = useState('');
+  const [calculationWayState,setCalculationWayState] = useState('');
+  const [addPriceState,setAddPriceState] = useState('');
 
   useEffect(async() => {
     await getApiAllDeliveryData();
@@ -54,7 +58,7 @@ const DeliveryProduct = () => {
 
   const initDeliveryData = async() => {
     try{
-      setTableData('');
+      getAllDeliveryData();
     notification.success('초기화 성공');
 
     } catch(e){
@@ -62,12 +66,11 @@ const DeliveryProduct = () => {
     }
   };
 
-  const updateDeliveryData = async(id,data) => {
+  const updateDeliveryDetailData = async(id,data) => {
     try{
-      const result = await updateDeliveryDetail(id,data);
-      console.log(result);
+    await updateDeliveryDetail(id,data);
     notification.success('수정 성공');
-
+    getApiAllDeliveryData();
     } catch(e){
       notification.error('배송 정보를 수정하지 못했습니다.');
     }
@@ -76,10 +79,9 @@ const DeliveryProduct = () => {
 
   const deleteDeliveryData = async(id) => {
     try{
-      const result = await updateDeliveryDetail(id);
-      console.log(result);
+      await deleteDeliveryDetail(id);
     notification.success('삭제 성공');
-
+    getApiAllDeliveryData();
     } catch(e){
       notification.error('배송 정보를 삭제하지 못했습니다.');
     }
@@ -90,7 +92,7 @@ const DeliveryProduct = () => {
       <EditDeliveryProductTitle />
       <EditDeliveryProductCategory />
       <EditDeliveryProductSetting  getAllDeliveryData = {getAllDeliveryData} initDeliveryData = {initDeliveryData} getSearchDeliveryData = {getSearchDeliveryData} />
-      <EditDeliveryProductTable updateDeliveryData ={updateDeliveryData} deleteDeliveryData = {deleteDeliveryData} result = {tableData} />
+      <EditDeliveryProductTable groupNamesRef = {groupNamesRef} setUseStatusState = {setUseStatusState} setCalculationWayState = {setCalculationWayState} setAddPriceState = {setAddPriceState} updateDeliveryDetailData ={updateDeliveryDetailData} deleteDeliveryData = {deleteDeliveryData} result = {tableData} />
     </>
   );
 };
