@@ -7,7 +7,7 @@ import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
 import DeliveryModifyModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryModifyModal';
 import DeliveryDeleteModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryDeleteModal';
-import {changeNumberDigits} from 'utils/common';
+
 const EditDeliveryTitlesCss = css`
   width: 100%;
   height: 7rem;
@@ -49,38 +49,17 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 5rem;
 `;
 
-const EditDeliveryProductTable = ({result}) => {
+const EditDeliveryProductTable = ({updateDeliveryData,deleteDeliveryData,result}) => {
   const [visible, setVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [data,setDatas] = useState([]);
+  const [dataProperty,setDataProperty] = useState([]);
+  const [index,setInde] = useState([]);
   useEffect(async() => {
-    console.log(result)
-    result.map(async(num,index)=>{
-      const tempData = {
-        key: index,
-        modify: '수정',
-        delete: '삭제',
-        groupNumber: '123124125',
-        groupName: '기본 배송비 묶음그룹',
-        calculationMethod: '최소부과',
-        areaClassification: '',
-        areaClassification2: '',
-        areaClassification3: '',
-        useStatus: '사용',
-        registrationDate: changeNumberDigits(num.created_at),
-        modifyDate: '-',
-      };
-    setDatas(data.concat(tempData));
-
-    })
-
+    setDatas(result)
     console.log(data)
 
 }, [result]);
-
-  const SetButton = (label) => {
-    return <BasicButton label={label}></BasicButton>;
-  };
 
   const setRegistConnectProduct = () => {
     console.log(result)
@@ -89,45 +68,49 @@ const EditDeliveryProductTable = ({result}) => {
     alert('묶음그룹 추가');
   };
 
-  const showModal = () => {
+  const showModal = (index,data) => {
+    setDataProperty(data)
+    setInde(index);
     setVisible(true);
   };
 
-  const showDeleteModal = () => {
-    setDeleteVisible(true);
+  const showDeleteModal = (index) => {
+    deleteDeliveryData(index);
+    // setDeleteVisible(true);
+
   };
 
   const columns = [
     {
-      title: '수정',
       dataIndex: 'modify',
-      render: (text) => (
-        <BasicButton onClick={showModal} label={text}></BasicButton>
+      render: (index) => (
+        // <BasicButton onClick={showModal} label={text}></BasicButton>
+        <BasicButton onClick={()=>{showModal(index)}} label = '수정'></BasicButton>
       ),
     },
     {
-      title: '삭제',
       dataIndex: 'delete',
-      render: (text) => (
-        <BasicButton onClick={showDeleteModal} label={text}></BasicButton>
+      render: (index) => (
+        <BasicButton onClick={()=>showDeleteModal(index)} label = '삭제'></BasicButton>
+        // <BasicButton onClick={showDeleteModal} label={text}></BasicButton>
       ),
     },
     {
       title: '그룹번호',
-      dataIndex: 'groupNumber',
+      dataIndex: 'id',
     },
     {
       title: '그룹명',
-      dataIndex: 'groupName',
+      dataIndex: 'body',
     },
 
     {
       title: '기본배송비',
-      dataIndex: 'defaultPrice',
+      dataIndex: 'amount1',
     },
     {
       title: '제주,산간 배송비',
-      dataIndex: 'otherPrice',
+      dataIndex: 'amount2',
     },
     {
       title: '사용여부',
@@ -135,7 +118,7 @@ const EditDeliveryProductTable = ({result}) => {
     },
     {
       title: '등록일',
-      dataIndex: 'registrationDate',
+      dataIndex: 'created_at',
     },
     {
       title: '수정일',
@@ -148,6 +131,7 @@ const EditDeliveryProductTable = ({result}) => {
       <DeliveryModifyModal
         visible={visible}
         setVisible={setVisible}
+        onClick = {()=>{updateDeliveryData(index,dataProperty)}}
         title="배송비묶음그룹"
       />
       <DeliveryDeleteModal
@@ -162,8 +146,9 @@ const EditDeliveryProductTable = ({result}) => {
           <BasicSelectBoxStyled width="12rem" list={list} />
         </TitleTexts>
       </EditDeliveryTitles>
-      <EditDeliveryMenuBtn onClick={setRegistConnectProduct}>
-        {SetButton('+ 묶음그룹 추가')}
+      <EditDeliveryMenuBtn>
+      <BasicButton onClick={setRegistConnectProduct} label={'+ 묶음그룹 추가'}></BasicButton>
+
       </EditDeliveryMenuBtn>
 
       <TableStyled columns={columns} data={data} selectionType={'checkbox'} />
