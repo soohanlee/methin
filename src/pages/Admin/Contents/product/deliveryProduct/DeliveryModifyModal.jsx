@@ -26,13 +26,19 @@ margin-right : 3rem;
 
 const DeliveryModifyModal = (property) => {
   console.log(property);
+
+  const okClick=()=>{
+    property.setVisible(false);
+    property.onClick();
+  }
+
   return (
     <>
       <Modal
         title={property.title}
         centered
         visible={property.visible}
-        onOk={()=>{property.setVisible(false);}}
+        onOk={okClick}
         onCancel={()=>{property.setVisible(false);}}
         width={900}
         okText= '저장'

@@ -4,7 +4,6 @@ import 'antd/dist/antd.css';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
-import { notification } from 'utils/notification';
 
 const EditDeliveryTitles = styled.div`
   width: 100%;
@@ -51,22 +50,14 @@ const BasicButtonStyled = styled(BasicButton)`
   margin-left: ${(props) => props.marginleft};
 `;
 
-
-
-const EditDeliveryProductSetting = ({getAllDeliveryData,getSearchDeliveryData}) => {
+const EditDeliveryProductSetting = ({getSearchDeliveryData,getAllDeliveryData,initDeliveryData}) => {
   const [searchValue, setSearchValue] = useState('deliveryPriceNames');
   const groupNameInputBox = useRef(null); //배송비 묶음그룹 명 인풋박스
   const searchBtn = useRef(null); //검색
 
   const handleSelectChange = (value) => {
-    console.log(value);
     setSearchValue(value);
   };
-
-  useEffect(async() => {
-    console.log(12312)
-      await getAllDeliveryData();
-  }, []);
 
   const RenderSetMenu = () => {
     return (
@@ -89,11 +80,19 @@ const EditDeliveryProductSetting = ({getAllDeliveryData,getSearchDeliveryData}) 
 
   const RenderSetSelect = () => {
     const setSearchBtn = () => {
-      getSearchDeliveryData(1);
+      let value = groupNameInputBox.current.state.value;
+      if(!value)
+      {
+       getAllDeliveryData();
+      }
+      else
+      {
+        getSearchDeliveryData(value);
+      }
     };
 
     const setResetBtn = () => {
-      notification.success('초기화 완료');
+      initDeliveryData();
       handleSelectChange("deliveryPriceNames");
     };
 
