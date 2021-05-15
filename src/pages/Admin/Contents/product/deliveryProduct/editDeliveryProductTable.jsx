@@ -106,7 +106,6 @@ const EditDeliveryProductTable = ({
     {
       dataIndex: 'id',
       render: (id) => (
-        // <BasicButton onClick={showModal} label={text}></BasicButton>
         <BasicButton
           onClick={() => {
             showModifyModal(id);
