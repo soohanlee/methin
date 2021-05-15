@@ -9,7 +9,7 @@ const Select = styled(OriginSelectBox)`
   width: 15rem;
 `;
 
-const BasicSelectBox = ({ className, list, onChange, disabled, ...props }) => {
+const BasicSelectBox = ({value, className, list, onChange, disabled, ...props }) => {
   const renderOption = (list) => {
     return (
       list &&
@@ -27,6 +27,7 @@ const BasicSelectBox = ({ className, list, onChange, disabled, ...props }) => {
         onChange={onChange}
         disabled={disabled}
         props={props}
+        value = {value}
       >
         {renderOption(list)}
       </Select>

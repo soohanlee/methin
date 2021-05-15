@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import Table from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
-import DeliveryModifyModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryModifyModal';
-import DeliveryDeleteModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryDeleteModal';
+import DeliveryUpdateModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryUpdateModal';
 
 const EditDeliveryTitlesCss = css`
   width: 100%;
@@ -49,57 +48,98 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 5rem;
 `;
 
-const SetButton = (label) => {
-  return <BasicButton label={label}></BasicButton>;
-};
+const EditDeliveryProductTable = ({
+  updateDeliveryDetailData,
+  deleteDeliveryData,
+  updateDeliveryData,
+  result,
+}) => {
+  const [modifyVisible, setModifyVisible] = useState(false);
+  const [addVisible, setAddVisible] = useState(false);
+  const [data, setDatas] = useState([]);
+  const [index, setIndex] = useState([]);
 
-const setRegistConnectProduct = () => {
-  alert('묶음그룹 추가');
-};
+  //테이블데이터
+  const groupNamesRef = useRef(null);
+  const [useStatusState, setUseStatusState] = useState('');
+  const [calculationWayState, setCalculationWayState] = useState('');
+  const [addPriceState, setAddPriceState] = useState('');
 
-const EditDeliveryProductTable = () => {
-  const [visible, setVisible] = useState(false);
-  const [deleteVisible, setDeleteVisible] = useState(false);
+  useEffect(async () => {
+    setDatas(result);
+  }, [result]);
 
-  const showModal = () => {
-    setVisible(true);
+  const setRegistConnectProduct = () => {
+    showAddModal();
   };
 
-  const showDeleteModal = () => {
-    setDeleteVisible(true);
+  const showModifyModal = (_index) => {
+    setIndex(_index);
+    setModifyVisible(true);
+  };
+
+  const showDeleteModal = (index) => {
+    deleteDeliveryData(index);
+  };
+
+  const showAddModal = () => {
+    setAddVisible(true);
+  };
+
+  const modifyDataSave = () => {
+    const data = {
+      body: groupNamesRef.current.state.value,
+    };
+    updateDeliveryDetailData(index, data);
+  };
+
+  const addDataSave = () => {
+    const data = {
+      body: groupNamesRef.current.state.value,
+      amount1: 1000,
+      amount2: 2000,
+    };
+    updateDeliveryData(data);
   };
 
   const columns = [
     {
-      title: '수정',
-      dataIndex: 'modify',
-      render: (text) => (
-        <BasicButton onClick={showModal} label={text}></BasicButton>
+      dataIndex: 'id',
+      render: (id) => (
+        <BasicButton
+          onClick={() => {
+            showModifyModal(id);
+          }}
+          label="수정"
+        ></BasicButton>
       ),
     },
     {
-      title: '삭제',
-      dataIndex: 'delete',
-      render: (text) => (
-        <BasicButton onClick={showDeleteModal} label={text}></BasicButton>
+      dataIndex: 'id',
+      render: (id) => (
+        <BasicButton
+          onClick={() => showDeleteModal(id)}
+          label="삭제"
+        ></BasicButton>
+        // <BasicButton onClick={showDeleteModal} label={text}></BasicButton>
       ),
     },
     {
       title: '그룹번호',
-      dataIndex: 'groupNumber',
+      dataIndex: 'id',
     },
     {
       title: '그룹명',
-      dataIndex: 'groupName',
+      dataIndex: 'body',
     },
 
     {
       title: '기본배송비',
-      dataIndex: 'defaultPrice',
+      dataIndex: 'amount1',
     },
     {
       title: '제주,산간 배송비',
-      dataIndex: 'otherPrice',
+      dataIndex: 'amount2',
     },
     {
       title: '사용여부',
@@ -107,7 +147,7 @@ const EditDeliveryProductTable = () => {
     },
     {
       title: '등록일',
-      dataIndex: 'registrationDate',
+      dataIndex: 'created_at',
     },
     {
       title: '수정일',
@@ -117,15 +157,25 @@ const EditDeliveryProductTable = () => {
 
   return (
     <>
-      <DeliveryModifyModal
-        visible={visible}
-        setVisible={setVisible}
+      <DeliveryUpdateModal
+        visible={modifyVisible}
+        setVisible={setModifyVisible}
+        onClick={modifyDataSave}
         title="배송비묶음그룹"
+        groupNamesRef={groupNamesRef}
+        setUseStatusState={setUseStatusState}
+        setCalculationWayState={setCalculationWayState}
+        setAddPriceState={setAddPriceState}
       />
-      <DeliveryDeleteModal
-        visible={deleteVisible}
-        setVisible={setDeleteVisible}
-        title="삭제되었습니다."
+      <DeliveryUpdateModal
+        visible={addVisible}
+        setVisible={setAddVisible}
+        onClick={addDataSave}
+        title="배송비묶음그룹"
+        groupNamesRef={groupNamesRef}
+        setUseStatusState={setUseStatusState}
+        setCalculationWayState={setCalculationWayState}
+        setAddPriceState={setAddPriceState}
       />
 
       <EditDeliveryTitles>
@@ -134,31 +184,17 @@ const EditDeliveryProductTable = () => {
           <BasicSelectBoxStyled width="12rem" list={list} />
         </TitleTexts>
       </EditDeliveryTitles>
-      <EditDeliveryMenuBtn onClick={setRegistConnectProduct}>
-        {SetButton('+ 묶음그룹 추가')}
+      <EditDeliveryMenuBtn>
+        <BasicButton
+          onClick={setRegistConnectProduct}
+          label={'+ 묶음그룹 추가'}
+        ></BasicButton>
       </EditDeliveryMenuBtn>
 
       <TableStyled columns={columns} data={data} selectionType={'checkbox'} />
     </>
   );
 };
-
-const data = [
-  {
-    key: '1',
-    modify: '수정',
-    delete: '삭제',
-    groupNumber: '123124125',
-    groupName: '기본 배송비 묶음그룹',
-    calculationMethod: '최소부과',
-    areaClassification: '',
-    areaClassification2: '',
-    areaClassification3: '',
-    useStatus: '사용',
-    registrationDate: '2021.04.23',
-    modifyDate: '-',
-  },
-];
 
 const list = [
   { value: 'ten', label: '10개씩' },
