@@ -1,12 +1,11 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import Table from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
-import DeliveryModifyModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryModifyModal';
-import DeliveryDeleteModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryDeleteModal';
+import DeliveryUpdateModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryUpdateModal';
 
 const EditDeliveryTitlesCss = css`
   width: 100%;
@@ -49,55 +48,80 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 5rem;
 `;
 
-const EditDeliveryProductTable = ({groupNamesRef,setUseStatusState,setCalculationWayState,setAddPriceState,updateDeliveryDetailData,deleteDeliveryData,result}) => {
-  const [visible, setVisible] = useState(false);
-  const [deleteVisible, setDeleteVisible] = useState(false);
-  const [data,setDatas] = useState([]);
-  const [index,setIndex] = useState([]);
+const EditDeliveryProductTable = ({
+  updateDeliveryDetailData,
+  deleteDeliveryData,
+  updateDeliveryData,
+  result,
+}) => {
+  const [modifyVisible, setModifyVisible] = useState(false);
+  const [addVisible, setAddVisible] = useState(false);
+  const [data, setDatas] = useState([]);
+  const [index, setIndex] = useState([]);
 
-  useEffect(async() => {
-    setDatas(result)
-    console.log(data)
+  //테이블데이터
+  const groupNamesRef = useRef(null);
+  const [useStatusState, setUseStatusState] = useState('');
+  const [calculationWayState, setCalculationWayState] = useState('');
+  const [addPriceState, setAddPriceState] = useState('');
 
-}, [result]);
+  useEffect(async () => {
+    setDatas(result);
+  }, [result]);
 
   const setRegistConnectProduct = () => {
-    console.log(result)
-    console.log(data)
-
-    alert('묶음그룹 추가');
+    showAddModal();
   };
 
-  const showModal = (_index) => {
-    console.log(_index)
+  const showModifyModal = (_index) => {
     setIndex(_index);
-    setVisible(true);
+    setModifyVisible(true);
   };
 
   const showDeleteModal = (index) => {
     deleteDeliveryData(index);
-    // setDeleteVisible(true);
   };
 
-  const modifyDataSave=()=>{
+  const showAddModal = () => {
+    setAddVisible(true);
+  };
+
+  const modifyDataSave = () => {
     const data = {
-      body : groupNamesRef.current.state.value,
-    }
-    updateDeliveryDetailData(index,data)
-  }
+      body: groupNamesRef.current.state.value,
+    };
+    updateDeliveryDetailData(index, data);
+  };
+
+  const addDataSave = () => {
+    const data = {
+      body: groupNamesRef.current.state.value,
+      amount1: 1000,
+      amount2: 2000,
+    };
+    updateDeliveryData(data);
+  };
 
   const columns = [
     {
       dataIndex: 'id',
       render: (id) => (
         // <BasicButton onClick={showModal} label={text}></BasicButton>
-        <BasicButton onClick={()=>{showModal(id)}} label = '수정'></BasicButton>
+        <BasicButton
+          onClick={() => {
+            showModifyModal(id);
+          }}
+          label="수정"
+        ></BasicButton>
       ),
     },
     {
       dataIndex: 'id',
       render: (id) => (
-        <BasicButton onClick={()=>showDeleteModal(id)} label = '삭제'></BasicButton>
+        <BasicButton
+          onClick={() => showDeleteModal(id)}
+          label="삭제"
+        ></BasicButton>
         // <BasicButton onClick={showDeleteModal} label={text}></BasicButton>
       ),
     },
@@ -134,21 +158,25 @@ const EditDeliveryProductTable = ({groupNamesRef,setUseStatusState,setCalculatio
 
   return (
     <>
-      <DeliveryModifyModal
-        visible={visible}
-        setVisible={setVisible}
-        onClick = {modifyDataSave}
+      <DeliveryUpdateModal
+        visible={modifyVisible}
+        setVisible={setModifyVisible}
+        onClick={modifyDataSave}
         title="배송비묶음그룹"
-        
-        groupNamesRef = {groupNamesRef}
-        setUseStatusState = {setUseStatusState}
-        setCalculationWayState = {setCalculationWayState}
-        setAddPriceState = {setAddPriceState}
+        groupNamesRef={groupNamesRef}
+        setUseStatusState={setUseStatusState}
+        setCalculationWayState={setCalculationWayState}
+        setAddPriceState={setAddPriceState}
       />
-      <DeliveryDeleteModal
-        visible={deleteVisible}
-        setVisible={setDeleteVisible}
-        title="삭제되었습니다."
+      <DeliveryUpdateModal
+        visible={addVisible}
+        setVisible={setAddVisible}
+        onClick={addDataSave}
+        title="배송비묶음그룹"
+        groupNamesRef={groupNamesRef}
+        setUseStatusState={setUseStatusState}
+        setCalculationWayState={setCalculationWayState}
+        setAddPriceState={setAddPriceState}
       />
 
       <EditDeliveryTitles>
@@ -158,16 +186,16 @@ const EditDeliveryProductTable = ({groupNamesRef,setUseStatusState,setCalculatio
         </TitleTexts>
       </EditDeliveryTitles>
       <EditDeliveryMenuBtn>
-      <BasicButton onClick={setRegistConnectProduct} label={'+ 묶음그룹 추가'}></BasicButton>
-
+        <BasicButton
+          onClick={setRegistConnectProduct}
+          label={'+ 묶음그룹 추가'}
+        ></BasicButton>
       </EditDeliveryMenuBtn>
 
       <TableStyled columns={columns} data={data} selectionType={'checkbox'} />
     </>
   );
 };
-
-
 
 const list = [
   { value: 'ten', label: '10개씩' },
