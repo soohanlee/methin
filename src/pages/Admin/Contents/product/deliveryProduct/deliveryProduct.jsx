@@ -46,7 +46,6 @@ const DeliveryProduct = () => {
       const result = await searchDeliveryProduct('배송정보22');
       const resultArray = [result.data.data];
       setTableData(resultArray);
-      console.log(result);
       notification.success('검색 성공');
     } catch (e) {
       notification.error('배송 정보를 가져오지 못했습니다.');
