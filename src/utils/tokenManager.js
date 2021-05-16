@@ -17,13 +17,13 @@ export async function setIsRememeberToken(isRemeber) {
   );
 }
 
-export async function getRefreshToken() {
+export function getRefreshToken() {
   const refreshToken = get(COOKIE_KEYS.UserRefreshToken);
 
   return refreshToken || null;
 }
 
-export async function getAccessToken() {
+export function getAccessToken() {
   const accessToken = get(COOKIE_KEYS.UserAccessToken);
 
   return accessToken || null;
@@ -72,10 +72,6 @@ export async function cleanAccessToken() {
   remove(COOKIE_KEYS.UserAccessToken);
 }
 
-export async function cleanPId() {
-  remove(COOKIE_KEYS.ProjectId);
-}
-
 export async function cleanToken() {
   await cleanRefreshToken();
   await cleanAccessToken();
@@ -83,7 +79,6 @@ export async function cleanToken() {
 
 export async function cleanAllToken() {
   await cleanToken();
-  await cleanPId();
 }
 
 export async function getNewAccessToken() {
