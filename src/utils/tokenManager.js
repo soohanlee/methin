@@ -1,10 +1,7 @@
 import { getLocalStorageData } from 'utils/common';
 import { get, set, remove } from 'js-cookie';
 import { COOKIE_KEYS, LOCAL_STORAGE_KEYS } from 'configs/config';
-import {
-  getAccessToken as getServerAccessToken,
-  checkAccessToken,
-} from 'apis/auth';
+import { reissuanceRefreshVerify, jwtVerify } from 'apis/auth';
 
 export async function getIsRememberToken() {
   return !!getLocalStorageData(LOCAL_STORAGE_KEYS.UserLoginRemember);
@@ -17,13 +14,13 @@ export async function setIsRememeberToken(isRemeber) {
   );
 }
 
-export async function getRefreshToken() {
+export function getRefreshToken() {
   const refreshToken = get(COOKIE_KEYS.UserRefreshToken);
 
   return refreshToken || null;
 }
 
-export async function getAccessToken() {
+export function getAccessToken() {
   const accessToken = get(COOKIE_KEYS.UserAccessToken);
 
   return accessToken || null;
@@ -72,39 +69,20 @@ export async function cleanAccessToken() {
   remove(COOKIE_KEYS.UserAccessToken);
 }
 
-export async function cleanPId() {
-  remove(COOKIE_KEYS.ProjectId);
-}
-
 export async function cleanToken() {
   await cleanRefreshToken();
   await cleanAccessToken();
 }
 
-export async function cleanAllToken() {
-  await cleanToken();
-  await cleanPId();
-}
-
+//access token 이 유효하지 않고 refresh token 만 유효할때 사용.
 export async function getNewAccessToken() {
-  const refreshToken = await getRefreshToken();
-  const accessToken = await getAccessToken();
-
-  if (refreshToken && accessToken) {
-    const reponse = await getServerAccessToken({ accessToken, refreshToken });
-
-    if (reponse.code === 100) {
-      const { accessToken: newAccessToken } = reponse.data;
-
-      await setAccessToken(newAccessToken);
-
-      return newAccessToken;
-    }
+  const result = reissuanceRefreshVerify();
+  if (result.code === 100) {
+    const { accessToken: newAccessToken } = result.data;
+    const { refreshToken: newRefreshToken } = result.data;
+    await setToken(newRefreshToken, newAccessToken);
+    return { newAccessToken, newRefreshToken };
   }
-
-  await cleanAllToken();
-
-  return null;
 }
 
 export async function getIsAvalidAccessToken() {
@@ -112,14 +90,14 @@ export async function getIsAvalidAccessToken() {
   const refreshToken = await getRefreshToken();
 
   if (accessToken && refreshToken) {
-    const response = await checkAccessToken();
+    const response = await jwtVerify();
 
     if (response.code === 100) {
       return true;
     }
   }
 
-  await cleanAllToken();
+  await cleanToken();
 
   return false;
 }

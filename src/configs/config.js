@@ -1,7 +1,7 @@
 export const ROUTE_PATH = {
   main: '/',
   login: '/login',
-  signup: '/console',
+  signup: '/signup',
   findId: '/findId',
   admin: {
     main: '/admin',
