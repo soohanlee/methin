@@ -35,28 +35,39 @@ const ItemContainer = styled.div`
 
 const { Option } = Select;
 
-const Delivery = () => {
-  const [isDelivery, setIsDelivery] = useState('yes');
-  const [deliveryType, setDeliveryType] = useState('package'); //package, directly
-  const [deliveryAttrs, setDeliveryAttrs] = useState('normal'); //normal, today
-  const [deliveryFee, setDeliveryFee] = useState('free'); //free ,conditionallyFree,pay,quantity,section
-  const [sectionFeeComent, setSectionFeeComent] = useState(''); // 지역별 차등배송비
-  const [defaultFee, setDefaultFee] = useState(''); //기본 배송비
-  const [deliveryFeeCondition, setDeliveryFeeCondition] = useState(''); //배송비 조건
-  const [payType, setPayType] = useState('cashOnDelivery'); // 결제방식 // cashOnDelivery, prePay, cashOrPre
-  const [sectionFeeCondition, setSectionFeeCondition] = useState('2'); // 2구간, 3구간
-  const [sectionFeeCount, setSectionFeeCount] = useState(''); // 개수
-  const [addFee, setAddFee] = useState(''); // 초과배송비
-  const [sectionExtraFeeCount, setSectionExtraFeeCount] = useState(''); // 3 구간개수
-  const [sectionExtraFee, setSectionExtraFee] = useState(''); //3구간 가격
-  const [shipment, setShipment] = useState(
-    localStorage.getItem('shipment') ? localStorage.getItem('shipment') : '',
-  ); //출고지
-
+const Delivery = ({
+  isDelivery,
+  deliveryType,
+  deliveryAttrs,
+  deliveryFee,
+  sectionFeeComent,
+  defaultFee,
+  deliveryFeeCondition,
+  payType,
+  sectionFeeCondition,
+  sectionFeeCount,
+  addFee,
+  sectionExtraFeeCount,
+  sectionExtraFee,
+  shipment,
+  setIsDelivery,
+  setDeliveryType,
+  setDeliveryAttrs,
+  setDeliveryFee,
+  setSectionFeeComent,
+  setDefaultFee,
+  setDeliveryFeeCondition,
+  setPayType,
+  setSectionFeeCondition,
+  setSectionFeeCount,
+  setAddFee,
+  setSectionExtraFeeCount,
+  setSectionExtraFee,
+  setShipment,
+}) => {
   const [deriveryPriceGroupVisible, setDeriveryPriceGroupVisible] = useState(
     false,
   );
-
   const handleDefaultFeeChange = (e) => {
     setDefaultFee(e.target.value);
   };

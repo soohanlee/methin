@@ -121,6 +121,7 @@ const CategoryModal = (property) => {
               {dataKey &&
                 dataKey.map((item) => (
                   <Item
+                    key={item}
                     isClicked={item === selectedFirstItem}
                     onClick={() => handleFristItemClick(item)}
                   >
@@ -135,6 +136,7 @@ const CategoryModal = (property) => {
               {data[selectedFirstItem] &&
                 data[selectedFirstItem].map((item) => (
                   <Item
+                    key={item}
                     isClicked={item === selectedSecondItem}
                     onClick={() => handleSecondItemClick(item)}
                   >

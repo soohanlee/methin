@@ -112,6 +112,7 @@ const Category = () => {
               {dataKey &&
                 dataKey.map((item) => (
                   <Item
+                    key={item}
                     isClicked={item === selectedFirstItem}
                     onClick={() => handleFristItemClick(item)}
                   >
@@ -126,6 +127,7 @@ const Category = () => {
               {data[selectedFirstItem] &&
                 data[selectedFirstItem].map((item) => (
                   <Item
+                    key={item}
                     isClicked={item === selectedSecondItem}
                     onClick={() => handleSecondItemClick(item)}
                   >
