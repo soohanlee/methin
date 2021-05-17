@@ -43,14 +43,22 @@ export const checkExistEmail = async (data) => {
   return await axios.post(`${baseUrl}/email/is-exists`, data);
 };
 
+// access token이 유효한지 체크한다. 맨 처음 사이트 들어왔을때 체크
 export const jwtVerify = async () => {
   return await axios.get(`${baseUrl}/jwt-verify`, requestConfig);
 };
 
+// refresh token이 유효한지 체크한다. 맨 처음 사이트 들어왔을때 체크
 export const refreshVerify = async () => {
   return await axios.get(`${baseUrl}/refresh-verify`, requestConfig);
 };
 
+//access token 이 유효하지 않고 refresh token 만 유효할때 사용.
 export const reissuanceRefreshVerify = async () => {
-  return await axios.get(`${baseUrl}/refresh-token`, requestConfig);
+  return await axios.get(
+    `${baseUrl}/refresh-token`,
+    requestConfig.headers.refreshToken,
+  );
 };
+
+// access token. refresh token 둘다 유효하지 않으면

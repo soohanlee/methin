@@ -6,7 +6,7 @@ import { logInWithCreds } from 'apis/auth';
 import {
   setAccessToken,
   setRefreshToken,
-  cleanAllToken,
+  cleanToken,
 } from 'utils/tokenManager';
 import { notification } from 'utils/notification';
 import {
@@ -55,7 +55,7 @@ const Login = () => {
         notification.error('아이디 혹은 비밀번호를 확인해주세요.');
       }
       login.changeUserState(NOT_LOGGED_IN);
-      cleanAllToken();
+      cleanToken();
     }
   };
 
