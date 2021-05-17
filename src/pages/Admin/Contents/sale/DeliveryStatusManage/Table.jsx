@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import OriginTable from 'pages/Admin/components/Table/Table';
+import QueryItemModal from 'pages/Admin/Contents/sale/CheckOutStandingPayment/QueryItemModal';
 
 const Container = styled.div`
   background: #fff;
@@ -31,12 +32,31 @@ const ButtomContainer = styled.div`
 `;
 
 const Table = () => {
+  const [QueryItemVisible, setQueryItemVisible] = useState(false);
+
   return (
     <Container>
+      <QueryItemModal
+        visible={QueryItemVisible}
+        setVisible={() => {
+          setQueryItemVisible(false);
+        }}
+        onClick={() => {
+          setQueryItemVisible(false);
+        }}
+        title="조회항목 설정(미결제확인)"
+      />
+
       <HeaderContainer>
         <Title>목록(총 0개)</Title>
         <ButtonContainer>
-          <Button>조회항목 설정</Button>
+          <Button
+            onClick={() => {
+              setQueryItemVisible(true);
+            }}
+          >
+            조회항목 설정
+          </Button>
           <Button>엑셀다운</Button>
         </ButtonContainer>
       </HeaderContainer>
