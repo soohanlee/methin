@@ -38,9 +38,6 @@ const Table = () => {
         <ButtonContainer>
           <Button onClick={setSelectRelease}>선택건 해제하기</Button>
         </ButtonContainer>
-        <Button onClick={setConfirmationCancel}>
-          구매 확정 후 취소처리 바로가기
-        </Button>
       </HeaderContainer>
 
       <OriginTable data={data} columns={columns} selectionType="checkbox" />
@@ -65,7 +62,7 @@ const columns = [
   },
   {
     title: '배송방법',
-    dataIndex: 'registerContent',
+    dataIndex: 'deliveryWay',
   },
 ];
 
