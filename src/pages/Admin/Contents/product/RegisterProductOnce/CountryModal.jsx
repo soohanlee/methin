@@ -2,36 +2,11 @@ import 'antd/dist/antd.css';
 import { Modal } from 'antd';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
-import CheckBoxLabel from 'pages/Admin/components/Form/CheckBoxLabel';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import 'antd/dist/antd.css';
 import { Radio } from 'antd';
-import React, { useRef, useState } from 'react';
+import { useState } from 'react';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
-
-const ItemContainer = styled.div`
-  display: flex;
-`;
-
-const ItemBox = styled.div`
-  max-width: 30rem;
-  width: 100%;
-  border: 1px solid black;
-  margin-right: 1rem;
-`;
-
-const ItemHeader = styled.div`
-  border-bottom: 0.1rem solid black;
-`;
-
-const ItemBody = styled.div`
-  height: 30rem;
-  overflow-y: auto;
-`;
-
-const Item = styled.div`
-  background: ${(props) => (props.isClicked ? 'lightgrey' : 'white')};
-`;
 
 const CategoryModalBox = styled.div`
   padding: 2rem;

@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
 import { ROUTE_PATH } from 'configs/config';
-import { adminLeftNavigationSize } from 'configs/constants';
 
 import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import CategoryModal from 'pages/Admin/Contents/product/RegisterProductOnce/CategoryModal';

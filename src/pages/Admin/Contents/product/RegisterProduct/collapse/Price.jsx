@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Input as OriginInput, Radio, Select, Checkbox } from 'antd';
+import { useState } from 'react';
+import { Input as OriginInput, Radio, Select } from 'antd';
 import styled from 'styled-components';
 
 import { changeNumberDigits, removeRest } from 'utils/common';
@@ -23,10 +23,6 @@ const Input = styled(OriginInput)`
 `;
 
 const Price = ({ price, setPrice, salePrice, setSalePrice, sale, setSale }) => {
-  const [isAllSale, setIsAllSale] = useState(false);
-  const [isPCSale, setIsPCSale] = useState(false);
-  const [isMobileSale, setIsMobileSale] = useState(false);
-
   const [saleType, setSaleType] = useState('won'); // won, percentage
   const [saleTypePrice, setSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
 
@@ -96,43 +92,6 @@ const Price = ({ price, setPrice, salePrice, setSalePrice, sale, setSale }) => {
     } else {
       setSaleTypePrice(e.target.value);
     }
-  };
-
-  const handleMobileSaleTypePriceChange = (e) => {
-    if (mobileSaleType === 'percentage') {
-      if (Number(removeRest(mobileSaleTypePrice)) <= 100) {
-        setMobileSaleTypePrice(e.target.value);
-      } else {
-        setMobileSaleTypePrice('');
-      }
-    } else {
-      setMobileSaleTypePrice(e.target.value);
-    }
-  };
-
-  const handleMobileSaleTypeBlur = () => {
-    calcMobilePrice();
-    setMobileSaleTypePrice(changeNumberDigits(mobileSaleTypePrice));
-  };
-
-  const handleMobileSaleTypeFocus = () => {
-    setMobileSaleTypePrice(removeRest(mobileSaleTypePrice));
-  };
-
-  const handleAllSaleChange = (e) => {
-    setIsAllSale(e.target.checked);
-    setIsPCSale(false);
-    setIsMobileSale(false);
-  };
-
-  const handlePCSaleChange = (e) => {
-    setIsPCSale(e.target.checked);
-    setIsAllSale(false);
-  };
-
-  const handleMobileSaleChange = (e) => {
-    setIsMobileSale(e.target.checked);
-    setIsAllSale(false);
   };
 
   const selectAfter = (
