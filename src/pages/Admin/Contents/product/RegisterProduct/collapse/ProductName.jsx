@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Input } from 'antd';
 
 import CustomCollapse from 'pages/Admin/components/Collapse';

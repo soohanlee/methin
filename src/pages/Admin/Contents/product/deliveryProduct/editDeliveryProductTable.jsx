@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import Table from 'pages/Admin/components/Table/Table';
@@ -65,7 +65,7 @@ const EditDeliveryProductTable = ({
   const [calculationWayState, setCalculationWayState] = useState('');
   const [addPriceState, setAddPriceState] = useState('');
 
-  useEffect(async () => {
+  useEffect(() => {
     setDatas(result);
   }, [result]);
 

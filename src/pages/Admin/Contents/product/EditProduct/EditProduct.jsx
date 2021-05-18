@@ -11,14 +11,17 @@ const EditProduct = () => {
   const [table, setTable] = useState([]);
   const [tableCount, setTableCount] = useState(0);
 
-  useEffect(async () => {
-    try {
-      const result = await getProductList();
-      setTable(result.data.data.list);
-      setTableCount(result.data.data.count);
-    } catch (e) {
-      notification.error('상품 정보를 가져오지 못했습니다.');
+  useEffect(() => {
+    async function fetchAndSetUser() {
+      try {
+        const result = await getProductList();
+        setTable(result.data.data.list);
+        setTableCount(result.data.data.count);
+      } catch (e) {
+        notification.error('상품 정보를 가져오지 못했습니다.');
+      }
     }
+    fetchAndSetUser();
   }, []);
 
   return (

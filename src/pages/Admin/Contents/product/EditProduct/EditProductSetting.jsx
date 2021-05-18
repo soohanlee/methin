@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import { css } from 'styled-components';
@@ -41,12 +41,6 @@ const Line = styled.div`
   padding-left: 40rem;
 `;
 
-const TwoLine = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 const Search = styled.div`
   ${TapTerm};
   height: 15rem;
@@ -55,8 +49,8 @@ const Search = styled.div`
 const CheckBoxLabelStyled = styled(CheckBoxLabel)`
   margin: 0px;
   padding: 1rem;
-  padding-bottom : 0px;
-  padding-top : 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
   width: 20rem;
 `;
 
@@ -94,17 +88,9 @@ const BasicDropBoxStyled = styled(BasicDropBox)`
   margin-right: 5rem;
 `;
 
-const Channel = styled.div`
-  ${TapTerm};
-`;
-
-const Payment = styled.div`
-  ${TapTerm};
-`;
-
 const DateTerm = styled.div`
   ${TapTerm};
-  padding-top : 3rem;
+  padding-top: 3rem;
   border-bottom: 0px;
 `;
 
@@ -129,28 +115,26 @@ const Select = styled.div`
 `;
 
 const SetSearch = () => {
-  // const [productNumber, setProductNumber] = useState("")
   const productNumberRef = useRef(null); //상품 번호
   const productSearchDesc = useRef(null); //상품 복수 검색
   const productName = useRef(null); //상품명
-  const brandeName = useRef(null); //브랜드명
   return (
     <Search>
       <Title>검색어</Title>
       <Propertys>
-          <CheckBoxLabelStyled label="상품번호" ref={productNumberRef} />
+        <CheckBoxLabelStyled label="상품번호" ref={productNumberRef} />
         <TextAreaBoxStyled
           label="복수 검색
           (enter 또는 &#34;,&#34;로 구분)"
           ref={productSearchDesc}
         />
-          <TextAndInput>
-            <BasicTextInputBoxStyled
-              textSize="10rem"
-              label="상품명"
-              ref={productName}
-            />
-          </TextAndInput>
+        <TextAndInput>
+          <BasicTextInputBoxStyled
+            textSize="10rem"
+            label="상품명"
+            ref={productName}
+          />
+        </TextAndInput>
       </Propertys>
     </Search>
   );
@@ -180,8 +164,6 @@ const SetSalesStatus = () => {
 const SetCategory = () => {
   const bigGroup = useRef(null); //대분류
   const middleGroup = useRef(null); //중분류
-  const smallGroup = useRef(null); //소분류
-  const attributeGroup = useRef(null); //세분류
   return (
     <Category>
       <Title>카테고리</Title>
@@ -268,7 +250,6 @@ const SetSelect = () => {
   };
 
   const searchBtn = useRef(null); //검색
-  const detailSearchBtn = useRef(null); //상세검색
 
   return (
     <Select justify="center">

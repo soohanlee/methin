@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Input, Radio, Select } from 'antd';
+import { useState } from 'react';
+import { Select } from 'antd';
 
 import CustomCollapse from 'pages/Admin/components/Collapse';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';

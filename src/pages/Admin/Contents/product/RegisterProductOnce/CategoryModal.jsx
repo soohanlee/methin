@@ -2,10 +2,9 @@ import 'antd/dist/antd.css';
 import { Modal } from 'antd';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
-import CheckBoxLabel from 'pages/Admin/components/Form/CheckBoxLabel';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import 'antd/dist/antd.css';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ItemContainer = styled.div`
   display: flex;
@@ -59,9 +58,6 @@ const CategoryModal = (property) => {
   const [data, setData] = useState({});
   const [selectedFirstItem, setSelectedFirstItem] = useState('축산');
   const [selectedSecondItem, setSelectedSecondItem] = useState('축산');
-
-  const [inputFirstItem, setInputFirstItem] = useState('');
-  const [inputSecondItem, setInputSecondItem] = useState('');
   const dataKey = Object.keys(data);
 
   useEffect(() => {
@@ -85,16 +81,12 @@ const CategoryModal = (property) => {
     switch (categoryIndex) {
       case 0:
         return renderCategory0();
-        break;
       case 1:
         return renderCategory1();
-        break;
       case 2:
         return renderCategory2();
-        break;
       default:
         return renderCategory0();
-        break;
     }
   };
 

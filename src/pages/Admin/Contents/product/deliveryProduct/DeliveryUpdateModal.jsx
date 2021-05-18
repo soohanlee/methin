@@ -2,7 +2,6 @@ import 'antd/dist/antd.css';
 import { Modal } from 'antd';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
-import CheckBoxLabel from 'pages/Admin/components/Form/CheckBoxLabel';
 import 'antd/dist/antd.css';
 import { Radio } from 'antd';
 

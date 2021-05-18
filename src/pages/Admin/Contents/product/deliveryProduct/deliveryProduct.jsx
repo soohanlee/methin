@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import EditDeliveryProductSetting from 'pages/Admin/Contents/product/deliveryProduct/editDeliveryProductSetting';
 import EditDeliveryProductCategory from 'pages/Admin/Contents/product/deliveryProduct/editDeliveryProductCategory';
@@ -18,9 +18,12 @@ const DeliveryProduct = () => {
   const [tableData, setTableData] = useState([]);
   const [allTableData, setAllTableData] = useState([]);
 
-  useEffect(async () => {
-    await getApiAllDeliveryData();
-  }, []);
+  useEffect(() => {
+    async function fetchAndSetUser() {
+      await getApiAllDeliveryData();
+    }
+    fetchAndSetUser();
+  });
 
   const getApiAllDeliveryData = async () => {
     try {

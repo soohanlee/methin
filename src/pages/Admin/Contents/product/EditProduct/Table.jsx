@@ -1,7 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
-
 import OriginTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 
@@ -38,18 +36,6 @@ const setExcelDown = () => {
 
 const setSelectDelete = () => {
   alert('선택삭제');
-};
-const setDiscount = () => {
-  alert('즉시할인 설정');
-};
-const setChangeSalePrice = () => {
-  alert('판매가 변경');
-};
-const setChangeSaleDate = () => {
-  alert('판매기간 변경');
-};
-const setModifySave = () => {
-  alert('수정저장');
 };
 
 const Table = ({ table, count }) => {
@@ -187,37 +173,6 @@ const columns = [
     title: '최종수정일',
     dataIndex: 'finalModifyDate',
   },
-];
-
-const ExhibitionList = [
-  { label: '전시변경', value: 'changeExhibition' },
-  { label: '전시중', value: 'exhibitioning' },
-  { label: '전시중지', value: 'stopExhibition' },
-];
-
-const SaleList = [
-  { label: '판매변경', value: 'saleCheange' },
-  { label: '판매중', value: 'onSale' },
-  { label: '판매중지', value: 'saleStop' },
-];
-
-const SelectizeControlList = [
-  { label: '일괄변경', value: 'batchChange' },
-  { label: '이벤트문구', value: 'eventPhrase' },
-  { label: '구매/혜택', value: 'purchaseBenefits' },
-  { label: '구매수량제한', value: 'purchaseQuantityLimit' },
-  { label: '상품정보제공고시', value: 'productInformationSupplyNotice' },
-  { label: '원산지', value: 'countryOfOrigin' },
-  { label: 'A/S,특이사항', value: 'a&s' },
-  { label: '브랜드/제조사', value: 'brand&Fabrication' },
-  { label: '가격비교사이트 설정', value: 'priceComparisonSite' },
-  { label: '모바일미리보기 설정', value: 'mobilePreview' },
-];
-
-const DriveList = [
-  { label: '배송변경', value: 'driveChange' },
-  { label: '배송중', value: 'driveing' },
-  { label: '배송속성', value: 'driveProperty' },
 ];
 
 const SortViewList = [
