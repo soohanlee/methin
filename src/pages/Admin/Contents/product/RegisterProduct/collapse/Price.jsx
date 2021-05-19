@@ -22,9 +22,23 @@ const Input = styled(OriginInput)`
   max-width: 300px;
 `;
 
-const Price = ({ price, setPrice, salePrice, setSalePrice, sale, setSale }) => {
-  const [saleType, setSaleType] = useState('won'); // won, percentage
-  const [saleTypePrice, setSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
+const Price = ({
+  price,
+  setPrice,
+  salePrice,
+  setSalePrice,
+  sale,
+  setSale,
+  saleTypePrice,
+  saleType,
+  VAT,
+  setSaleTypePrice,
+  setSaleType,
+  setVAT,
+}) => {
+  const [isAllSale, setIsAllSale] = useState(false);
+  const [isPCSale, setIsPCSale] = useState(false);
+  const [isMobileSale, setIsMobileSale] = useState(false);
 
   const [mobileSaleType, setMobileSaleType] = useState('won'); // won, percentage
   const [mobileSaleTypePrice, setMobileSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
@@ -32,8 +46,6 @@ const Price = ({ price, setPrice, salePrice, setSalePrice, sale, setSale }) => {
 
   const [salesPeriod, setSalesPeriod] = useState('setting');
   const [selectedDate, setSelectedDate] = useState('3');
-
-  const [VAT, setVAT] = useState('taxable'); //taxable, dutyFree, small
 
   const handleBlur = () => {
     const changeValue = changeNumberDigits(price);
@@ -176,9 +188,9 @@ const Price = ({ price, setPrice, salePrice, setSalePrice, sale, setSale }) => {
 
       <LabelContents title="부가세">
         <Radio.Group value={VAT} onChange={(e) => setVAT(e.target.value)}>
-          <Radio.Button value="taxable">과세상품</Radio.Button>
-          <Radio.Button value="dutyFree">면세상품</Radio.Button>
-          <Radio.Button value="small">영세상품</Radio.Button>
+          <Radio.Button value={0}>과세상품</Radio.Button>
+          <Radio.Button value={1}>면세상품</Radio.Button>
+          <Radio.Button value={2}>영세상품</Radio.Button>
         </Radio.Group>
       </LabelContents>
     </CustomCollapse>

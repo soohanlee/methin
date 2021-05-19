@@ -10,3 +10,4 @@ export { default as ProductMainInformation } from './ProductMainInformation';
 export { default as ProductName } from './ProductName';
 export { default as ReturnExchange } from './ReturnExchange';
 export { default as Price } from './Price';
+export { default as PruchaseBenefitConditions } from './PruchaseBenefitConditions';

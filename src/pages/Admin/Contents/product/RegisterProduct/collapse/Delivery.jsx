@@ -137,9 +137,8 @@ const Delivery = ({
           value={payType}
           onChange={(e) => setPayType(e.target.value)}
         >
-          <Radio value="cashOnDelivery">착불</Radio>
-          <Radio value="prePay">선결제</Radio>
-          <Radio value="cashOrPre">착불 또는 선결제</Radio>
+          <Radio value={0}>선불</Radio>
+          <Radio value={1}>착불</Radio>
         </Radio.Group>
       </LabelContents>
     );
@@ -193,8 +192,8 @@ const Delivery = ({
           value={deliveryType}
           onChange={(e) => setDeliveryType(e.target.value)}
         >
-          <Radio.Button value="package">택배,소포,등기</Radio.Button>
-          <Radio.Button value="directly">직접배송(화물배달)</Radio.Button>
+          <Radio.Button value={0}>택배,소포,등기</Radio.Button>
+          <Radio.Button value={1}>직접배송(화물배달)</Radio.Button>
         </Radio.Group>
       </LabelContents>
 
@@ -203,16 +202,16 @@ const Delivery = ({
           value={deliveryAttrs}
           onChange={(e) => setDeliveryAttrs(e.target.value)}
         >
-          <Radio.Button value="normal">일반배송</Radio.Button>
-          <Radio.Button value="today">오늘출발</Radio.Button>
+          <Radio.Button value={0}>일반배송</Radio.Button>
+          <Radio.Button value={1}>오늘출발</Radio.Button>
         </Radio.Group>
       </LabelContents>
 
       <LabelContents title="상품별 배송비">
         <Select value={deliveryFee} onChange={(value) => setDeliveryFee(value)}>
-          <Option value="free">무료</Option>
+          <Option value={0}>무료</Option>
           <Option value="conditionallyFree">조건무 무료</Option>
-          <Option value="pay">유료</Option>
+          <Option value={1}>유료</Option>
         </Select>
         <Button>배송비 묶음 그룹 선택</Button>
       </LabelContents>
