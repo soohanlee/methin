@@ -6,6 +6,9 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import OriginTable from 'pages/Admin/components/Table/Table';
 
+import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/orderSheetModal';
+import OrderCountTableModal from 'pages/Admin/Contents/sale/OrderConfirm/orderCountTableModal';
+
 const Container = styled.div`
   background: #fff;
   padding: 3rem;
@@ -41,10 +44,18 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ data }) => {
+const Table = ({
+  data,
+  orderCountTableColumns,
+  orderCountTableData,
+  orderSheetList,
+}) => {
   const invoiceNumber = useRef(null);
 
-  const [orderVisible, setorderVisible] = useState(false);
+  const [orderVisible, setOrderVisible] = useState(false);
+  const [orderSheetVisible, setOrderSheetVisible] = useState(false);
+  const [orderCountTableVisible, setOrderCountTableVisible] = useState(false);
+
   const [orderFunction, setOrderFunction] = useState(false);
 
   const [orderConfirmFunction, setOrderConfirmFunction] = useState(false);
@@ -66,7 +77,7 @@ const Table = ({ data }) => {
   const [label, setLabel] = useState('');
 
   const tableBtn = (id) => {
-    setorderVisible(true);
+    setOrderVisible(true);
 
     switch (id) {
       case 'OrderConfirmation': {
@@ -160,13 +171,14 @@ const Table = ({ data }) => {
   return (
     <Container>
       <Modal
+        title="주문서 출력"
         centered
         visible={orderVisible}
         onOk={() => {
-          setorderVisible(true);
+          setOrderVisible(true);
         }}
         onCancel={() => {
-          setorderVisible(false);
+          setOrderVisible(false);
         }}
         width={500}
         okText="확인"
@@ -174,6 +186,41 @@ const Table = ({ data }) => {
       >
         {label}
       </Modal>
+
+      <OrderSheetModal
+        centered
+        visible={orderSheetVisible}
+        onOk={() => {
+          setOrderSheetVisible(true);
+        }}
+        onCancel={() => {
+          setOrderSheetVisible(false);
+        }}
+        width={500}
+        okText="확인"
+        cancelText="취소"
+        orderSheetList={orderSheetList}
+      >
+        {label}
+      </OrderSheetModal>
+
+      <OrderCountTableModal
+        centered
+        visible={orderCountTableVisible}
+        onOk={() => {
+          setOrderCountTableVisible(true);
+        }}
+        onCancel={() => {
+          setOrderCountTableVisible(false);
+        }}
+        width={500}
+        okText="확인"
+        cancelText="취소"
+        orderCountTableColumns={orderCountTableColumns}
+        orderCountTableData={orderCountTableData}
+      >
+        {label}
+      </OrderCountTableModal>
 
       <SearchContainer>
         <LabelContents title="배송정보 한번에 입력하기">
@@ -190,8 +237,20 @@ const Table = ({ data }) => {
       />
 
       <ButtonContainer>
-        <Button>선택건 주문서 출력</Button>
-        <Button>선택건 출고지/옵션별 주문수량 보기</Button>
+        <Button
+          onClick={() => {
+            setOrderSheetVisible(true);
+          }}
+        >
+          선택건 주문서 출력
+        </Button>
+        <Button
+          onClick={() => {
+            setOrderCountTableVisible(true);
+          }}
+        >
+          선택건 출고지/옵션별 주문수량 보기
+        </Button>
       </ButtonContainer>
 
       <ButtomContainer>
