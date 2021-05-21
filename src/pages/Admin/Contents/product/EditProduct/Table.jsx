@@ -4,7 +4,7 @@ import OriginTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 
 const BasicSelectBoxStyled = styled(BasicSelectBox)`
-  width: 12rem;
+  width: 15rem;
   margin-right: 0.5rem;
 `;
 

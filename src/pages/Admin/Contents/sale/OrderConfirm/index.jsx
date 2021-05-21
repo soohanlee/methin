@@ -67,7 +67,11 @@ const OrderConfirm = () => {
     <div>
       <BoardHeader list={list} onClick={handleClick} data={data} />
       <Filter />
-      <Table />
+      <Table
+        orderCountTableColumns={orderCountTableColumns}
+        orderCountTableData={orderCountTableData}
+        orderSheetList={orderSheetList}
+      />
     </div>
   );
 };
@@ -116,5 +120,85 @@ const list = [
         img: <AppstoreTwoToneIcon />,
       },
     ],
+  },
+];
+
+const orderCountTableColumns = [
+  {
+    title: '출고지',
+    dataIndex: 'location',
+  },
+  {
+    title: '상품번호',
+    dataIndex: 'productNum',
+  },
+  {
+    title: '상품명',
+    dataIndex: 'productName',
+    sorter: {
+      compare: (a, b) => a.math - b.math,
+      multiple: 2,
+    },
+  },
+  {
+    title: '옵션값',
+    dataIndex: 'optionValue',
+  },
+  {
+    title: '수량',
+    dataIndex: 'count',
+  },
+];
+
+const orderCountTableData = [
+  {
+    key: '1',
+    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
+    productNum: '5359856047',
+    productName:
+      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
+    optionValue: '패키지: 돼지안심 4개',
+    count: 1,
+  },
+  {
+    key: '2',
+    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
+    productNum: '5359856047',
+    productName:
+      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
+    optionValue: '패키지: 돼지안심 4개',
+    count: 1,
+  },
+  {
+    key: '3',
+    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
+    productNum: '5359856047',
+    productName:
+      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
+    optionValue: '패키지: 돼지안심 4개',
+    count: 1,
+  },
+  {
+    key: '4',
+    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
+    productNum: '5359856047',
+    productName:
+      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
+    optionValue: '패키지: 돼지안심 4개',
+    count: 1,
+  },
+];
+
+const orderSheetList = [
+  {
+    date: '2021.05.20 2021052098897071',
+    productName:
+      '국내산 한돈1+ 돼지안심 수비드 미띤(2021052064444061) 옵션 패키지: 양념돼지안심 7개',
+    price: '34,300원 (1개)',
+    process: '선결제',
+    name: '한명서 (한명서)',
+    adress:
+      '(650759) 경상남도 통영시 무전동 한진로즈힐 1054/2 한진로즈힐 106동 1406호',
+    phoneNum: '010-6295-1039 / 010-8541-1039 (010-6295-1039)',
   },
 ];
