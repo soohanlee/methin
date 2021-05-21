@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 import CategoryModal from 'pages/Admin/Contents/product/RegisterProductOnce/CategoryModal';
 import CountryModal from 'pages/Admin/Contents/product/RegisterProductOnce/CountryModal';
+import ImageModal from 'pages/Admin/Contents/product/RegisterProductOnce/ImageModal';
 
 const Container = styled.div`
   display: flex;
@@ -25,6 +26,7 @@ const Header = () => {
   const countryRef = useRef(null);
   const [categoryVisible, setCategoryVisible] = useState(false);
   const [countryVisible, setCountryVisible] = useState(false);
+  const [imageVisible, setImageVisible] = useState(false);
   const [conturySelect, setConturySelect] = useState('korea');
   const [adressSelect, setAdressSelect] = useState('korea');
 
@@ -41,7 +43,7 @@ const Header = () => {
   };
 
   const handleImageClick = () => {
-    alert('이미지업로드 클릭');
+    setImageVisible(true);
   };
 
   const handleFileClick = () => {
@@ -68,6 +70,12 @@ const Header = () => {
         countryRef={countryRef}
         setConturySelect={setConturySelect}
         setAdressSelect={setAdressSelect}
+      />
+      <ImageModal
+        visible={imageVisible}
+        setVisible={setImageVisible}
+        onClick={setImageVisible}
+        countryRef={countryRef}
       />
       <Container>
         <ButtonContainer>
