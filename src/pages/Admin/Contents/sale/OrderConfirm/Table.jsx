@@ -14,12 +14,6 @@ const Container = styled.div`
   padding: 3rem;
 `;
 
-const HeaderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 2rem;
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
 `;

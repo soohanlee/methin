@@ -12,6 +12,8 @@ import { changeNumberDigits, removeRest } from 'utils/common';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import CustomCollapse from 'pages/Admin/components/Collapse';
 
+import DeliveryPriceGroupModal from 'pages/Admin/Contents/product/RegisterProduct/collapse/deliveryPriceGroupModal';
+
 const Select = styled(OriginSelect)`
   width: 200px;
 `;
@@ -47,10 +49,13 @@ const Delivery = () => {
   const [addFee, setAddFee] = useState(''); // 초과배송비
   const [sectionExtraFeeCount, setSectionExtraFeeCount] = useState(''); // 3 구간개수
   const [sectionExtraFee, setSectionExtraFee] = useState(''); //3구간 가격
-  const [installFee, setInstallFee] = useState('yes');
   const [shipment, setShipment] = useState(
     localStorage.getItem('shipment') ? localStorage.getItem('shipment') : '',
   ); //출고지
+
+  const [deriveryPriceGroupVisible, setDeriveryPriceGroupVisible] = useState(
+    false,
+  );
 
   const handleDefaultFeeChange = (e) => {
     setDefaultFee(e.target.value);
@@ -161,143 +166,195 @@ const Delivery = () => {
   };
 
   return (
-    <CustomCollapse header="배송" extra={'뭔가옴'}>
-      <LabelContents title="배송여부">
-        <Radio.Group
-          value={isDelivery}
-          onChange={(e) => setIsDelivery(e.target.value)}
-        >
-          <Radio.Button value="yes">배송</Radio.Button>
-          <Radio.Button value="no">배송없음</Radio.Button>
-        </Radio.Group>
-      </LabelContents>
+    <>
+      <DeliveryPriceGroupModal
+        centered
+        visible={deriveryPriceGroupVisible}
+        onCancel={() => {
+          setDeriveryPriceGroupVisible(false);
+        }}
+        width={700}
+        deliveryTableColumns={deliveryTableColumns}
+        deliveryData={deliveryData}
+      ></DeliveryPriceGroupModal>
 
-      <LabelContents title="배송방법">
-        <Radio.Group
-          value={deliveryType}
-          onChange={(e) => setDeliveryType(e.target.value)}
-        >
-          <Radio.Button value="package">택배,소포,등기</Radio.Button>
-          <Radio.Button value="directly">직접배송(화물배달)</Radio.Button>
-        </Radio.Group>
-      </LabelContents>
+      <CustomCollapse header="배송" extra={'뭔가옴'}>
+        <LabelContents title="배송여부">
+          <Radio.Group
+            value={isDelivery}
+            onChange={(e) => setIsDelivery(e.target.value)}
+          >
+            <Radio.Button value="yes">배송</Radio.Button>
+            <Radio.Button value="no">배송없음</Radio.Button>
+          </Radio.Group>
+        </LabelContents>
 
-      <LabelContents title="배송속성">
-        <Radio.Group
-          value={deliveryAttrs}
-          onChange={(e) => setDeliveryAttrs(e.target.value)}
-        >
-          <Radio.Button value="normal">일반배송</Radio.Button>
-          <Radio.Button value="today">오늘출발</Radio.Button>
-        </Radio.Group>
-      </LabelContents>
+        <LabelContents title="배송방법">
+          <Radio.Group
+            value={deliveryType}
+            onChange={(e) => setDeliveryType(e.target.value)}
+          >
+            <Radio.Button value="package">택배,소포,등기</Radio.Button>
+            <Radio.Button value="directly">직접배송(화물배달)</Radio.Button>
+          </Radio.Group>
+        </LabelContents>
 
-      <LabelContents title="상품별 배송비">
-        <Select value={deliveryFee} onChange={(value) => setDeliveryFee(value)}>
-          <Option value="free">무료</Option>
-          <Option value="conditionallyFree">조건무 무료</Option>
-          <Option value="pay">유료</Option>
-          <Option value="quantity">수량별</Option>
-          <Option value="section">구간별</Option>
-        </Select>
-        <Button>배송비 묶음 그룹 선택</Button>
-      </LabelContents>
-      {deliveryFee === 'free' && renderSectionFeeComent()}
+        <LabelContents title="배송속성">
+          <Radio.Group
+            value={deliveryAttrs}
+            onChange={(e) => setDeliveryAttrs(e.target.value)}
+          >
+            <Radio.Button value="normal">일반배송</Radio.Button>
+            <Radio.Button value="today">오늘출발</Radio.Button>
+          </Radio.Group>
+        </LabelContents>
 
-      {deliveryFee === 'conditionallyFree' && (
-        <>
-          {renderDefaultFee()}
-          {renderDeliveryFeeCondition()}
-          {renderPayType()}
-          {renderSectionFeeComent()}
-        </>
-      )}
-      {deliveryFee === 'pay' && (
-        <>
-          {renderDefaultFee()}
-          {renderPayType()}
-          {renderSectionFeeComent()}
-        </>
-      )}
-      {deliveryFee === 'quantity' && (
-        <>
-          {renderDefaultFee()}
-          {renderDeliveryFeeCondition()}
-          {renderPayType()}
-          {renderSectionFeeComent()}
-        </>
-      )}
-      {deliveryFee === 'section' && (
-        <>
-          {renderDefaultFee()}
-          <LabelContents title="배송지 조건">
-            <ItemContainer>
-              <Radio.Group
-                value={sectionFeeCondition}
-                onChange={(e) => setSectionFeeCondition(e.target.value)}
-              >
-                <Radio value="2">2구간</Radio>
-                <Radio value="3">3구간</Radio>
-              </Radio.Group>
-              <InputContainer>
-                <Input
-                  value={sectionFeeCount}
-                  onChange={(e) => setSectionFeeCount(e.target.value)}
-                  addonAfter="개"
-                  placeholder="숫자만 입력"
-                />
-                까지 추가 배송비 없음
-              </InputContainer>
+        <LabelContents title="상품별 배송비">
+          <Select
+            value={deliveryFee}
+            onChange={(value) => setDeliveryFee(value)}
+          >
+            <Option value="free">무료</Option>
+            <Option value="conditionallyFree">조건무 무료</Option>
+            <Option value="pay">유료</Option>
+            <Option value="quantity">수량별</Option>
+            <Option value="section">구간별</Option>
+          </Select>
+          <Button
+            onClick={() => {
+              setDeriveryPriceGroupVisible(true);
+            }}
+          >
+            배송비 묶음 그룹 선택
+          </Button>
+        </LabelContents>
+        {deliveryFee === 'free' && renderSectionFeeComent()}
 
-              {sectionFeeCondition === '3' && (
-                <>
-                  <InputContainer>
-                    <Input
-                      value={sectionExtraFeeCount}
-                      onChange={(e) => setSectionExtraFeeCount(e.target.value)}
-                      addonAfter="개"
-                      placeholder="숫자만 입력"
-                    />
-                    까지 추가 배송비
-                  </InputContainer>
-
+        {deliveryFee === 'conditionallyFree' && (
+          <>
+            {renderDefaultFee()}
+            {renderDeliveryFeeCondition()}
+            {renderPayType()}
+            {renderSectionFeeComent()}
+          </>
+        )}
+        {deliveryFee === 'pay' && (
+          <>
+            {renderDefaultFee()}
+            {renderPayType()}
+            {renderSectionFeeComent()}
+          </>
+        )}
+        {deliveryFee === 'quantity' && (
+          <>
+            {renderDefaultFee()}
+            {renderDeliveryFeeCondition()}
+            {renderPayType()}
+            {renderSectionFeeComent()}
+          </>
+        )}
+        {deliveryFee === 'section' && (
+          <>
+            {renderDefaultFee()}
+            <LabelContents title="배송지 조건">
+              <ItemContainer>
+                <Radio.Group
+                  value={sectionFeeCondition}
+                  onChange={(e) => setSectionFeeCondition(e.target.value)}
+                >
+                  <Radio value="2">2구간</Radio>
+                  <Radio value="3">3구간</Radio>
+                </Radio.Group>
+                <InputContainer>
                   <Input
-                    value={sectionExtraFee}
-                    onChange={(e) => setSectionExtraFee(e.target.value)}
-                    addonAfter="원"
+                    value={sectionFeeCount}
+                    onChange={(e) => setSectionFeeCount(e.target.value)}
+                    addonAfter="개"
                     placeholder="숫자만 입력"
-                    onBlur={handleSectionExtraFeeBlur}
-                    onFocus={handleSectionExtraFeeFocus}
                   />
-                </>
-              )}
+                  까지 추가 배송비 없음
+                </InputContainer>
 
-              <div>초과 구매시 추가배송비</div>
-              <Input
-                value={addFee}
-                onChange={(e) => setAddFee(e.target.value)}
-                addonAfter="원"
-                placeholder="숫자만 입력"
-                onBlur={handleAddFeeBlur}
-                onFocus={handleAddFeeFocus}
-              />
-            </ItemContainer>
-          </LabelContents>
-          {renderPayType()}
-          {renderSectionFeeComent()}
-        </>
-      )}
+                {sectionFeeCondition === '3' && (
+                  <>
+                    <InputContainer>
+                      <Input
+                        value={sectionExtraFeeCount}
+                        onChange={(e) =>
+                          setSectionExtraFeeCount(e.target.value)
+                        }
+                        addonAfter="개"
+                        placeholder="숫자만 입력"
+                      />
+                      까지 추가 배송비
+                    </InputContainer>
 
-      <LabelContents title="출고지">
-        <Input
-          value={shipment}
-          onChange={(e) => setShipment(e.target.value)}
-          addonAfter={<div onClick={handleShipmentSaveButtonClick}>저장</div>}
-          placeholder="출고지 입력"
-        />
-      </LabelContents>
-    </CustomCollapse>
+                    <Input
+                      value={sectionExtraFee}
+                      onChange={(e) => setSectionExtraFee(e.target.value)}
+                      addonAfter="원"
+                      placeholder="숫자만 입력"
+                      onBlur={handleSectionExtraFeeBlur}
+                      onFocus={handleSectionExtraFeeFocus}
+                    />
+                  </>
+                )}
+
+                <div>초과 구매시 추가배송비</div>
+                <Input
+                  value={addFee}
+                  onChange={(e) => setAddFee(e.target.value)}
+                  addonAfter="원"
+                  placeholder="숫자만 입력"
+                  onBlur={handleAddFeeBlur}
+                  onFocus={handleAddFeeFocus}
+                />
+              </ItemContainer>
+            </LabelContents>
+            {renderPayType()}
+            {renderSectionFeeComent()}
+          </>
+        )}
+
+        <LabelContents title="출고지">
+          <Input
+            value={shipment}
+            onChange={(e) => setShipment(e.target.value)}
+            addonAfter={<div onClick={handleShipmentSaveButtonClick}>저장</div>}
+            placeholder="출고지 입력"
+          />
+        </LabelContents>
+      </CustomCollapse>
+    </>
   );
 };
 
 export default Delivery;
+
+const deliveryTableColumns = [
+  {
+    title: '묶음그룹번호',
+    dataIndex: 'GroupNum',
+  },
+  {
+    title: '그룹명',
+    dataIndex: 'GroupName',
+  },
+  {
+    title: '배송비 계산방식',
+    dataIndex: 'PriceCalculator',
+  },
+  {
+    title: '선택',
+    dataIndex: 'Select',
+  },
+];
+
+const deliveryData = [
+  {
+    GroupNum: '52691388',
+    GroupName: '기본 배송비 묶음그룹',
+    PriceCalculator: '최소부과',
+    Select: '선택',
+  },
+];
