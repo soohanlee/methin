@@ -55,10 +55,8 @@ const Table = () => {
       <OriginTable data={data} columns={columns} selectionType="checkbox" />
 
       <ButtomContainer>
-        <LabelContents title="취소처리">
-          <Button onClick={setSuccessCancelProcess}>취소 완료처리</Button>
-          <Button onClick={setRejectCancelProcess}>취소 거부처리</Button>
-        </LabelContents>
+        <Button onClick={setSuccessCancelProcess}>취소 완료처리</Button>
+        <Button onClick={setRejectCancelProcess}>취소 거부처리</Button>
       </ButtomContainer>
     </Container>
   );
