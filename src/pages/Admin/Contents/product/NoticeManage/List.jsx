@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import Table from 'pages/Admin/components/Table/Table';
+import { useHistory } from 'react-router';
+import { ROUTE_PATH } from 'configs/config';
 
 const Container = styled.div`
   background: #fff;
@@ -29,6 +31,47 @@ const BodyContainer = styled.div`
 const ButtonStyled = styled(Button)``;
 
 const List = ({ data }) => {
+  const history = useHistory();
+
+  const handleModifyNotice = () => {
+    console.log(history);
+    history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
+  };
+
+  const columns = [
+    {
+      title: '수정',
+      dataIndex: 'modify',
+      render: () => (
+        <ButtonStyled onClick={handleModifyNotice}>수정</ButtonStyled>
+      ),
+    },
+    {
+      title: '번호',
+      dataIndex: 'number',
+    },
+    {
+      title: '분류',
+      dataIndex: 'classification',
+    },
+    {
+      title: '상태',
+      dataIndex: 'status',
+    },
+    {
+      title: '제목',
+      dataIndex: 'title',
+    },
+    {
+      title: '등록일',
+      dataIndex: 'registerDate',
+    },
+    {
+      title: '삭제일',
+      dataIndex: 'deleteDate',
+    },
+  ];
+
   return (
     <Container>
       <TitleContainer>
@@ -45,35 +88,3 @@ const List = ({ data }) => {
 };
 
 export default List;
-
-const columns = [
-  {
-    title: '수정',
-    dataIndex: 'modify',
-    render: () => <ButtonStyled>수정</ButtonStyled>,
-  },
-  {
-    title: '번호',
-    dataIndex: 'number',
-  },
-  {
-    title: '분류',
-    dataIndex: 'classification',
-  },
-  {
-    title: '상태',
-    dataIndex: 'status',
-  },
-  {
-    title: '제목',
-    dataIndex: 'title',
-  },
-  {
-    title: '등록일',
-    dataIndex: 'registerDate',
-  },
-  {
-    title: '삭제일',
-    dataIndex: 'deleteDate',
-  },
-];

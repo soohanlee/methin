@@ -76,7 +76,6 @@ const Filter = () => {
     console.log(history);
     history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
   };
-
   return (
     <Container>
       <LabelContents title="상품 공지사항 조회">
