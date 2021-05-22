@@ -63,8 +63,8 @@ const RegisterProduct = () => {
   const [minPurchase, setMinPurchase] = useState(0);
   const [maxPurchase, setMaxPurchase] = useState(0);
 
-  const handleRegisterProductButtonClick = () => {
-    if (productName === '') {
+  const handleRegisterProductButtonClick = async () => {
+    if (productName === '' || price === '') {
       notification.error('필수 입력사항을 입력해주세요.');
       return;
     }
@@ -92,8 +92,14 @@ const RegisterProduct = () => {
         jsondata: null, //stringified json data
       };
 
-      const result = registerProduct(data);
-      console.log(result);
+      const result = await registerProduct(data);
+      if (result.status === 200) {
+        notification.success('상품등록을 완료했습니다.');
+      } else if (result.status === 400) {
+        notification.error('상품명 혹은 가격을 입력해주세요.');
+      } else {
+        notification.error('서버 에러입니다. 잠시 후 시도해주세요.');
+      }
     } catch (e) {
       notification.error('상품등록을 실패했습니다.');
     }
