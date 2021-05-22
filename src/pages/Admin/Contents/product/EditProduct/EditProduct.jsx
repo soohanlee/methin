@@ -15,7 +15,12 @@ const EditProduct = () => {
     async function fetchAndSetUser() {
       try {
         const result = await getProductList();
-        setTable(result.data.data.list);
+        const customList = result.data.data.list.map((item) => {
+          return { ...item, key: item.id };
+        });
+        // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
+
+        setTable(customList);
         setTableCount(result.data.data.count);
       } catch (e) {
         notification.error('상품 정보를 가져오지 못했습니다.');
@@ -29,7 +34,7 @@ const EditProduct = () => {
       <EditTitle />
       <EditCategory count={tableCount} />
       <EditProductSetting />
-      <Table table={table} count={tableCount} />
+      <Table table={table} setTable={setTable} count={tableCount} />
     </>
   );
 };

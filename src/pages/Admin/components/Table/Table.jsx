@@ -71,12 +71,10 @@ const Table = ({
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        'selectedRows: ',
-        selectedRows,
-      );
+      onChange(selectedRowKeys, selectedRows);
     },
+    // selectedRowKeys 는 key값만 들어있는 배열
+    // selectedRows 는 data전체가 들어있는 배열
     getCheckboxProps: (record) => ({
       disabled: record.name === 'Disabled User',
       // Column configuration not to be checked
@@ -96,7 +94,6 @@ const Table = ({
       columns={customColumns}
       dataSource={data}
       bordered
-      onChange={onChange}
       scroll={{ x: '100vw', y: 500 }}
       {...props}
     />

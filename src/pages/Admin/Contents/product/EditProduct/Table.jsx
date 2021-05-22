@@ -1,9 +1,14 @@
+import * as React from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router';
 import { Button as OriginButton } from 'antd';
+import { deleteProduct } from 'apis/product';
+import { notification } from 'utils/notification';
+import { ROUTE_PATH } from 'configs/config';
+
 import OriginTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
-import { ROUTE_PATH } from 'configs/config';
-import { useHistory } from 'react-router';
+import BasicModal from 'pages/Admin/components/Modal/BasicModal';
 
 const BasicSelectBoxStyled = styled(BasicSelectBox)`
   width: 15rem;
@@ -32,15 +37,14 @@ const Button = styled(OriginButton)`
   margin-right: 0.5rem;
 `;
 
-const Table = ({ table, count }) => {
+const Table = ({ table, count, setTable }) => {
+  const [selectedTableKeys, setSelectedTableKeys] = React.useState([]);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState('');
   const history = useHistory();
 
   const setExcelDown = () => {
     alert('엑셀다운');
-  };
-
-  const setSelectDelete = () => {
-    alert('선택삭제');
   };
 
   const handleMoveEditPage = (id) => {
@@ -57,6 +61,15 @@ const Table = ({ table, count }) => {
       render: (_, record) => (
         <OriginButton onClick={() => handleMoveEditPage(record.id)}>
           수정
+        </OriginButton>
+      ),
+    },
+    {
+      title: '삭제',
+      dataIndex: 'delete',
+      render: (_, record) => (
+        <OriginButton onClick={() => handleDeleteModalOpen(record.id)}>
+          삭제
         </OriginButton>
       ),
     },
@@ -151,6 +164,46 @@ const Table = ({ table, count }) => {
     { label: '500개씩', value: 'fiveHundredCount' },
   ];
 
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    setSelectedTableKeys(selectedRowKeys);
+  };
+
+  const handleDeleteModalOpen = (id) => {
+    setSelectedProduct(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const setSelectDelete = () => {
+    alert('선택삭제 준비중');
+  };
+
+  const handleDeleteProduct = async () => {
+    try {
+      const result = await deleteProduct(selectedProduct);
+      if (result.status === 200) {
+        const newTable = table.filter((item) => {
+          return item.id !== selectedProduct;
+        });
+        console.log(newTable);
+        setTable(newTable);
+      } else if (result.status === 404) {
+        notification.error('이미 삭제되었습니다.');
+      }
+      setIsDeleteModalOpen(false);
+    } catch (e) {
+      console.log(e, 'e');
+      if (e.response && e.response.status === 404) {
+        notification.error('이미 삭제되었습니다.');
+      }
+      setIsDeleteModalOpen(false);
+    }
+  };
+
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedProduct('');
+  };
+
   return (
     <Container>
       <HeaderContainer>
@@ -167,7 +220,19 @@ const Table = ({ table, count }) => {
         </ButtonContainer>
       </HeaderContainer>
 
-      <OriginTable data={table} columns={columns} selectionType="checkbox" />
+      <OriginTable
+        data={table}
+        columns={columns}
+        selectionType="checkbox"
+        onChange={handleChange}
+      />
+      <BasicModal
+        visible={isDeleteModalOpen}
+        onOk={handleDeleteProduct}
+        onCancel={handleDeleteModalClose}
+      >
+        정말 삭제하시겠습니까?
+      </BasicModal>
     </Container>
   );
 };
