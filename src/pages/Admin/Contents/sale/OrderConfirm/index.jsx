@@ -5,7 +5,6 @@ import Filter from './Filter';
 import Table from './Table';
 import BoardHeader from 'pages/Admin/components/BoardHeader';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
-import DollarCircleTwoTone from '@ant-design/icons/DollarCircleTwoTone';
 
 const Icon = css`
   font-size: 4rem;
@@ -13,9 +12,6 @@ const Icon = css`
 `;
 
 const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
-  ${Icon}
-`;
-const DollarCircleTwoToneIcon = styled(DollarCircleTwoTone)`
   ${Icon}
 `;
 // 발주 확인/발송관리

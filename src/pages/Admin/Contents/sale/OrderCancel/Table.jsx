@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
-
-import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import OriginTable from 'pages/Admin/components/Table/Table';
 
 const Container = styled.div`

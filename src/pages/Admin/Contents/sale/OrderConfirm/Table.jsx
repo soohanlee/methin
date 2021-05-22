@@ -161,6 +161,9 @@ const Table = ({
 
         break;
       }
+      default: {
+        break;
+      }
     }
   };
 
@@ -342,7 +345,7 @@ const columns = [
   {
     title: '상품주문번호',
     dataIndex: 'productOrderNumber',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '주문번호',
@@ -382,7 +385,7 @@ const columns = [
   {
     title: '톡톡하기',
     dataIndex: 'talktalk',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
 ];
 

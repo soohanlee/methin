@@ -61,7 +61,7 @@ const CategoryModal = (property) => {
   const dataKey = Object.keys(data);
 
   useEffect(() => {
-    setData(dataList);
+    setData(property.dataList);
   }, []);
 
   const handleFristItemClick = (value) => {
@@ -210,27 +210,3 @@ const CategoryModal = (property) => {
   );
 };
 export default CategoryModal;
-
-const dataList = {
-  축산: [
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-  ],
-  곡물: ['오트밀'],
-};

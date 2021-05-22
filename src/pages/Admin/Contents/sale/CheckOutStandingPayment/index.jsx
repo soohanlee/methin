@@ -69,7 +69,7 @@ const columns = [
   {
     title: '주문번호',
     dataIndex: 'orderNumber',
-    render: (Text) => <a>{Text}</a>,
+    render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
     title: '주문날짜',
@@ -98,7 +98,7 @@ const columns = [
   {
     title: '상품번호',
     dataIndex: 'productNumber',
-    render: (Text) => <a>{Text}</a>,
+    render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
     title: '상품명',

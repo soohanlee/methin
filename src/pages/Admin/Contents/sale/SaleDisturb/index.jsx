@@ -172,46 +172,46 @@ const DisturbSales = () => {
 
 // 발주 확인/발송관리
 const SaleDisturb = () => {
-  const handleClick = (value) => {
-    switch (value) {
-      case 'todayDelay':
-        console.log('todayDelay');
-        break;
-      case 'preOrderDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'newOrderDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'deliveryPreparationDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'cancleRequest':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'changeDelivery':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'autoProcessing':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'todayStart':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'prePurchase':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'newOrder':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'confirmOrderCheck':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
+  // const handleClick = (value) => {
+  //   switch (value) {
+  //     case 'todayDelay':
+  //       console.log('todayDelay');
+  //       break;
+  //     case 'preOrderDelay':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'newOrderDelay':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'deliveryPreparationDelay':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'cancleRequest':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'changeDelivery':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'autoProcessing':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'todayStart':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'prePurchase':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'newOrder':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'confirmOrderCheck':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
 
-      default:
-        console.log(`Sorry, we are out of .`);
-    }
-  };
+  //     default:
+  //       console.log(`Sorry, we are out of .`);
+  //   }
+  // };
 
   return (
     <div>

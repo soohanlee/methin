@@ -71,7 +71,7 @@ const columns = [
   {
     title: '상품번호',
     dataIndex: 'ProductNumber',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '상품명',
@@ -100,65 +100,62 @@ const columns = [
   {
     title: '판매자할인',
     dataIndex: 'sellerDiscount',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '옵션',
     dataIndex: 'option',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '추가상품',
     dataIndex: 'addProduct',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '상품속성',
     dataIndex: 'ProductProperty',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '최소구매수량',
     dataIndex: 'minimumPurchaseQuantity',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '최대구매수량',
     dataIndex: 'maxmumPurchaseQuantity',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '배송비유형',
     dataIndex: 'deliveryPriceType',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
-  ,
   {
     title: '배송비결제방식',
     dataIndex: 'deliveryPriceMethod',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
-  ,
   {
     title: '기본배송비',
     dataIndex: 'defaultPrice',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '반품배송비',
     dataIndex: 'returnPrice',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '교환배송비',
     dataIndex: 'changePrice',
-    render: (text) => <a>{text}</a>,
+    render: (text) => <a href="https://www.naver.com">{text}</a>,
   },
   {
     title: '대분류',
     dataIndex: 'largeClassification',
   },
-  ,
   {
     title: '중분류',
     dataIndex: 'middleClassification',

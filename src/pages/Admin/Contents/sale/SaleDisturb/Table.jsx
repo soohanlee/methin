@@ -28,10 +28,6 @@ const Table = ({ data }) => {
     alert('선택건 해제하기');
   };
 
-  const setConfirmationCancel = () => {
-    alert('선택건 해제하기');
-  };
-
   return (
     <Container>
       <HeaderContainer>
