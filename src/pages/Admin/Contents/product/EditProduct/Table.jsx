@@ -1,9 +1,14 @@
+import * as React from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router';
 import { Button as OriginButton } from 'antd';
+import { deleteProduct } from 'apis/product';
+import { notification } from 'utils/notification';
+import { ROUTE_PATH } from 'configs/config';
+
 import OriginTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
-import { ROUTE_PATH } from 'configs/config';
-import { useHistory } from 'react-router';
+import BasicModal from 'pages/Admin/components/Modal/BasicModal';
 
 const BasicSelectBoxStyled = styled(BasicSelectBox)`
   width: 15rem;
@@ -31,140 +36,173 @@ const ButtonContainer = styled.div`
 const Button = styled(OriginButton)`
   margin-right: 0.5rem;
 `;
-const Table = ({ table, count }) => {
+
+const Table = ({ table, count, setTable }) => {
+  const [selectedTableKeys, setSelectedTableKeys] = React.useState([]);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState('');
   const history = useHistory();
+
   const setExcelDown = () => {
     alert('엑셀다운');
   };
 
-  const setSelectDelete = () => {
-    alert('선택삭제');
-  };
-
-  const handleModifyTableData = () => {
-    console.log(history);
-    history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerProduct}`);
+  const handleMoveEditPage = (id) => {
+    history.push({
+      pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerProduct}`,
+      state: id,
+    });
   };
 
   const columns = [
     {
       title: '수정',
       dataIndex: 'modify',
-      render: () => <Button onClick={handleModifyTableData}>수정</Button>,
+      render: (_, record) => (
+        <OriginButton onClick={() => handleMoveEditPage(record.id)}>
+          수정
+        </OriginButton>
+      ),
+    },
+    {
+      title: '삭제',
+      dataIndex: 'delete',
+      render: (_, record) => (
+        <OriginButton onClick={() => handleDeleteModalOpen(record.id)}>
+          삭제
+        </OriginButton>
+      ),
     },
     {
       title: '상품번호',
-      dataIndex: 'ProductNumber',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
+      dataIndex: 'id',
     },
     {
       title: '상품명',
-      dataIndex: 'productName',
+      dataIndex: 'name',
     },
     {
       title: '판매상태',
-      dataIndex: 'saleStatus',
+      dataIndex: 'status',
     },
     {
       title: '전시상태',
-      dataIndex: 'exhibitionStatus',
+      dataIndex: 'preview_status',
     },
     {
       title: '재고수량',
-      dataIndex: 'inventoryCount',
+      dataIndex: 'count',
     },
     {
       title: '판매가',
-      dataIndex: 'salePrice',
+      dataIndex: 'price',
     },
     {
       title: '할인가',
-      dataIndex: ' reducedPrice',
-    },
-    {
-      title: '판매자할인',
-      dataIndex: 'sellerDiscount',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
-    },
-    {
-      title: '옵션',
-      dataIndex: 'option',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
-    },
-    {
-      title: '추가상품',
-      dataIndex: 'addProduct',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
-    },
-    {
-      title: '상품속성',
-      dataIndex: 'ProductProperty',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
+      dataIndex: 'discount_amount',
     },
     {
       title: '최소구매수량',
-      dataIndex: 'minimumPurchaseQuantity',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
+      dataIndex: 'min_quantity',
     },
     {
       title: '최대구매수량',
-      dataIndex: 'maxmumPurchaseQuantity',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
+      dataIndex: 'max_quantity',
     },
     {
       title: '배송비유형',
-      dataIndex: 'deliveryPriceType',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
+      dataIndex: 'ship_category',
     },
+    ,
     {
       title: '배송비결제방식',
-      dataIndex: 'deliveryPriceMethod',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
+      dataIndex: 'ship_pay_type',
     },
+    ,
     {
       title: '기본배송비',
-      dataIndex: 'defaultPrice',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
+      dataIndex: 'ship_amount',
     },
     {
       title: '반품배송비',
-      dataIndex: 'returnPrice',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
+      dataIndex: 'refund_ship_amount',
     },
     {
       title: '교환배송비',
-      dataIndex: 'changePrice',
-      render: (text) => <a href="https://www.naver.com">{text}</a>,
+      dataIndex: 'exchange_ship_amount',
     },
-    {
-      title: '대분류',
-      dataIndex: 'largeClassification',
-    },
-    {
-      title: '중분류',
-      dataIndex: 'middleClassification',
-    },
-    {
-      title: '소분류',
-      dataIndex: 'smallClassification',
-    },
+    ,
     {
       title: '판매시작일',
-      dataIndex: 'startSaleDate',
+      dataIndex: 'sales_start_date',
     },
     {
       title: '판매종료일',
-      dataIndex: 'endSaleDate',
+      dataIndex: 'sales_end_date',
     },
     {
       title: '상품등록일',
-      dataIndex: 'addProductDate',
+      dataIndex: 'created_at',
     },
     {
       title: '최종수정일',
-      dataIndex: 'finalModifyDate',
+      dataIndex: 'updated_at',
     },
   ];
+
+  const SortViewList = [
+    { label: '연관상품 ID순', value: 'associatedProductID' },
+    { label: '대표 상품명순', value: 'representativeProduct' },
+    { label: '등록일순', value: 'registrationDate' },
+    { label: '최종수정일순', value: 'lastModifiedDate' },
+  ];
+
+  const CountList = [
+    { label: '50개씩', value: 'fiftyCount' },
+    { label: '100개씩', value: 'hundredCount' },
+    { label: '300개씩', value: 'threeHundredCount' },
+    { label: '500개씩', value: 'fiveHundredCount' },
+  ];
+
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    setSelectedTableKeys(selectedRowKeys);
+  };
+
+  const handleDeleteModalOpen = (id) => {
+    setSelectedProduct(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const setSelectDelete = () => {
+    alert('선택삭제 준비중');
+  };
+
+  const handleDeleteProduct = async () => {
+    try {
+      const result = await deleteProduct(selectedProduct);
+      if (result.status === 200) {
+        const newTable = table.filter((item) => {
+          return item.id !== selectedProduct;
+        });
+        console.log(newTable);
+        setTable(newTable);
+      } else if (result.status === 404) {
+        notification.error('이미 삭제되었습니다.');
+      }
+      setIsDeleteModalOpen(false);
+    } catch (e) {
+      console.log(e, 'e');
+      if (e.response && e.response.status === 404) {
+        notification.error('이미 삭제되었습니다.');
+      }
+      setIsDeleteModalOpen(false);
+    }
+  };
+
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedProduct('');
+  };
 
   return (
     <Container>
@@ -182,23 +220,21 @@ const Table = ({ table, count }) => {
         </ButtonContainer>
       </HeaderContainer>
 
-      <OriginTable data={table} columns={columns} selectionType="checkbox" />
+      <OriginTable
+        data={table}
+        columns={columns}
+        selectionType="checkbox"
+        onChange={handleChange}
+      />
+      <BasicModal
+        visible={isDeleteModalOpen}
+        onOk={handleDeleteProduct}
+        onCancel={handleDeleteModalClose}
+      >
+        정말 삭제하시겠습니까?
+      </BasicModal>
     </Container>
   );
 };
 
 export default Table;
-
-const SortViewList = [
-  { label: '연관상품 ID순', value: 'associatedProductID' },
-  { label: '대표 상품명순', value: 'representativeProduct' },
-  { label: '등록일순', value: 'registrationDate' },
-  { label: '최종수정일순', value: 'lastModifiedDate' },
-];
-
-const CountList = [
-  { label: '50개씩', value: 'fiftyCount' },
-  { label: '100개씩', value: 'hundredCount' },
-  { label: '300개씩', value: 'threeHundredCount' },
-  { label: '500개씩', value: 'fiveHundredCount' },
-];

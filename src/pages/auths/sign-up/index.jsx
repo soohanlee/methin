@@ -36,7 +36,7 @@ const SignUp = () => {
 
   const handleCheckExistEmail = async () => {
     try {
-      const result = await checkExistEmail(watch('email'));
+      const result = await checkExistEmail({ email: watch('email') });
       console.log('result', result);
       setIsExistEmail(result.data.isExists);
     } catch (e) {

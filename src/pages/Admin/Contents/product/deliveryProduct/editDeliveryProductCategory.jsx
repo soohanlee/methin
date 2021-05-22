@@ -34,18 +34,19 @@ const TitleText = styled.div`
 const editDeliveryProductCategory = () => {
   const categoryTextArray = ['배송비 묶음그룹 관리'];
 
-
   const renderSetCaterogy = () => {
     const CategoryClick = (e) => {
       alert(e.target.innerText);
     };
-  
+
     const result = [];
     for (let i = 0; i < 5; i++) {
       result.push(
         <>
-          <CategoryType>
-            <TitleText onClick={CategoryClick}>{categoryTextArray[i]}</TitleText>
+          <CategoryType key={i}>
+            <TitleText onClick={CategoryClick}>
+              {categoryTextArray[i]}
+            </TitleText>
           </CategoryType>
         </>,
       );

@@ -112,6 +112,7 @@ const Category = () => {
               {dataKey &&
                 dataKey.map((item) => (
                   <Item
+                    key={item}
                     isClicked={item === selectedFirstItem}
                     onClick={() => handleFristItemClick(item)}
                   >
@@ -126,6 +127,7 @@ const Category = () => {
               {data[selectedFirstItem] &&
                 data[selectedFirstItem].map((item) => (
                   <Item
+                    key={item}
                     isClicked={item === selectedSecondItem}
                     onClick={() => handleSecondItemClick(item)}
                   >
@@ -143,25 +145,6 @@ const Category = () => {
 export default Category;
 
 const dataList = {
-  축산: [
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-  ],
+  축산: ['닭가슴살', '돼지안심'],
   곡물: ['오트밀'],
 };

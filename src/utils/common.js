@@ -17,5 +17,9 @@ export function changeNumberDigits(value) {
 }
 
 export function removeRest(value) {
-  return value.replace(/,/gi, '');
+  if (value) {
+    return value.replace(/,/gi, '');
+  } else {
+    return value;
+  }
 }

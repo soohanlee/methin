@@ -23,7 +23,7 @@ const DeliveryProduct = () => {
       await getApiAllDeliveryData();
     }
     fetchAndSetUser();
-  });
+  }, []);
 
   const getApiAllDeliveryData = async () => {
     try {

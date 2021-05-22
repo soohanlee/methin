@@ -63,7 +63,10 @@ const EditCategory = ({ count }) => {
     for (let i = 0; i < 5; i++) {
       result.push(
         <>
-          <CategoryType onClick={() => categoryTypeClick(categoryTextArray[i])}>
+          <CategoryType
+            key={i}
+            onClick={() => categoryTypeClick(categoryTextArray[i])}
+          >
             {categoryTypeArray[i]}
             <CategoryTexts>
               <TitleText>{categoryTextArray[i]}</TitleText>
