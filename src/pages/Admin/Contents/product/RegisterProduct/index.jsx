@@ -93,54 +93,57 @@ const RegisterProduct = ({ history }) => {
     setMaxPurchase(0);
   };
 
-  useEffect(async () => {
-    if (history.location.state) {
-      const result = await getProductDetail(history.location.state);
-      if (result.status === 200) {
-        const {
-          actual_price,
-          count,
-          created_at,
-          description,
-          discount_amount,
-          jsondata,
-          id,
-          max_quantity,
-          min_quantity,
-          name,
-          preview_status,
-          price,
-          sales_end_date,
-          sales_start_date,
-          ship_amount1,
-          ship_amount2,
-          ship_attr,
-          ship_category,
-          ship_free_cond_amount,
-          ship_pay_type,
-          ship_type,
-          status,
-          tax_type,
-          updated_at,
-        } = result.data.data;
-        setPrice(actual_price);
-        setAvailableStock(count);
-        setMinPurchase(min_quantity);
-        setMaxPurchase(max_quantity);
-        setProductName(name);
-        setSalePrice(price);
-        setPayType(ship_pay_type);
-        setDeliveryFeeCondition(ship_free_cond_amount);
-        setVAT(tax_type);
-        setDeliveryType(ship_type);
-        setDeliveryAttrs(ship_attr);
-        setDeliveryFee(ship_category);
-        setDefaultFee(ship_amount1);
-        setSectionFeeComent(ship_amount2);
-        setSaleTypePrice(discount_amount);
+  useEffect(() => {
+    async function fetchData() {
+      if (history.location.state) {
+        const result = await getProductDetail(history.location.state);
+        if (result.status === 200) {
+          const {
+            actual_price,
+            count,
+            created_at,
+            description,
+            discount_amount,
+            jsondata,
+            id,
+            max_quantity,
+            min_quantity,
+            name,
+            preview_status,
+            price,
+            sales_end_date,
+            sales_start_date,
+            ship_amount1,
+            ship_amount2,
+            ship_attr,
+            ship_category,
+            ship_free_cond_amount,
+            ship_pay_type,
+            ship_type,
+            status,
+            tax_type,
+            updated_at,
+          } = result.data.data;
+          setPrice(actual_price);
+          setAvailableStock(count);
+          setMinPurchase(min_quantity);
+          setMaxPurchase(max_quantity);
+          setProductName(name);
+          setSalePrice(price);
+          setPayType(ship_pay_type);
+          setDeliveryFeeCondition(ship_free_cond_amount);
+          setVAT(tax_type);
+          setDeliveryType(ship_type);
+          setDeliveryAttrs(ship_attr);
+          setDeliveryFee(ship_category);
+          setDefaultFee(ship_amount1);
+          setSectionFeeComent(ship_amount2);
+          setSaleTypePrice(discount_amount);
+        }
       }
     }
-    // return (history.location.state = undefined);
+
+    fetchData();
   }, []);
 
   const handleRegisterProductButtonClick = async () => {

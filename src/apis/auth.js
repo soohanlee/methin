@@ -4,15 +4,17 @@ import { requestConfig } from 'apis/config';
 const baseUrl = '/api/auth';
 
 export const logInWithCreds = async (userName, password) => {
-  const response = await axios.post(`${baseUrl}/sign-in`, {
+  const result = await axios.post(`${baseUrl}/sign-in`, {
     id: userName,
     password: password,
   });
-  const accessToken = response.data.token;
+  const accessToken = result.data.token;
+  const refresh_token = result.data.refresh_token;
   // const refreshToken = response.data.refresh_token;
 
   requestConfig.headers.Authorization = accessToken;
-  return accessToken;
+  requestConfig.headers.refreshToken = refresh_token;
+  return result;
 };
 
 // export const logInWithToken = async (accessToken) => {
@@ -62,3 +64,7 @@ export const reissuanceRefreshVerify = async () => {
 };
 
 // access token. refresh token 둘다 유효하지 않으면
+
+export const checkPhoneNumber = async (data) => {
+  return await axios.post(`${baseUrl}/auth-code`, data);
+};

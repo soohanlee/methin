@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { signup, checkExistEmail } from 'apis/auth';
+import { signup, checkExistEmail, checkPhoneNumber } from 'apis/auth';
 import { notification } from 'utils/notification';
 
 import { Input, Form } from 'components/styled/Form';
@@ -24,20 +24,24 @@ const SignUp = () => {
   const onSubmit = async (data) => {
     try {
       const result = await signup(data);
-      console.log('result', result);
     } catch (e) {
       if (e.response.status === 400) {
-        notification.error('핸드폰 인증을 먼저 진행해주세요.');
+        if (e.response.data.error_code === 1003) {
+          notification.error('핸드폰 인증을 먼저 진행해주세요.');
+        } else if (e.response.data.error_code === 1002) {
+          notification.error('이미 가입한 이메일 입니다.');
+        } else if (e.response.data.error_code === 1000) {
+          notification.error('필수 값을 입력해주세요.');
+        } else {
+          notification.error('죄송합니다. 다시 한번 시도해주세요.');
+        }
       }
     }
   };
 
-  console.log(watch('email')); // watch input value by passing the name of it
-
   const handleCheckExistEmail = async () => {
     try {
       const result = await checkExistEmail({ email: watch('email') });
-      console.log('result', result);
       setIsExistEmail(result.data.isExists);
     } catch (e) {
       if (e.response && e.response.status === 400) {
@@ -46,8 +50,17 @@ const SignUp = () => {
     }
   };
 
-  const handleCheckPhoneNumber = () => {
-    notification.error('핸드폰 인증 api 연결 x');
+  const handleCheckPhoneNumber = async () => {
+    const phoneNumber = watch('phone');
+
+    if (phoneNumber.length < 1) {
+      return notification.error(`핸드폰 번호를 입력해주세요.`);
+    }
+    try {
+      await checkPhoneNumber({ phone: watch('phone') });
+    } catch (e) {
+      notification.error(`핸드폰 인증 실패`);
+    }
   };
 
   return (

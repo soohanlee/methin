@@ -41,8 +41,8 @@ const Login = () => {
     login.changeUserState(LOGGING_IN);
     try {
       const result = await logInWithCreds(id, password);
-      const token = result.data.token;
-      const refresh_token = result.data.refresh_token;
+      const token = result.data.data.token;
+      const refresh_token = result.data.data.refresh_token;
       setAccessToken(token);
       setRefreshToken(refresh_token);
       login.changeUserState(LOGGED_IN);
