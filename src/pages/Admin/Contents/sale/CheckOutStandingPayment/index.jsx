@@ -1,10 +1,9 @@
-import {useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import Table from 'pages/Admin/components/Table/Table';
 import { Button } from 'antd';
 import QueryItemModal from 'pages/Admin/Contents/sale/CheckOutStandingPayment/QueryItemModal';
-
 
 // 미결제 확인
 
@@ -35,14 +34,26 @@ const CheckOutStandingPayment = () => {
 
   return (
     <Container>
-      <QueryItemModal visible={QueryItemVisible}
-        setVisible={()=>{setQueryItemVisible(false)}}
-        onClick={()=>{setQueryItemVisible(false)}}
-        title="조회항목 설정(미결제확인)"/>
+      <QueryItemModal
+        visible={QueryItemVisible}
+        setVisible={() => {
+          setQueryItemVisible(false);
+        }}
+        onClick={() => {
+          setQueryItemVisible(false);
+        }}
+        title="조회항목 설정(미결제확인)"
+      />
       <TitleContainer>
         <Title>목록 (총 {data.length}개)</Title>
         <ButtonContainer>
-          <Button onClick = {()=>{setQueryItemVisible(true)}} >조회항목 설정</Button>
+          <Button
+            onClick={() => {
+              setQueryItemVisible(true);
+            }}
+          >
+            조회항목 설정
+          </Button>
           <Button>엑셀다운</Button>
         </ButtonContainer>
       </TitleContainer>
@@ -139,7 +150,7 @@ const columns = [
 
 const data = [
   {
-    key: '1',
+    key: '0',
     productOrderNumber: '판매완료',
     orderNumber: '',
     orderDate: '123124125',
