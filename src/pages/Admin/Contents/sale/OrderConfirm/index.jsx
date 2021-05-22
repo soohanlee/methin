@@ -5,7 +5,6 @@ import Filter from './Filter';
 import Table from './Table';
 import BoardHeader from 'pages/Admin/components/BoardHeader';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
-import DollarCircleTwoTone from '@ant-design/icons/DollarCircleTwoTone';
 
 const Icon = css`
   font-size: 4rem;
@@ -13,9 +12,6 @@ const Icon = css`
 `;
 
 const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
-  ${Icon}
-`;
-const DollarCircleTwoToneIcon = styled(DollarCircleTwoTone)`
   ${Icon}
 `;
 // 발주 확인/발송관리
@@ -71,6 +67,7 @@ const OrderConfirm = () => {
         orderCountTableColumns={orderCountTableColumns}
         orderCountTableData={orderCountTableData}
         orderSheetList={orderSheetList}
+        tableData={tableData}
       />
     </div>
   );
@@ -200,5 +197,21 @@ const orderSheetList = [
     adress:
       '(650759) 경상남도 통영시 무전동 한진로즈힐 1054/2 한진로즈힐 106동 1406호',
     phoneNum: '010-6295-1039 / 010-8541-1039 (010-6295-1039)',
+  },
+];
+
+const tableData = [
+  {
+    key: '0',
+    productOrderNumber: '2021',
+    orderNumber: '2021',
+    buyerDeliveryType: '택배,등기,소포',
+    deliveryType: '',
+    courier: '',
+    invoiceNumber: '',
+    trackingShipping: '',
+    shipmentDate: '2021.05.22',
+    salesChannel: '스마트스토어',
+    talktalk: '톡톡하기',
   },
 ];

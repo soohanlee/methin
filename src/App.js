@@ -58,12 +58,15 @@ function App() {
   //   }
   // }, []);
 
-  useEffect(async () => {
-    if (await getIsValidUser()) {
-      changeUserState(LOGGED_IN);
-    } else {
-      changeUserState(NOT_LOGGED_IN);
+  useEffect(() => {
+    async function fetchAndSetUser() {
+      if (await getIsValidUser()) {
+        changeUserState(LOGGED_IN);
+      } else {
+        changeUserState(NOT_LOGGED_IN);
+      }
     }
+    fetchAndSetUser();
   }, []);
 
   const changeUserState = (data) => {

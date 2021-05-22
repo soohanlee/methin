@@ -23,15 +23,11 @@ const Button = styled(OriginButton)`
   margin-right: 0.5rem;
 `;
 
-const setSelectRelease = () => {
-  alert('선택건 해제하기');
-};
+const Table = ({ data }) => {
+  const setSelectRelease = () => {
+    alert('선택건 해제하기');
+  };
 
-const setConfirmationCancel = () => {
-  alert('선택건 해제하기');
-};
-
-const Table = () => {
   return (
     <Container>
       <HeaderContainer>
@@ -63,32 +59,5 @@ const columns = [
   {
     title: '등록사유',
     dataIndex: 'registerWhy',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
   },
 ];

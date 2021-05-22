@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
-
-import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import OriginTable from 'pages/Admin/components/Table/Table';
 
 const Container = styled.div`
@@ -42,7 +40,7 @@ const setRejectCancelProcess = () => {
   alert('취소거부처리');
 };
 
-const Table = () => {
+const Table = ({ data }) => {
   return (
     <Container>
       <HeaderContainer>
@@ -100,20 +98,5 @@ const columns = [
   {
     title: '취소사유',
     dataIndex: 'cancelReason',
-  },
-];
-
-const data = [
-  {
-    key: '0',
-    productOrderNumber: '2021',
-    orderNumber: '',
-    orderState: '',
-    orderCancelState: '',
-    settlementDay: '',
-    orderCancelDate: '',
-    receptionChannel: '',
-    talktalk: '',
-    cancelReason: '',
   },
 ];

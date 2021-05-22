@@ -26,7 +26,7 @@ const OrderCancel = () => {
     <Container>
       <BoardHeader onClick={categoryTypeClick} list={list} />
       <Filter />
-      <Table />
+      <Table data={data} />
     </Container>
   );
 };
@@ -48,5 +48,19 @@ const list = [
         img: <AppstoreTwoToneIcon />,
       },
     ],
+  },
+];
+const data = [
+  {
+    key: '0',
+    productOrderNumber: '2021',
+    orderNumber: '',
+    orderState: '',
+    orderCancelState: '',
+    settlementDay: '',
+    orderCancelDate: '',
+    receptionChannel: '',
+    talktalk: '',
+    cancelReason: '',
   },
 ];

@@ -31,7 +31,7 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = () => {
+const Table = ({ data }) => {
   const [QueryItemVisible, setQueryItemVisible] = useState(false);
 
   return (
@@ -88,106 +88,108 @@ const columns = [
   {
     title: '주문번호',
     dataIndex: 'orderNumber',
+    render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
     title: '발송처리일',
-    dataIndex: 'deliveryWayBuyer',
+    dataIndex: 'deliveryDate',
   },
   {
     title: '주문상태',
-    dataIndex: 'deliveryWay',
+    dataIndex: 'orderStatus',
   },
   {
     title: '배송방법',
-    dataIndex: 'address',
+    dataIndex: 'deliveryForm',
   },
   {
     title: '택배사',
-    dataIndex: 'address',
+    dataIndex: 'Courier',
   },
   {
     title: '송장번호',
-    dataIndex: 'address',
+    dataIndex: 'invoiceNumber',
   },
   {
     title: '배송추적',
-    dataIndex: 'address',
+    dataIndex: 'trackingShipping',
   },
   {
     title: '발송일',
-    dataIndex: 'address',
+    dataIndex: 'shipmentDate',
   },
   {
     title: '구매자명',
-    dataIndex: 'address',
+    dataIndex: 'buyerName',
   },
   {
     title: '구매자ID',
-    dataIndex: 'address',
+    dataIndex: 'buyerID',
   },
   {
     title: '수취인명',
-    dataIndex: 'address',
+    dataIndex: 'recipientName',
   },
   {
     title: '상품번호',
-    dataIndex: 'address',
+    dataIndex: 'productNumber',
+    render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
     title: '상품명',
-    dataIndex: 'address',
+    dataIndex: 'productName',
   },
   {
     title: '옵션정보',
-    dataIndex: 'address',
+    dataIndex: 'optionInfo',
   },
   {
     title: '수량',
-    dataIndex: 'address',
+    dataIndex: 'count',
   },
   {
     title: '상품가격',
-    dataIndex: 'address',
+    dataIndex: 'productPrice',
   },
   {
     title: '옵션가격',
-    dataIndex: 'address',
+    dataIndex: 'optionPrice',
   },
   {
     title: '총 주문금액',
-    dataIndex: 'address',
+    dataIndex: 'allOrderPrice',
   },
   {
     title: '결제일',
-    dataIndex: 'address',
+    dataIndex: 'paymentDate',
   },
   {
     title: '배송비 묶음번호',
-    dataIndex: 'address',
+    dataIndex: 'deliveryGroupNumber',
   },
   {
     title: '배송비 형태',
-    dataIndex: 'address',
+    dataIndex: 'deliveryForm',
   },
   {
     title: '배송비 유형',
-    dataIndex: 'address',
+    dataIndex: 'deliveryType',
   },
   {
     title: '배송비 합계',
-    dataIndex: 'address',
+    dataIndex: 'deliveryPriceSum',
   },
   {
     title: '제주/도서 추가배송비',
-    dataIndex: 'address',
+    dataIndex: 'deliveryPriceAdd',
   },
   {
     title: '배송비 할인액',
-    dataIndex: 'address',
+    dataIndex: 'deliveryPriceDiscount',
   },
   {
     title: '수취인 연락처',
-    dataIndex: 'address',
+    dataIndex: 'recipientPhone',
   },
   {
     title: '배송지',
@@ -195,37 +197,10 @@ const columns = [
   },
   {
     title: '구매자 연락처',
-    dataIndex: 'address',
+    dataIndex: 'buyerPhone',
   },
   {
     title: '우편번호',
-    dataIndex: 'address',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
+    dataIndex: 'postalCode',
   },
 ];

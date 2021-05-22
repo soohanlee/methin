@@ -16,23 +16,10 @@ const Container = styled.div`
   margin-bottom: 2rem;
 `;
 
-const displayDateContainer = styled.div`
+const DisplayDateContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-const searchNameList = [
-  { label: '일반', value: 'normal' },
-  { label: '이벤트', value: 'event' },
-  { label: '배송지연', value: 'late' },
-  { label: '상품', value: 'product' },
-];
-
-const displayArea = [
-  { label: '전체', value: 'all' },
-  { label: '웹', value: 'web' },
-  { label: '모바일', value: 'mobile' },
-];
 
 const RegisterNotice = () => {
   const [title, setTitle] = useState('');
@@ -146,7 +133,7 @@ const RegisterNotice = () => {
         <BasicSelectBox list={displayArea} onChange={handleDisplayAreaChange} />
       </LabelContents>
       <LabelContents title="전시기간 설정">
-        <displayDateContainer>
+        <DisplayDateContainer>
           <Radio.Group
             value={isDisplayDate}
             onChange={(e) => setIsDisplayDate(e.target.value)}
@@ -170,10 +157,10 @@ const RegisterNotice = () => {
               />
             </>
           )}
-        </displayDateContainer>
+        </DisplayDateContainer>
       </LabelContents>
       <LabelContents title="팝업사용">
-        <displayDateContainer>
+        <DisplayDateContainer>
           <Radio.Group
             value={isUsePopup}
             onChange={(e) => setIsUsePopup(e.target.value)}
@@ -197,10 +184,23 @@ const RegisterNotice = () => {
               />
             </>
           )}
-        </displayDateContainer>
+        </DisplayDateContainer>
       </LabelContents>
     </Container>
   );
 };
 
 export default RegisterNotice;
+
+const searchNameList = [
+  { label: '일반', value: 'normal' },
+  { label: '이벤트', value: 'event' },
+  { label: '배송지연', value: 'late' },
+  { label: '상품', value: 'product' },
+];
+
+const displayArea = [
+  { label: '전체', value: 'all' },
+  { label: '웹', value: 'web' },
+  { label: '모바일', value: 'mobile' },
+];

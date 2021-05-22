@@ -104,6 +104,7 @@ const EditDeliveryProductTable = ({
 
   const columns = [
     {
+      title: '수정',
       dataIndex: 'id',
       render: (id) => (
         <BasicButton
@@ -115,6 +116,7 @@ const EditDeliveryProductTable = ({
       ),
     },
     {
+      title: '삭제',
       dataIndex: 'id',
       render: (id) => (
         <BasicButton
@@ -195,11 +197,10 @@ const EditDeliveryProductTable = ({
   );
 };
 
+export default EditDeliveryProductTable;
 const list = [
   { value: 'ten', label: '10개씩' },
   { value: 'fifty', label: '50개씩' },
   { value: 'hundred', label: '100개씩' },
   { value: 'fiveHundred', label: '500개씩' },
 ];
-
-export default EditDeliveryProductTable;
