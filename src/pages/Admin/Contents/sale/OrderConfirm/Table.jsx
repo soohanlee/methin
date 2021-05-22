@@ -44,6 +44,7 @@ const Table = ({
   orderCountTableColumns,
   orderCountTableData,
   orderSheetList,
+  tableData,
 }) => {
   const invoiceNumber = useRef(null);
 
@@ -391,22 +392,6 @@ const selctBoxList = [
   { value: '3', label: '퀵서비스' },
   { value: '4', label: '방문수령' },
   { value: '4', label: '직접전달' },
-];
-
-const tableData = [
-  {
-    key: '0',
-    productOrderNumber: '2021',
-    orderNumber: '2021',
-    buyerDeliveryType: '택배,등기,소포',
-    deliveryType: '',
-    courier: '',
-    invoiceNumber: '',
-    trackingShipping: '',
-    shipmentDate: '2021.05.22',
-    salesChannel: '스마트스토어',
-    talktalk: '톡톡하기',
-  },
 ];
 
 const deliveryTypeList = [

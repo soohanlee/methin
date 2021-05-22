@@ -21,7 +21,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const Header = () => {
+const Header = ({ dataList }) => {
   const categoryRef = useRef(null);
   const countryRef = useRef(null);
   const [categoryVisible, setCategoryVisible] = useState(false);
@@ -61,6 +61,7 @@ const Header = () => {
         onClick={setCategoryVisible}
         title="카테고리 찾기"
         categoryRef={categoryRef}
+        dataList={dataList}
       />
       <CountryModal
         visible={countryVisible}

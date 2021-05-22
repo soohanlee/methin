@@ -46,26 +46,6 @@ const ItemWrap = styled.div`
   align-items: center;
 `;
 
-const searchNameList = [
-  { label: '제목', value: 'title' },
-  { label: '번호', value: 'number' },
-];
-
-const typeList = [
-  { label: '분류 전체', value: 'all' },
-  { label: '일반', value: 'normal' },
-  { label: '이벤트', value: 'event' },
-  { label: '배송지연', value: 'delivery' },
-  { label: '상품', value: 'product' },
-];
-
-const displayList = [
-  { label: '전시상태 전체', value: 'all' },
-  { label: '전시대기', value: 'wait' },
-  { label: '전시중', value: 'ing' },
-  { label: '전시중지', value: 'stop' },
-];
-
 const Filter = () => {
   const titleRef = useRef(null);
   const history = useHistory();
@@ -147,3 +127,23 @@ const Filter = () => {
 };
 
 export default Filter;
+
+const searchNameList = [
+  { label: '제목', value: 'title' },
+  { label: '번호', value: 'number' },
+];
+
+const typeList = [
+  { label: '분류 전체', value: 'all' },
+  { label: '일반', value: 'normal' },
+  { label: '이벤트', value: 'event' },
+  { label: '배송지연', value: 'delivery' },
+  { label: '상품', value: 'product' },
+];
+
+const displayList = [
+  { label: '전시상태 전체', value: 'all' },
+  { label: '전시대기', value: 'wait' },
+  { label: '전시중', value: 'ing' },
+  { label: '전시중지', value: 'stop' },
+];

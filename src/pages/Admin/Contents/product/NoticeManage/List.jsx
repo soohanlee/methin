@@ -26,69 +26,9 @@ const BodyContainer = styled.div`
   padding: 2rem;
 `;
 
-const DeleteButton = styled(Button)``;
+const ButtonStyled = styled(Button)``;
 
-const columns = [
-  {
-    title: '수정',
-    dataIndex: 'edit',
-  },
-  {
-    title: '번호',
-    dataIndex: 'number',
-  },
-  {
-    title: '분류',
-    dataIndex: 'devide',
-  },
-  {
-    title: '상태',
-    dataIndex: 'address',
-  },
-  {
-    title: '제목',
-    dataIndex: 'title',
-  },
-  {
-    title: '등록일',
-    dataIndex: 'registerDate',
-  },
-  {
-    title: '삭제일',
-    dataIndex: '',
-    key: 'x',
-    render: () => <DeleteButton>삭제</DeleteButton>,
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'edit',
-    age: 32,
-    address: 'number',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'devide',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'address',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'title',
-  },
-];
-
-const List = () => {
+const List = ({ data }) => {
   return (
     <Container>
       <TitleContainer>
@@ -105,3 +45,35 @@ const List = () => {
 };
 
 export default List;
+
+const columns = [
+  {
+    title: '수정',
+    dataIndex: 'modify',
+    render: () => <ButtonStyled>수정</ButtonStyled>,
+  },
+  {
+    title: '번호',
+    dataIndex: 'number',
+  },
+  {
+    title: '분류',
+    dataIndex: 'classification',
+  },
+  {
+    title: '상태',
+    dataIndex: 'status',
+  },
+  {
+    title: '제목',
+    dataIndex: 'title',
+  },
+  {
+    title: '등록일',
+    dataIndex: 'registerDate',
+  },
+  {
+    title: '삭제일',
+    dataIndex: 'deleteDate',
+  },
+];

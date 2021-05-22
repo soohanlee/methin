@@ -22,21 +22,20 @@ const EditDeliveryMenuBtn = styled.div`
 
 const TableStyled = styled(Table)``;
 
-const onClickBtn = (e) => {
-  alert(e.target.innerText);
-};
+const editTemplateProductTable = ({ data }) => {
+  const onClickBtn = (e) => {
+    alert(e.target.innerText);
+  };
+  const renderSetButton = (label) => {
+    return <BasicButton onClick={onClickBtn} label={label}></BasicButton>;
+  };
 
-const SetButton = (label) => {
-  return <BasicButton onClick={onClickBtn} label={label}></BasicButton>;
-};
-
-const editTemplateProductTable = () => {
   return (
     <>
-      <TableStyled  columns={columns} selectionType={'checkbox'}/>
+      <TableStyled data={data} columns={columns} selectionType={'checkbox'} />
       <EditDeliveryMenuBtn>
-        {SetButton('등록')}
-        {SetButton('선택삭제')}
+        {renderSetButton('등록')}
+        {renderSetButton('선택삭제')}
       </EditDeliveryMenuBtn>
     </>
   );
@@ -56,6 +55,7 @@ const columns = [
   {
     title: '수정',
     dataIndex: 'modify',
+    render: () => <BasicButton>수정</BasicButton>,
   },
   {
     title: '등록일',
@@ -64,5 +64,5 @@ const columns = [
   {
     title: '수정일',
     dataIndex: 'modifyDate',
-  }
+  },
 ];

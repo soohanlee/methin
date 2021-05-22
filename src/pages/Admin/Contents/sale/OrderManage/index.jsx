@@ -140,6 +140,7 @@ const columns = [
   {
     title: '주문번호',
     dataIndex: 'orderNumber',
+    render: (Text) => <a>{Text}</a>,
   },
   {
     title: '주문날짜',
@@ -151,51 +152,60 @@ const columns = [
   },
   {
     title: '상품번호',
-    dataIndex: 'claimState',
+    dataIndex: 'productNumber',
+    render: (Text) => <a>{Text}</a>,
   },
   {
     title: '상품명',
-    dataIndex: 'productNumber',
+    dataIndex: 'productName',
   },
   {
     title: '옵션',
-    dataIndex: 'productNumber',
+    dataIndex: 'option',
   },
   {
     title: '수량',
-    dataIndex: 'productNumber',
+    dataIndex: 'count',
   },
   {
     title: '구매자명',
-    dataIndex: 'productNumber',
+    dataIndex: 'buyerName',
   },
   {
     title: '구매자 ID',
-    dataIndex: 'productNumber',
+    dataIndex: 'buyerID',
   },
   {
     title: '수취인명',
-    dataIndex: 'productNumber',
+    dataIndex: 'recipientName',
   },
 ];
 
 const data = [
   {
     key: '1',
-    productOrderNumber: '판매완료',
-    orderNumber: '',
-    orderDate: '123124125',
+    orderNumber: '1',
+    orderDate: '2021',
     orderState: '판매완료',
-    claimState: '소고기',
-    productNumber: '소고기 안심',
+    productNumber: '1',
+    productName: '소고기 안심',
+    option: '',
+    count: '1',
+    buyerName: '범희',
+    buyerID: '범희',
+    recipientName: '범희',
   },
   {
     key: '2',
-    productOrderNumber: '판매완료',
-    orderNumber: '',
-    orderDate: '123124125',
+    orderNumber: '2',
+    orderDate: '2021',
     orderState: '판매완료',
-    claimState: '소고기',
-    productNumber: '소고기 안심',
+    productNumber: '2',
+    productName: '소고기 등심',
+    option: '',
+    count: '1',
+    buyerName: '수한',
+    buyerID: '수한',
+    recipientName: '수한',
   },
 ];

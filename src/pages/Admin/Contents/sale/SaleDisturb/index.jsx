@@ -68,12 +68,12 @@ const Content = styled.div`
   padding: 2rem;
 `;
 
-const regist = () => {
-  alert('등록');
-};
-
 const RegistertionConditions = () => {
   const registrationConditions = useRef(null);
+
+  const regist = () => {
+    alert('등록');
+  };
 
   return (
     <RegistertBox>
@@ -217,7 +217,7 @@ const SaleDisturb = () => {
     <div>
       <div>{RegistertionConditions()}</div>
       <div>{DisturbSales()}</div>
-      <Table />
+      <Table data={data} />
     </div>
   );
 };
@@ -231,4 +231,31 @@ const InquiryConditionsTypeList = [
   { label: '전체', value: 'all' },
   { label: '구매자ID', value: 'buyerID' },
   { label: '상품주문번호', value: 'productOrderNumber' },
+];
+
+const data = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+  },
+  {
+    key: '4',
+    name: 'Disabled User',
+    age: 99,
+    address: 'Sidney No. 1 Lake Park',
+  },
 ];

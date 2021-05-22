@@ -55,18 +55,10 @@ const CheckCircleTwoToneIcon = styled(CheckCircleTwoTone)`
   ${Icon}
 `;
 
-const categoryTypeArray = [
-  <AppstoreTwoToneIcon />,
-  <DollarCircleTwoToneIcon />,
-  <WarningTwoToneIcon />,
-  <CloseCircleTwoToneIcon />,
-  <CheckCircleTwoToneIcon />,
-];
-
 const categoryTextArray = ['전체', '판매중', '품절', '판매중지', '판매종료'];
 
 const EditCategory = ({ count }) => {
-  const SetCaterogy = () => {
+  const renderSetCaterogy = () => {
     const result = [];
     for (let i = 0; i < 5; i++) {
       result.push(
@@ -89,9 +81,17 @@ const EditCategory = ({ count }) => {
   };
   return (
     <>
-      <EditCategorys>{SetCaterogy()}</EditCategorys>
+      <EditCategorys>{renderSetCaterogy()}</EditCategorys>
     </>
   );
 };
 
 export default EditCategory;
+
+const categoryTypeArray = [
+  <AppstoreTwoToneIcon />,
+  <DollarCircleTwoToneIcon />,
+  <WarningTwoToneIcon />,
+  <CloseCircleTwoToneIcon />,
+  <CheckCircleTwoToneIcon />,
+];

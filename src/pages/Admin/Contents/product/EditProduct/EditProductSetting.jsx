@@ -114,68 +114,65 @@ const Select = styled.div`
   border-bottom: 0px;
 `;
 
-const SetSearch = () => {
+const EditProductSetting = () => {
   const productNumberRef = useRef(null); //상품 번호
   const productSearchDesc = useRef(null); //상품 복수 검색
   const productName = useRef(null); //상품명
-  return (
-    <Search>
-      <Title>검색어</Title>
-      <Propertys>
-        <CheckBoxLabelStyled label="상품번호" ref={productNumberRef} />
-        <TextAreaBoxStyled
-          label="복수 검색
-          (enter 또는 &#34;,&#34;로 구분)"
-          ref={productSearchDesc}
-        />
-        <TextAndInput>
-          <BasicTextInputBoxStyled
-            textSize="10rem"
-            label="상품명"
-            ref={productName}
-          />
-        </TextAndInput>
-      </Propertys>
-    </Search>
-  );
-};
 
-const SetSalesStatus = () => {
+  const renderSetSearch = () => {
+    return (
+      <Search>
+        <Title>검색어</Title>
+        <Propertys>
+          <CheckBoxLabelStyled label="상품번호" ref={productNumberRef} />
+          <TextAreaBoxStyled
+            label="복수 검색
+          (enter 또는 &#34;,&#34;로 구분)"
+            ref={productSearchDesc}
+          />
+          <TextAndInput>
+            <BasicTextInputBoxStyled
+              textSize="10rem"
+              label="상품명"
+              ref={productName}
+            />
+          </TextAndInput>
+        </Propertys>
+      </Search>
+    );
+  };
   const allSalesCheck = useRef(null); //전체체크
   const saleNowCheck = useRef(null); //판매중 체크
   const soldOutCheck = useRef(null); //품절 체크
   const stopSaleCheck = useRef(null); //판매중지 체크
   const endSaleCheck = useRef(null); //판매종료 체크
-
-  return (
-    <SalesStatus>
-      <Title>판매상태</Title>
-      <Propertys>
-        <CheckBoxLabelStyled label="전체" ref={allSalesCheck} />
-        <CheckBoxLabelStyled label="판매중" ref={saleNowCheck} />
-        <CheckBoxLabelStyled label="품절" ref={soldOutCheck} />
-        <CheckBoxLabelStyled label="판매중지" ref={stopSaleCheck} />
-        <CheckBoxLabelStyled label="판매종료" ref={endSaleCheck} />
-      </Propertys>
-    </SalesStatus>
-  );
-};
-
-const SetCategory = () => {
+  const renderSetSalesStatus = () => {
+    return (
+      <SalesStatus>
+        <Title>판매상태</Title>
+        <Propertys>
+          <CheckBoxLabelStyled label="전체" ref={allSalesCheck} />
+          <CheckBoxLabelStyled label="판매중" ref={saleNowCheck} />
+          <CheckBoxLabelStyled label="품절" ref={soldOutCheck} />
+          <CheckBoxLabelStyled label="판매중지" ref={stopSaleCheck} />
+          <CheckBoxLabelStyled label="판매종료" ref={endSaleCheck} />
+        </Propertys>
+      </SalesStatus>
+    );
+  };
   const bigGroup = useRef(null); //대분류
   const middleGroup = useRef(null); //중분류
-  return (
-    <Category>
-      <Title>카테고리</Title>
-      <Propertys>
-        <BasicDropBoxStyled label="대분류" width="20rem" ref={bigGroup} />
-        <BasicDropBoxStyled label="중분류" width="20rem" ref={middleGroup} />
-      </Propertys>
-    </Category>
-  );
-};
-
-const SetDateTerm = () => {
+  const renderSetCategory = () => {
+    return (
+      <Category>
+        <Title>카테고리</Title>
+        <Propertys>
+          <BasicDropBoxStyled label="대분류" width="20rem" ref={bigGroup} />
+          <BasicDropBoxStyled label="중분류" width="20rem" ref={middleGroup} />
+        </Propertys>
+      </Category>
+    );
+  };
   const productRegistDropbox = useRef(null); //상품등록일
   const dayBtn = useRef(null); //오늘
   const weekBtn = useRef(null); //1주일
@@ -185,108 +182,106 @@ const SetDateTerm = () => {
   const yearBtn = useRef(null); //1년
   const startDate = useRef(null); //상품 등록 시작일
   const endDate = useRef(null); //상품 등록 정지일
-
-  return (
-    <DateTerm>
-      <Title>기간</Title>
-      <Propertys>
-        <BasicDropBoxStyled
-          label="상품등록일"
-          width="13rem"
-          height="7rem"
-          ref={productRegistDropbox}
-        />
-        <BasicButtonStyled
-          label="오늘"
-          width="8rem"
-          height="4rem"
-          ref={dayBtn}
-        />
-        <BasicButtonStyled
-          label="1주일"
-          width="8rem"
-          height="4rem"
-          ref={weekBtn}
-        />
-        <BasicButtonStyled
-          label="1개월"
-          width="8rem"
-          height="4rem"
-          ref={monthBtn}
-        />
-        <BasicButtonStyled
-          label="3개월"
-          width="8rem"
-          height="4rem"
-          ref={threeMonthBtn}
-        />
-        <BasicButtonStyled
-          label="6개월"
-          width="8rem"
-          height="4rem"
-          ref={sixMonthBtn}
-        />
-        <BasicButtonStyled
-          label="1년"
-          width="8rem"
-          height="4rem"
-          ref={yearBtn}
-        />
-        <BasicDatePickerStyled ref={startDate} />
-        ~
-        <BasicDatePickerStyled ref={endDate} />
-      </Propertys>
-    </DateTerm>
-  );
-};
-
-const SetSelect = () => {
-  const setSearchBtn = () => {
-    alert('검색 버튼 클릭');
+  const renderSetDateTerm = () => {
+    return (
+      <DateTerm>
+        <Title>기간</Title>
+        <Propertys>
+          <BasicDropBoxStyled
+            label="상품등록일"
+            width="13rem"
+            height="7rem"
+            ref={productRegistDropbox}
+          />
+          <BasicButtonStyled
+            label="오늘"
+            width="8rem"
+            height="4rem"
+            ref={dayBtn}
+          />
+          <BasicButtonStyled
+            label="1주일"
+            width="8rem"
+            height="4rem"
+            ref={weekBtn}
+          />
+          <BasicButtonStyled
+            label="1개월"
+            width="8rem"
+            height="4rem"
+            ref={monthBtn}
+          />
+          <BasicButtonStyled
+            label="3개월"
+            width="8rem"
+            height="4rem"
+            ref={threeMonthBtn}
+          />
+          <BasicButtonStyled
+            label="6개월"
+            width="8rem"
+            height="4rem"
+            ref={sixMonthBtn}
+          />
+          <BasicButtonStyled
+            label="1년"
+            width="8rem"
+            height="4rem"
+            ref={yearBtn}
+          />
+          <BasicDatePickerStyled ref={startDate} />
+          ~
+          <BasicDatePickerStyled ref={endDate} />
+        </Propertys>
+      </DateTerm>
+    );
   };
-
-  const setResetBtn = () => {
-    alert('초기화 버튼 클릭');
-  };
-
   const searchBtn = useRef(null); //검색
 
-  return (
-    <Select justify="center">
-      <Propertys width="150rem">
-        <Line>
-          <BasicButtonStyled
-            label="검색"
-            width="13rem"
-            height="5rem"
-            type="primary"
-            ref={searchBtn}
-            margintop="5rem"
-            onClick={setSearchBtn}
-          />
-          <BasicButtonStyled
-            label="초기화"
-            width="13rem"
-            height="5rem"
-            marginleft="2rem"
-            margintop="5rem"
-            onClick={setResetBtn}
-          />
-        </Line>
-      </Propertys>
-    </Select>
-  );
-};
+  const renderSetSelect = () => {
+    const setSearchBtn = () => {
+      alert('검색 버튼 클릭');
+    };
 
-const EditProductSetting = () => {
+    const setResetBtn = () => {
+      alert('초기화 버튼 클릭');
+    };
+
+    return (
+      <Select justify="center">
+        <Propertys width="150rem">
+          <Line>
+            <BasicButtonStyled
+              label="검색"
+              width="13rem"
+              height="5rem"
+              type="primary"
+              ref={searchBtn}
+              margintop="5rem"
+              onClick={setSearchBtn}
+            />
+            <BasicButtonStyled
+              label="초기화"
+              width="13rem"
+              height="5rem"
+              marginleft="2rem"
+              margintop="5rem"
+              onClick={setResetBtn}
+            />
+          </Line>
+        </Propertys>
+      </Select>
+    );
+  };
+
   return (
     <>
       <EditProductSettings>
-        {SetSearch()}
-        {SetSalesStatus()}
-        {SetCategory()}
-        {SetDateTerm()}
-        {SetSelect()}
+        {renderSetSearch()}
+        {renderSetSalesStatus()}
+        {renderSetCategory()}
+        {renderSetDateTerm()}
+        {renderSetSelect()}
       </EditProductSettings>
     </>
   );

@@ -16,18 +16,18 @@ const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
 
 const Container = styled.div``;
 
-const categoryBtn = (e) => {
-  console.log(e);
-  alert(e);
-};
-
 // 배송 현황 관리
 const DeliveryStatusManage = () => {
+  const categoryBtn = (e) => {
+    console.log(e);
+    alert(e);
+  };
+
   return (
     <Container>
       <BoardHeader onClick={categoryBtn} list={list} />
       <Filter />
-      <Table />
+      <Table data={data} />
     </Container>
   );
 };
@@ -51,5 +51,32 @@ const list = [
       { label: '배송중', value: 'todayStart', img: <AppstoreTwoToneIcon /> },
       { label: '배송완료', value: 'prePurchase', img: <AppstoreTwoToneIcon /> },
     ],
+  },
+];
+
+const data = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+  },
+  {
+    key: '4',
+    name: 'Disabled User',
+    age: 99,
+    address: 'Sidney No. 1 Lake Park',
   },
 ];

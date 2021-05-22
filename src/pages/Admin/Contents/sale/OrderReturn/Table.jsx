@@ -59,7 +59,7 @@ const setModifyReturnCollection = () => {
   alert('수거정보 수정');
 };
 
-const Table = () => {
+const Table = ({ data }) => {
   return (
     <Container>
       <HeaderContainer>
@@ -121,32 +121,5 @@ const columns = [
   {
     title: '반품요청일',
     dataIndex: 'orderReturnDate',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
   },
 ];
