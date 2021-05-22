@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Input as OriginInput, Radio, Select } from 'antd';
 import styled from 'styled-components';
 
-import { changeNumberDigits, removeRest } from 'utils/common';
+import {} from 'utils/common';
 
 import CustomCollapse from 'pages/Admin/components/Collapse';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
@@ -48,55 +48,64 @@ const Price = ({
   const [selectedDate, setSelectedDate] = useState('3');
 
   const handleBlur = () => {
-    const changeValue = changeNumberDigits(price);
-    setPrice(changeValue);
-    calcPcPrice();
-    calcMobilePrice();
+    if (typeof price === 'string') {
+      const changeValue = price;
+      setPrice(changeValue);
+      calcPcPrice();
+      calcMobilePrice();
+    }
   };
 
   const handleFocus = () => {
-    const changeValue = removeRest(price);
-    setPrice(changeValue);
+    if (typeof price === 'string') {
+      const changeValue = price;
+      setPrice(changeValue);
+    }
   };
 
   const calcPcPrice = () => {
-    const purePrice = removeRest(price);
-    const pureSaleTypePrice = removeRest(saleTypePrice);
-
-    if (saleType === 'won') {
-      const result = purePrice - pureSaleTypePrice;
-      setSalePrice(changeNumberDigits(result.toString()));
-    } else {
-      const result = purePrice - purePrice * (pureSaleTypePrice / 100);
-      setSalePrice(changeNumberDigits(result.toString()));
+    if (typeof price === 'string') {
+      const purePrice = price;
+      const pureSaleTypePrice = saleTypePrice;
+      if (saleType === 'won') {
+        const result = purePrice - pureSaleTypePrice;
+        setSalePrice(result.toString());
+      } else {
+        const result = purePrice - purePrice * (pureSaleTypePrice / 100);
+        setSalePrice(result.toString());
+      }
     }
   };
 
   const calcMobilePrice = () => {
-    const purePrice = removeRest(price);
-    const pureMobileSaleTypePrice = removeRest(mobileSaleTypePrice);
+    const purePrice = price;
+    const pureMobileSaleTypePrice = mobileSaleTypePrice;
 
     if (mobileSaleType === 'won') {
       const result = purePrice - pureMobileSaleTypePrice;
-      setMobileSalePrice(changeNumberDigits(result.toString()));
+      setMobileSalePrice(result.toString());
     } else {
       const result = purePrice - purePrice * (pureMobileSaleTypePrice / 100);
-      setMobileSalePrice(changeNumberDigits(result.toString()));
+      setMobileSalePrice(result.toString());
     }
   };
 
   const handleSaleTypeBlur = () => {
-    calcPcPrice();
-    setSaleTypePrice(changeNumberDigits(saleTypePrice));
+    if (typeof saleTypePrice === 'string') {
+      calcPcPrice();
+      setSaleTypePrice(saleTypePrice);
+    }
   };
 
   const handleSaleTypeFocus = () => {
-    setSaleTypePrice(removeRest(saleTypePrice));
+    if (typeof saleTypePrice === 'string') {
+      setSaleTypePrice(saleTypePrice);
+    }
   };
 
   const handleSaleTypePriceChange = (e) => {
     if (saleType === 'percentage') {
-      if (Number(removeRest(saleTypePrice)) <= 100) {
+      if (Number(saleTypePrice) <= 100) {
         setSaleTypePrice(e.target.value);
       } else {
         setSaleTypePrice('');

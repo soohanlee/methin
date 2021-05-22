@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Button } from 'antd';
 import styled from 'styled-components';
@@ -19,15 +19,19 @@ import {
   PruchaseBenefitConditions,
 } from './collapse';
 
-import { registerProduct } from 'apis/product';
+import {
+  registerProduct,
+  getProductDetail,
+  updateProductDetail,
+} from 'apis/product';
 import { removeRest } from 'utils/common';
 import { notification } from 'utils/notification';
 
 const Container = styled.div``;
 
-const RegisterProduct = () => {
+const RegisterProduct = ({ history }) => {
   // 재고 수량
-  const availableStockRef = useRef(null);
+  const [availableStock, setAvailableStock] = useState(0);
 
   // 상품명
   const [productName, setProductName] = useState('');
@@ -42,9 +46,9 @@ const RegisterProduct = () => {
 
   // 배송
   const [isDelivery, setIsDelivery] = useState('yes');
-  const [deliveryType, setDeliveryType] = useState('package'); //package, directly
-  const [deliveryAttrs, setDeliveryAttrs] = useState('normal'); //normal, today
-  const [deliveryFee, setDeliveryFee] = useState('free'); //free ,conditionallyFree,pay,quantity,section
+  const [deliveryType, setDeliveryType] = useState(0); //package, directly
+  const [deliveryAttrs, setDeliveryAttrs] = useState(0); //normal, today
+  const [deliveryFee, setDeliveryFee] = useState(0); //ship category 배송비 유형
   const [sectionFeeComent, setSectionFeeComent] = useState(''); // 지역별 차등배송비
   const [defaultFee, setDefaultFee] = useState(''); //기본 배송비
   const [deliveryFeeCondition, setDeliveryFeeCondition] = useState(''); //배송비 조건
@@ -63,17 +67,94 @@ const RegisterProduct = () => {
   const [minPurchase, setMinPurchase] = useState(0);
   const [maxPurchase, setMaxPurchase] = useState(0);
 
+  const initState = () => {
+    setPrice('');
+    setSalePrice('');
+    setSale('setting');
+    setSaleType('won');
+    setSaleTypePrice('');
+    setVAT(0);
+
+    setIsDelivery('yes');
+    setDeliveryType(0);
+    setDeliveryAttrs(0);
+    setDeliveryFee(0);
+    setSectionFeeComent('');
+    setDefaultFee('');
+    setDeliveryFeeCondition('');
+    setPayType('cashOnDelivery');
+    setSectionFeeCondition('2');
+    setSectionFeeCount('');
+    setAddFee('');
+    setSectionExtraFeeCount('');
+    setSectionExtraFee('');
+    setShipment('');
+    setMinPurchase(0);
+    setMaxPurchase(0);
+  };
+
+  useEffect(async () => {
+    if (history.location.state) {
+      const result = await getProductDetail(history.location.state);
+      if (result.status === 200) {
+        const {
+          actual_price,
+          count,
+          created_at,
+          description,
+          discount_amount,
+          jsondata,
+          id,
+          max_quantity,
+          min_quantity,
+          name,
+          preview_status,
+          price,
+          sales_end_date,
+          sales_start_date,
+          ship_amount1,
+          ship_amount2,
+          ship_attr,
+          ship_category,
+          ship_free_cond_amount,
+          ship_pay_type,
+          ship_type,
+          status,
+          tax_type,
+          updated_at,
+        } = result.data.data;
+        setPrice(actual_price);
+        setAvailableStock(count);
+        setMinPurchase(min_quantity);
+        setMaxPurchase(max_quantity);
+        setProductName(name);
+        setSalePrice(price);
+        setPayType(ship_pay_type);
+        setDeliveryFeeCondition(ship_free_cond_amount);
+        setVAT(tax_type);
+        setDeliveryType(ship_type);
+        setDeliveryAttrs(ship_attr);
+        setDeliveryFee(ship_category);
+        setDefaultFee(ship_amount1);
+        setSectionFeeComent(ship_amount2);
+        setSaleTypePrice(discount_amount);
+      }
+    }
+    // return (history.location.state = undefined);
+  }, []);
+
   const handleRegisterProductButtonClick = async () => {
     if (productName === '' || price === '') {
       notification.error('필수 입력사항을 입력해주세요.');
       return;
     }
+
     try {
       const data = {
         name: productName, //상품이름
         description: 'df', //특이사항
         status: 0, // 0 미설정, 1: 판매중 , 2 판매종료 상품 판매상태
-        count: availableStockRef.current.state.value, // 상품재고수량
+        count: availableStock, // 상품재고수량
         main_image_id: null, // 이미지 ID
         ship_info_id: 123,
         price: sale === 'setting' ? removeRest(salePrice) : removeRest(price), // 상품 가격
@@ -92,13 +173,26 @@ const RegisterProduct = () => {
         jsondata: null, //stringified json data
       };
 
-      const result = await registerProduct(data);
-      if (result.status === 200) {
-        notification.success('상품등록을 완료했습니다.');
-      } else if (result.status === 400) {
-        notification.error('상품명 혹은 가격을 입력해주세요.');
+      if (history.location.state) {
+        const result = await updateProductDetail(history.location.state, data);
+        if (result.status === 200) {
+          notification.success('상품수정을 완료했습니다.');
+          history.push('/admin/edit-product');
+        } else if (result.status === 400) {
+          notification.error('상품명 혹은 가격을 입력해주세요.');
+        } else {
+          notification.error('서버 에러입니다. 잠시 후 시도해주세요.');
+        }
       } else {
-        notification.error('서버 에러입니다. 잠시 후 시도해주세요.');
+        const result = await registerProduct(data);
+        if (result.status === 200) {
+          notification.success('상품등록을 완료했습니다.');
+          initState();
+        } else if (result.status === 400) {
+          notification.error('상품명 혹은 가격을 입력해주세요.');
+        } else {
+          notification.error('서버 에러입니다. 잠시 후 시도해주세요.');
+        }
       }
     } catch (e) {
       notification.error('상품등록을 실패했습니다.');
@@ -123,7 +217,10 @@ const RegisterProduct = () => {
         setSaleType={setSaleType}
         setVAT={setVAT}
       />
-      <AvailableStock ref={availableStockRef} />
+      <AvailableStock
+        setAvailableStock={setAvailableStock}
+        availableStock={availableStock}
+      />
       <Option />
       <ProductImage />
       <DetailedDescription />

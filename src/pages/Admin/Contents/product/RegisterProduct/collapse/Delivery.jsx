@@ -210,14 +210,14 @@ const Delivery = ({
       <LabelContents title="상품별 배송비">
         <Select value={deliveryFee} onChange={(value) => setDeliveryFee(value)}>
           <Option value={0}>무료</Option>
-          <Option value="conditionallyFree">조건무 무료</Option>
-          <Option value={1}>유료</Option>
+          <Option value={1}>조건무 무료</Option>
+          <Option value={2}>유료</Option>
         </Select>
         <Button>배송비 묶음 그룹 선택</Button>
       </LabelContents>
-      {deliveryFee === 'free' && renderSectionFeeComent()}
+      {deliveryFee === 0 && renderSectionFeeComent()}
 
-      {deliveryFee === 'conditionallyFree' && (
+      {deliveryFee === 1 && (
         <>
           {renderDefaultFee()}
           {renderDeliveryFeeCondition()}
@@ -225,7 +225,7 @@ const Delivery = ({
           {renderSectionFeeComent()}
         </>
       )}
-      {deliveryFee === 'pay' && (
+      {deliveryFee === 2 && (
         <>
           {renderDefaultFee()}
           {renderPayType()}
