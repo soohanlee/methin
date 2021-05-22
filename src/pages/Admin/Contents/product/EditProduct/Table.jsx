@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
 import OriginTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import { ROUTE_PATH } from 'configs/config';
+import { useHistory } from 'react-router';
 
 const BasicSelectBoxStyled = styled(BasicSelectBox)`
   width: 15rem;
@@ -29,16 +31,141 @@ const ButtonContainer = styled.div`
 const Button = styled(OriginButton)`
   margin-right: 0.5rem;
 `;
-
-const setExcelDown = () => {
-  alert('엑셀다운');
-};
-
-const setSelectDelete = () => {
-  alert('선택삭제');
-};
-
 const Table = ({ table, count }) => {
+  const history = useHistory();
+  const setExcelDown = () => {
+    alert('엑셀다운');
+  };
+
+  const setSelectDelete = () => {
+    alert('선택삭제');
+  };
+
+  const handleModifyTableData = () => {
+    console.log(history);
+    history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerProduct}`);
+  };
+
+  const columns = [
+    {
+      title: '수정',
+      dataIndex: 'modify',
+      render: () => <Button onClick={handleModifyTableData}>수정</Button>,
+    },
+    {
+      title: '상품번호',
+      dataIndex: 'ProductNumber',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '상품명',
+      dataIndex: 'productName',
+    },
+    {
+      title: '판매상태',
+      dataIndex: 'saleStatus',
+    },
+    {
+      title: '전시상태',
+      dataIndex: 'exhibitionStatus',
+    },
+    {
+      title: '재고수량',
+      dataIndex: 'inventoryCount',
+    },
+    {
+      title: '판매가',
+      dataIndex: 'salePrice',
+    },
+    {
+      title: '할인가',
+      dataIndex: ' reducedPrice',
+    },
+    {
+      title: '판매자할인',
+      dataIndex: 'sellerDiscount',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '옵션',
+      dataIndex: 'option',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '추가상품',
+      dataIndex: 'addProduct',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '상품속성',
+      dataIndex: 'ProductProperty',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '최소구매수량',
+      dataIndex: 'minimumPurchaseQuantity',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '최대구매수량',
+      dataIndex: 'maxmumPurchaseQuantity',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '배송비유형',
+      dataIndex: 'deliveryPriceType',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '배송비결제방식',
+      dataIndex: 'deliveryPriceMethod',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '기본배송비',
+      dataIndex: 'defaultPrice',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '반품배송비',
+      dataIndex: 'returnPrice',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '교환배송비',
+      dataIndex: 'changePrice',
+      render: (text) => <a href="https://www.naver.com">{text}</a>,
+    },
+    {
+      title: '대분류',
+      dataIndex: 'largeClassification',
+    },
+    {
+      title: '중분류',
+      dataIndex: 'middleClassification',
+    },
+    {
+      title: '소분류',
+      dataIndex: 'smallClassification',
+    },
+    {
+      title: '판매시작일',
+      dataIndex: 'startSaleDate',
+    },
+    {
+      title: '판매종료일',
+      dataIndex: 'endSaleDate',
+    },
+    {
+      title: '상품등록일',
+      dataIndex: 'addProductDate',
+    },
+    {
+      title: '최종수정일',
+      dataIndex: 'finalModifyDate',
+    },
+  ];
+
   return (
     <Container>
       <HeaderContainer>
@@ -61,126 +188,6 @@ const Table = ({ table, count }) => {
 };
 
 export default Table;
-
-const columns = [
-  {
-    title: '수정',
-    dataIndex: 'modify',
-    render: () => <Button>수정</Button>,
-  },
-  {
-    title: '상품번호',
-    dataIndex: 'ProductNumber',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '상품명',
-    dataIndex: 'productName',
-  },
-  {
-    title: '판매상태',
-    dataIndex: 'saleStatus',
-  },
-  {
-    title: '전시상태',
-    dataIndex: 'exhibitionStatus',
-  },
-  {
-    title: '재고수량',
-    dataIndex: 'inventoryCount',
-  },
-  {
-    title: '판매가',
-    dataIndex: 'salePrice',
-  },
-  {
-    title: '할인가',
-    dataIndex: ' reducedPrice',
-  },
-  {
-    title: '판매자할인',
-    dataIndex: 'sellerDiscount',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '옵션',
-    dataIndex: 'option',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '추가상품',
-    dataIndex: 'addProduct',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '상품속성',
-    dataIndex: 'ProductProperty',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '최소구매수량',
-    dataIndex: 'minimumPurchaseQuantity',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '최대구매수량',
-    dataIndex: 'maxmumPurchaseQuantity',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '배송비유형',
-    dataIndex: 'deliveryPriceType',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '배송비결제방식',
-    dataIndex: 'deliveryPriceMethod',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '기본배송비',
-    dataIndex: 'defaultPrice',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '반품배송비',
-    dataIndex: 'returnPrice',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '교환배송비',
-    dataIndex: 'changePrice',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
-    title: '대분류',
-    dataIndex: 'largeClassification',
-  },
-  {
-    title: '중분류',
-    dataIndex: 'middleClassification',
-  },
-  {
-    title: '소분류',
-    dataIndex: 'smallClassification',
-  },
-  {
-    title: '판매시작일',
-    dataIndex: 'startSaleDate',
-  },
-  {
-    title: '판매종료일',
-    dataIndex: 'endSaleDate',
-  },
-  {
-    title: '상품등록일',
-    dataIndex: 'addProductDate',
-  },
-  {
-    title: '최종수정일',
-    dataIndex: 'finalModifyDate',
-  },
-];
 
 const SortViewList = [
   { label: '연관상품 ID순', value: 'associatedProductID' },
