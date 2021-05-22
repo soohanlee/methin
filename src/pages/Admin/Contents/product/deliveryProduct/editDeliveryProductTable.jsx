@@ -121,7 +121,6 @@ const EditDeliveryProductTable = ({
           onClick={() => showDeleteModal(id)}
           label="삭제"
         ></BasicButton>
-        // <BasicButton onClick={showDeleteModal} label={text}></BasicButton>
       ),
     },
     {

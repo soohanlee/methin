@@ -4,10 +4,11 @@ import { Button as OriginButton, Modal, Input } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
-import OriginTable from 'pages/Admin/components/Table/Table';
+import BasicTable from 'pages/Admin/components/Table/Table';
 
 import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/orderSheetModal';
 import OrderCountTableModal from 'pages/Admin/Contents/sale/OrderConfirm/orderCountTableModal';
+import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 const Container = styled.div`
   background: #fff;
@@ -224,11 +225,7 @@ const Table = ({
         </LabelContents>
       </SearchContainer>
 
-      <OriginTable
-        data={data && data}
-        columns={columns}
-        selectionType="checkbox"
-      />
+      <BasicTable data={tableData} columns={columns} selectionType="checkbox" />
 
       <ButtonContainer>
         <Button
@@ -342,152 +339,73 @@ export default Table;
 
 const columns = [
   {
+    title: '상품주문번호',
+    dataIndex: 'productOrderNumber',
+    render: (text) => <a>{text}</a>,
+  },
+  {
     title: '주문번호',
     dataIndex: 'orderNumber',
   },
   {
-    title: '배송방법(구매자 요청)',
-    dataIndex: 'deliveryWayBuyer',
+    title: '배송방법(구매자요청)',
+    dataIndex: 'buyerDeliveryType',
   },
   {
     title: '배송방법',
-    dataIndex: 'deliveryWay',
+    dataIndex: 'deliveryType',
+    render: () => <BasicSelectBox list={selctBoxList} />,
   },
   {
     title: '택배사',
-    dataIndex: 'address',
+    dataIndex: 'courier',
+    render: () => <BasicSelectBox list={selctBoxList} disabled />,
   },
   {
     title: '송장번호',
-    dataIndex: 'address',
+    dataIndex: 'invoiceNumber',
+    render: () => <BasicTextInputBox list={selctBoxList} disabled />,
   },
   {
     title: '배송추적',
-    dataIndex: 'address',
+    dataIndex: 'trackingShipping',
   },
   {
     title: '발송일',
-    dataIndex: 'address',
+    dataIndex: 'shipmentDate',
   },
   {
-    title: '구매자명',
-    dataIndex: 'address',
+    title: '판매채널',
+    dataIndex: 'salesChannel',
   },
   {
-    title: '구매자ID',
-    dataIndex: 'address',
+    title: '톡톡하기',
+    dataIndex: 'talktalk',
+    render: (text) => <a>{text}</a>,
   },
+];
+
+const selctBoxList = [
+  { value: '1', label: '선택' },
+  { value: '2', label: '택배,등기,소포' },
+  { value: '3', label: '퀵서비스' },
+  { value: '4', label: '방문수령' },
+  { value: '4', label: '직접전달' },
+];
+
+const tableData = [
   {
-    title: '수취인명',
-    dataIndex: 'address',
-  },
-  {
-    title: '주문상태',
-    dataIndex: 'address',
-  },
-  {
-    title: '결제일',
-    dataIndex: 'address',
-  },
-  {
-    title: '상품번호',
-    dataIndex: 'address',
-  },
-  {
-    title: '상품명',
-    dataIndex: 'address',
-  },
-  {
-    title: '상품종류',
-    dataIndex: 'address',
-  },
-  {
-    title: '옵션정보',
-    dataIndex: 'address',
-  },
-  {
-    title: '수량',
-    dataIndex: 'address',
-  },
-  {
-    title: '옵션가격',
-    dataIndex: 'address',
-  },
-  {
-    title: '상품가격',
-    dataIndex: 'address',
-  },
-  {
-    title: '총 주문 금액',
-    dataIndex: 'address',
-  },
-  {
-    title: '발주확인일',
-    dataIndex: 'address',
-  },
-  {
-    title: '발송기한',
-    dataIndex: 'address',
-  },
-  {
-    title: '발송처리일',
-    dataIndex: 'address',
-  },
-  {
-    title: '송장출력일',
-    dataIndex: 'address',
-  },
-  {
-    title: '배송비 형태',
-    dataIndex: 'address',
-  },
-  {
-    title: '배송비 묶음 번호',
-    dataIndex: 'address',
-  },
-  {
-    title: '배송비 유형',
-    dataIndex: 'address',
-  },
-  {
-    title: '배송비 합계',
-    dataIndex: 'address',
-  },
-  {
-    title: '배송비 할인액',
-    dataIndex: 'address',
-  },
-  {
-    title: '수취인 연락처',
-    dataIndex: 'address',
-  },
-  {
-    title: '배송지',
-    dataIndex: 'address',
-  },
-  {
-    title: '구매자 연락처',
-    dataIndex: 'address',
-  },
-  {
-    title: '우편번호',
-    dataIndex: 'address',
-  },
-  {
-    title: '배송메세지',
-    dataIndex: 'address',
-  },
-  {
-    title: '출고지',
-    dataIndex: 'address',
-  },
-  {
-    title: '결제수단',
-    dataIndex: 'address',
-  },
-  {
-    title: '주문일시',
-    dataIndex: 'address',
+    key: '0',
+    productOrderNumber: '2021',
+    orderNumber: '2021',
+    buyerDeliveryType: '택배,등기,소포',
+    deliveryType: '',
+    courier: '',
+    invoiceNumber: '',
+    trackingShipping: '',
+    shipmentDate: '2021.05.22',
+    salesChannel: '스마트스토어',
+    talktalk: '톡톡하기',
   },
 ];
 

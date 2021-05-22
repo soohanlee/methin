@@ -61,8 +61,8 @@ const columns = [
     dataIndex: 'registerDate',
   },
   {
-    title: '배송방법',
-    dataIndex: 'deliveryWay',
+    title: '등록사유',
+    dataIndex: 'registerWhy',
   },
 ];
 
