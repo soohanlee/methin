@@ -6,7 +6,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
 
 const { REACT_APP_BASE_URL: baseUrl } = process.env;
-
 axios.defaults.baseURL = baseUrl;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 

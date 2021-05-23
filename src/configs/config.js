@@ -1,5 +1,5 @@
 export const ROUTE_PATH = {
-  main: '/',
+  main: '/main',
   login: '/login',
   signup: '/signup',
   findId: '/findId',
