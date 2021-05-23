@@ -27,7 +27,6 @@ const Login = () => {
   } = useForm();
   const history = useHistory();
   const login = useContext(UserContext);
-  console.log('login', login);
 
   useEffect(() => {
     if (login.loginState === LOGGED_IN) {

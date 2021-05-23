@@ -5,7 +5,9 @@ import styled, { ThemeProvider } from 'styled-components';
 import { LightTheme } from 'configs/theme';
 import { ROUTE_PATH } from 'configs/config';
 import GlobalStyle from 'configs/globalStyle';
-// import { jwtVerify } from 'apis/auth';
+import { reissueJwt } from 'apis/auth';
+import { requestConfig } from 'apis/config';
+import axios from 'axios';
 import {
   getIsAvalidAccessToken,
   getAccessToken,
@@ -60,7 +62,12 @@ function App() {
 
   useEffect(() => {
     async function fetchAndSetUser() {
+      const accessToken = await getAccessToken();
+
       if (await getIsValidUser()) {
+        axios.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${accessToken}`;
         changeUserState(LOGGED_IN);
       } else {
         changeUserState(NOT_LOGGED_IN);
@@ -68,6 +75,8 @@ function App() {
     }
     fetchAndSetUser();
   }, []);
+
+  useEffect(() => {});
 
   const changeUserState = (data) => {
     setIsLogin(data);
@@ -77,21 +86,24 @@ function App() {
     const accessToken = await getAccessToken();
     const refreshToken = await getRefreshToken();
 
-    if (accessToken && refreshToken) {
-      if ((await getIsAvalidAccessToken()) || (await getNewAccessToken())) {
+    if (accessToken) {
+      if (await getIsAvalidAccessToken()) {
         return true;
       }
+      return false;
+    } else if (refreshToken) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${refreshToken}`;
+      const result = await reissueJwt();
+      console.log(result, 'result');
+    } else {
+      return false;
     }
-
-    return false;
   };
 
   const state = {
     loginState: isLogin,
     changeUserState: changeUserState,
   };
-
-  console.log(THEME);
 
   return (
     <ThemeProvider theme={THEME}>

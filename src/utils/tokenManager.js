@@ -1,7 +1,7 @@
 import { getLocalStorageData } from 'utils/common';
 import { get, set, remove } from 'js-cookie';
 import { COOKIE_KEYS, LOCAL_STORAGE_KEYS } from 'configs/config';
-import { reissuanceRefreshVerify, jwtVerify } from 'apis/auth';
+import { reissuanceRefreshVerify, jwtVerify, refreshVerify } from 'apis/auth';
 
 export async function getIsRememberToken() {
   return !!getLocalStorageData(LOCAL_STORAGE_KEYS.UserLoginRemember);
@@ -87,17 +87,29 @@ export async function getNewAccessToken() {
 
 export async function getIsAvalidAccessToken() {
   const accessToken = await getAccessToken();
+
+  if (accessToken) {
+    const response = await jwtVerify();
+    console.log('response', response.message === 'success');
+
+    if (response.message === 'success') {
+      return true;
+    }
+  } else {
+    return false;
+  }
+}
+
+export async function getIsAvalidAccessRefreshToken() {
   const refreshToken = await getRefreshToken();
 
-  if (accessToken && refreshToken) {
-    const response = await jwtVerify();
+  if (refreshToken) {
+    const response = await refreshVerify();
 
     if (response.code === 100) {
       return true;
     }
   }
-
-  await cleanToken();
 
   return false;
 }
