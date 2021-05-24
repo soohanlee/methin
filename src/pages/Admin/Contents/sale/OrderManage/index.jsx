@@ -1,11 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Radio, Input } from 'antd';
+import { getPaymentList } from 'apis/payment';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 import Table from 'pages/Admin/components/Table/Table';
+import { notification } from 'utils/notification';
 
 // 주문통합검색
 const SelectBox = styled(BasicSelectBox)`
@@ -59,6 +61,22 @@ const Title = styled.div`
 
 const OrderManage = () => {
   const [datePeriod, setDatePeriod] = useState('');
+  const [table, setTable] = useState([]);
+  const [tableLength, setTableLength] = useState(0);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await getPaymentList();
+        console.log(result);
+        setTable(result.data.data.list);
+        setTableLength(result.data.data.count);
+      } catch (e) {
+        notification.error(e);
+      }
+    }
+    fetchData();
+  }, []);
 
   const handleStartDateChange = (value) => {
     console.log(value);
@@ -108,9 +126,9 @@ const OrderManage = () => {
 
       <BodyContainer>
         <BodyHeaderContainer>
-          <Title>목록 (총{data.length}개)</Title>
+          <Title>목록 (총{table.length}개)</Title>
         </BodyHeaderContainer>
-        <Table selectionType="checkbox" data={data} columns={columns} />
+        <Table selectionType="checkbox" data={table} columns={columns} />
       </BodyContainer>
     </Container>
   );
@@ -139,73 +157,41 @@ const detailList = [
 const columns = [
   {
     title: '주문번호',
-    dataIndex: 'orderNumber',
+    dataIndex: 'id',
     render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
     title: '주문날짜',
-    dataIndex: 'orderDate',
+    dataIndex: 'created_at',
   },
   {
     title: '주문상태',
-    dataIndex: 'orderState',
+    dataIndex: 'status',
   },
   {
     title: '상품번호',
-    dataIndex: 'productNumber',
+    dataIndex: 'product_id',
     render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
     title: '상품명',
-    dataIndex: 'productName',
+    dataIndex: 'product_name',
   },
-  {
-    title: '옵션',
-    dataIndex: 'option',
-  },
+
   {
     title: '수량',
     dataIndex: 'count',
   },
   {
     title: '구매자명',
-    dataIndex: 'buyerName',
+    dataIndex: 'buyer_name',
   },
   {
     title: '구매자 ID',
-    dataIndex: 'buyerID',
+    dataIndex: 'buyer_id',
   },
   {
     title: '수취인명',
-    dataIndex: 'recipientName',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    orderNumber: '1',
-    orderDate: '2021',
-    orderState: '판매완료',
-    productNumber: '1',
-    productName: '소고기 안심',
-    option: '',
-    count: '1',
-    buyerName: '범희',
-    buyerID: '범희',
-    recipientName: '범희',
-  },
-  {
-    key: '2',
-    orderNumber: '2',
-    orderDate: '2021',
-    orderState: '판매완료',
-    productNumber: '2',
-    productName: '소고기 등심',
-    option: '',
-    count: '1',
-    buyerName: '수한',
-    buyerID: '수한',
-    recipientName: '수한',
+    dataIndex: 'recipient_name',
   },
 ];
