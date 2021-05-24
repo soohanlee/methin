@@ -29,7 +29,11 @@ const DeliveryUpdateModal = (property) => {
   };
 
   const onUseBtnClick = (e) => {
-    property.setUseStatusState(e.target.value);
+    if (e.target.value == 'use') {
+      property.setUseStatusState(1);
+    } else {
+      property.setUseStatusState(0);
+    }
   };
 
   const onCalculationWayBtnClick = (e) => {
