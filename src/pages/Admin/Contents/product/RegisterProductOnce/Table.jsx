@@ -20,7 +20,7 @@ export default Table;
 const columns = [
   {
     title: '처리상태',
-    dataIndex: 'state',
+    dataIndex: 'status',
     render: (text) => <a href={'www.naver.com'}>{text}</a>,
   },
   {
@@ -29,11 +29,11 @@ const columns = [
   },
   {
     title: '상품번호',
-    dataIndex: 'number',
+    dataIndex: 'id',
   },
   {
     title: '판매상태',
-    dataIndex: 'saleState',
+    dataIndex: 'status',
   },
   {
     title: '카테고리',
@@ -45,10 +45,10 @@ const columns = [
   },
   {
     title: '판매가',
-    dataIndex: 'price',
+    dataIndex: 'actual_price',
   },
   {
     title: '재고수량',
-    dataIndex: 'available',
+    dataIndex: 'count',
   },
 ];
