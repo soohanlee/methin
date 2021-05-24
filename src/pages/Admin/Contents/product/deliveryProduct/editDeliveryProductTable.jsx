@@ -87,8 +87,11 @@ const EditDeliveryProductTable = ({
   };
 
   const modifyDataSave = () => {
+    console.log(useStatusState);
+
     const data = {
       body: groupNamesRef.current.state.value,
+      status: useStatusState,
     };
     updateDeliveryDetailData(index, data);
   };
@@ -144,7 +147,7 @@ const EditDeliveryProductTable = ({
     },
     {
       title: '사용여부',
-      dataIndex: 'useStatus',
+      dataIndex: 'status',
     },
     {
       title: '등록일',
@@ -152,9 +155,19 @@ const EditDeliveryProductTable = ({
     },
     {
       title: '수정일',
-      dataIndex: 'modifyDate',
+      dataIndex: 'updated_at',
     },
   ];
+  for (var i = 0; i < data.length; i++) {
+    switch (data[i].status) {
+      case 0:
+        data[i].status = '미사용';
+        break;
+      case 1:
+        data[i].status = '사용';
+        break;
+    }
+  }
 
   return (
     <>
