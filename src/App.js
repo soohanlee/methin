@@ -2,17 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 
+import { Layout } from 'antd';
+
 import { LightTheme } from 'configs/theme';
 import { ROUTE_PATH } from 'configs/config';
 import GlobalStyle from 'configs/globalStyle';
 import { reissueJwt } from 'apis/auth';
-import { requestConfig } from 'apis/config';
+
 import axios from 'axios';
 import {
   getIsAvalidAccessToken,
   getAccessToken,
   getRefreshToken,
-  getNewAccessToken,
+  // getNewAccessToken,
   // getIsRememberToken,
   // cleanAllToken,
 } from 'utils/tokenManager';
@@ -27,20 +29,33 @@ import {
 import Container from './components/container/Container';
 import Main from 'pages/Main';
 import Navigation from 'components/Navigation';
-import Footer from 'components/Footer';
+import MainFooter from 'components/Footer';
 import Admin from 'pages/Admin';
 import Login from 'pages/auths/Login';
 import SignUp from 'pages/auths/sign-up';
 
-const UserContainer = styled.div`
+const { Header, Content } = Layout;
+
+const UserContainer = styled(Layout)`
   display: flex;
   flex-direction: column;
   overflow: hidden;
 `;
 
-const Contents = styled.div`
+const CustomHeader = styled(Header)`
+  display: flex;
+  height: 10rem;
+
+  padding: 0;
+`;
+
+const CustomContent = styled(Content)`
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  height: 100%;
   overflow-y: auto;
+  background: ${(props) => props.theme.BACKGROUND};
 `;
 
 function App() {
@@ -117,8 +132,11 @@ function App() {
             </Switch>
           ) : (
             <UserContainer>
-              <Navigation />
-              <Contents>
+              <CustomHeader>
+                <Navigation />
+              </CustomHeader>
+
+              <CustomContent>
                 <Switch>
                   {/* 라우트 예시 */}
                   <Route exact path={'/'} component={Main} />
@@ -126,9 +144,8 @@ function App() {
                   <Route exact path={ROUTE_PATH.login} component={Login} />
                   <Route exact path={ROUTE_PATH.signup} component={SignUp} />
                 </Switch>
-              </Contents>
-
-              <Footer />
+                <MainFooter />
+              </CustomContent>
             </UserContainer>
           )}
         </UserContext.Provider>
