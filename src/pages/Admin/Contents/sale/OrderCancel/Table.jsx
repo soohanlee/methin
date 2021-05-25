@@ -64,39 +64,27 @@ export default Table;
 
 const columns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-  },
-  {
-    title: '상품주문번호',
-    dataIndex: 'orderNumber',
+    title: '주문번호',
+    dataIndex: 'id',
   },
   {
     title: '주문상태',
-    dataIndex: 'orderState',
+    dataIndex: 'status',
   },
   {
     title: '취소 처리상태',
-    dataIndex: 'orderCancelState',
+    dataIndex: 'cancel_status',
   },
   {
     title: '결제일',
-    dataIndex: 'settlementDay',
+    dataIndex: 'paid_at',
   },
   {
     title: '취소요청일',
-    dataIndex: 'orderCancelDate',
-  },
-  {
-    title: '접수채널',
-    dataIndex: 'receptionChannel',
-  },
-  {
-    title: '톡톡하기',
-    dataIndex: 'talktalk',
+    dataIndex: 'canceled_at',
   },
   {
     title: '취소사유',
-    dataIndex: 'cancelReason',
+    dataIndex: 'cancel_reason',
   },
 ];

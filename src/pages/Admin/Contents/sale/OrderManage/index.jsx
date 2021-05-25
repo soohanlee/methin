@@ -177,7 +177,10 @@ const columns = [
     title: '상품명',
     dataIndex: 'product_name',
   },
-
+  {
+    title: '옵션',
+    dataIndex: 'option',
+  },
   {
     title: '수량',
     dataIndex: 'count',

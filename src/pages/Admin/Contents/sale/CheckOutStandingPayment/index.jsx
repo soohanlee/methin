@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Table from 'pages/Admin/components/Table/Table';
 import { Button } from 'antd';
 import QueryItemModal from 'pages/Admin/Contents/sale/CheckOutStandingPayment/QueryItemModal';
+import { getPaymentUnpaidList } from 'apis/payment';
+import { notification } from 'utils/notification';
 
 // 미결제 확인
 
@@ -32,6 +34,27 @@ const Title = styled.div`
 const CheckOutStandingPayment = () => {
   const [QueryItemVisible, setQueryItemVisible] = useState(false);
 
+  const [table, setTable] = useState([]);
+  const [tableCount, setTableCount] = useState(0);
+
+  useEffect(() => {
+    async function fetchAndSetUser() {
+      try {
+        const result = await getPaymentUnpaidList();
+        const customList = result.data.data.list.map((item) => {
+          return { ...item, key: item.id };
+        });
+        // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
+
+        setTable(customList);
+        setTableCount(result.data.data.count);
+      } catch (e) {
+        notification.error('상품 정보를 가져오지 못했습니다.');
+      }
+    }
+    fetchAndSetUser();
+  }, []);
+
   return (
     <Container>
       <QueryItemModal
@@ -45,7 +68,7 @@ const CheckOutStandingPayment = () => {
         title="조회항목 설정(미결제확인)"
       />
       <TitleContainer>
-        <Title>목록 (총 {data.length}개)</Title>
+        <Title>목록 (총 {tableCount}개)</Title>
         <ButtonContainer>
           <Button
             onClick={() => {
@@ -58,7 +81,7 @@ const CheckOutStandingPayment = () => {
         </ButtonContainer>
       </TitleContainer>
 
-      <Table data={data} columns={columns} />
+      <Table data={table} columns={columns} />
     </Container>
   );
 };
@@ -68,45 +91,41 @@ export default CheckOutStandingPayment;
 const columns = [
   {
     title: '주문번호',
-    dataIndex: 'orderNumber',
+    dataIndex: 'id',
     render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
     title: '주문날짜',
-    dataIndex: 'orderDate',
+    dataIndex: 'created_at',
   },
   {
     title: '구매자명',
-    dataIndex: 'buyerName',
+    dataIndex: 'buyer_name',
   },
   {
     title: '구매자ID',
-    dataIndex: 'buyerID',
+    dataIndex: 'buyer_id',
   },
   {
     title: '수취인명',
-    dataIndex: 'recipientName',
+    dataIndex: 'recipient_name',
   },
   {
-    title: '결제',
-    dataIndex: 'payment',
-  },
-  {
-    title: '입금기한',
-    dataIndex: 'depositDue',
+    title: '결제/입금기한',
+    dataIndex: '',
   },
   {
     title: '상품번호',
-    dataIndex: 'productNumber',
+    dataIndex: 'product_id',
     render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
     title: '상품명',
-    dataIndex: 'productName',
+    dataIndex: 'product_name',
   },
   {
     title: '옵션',
-    dataIndex: 'option',
+    dataIndex: '',
   },
   {
     title: '수량',
@@ -114,87 +133,38 @@ const columns = [
   },
   {
     title: '상품가격',
-    dataIndex: 'productPrice',
+    dataIndex: 'price',
   },
   {
     title: '옵션가격',
-    dataIndex: 'optionPrice',
+    dataIndex: 'option_add_price',
   },
   {
     title: '총 주문금액',
-    dataIndex: 'allOrderPrice',
+    dataIndex: 'total_price',
   },
   {
     title: '배송비 형태',
-    dataIndex: 'deliveryForm',
+    dataIndex: '',
   },
   {
     title: '배송비 묶음번호',
-    dataIndex: 'deliveryGroupNumber',
+    dataIndex: '',
   },
   {
     title: '배송비 유형',
-    dataIndex: 'deliveryType',
+    dataIndex: '',
   },
   {
     title: '배송비 합계',
-    dataIndex: 'deliveryPriceSum',
+    dataIndex: '',
   },
   {
     title: '배송비 할인액',
-    dataIndex: 'deliveryPriceDiscount',
+    dataIndex: '',
   },
   {
     title: '결제수단',
-    dataIndex: 'PaymentMethod',
-  },
-];
-
-const data = [
-  {
-    key: '0',
-    orderNumber: '0',
-    orderDate: '2021',
-    buyerName: '범희',
-    buyerID: '범희',
-    recipientName: '범희',
-    payment: '카드',
-    depositDue: '범희',
-    productNumber: '범희',
-    productName: '범희',
-    option: '범희',
-    count: '범희',
-    productPrice: '범희',
-    optionPrice: '범희',
-    allOrderPrice: '범희',
-    deliveryForm: '범희',
-    deliveryGroupNumber: '범희',
-    deliveryType: '범희',
-    deliveryPriceSum: '10000',
-    deliveryPriceDiscount: '범희',
-    PaymentMethod: '범희',
-  },
-  {
-    key: '1',
-    orderNumber: '1',
-    orderDate: '2021',
-    buyerName: '범희',
-    buyerID: '범희',
-    recipientName: '범희',
-    payment: '카드',
-    depositDue: '범희',
-    productNumber: '범희',
-    productName: '범희',
-    option: '범희',
-    count: '범희',
-    productPrice: '범희',
-    optionPrice: '범희',
-    allOrderPrice: '범희',
-    deliveryForm: '범희',
-    deliveryGroupNumber: '범희',
-    deliveryType: '범희',
-    deliveryPriceSum: '10000',
-    deliveryPriceDiscount: '범희',
-    PaymentMethod: '범희',
+    dataIndex: '',
   },
 ];

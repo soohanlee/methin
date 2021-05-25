@@ -50,13 +50,6 @@ const Table = ({ data }) => {
       <HeaderContainer>
         <Title>목록(총 0개)</Title>
         <ButtonContainer>
-          <Button
-            onClick={() => {
-              setQueryItemVisible(true);
-            }}
-          >
-            조회항목 설정
-          </Button>
           <Button>엑셀다운</Button>
         </ButtonContainer>
       </HeaderContainer>
@@ -87,61 +80,61 @@ export default Table;
 const columns = [
   {
     title: '주문번호',
-    dataIndex: 'orderNumber',
+    dataIndex: 'id',
     render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
     title: '발송처리일',
-    dataIndex: 'deliveryDate',
+    dataIndex: 'ship_confirmed_at',
   },
   {
     title: '주문상태',
-    dataIndex: 'orderStatus',
+    dataIndex: 'status',
   },
   {
     title: '배송방법',
-    dataIndex: 'deliveryForm',
+    dataIndex: 'ship_type',
   },
   {
     title: '택배사',
-    dataIndex: 'Courier',
+    dataIndex: 'ship_company_name',
   },
   {
     title: '송장번호',
-    dataIndex: 'invoiceNumber',
+    dataIndex: 'ship_number',
   },
   {
     title: '배송추적',
-    dataIndex: 'trackingShipping',
+    dataIndex: '',
   },
   {
     title: '발송일',
-    dataIndex: 'shipmentDate',
+    dataIndex: 'ship_confirmed_at',
   },
   {
     title: '구매자명',
-    dataIndex: 'buyerName',
+    dataIndex: 'buyer_name',
   },
   {
     title: '구매자ID',
-    dataIndex: 'buyerID',
+    dataIndex: 'buyer_id',
   },
   {
     title: '수취인명',
-    dataIndex: 'recipientName',
+    dataIndex: 'recipient_name',
   },
   {
     title: '상품번호',
-    dataIndex: 'productNumber',
+    dataIndex: 'product_id',
     render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
     title: '상품명',
-    dataIndex: 'productName',
+    dataIndex: 'product_name',
   },
   {
     title: '옵션정보',
-    dataIndex: 'optionInfo',
+    dataIndex: '',
   },
   {
     title: '수량',
@@ -149,58 +142,58 @@ const columns = [
   },
   {
     title: '상품가격',
-    dataIndex: 'productPrice',
+    dataIndex: 'price',
   },
   {
     title: '옵션가격',
-    dataIndex: 'optionPrice',
+    dataIndex: 'option_add_price',
   },
   {
     title: '총 주문금액',
-    dataIndex: 'allOrderPrice',
+    dataIndex: 'total_price',
   },
   {
     title: '결제일',
-    dataIndex: 'paymentDate',
+    dataIndex: 'paid_at',
   },
   {
     title: '배송비 묶음번호',
-    dataIndex: 'deliveryGroupNumber',
+    dataIndex: '',
   },
   {
     title: '배송비 형태',
-    dataIndex: 'deliveryForm',
+    dataIndex: 'ship_pay_type',
   },
   {
     title: '배송비 유형',
-    dataIndex: 'deliveryType',
+    dataIndex: 'ship_category',
   },
   {
     title: '배송비 합계',
-    dataIndex: 'deliveryPriceSum',
+    dataIndex: 'total_ship_amount',
   },
   {
     title: '제주/도서 추가배송비',
-    dataIndex: 'deliveryPriceAdd',
+    dataIndex: 'ship_add_amount',
   },
   {
     title: '배송비 할인액',
-    dataIndex: 'deliveryPriceDiscount',
+    dataIndex: '',
   },
   {
     title: '수취인 연락처',
-    dataIndex: 'recipientPhone',
+    dataIndex: 'recipient_phone',
   },
   {
     title: '배송지',
-    dataIndex: 'address',
+    dataIndex: 'ship_address_main',
   },
   {
     title: '구매자 연락처',
-    dataIndex: 'buyerPhone',
+    dataIndex: 'buyer_phone',
   },
   {
     title: '우편번호',
-    dataIndex: 'postalCode',
+    dataIndex: 'ship_zip_code',
   },
 ];
