@@ -53,6 +53,7 @@ const EditDeliveryProductTable = ({
   deleteDeliveryData,
   updateDeliveryData,
   result,
+  count,
 }) => {
   const [modifyVisible, setModifyVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
@@ -194,7 +195,7 @@ const EditDeliveryProductTable = ({
 
       <EditDeliveryTitles>
         <TitleTexts>
-          <TitleText>조회 건수 (총 N 건) </TitleText>
+          <TitleText>조회 건수 (총 {count} 건) </TitleText>
           <BasicSelectBoxStyled width="12rem" list={list} />
         </TitleTexts>
       </EditDeliveryTitles>

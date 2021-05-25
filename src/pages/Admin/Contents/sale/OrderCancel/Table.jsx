@@ -40,11 +40,11 @@ const setRejectCancelProcess = () => {
   alert('취소거부처리');
 };
 
-const Table = ({ data }) => {
+const Table = ({ data, count }) => {
   return (
     <Container>
       <HeaderContainer>
-        <Title>목록(총 0개)</Title>
+        <Title>목록(총 {count}개)</Title>
         <ButtonContainer>
           <Button onClick={setExcelDown}>엑셀다운</Button>
         </ButtonContainer>

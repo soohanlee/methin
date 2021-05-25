@@ -17,6 +17,7 @@ import { notification } from 'utils/notification';
 const DeliveryProduct = () => {
   const [tableData, setTableData] = useState([]);
   const [allTableData, setAllTableData] = useState([]);
+  const [tableCount, setTableCount] = useState([]);
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -30,6 +31,7 @@ const DeliveryProduct = () => {
       const result = await allDeliveryProduct();
       setTableData(result.data.data.list);
       setAllTableData(result.data.data.list);
+      setTableCount(result.data.data.count);
     } catch (e) {
       notification.error('배송 정보를 가져오지 못했습니다.');
     }
@@ -46,7 +48,7 @@ const DeliveryProduct = () => {
 
   const getSearchDeliveryData = async (id) => {
     try {
-      const result = await searchDeliveryProduct('배송정보22');
+      const result = await searchDeliveryProduct(id);
       const resultArray = [result.data.data];
       setTableData(resultArray);
       notification.success('검색 성공');
@@ -108,6 +110,7 @@ const DeliveryProduct = () => {
         updateDeliveryDetailData={updateDeliveryDetailData}
         deleteDeliveryData={deleteDeliveryData}
         result={tableData}
+        count={tableCount}
       />
     </>
   );

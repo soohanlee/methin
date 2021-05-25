@@ -31,7 +31,7 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ data }) => {
+const Table = ({ data, count }) => {
   const [QueryItemVisible, setQueryItemVisible] = useState(false);
 
   return (
@@ -48,7 +48,7 @@ const Table = ({ data }) => {
       />
 
       <HeaderContainer>
-        <Title>목록(총 0개)</Title>
+        <Title>목록(총 {count}개)</Title>
         <ButtonContainer>
           <Button>엑셀다운</Button>
         </ButtonContainer>

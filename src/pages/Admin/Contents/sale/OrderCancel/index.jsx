@@ -49,7 +49,7 @@ const OrderCancel = () => {
     <Container>
       <BoardHeader onClick={categoryTypeClick} list={list} />
       <Filter />
-      <Table data={table} />
+      <Table data={table} count={tableCount} />
     </Container>
   );
 };

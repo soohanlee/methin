@@ -59,14 +59,14 @@ const setModifyReturnCollection = () => {
   alert('수거정보 수정');
 };
 
-const Table = ({ data }) => {
+const Table = ({ data, count }) => {
   console.log('data');
 
   console.log(data);
   return (
     <Container>
       <HeaderContainer>
-        <Title>목록(총 0개)</Title>
+        <Title>목록(총 {count}개)</Title>
         <ButtonContainer>
           <Button onClick={setExcelDown}>엑셀다운</Button>
         </ButtonContainer>

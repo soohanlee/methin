@@ -62,7 +62,7 @@ const Title = styled.div`
 const OrderManage = () => {
   const [datePeriod, setDatePeriod] = useState('');
   const [table, setTable] = useState([]);
-  const [tableLength, setTableLength] = useState(0);
+  const [tableCount, setTableCount] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -70,7 +70,7 @@ const OrderManage = () => {
         const result = await getPaymentList();
         console.log(result);
         setTable(result.data.data.list);
-        setTableLength(result.data.data.count);
+        setTableCount(result.data.data.count);
       } catch (e) {
         notification.error(e);
       }
@@ -126,7 +126,7 @@ const OrderManage = () => {
 
       <BodyContainer>
         <BodyHeaderContainer>
-          <Title>목록 (총{table.length}개)</Title>
+          <Title>목록 (총{tableCount}개)</Title>
         </BodyHeaderContainer>
         <Table selectionType="checkbox" data={table} columns={columns} />
       </BodyContainer>
