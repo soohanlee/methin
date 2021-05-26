@@ -156,6 +156,9 @@ const CategoryModal = (property) => {
         <CategoryModalContent>
           <ContentTitle>카테고리명</ContentTitle>
           <BasicTextInputBoxStyled
+            onClick={(e) => {
+              console.log();
+            }}
             ref={property.catagoryRef}
           ></BasicTextInputBoxStyled>
         </CategoryModalContent>
@@ -198,12 +201,12 @@ const CategoryModal = (property) => {
               }}
               label="카테고리명 선택"
             ></BasicButton>
-            <BasicButton
+            {/* <BasicButton
               onClick={() => {
                 setCategoryIndex(2);
               }}
               label="카테고리 템플릿"
-            ></BasicButton>
+            ></BasicButton> */}
           </CategoryModalContent>
           {renderTap()}
         </CategoryModalBox>
