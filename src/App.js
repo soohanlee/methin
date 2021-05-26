@@ -39,7 +39,8 @@ const { Header, Content } = Layout;
 const UserContainer = styled(Layout)`
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
+  height: 100%;
 `;
 
 const CustomHeader = styled(Header)`
@@ -54,7 +55,6 @@ const CustomContent = styled(Content)`
   flex-direction: column;
   flex: 1;
   height: 100%;
-  overflow-y: auto;
   background: ${(props) => props.theme.BACKGROUND};
 `;
 
