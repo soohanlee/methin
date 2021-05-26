@@ -6,7 +6,7 @@ import Table from './Table';
 import BoardHeader from 'pages/Admin/components/BoardHeader';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
 import { notification } from 'utils/notification';
-import { getPaidWithPaymentConfirmed } from 'apis/payment';
+import { getPaidWithPaymentConfirmedList } from 'apis/payment';
 
 const Icon = css`
   font-size: 4rem;
@@ -24,7 +24,7 @@ const OrderConfirm = () => {
   useEffect(() => {
     async function fetchAndSetUser() {
       try {
-        const result = await getPaidWithPaymentConfirmed();
+        const result = await getPaidWithPaymentConfirmedList();
         const customList = result.data.data.list.map((item) => {
           return { ...item, key: item.id };
         });
