@@ -1,11 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import { css } from 'styled-components';
 import CheckBoxLabel from 'pages/Admin/components/Form/CheckBoxLabel';
 import TextAreaBox from 'pages/Admin/components/Form/TextAreaBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
-import BasicDropBox from 'pages/Admin/components/Form/BasicDropBox';
+import BasicBasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 
@@ -80,7 +80,7 @@ const Category = styled.div`
   ${TapTerm};
 `;
 
-const BasicDropBoxStyled = styled(BasicDropBox)`
+const BasicSelectBoxStyled = styled(BasicBasicSelectBox)`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   padding-left: ${(props) => props.paddingleft};
@@ -116,8 +116,8 @@ const Select = styled.div`
 
 const EditProductSetting = () => {
   const productNumberRef = useRef(null); //상품 번호
-  const productSearchDesc = useRef(null); //상품 복수 검색
-  const productName = useRef(null); //상품명
+  const productSearchDescRef = useRef(null); //상품 복수 검색
+  const productNameRef = useRef(null); //상품명
 
   const renderSetSearch = () => {
     return (
@@ -128,110 +128,148 @@ const EditProductSetting = () => {
           <TextAreaBoxStyled
             label="복수 검색
           (enter 또는 &#34;,&#34;로 구분)"
-            ref={productSearchDesc}
+            ref={productSearchDescRef}
           />
           <TextAndInput>
             <BasicTextInputBoxStyled
               textSize="10rem"
               label="상품명"
-              ref={productName}
+              ref={productNameRef}
             />
           </TextAndInput>
         </Propertys>
       </Search>
     );
   };
-  const allSalesCheck = useRef(null); //전체체크
-  const saleNowCheck = useRef(null); //판매중 체크
-  const soldOutCheck = useRef(null); //품절 체크
-  const stopSaleCheck = useRef(null); //판매중지 체크
-  const endSaleCheck = useRef(null); //판매종료 체크
+  const allSalesCheckRef = useRef(null); //전체체크
+  const saleNowCheckRef = useRef(null); //판매중 체크
+  const soldOutCheckRef = useRef(null); //품절 체크
+  const stopSaleCheckRef = useRef(null); //판매중지 체크
+  const endSaleCheckRef = useRef(null); //판매종료 체크
+
   const renderSetSalesStatus = () => {
     return (
       <SalesStatus>
         <Title>판매상태</Title>
         <Propertys>
-          <CheckBoxLabelStyled label="전체" ref={allSalesCheck} />
-          <CheckBoxLabelStyled label="판매중" ref={saleNowCheck} />
-          <CheckBoxLabelStyled label="품절" ref={soldOutCheck} />
-          <CheckBoxLabelStyled label="판매중지" ref={stopSaleCheck} />
-          <CheckBoxLabelStyled label="판매종료" ref={endSaleCheck} />
+          <CheckBoxLabelStyled label="전체" ref={allSalesCheckRef} />
+          <CheckBoxLabelStyled label="판매중" ref={saleNowCheckRef} />
+          <CheckBoxLabelStyled label="품절" ref={soldOutCheckRef} />
+          <CheckBoxLabelStyled label="판매중지" ref={stopSaleCheckRef} />
+          <CheckBoxLabelStyled label="판매종료" ref={endSaleCheckRef} />
         </Propertys>
       </SalesStatus>
     );
   };
-  const bigGroup = useRef(null); //대분류
-  const middleGroup = useRef(null); //중분류
+
+  const [largeGroupState, setLargeGroupState] = useState(''); //대분류
+  const [middleGroupState, setMiddleGroupState] = useState(''); //중분류
+
   const renderSetCategory = () => {
     return (
       <Category>
         <Title>카테고리</Title>
         <Propertys>
-          <BasicDropBoxStyled label="대분류" width="20rem" ref={bigGroup} />
-          <BasicDropBoxStyled label="중분류" width="20rem" ref={middleGroup} />
+          <BasicSelectBoxStyled
+            list={largeCategory}
+            width="20rem"
+            onChange={(e) => {
+              setLargeGroupState(e);
+            }}
+          />
+          <BasicSelectBoxStyled
+            list={middleCategory}
+            width="20rem"
+            onChange={(e) => {
+              setMiddleGroupState(e);
+            }}
+          />
         </Propertys>
       </Category>
     );
   };
-  const productRegistDropbox = useRef(null); //상품등록일
-  const dayBtn = useRef(null); //오늘
-  const weekBtn = useRef(null); //1주일
-  const monthBtn = useRef(null); //1개월
-  const threeMonthBtn = useRef(null); //3개월
-  const sixMonthBtn = useRef(null); //6개월
-  const yearBtn = useRef(null); //1년
-  const startDate = useRef(null); //상품 등록 시작일
-  const endDate = useRef(null); //상품 등록 정지일
+
+  const periodBtnClick = (value) => {
+    SetPeriodBtnState(value);
+  };
+
+  const [periodCategorySelectState, setPeriodCategorySelectState] = useState(
+    '',
+  ); //상품등록일
+  const [periodBtnState, SetPeriodBtnState] = useState('');
+  const [startDateState, setStartDateState] = useState(''); //상품 등록 시작일
+  const [endDateState, setEndDateState] = useState(''); //상품 등록 정지일
   const renderSetDateTerm = () => {
     return (
       <DateTerm>
         <Title>기간</Title>
         <Propertys>
-          <BasicDropBoxStyled
-            label="상품등록일"
+          <BasicSelectBoxStyled
+            list={periodCategory}
             width="13rem"
-            height="7rem"
-            ref={productRegistDropbox}
+            onChange={(e) => {
+              setPeriodCategorySelectState(e);
+            }}
           />
           <BasicButtonStyled
             label="오늘"
             width="8rem"
             height="4rem"
-            ref={dayBtn}
+            onClick={() => {
+              periodBtnClick('day');
+            }}
           />
           <BasicButtonStyled
             label="1주일"
             width="8rem"
             height="4rem"
-            ref={weekBtn}
+            onClick={() => {
+              periodBtnClick('week');
+            }}
           />
           <BasicButtonStyled
             label="1개월"
             width="8rem"
             height="4rem"
-            ref={monthBtn}
+            onClick={() => {
+              periodBtnClick('month');
+            }}
           />
           <BasicButtonStyled
             label="3개월"
             width="8rem"
             height="4rem"
-            ref={threeMonthBtn}
+            onClick={() => {
+              periodBtnClick('threeMonth');
+            }}
           />
           <BasicButtonStyled
             label="6개월"
             width="8rem"
             height="4rem"
-            ref={sixMonthBtn}
+            onClick={() => {
+              periodBtnClick('sixMonth');
+            }}
           />
           <BasicButtonStyled
             label="1년"
             width="8rem"
             height="4rem"
-            ref={yearBtn}
+            onClick={() => {
+              periodBtnClick('year');
+            }}
           />
-          <BasicDatePickerStyled ref={startDate} />
+          <BasicDatePickerStyled
+            onChange={(value) => {
+              setStartDateState(value);
+            }}
+          />
           ~
-          <BasicDatePickerStyled ref={endDate} />
+          <BasicDatePickerStyled
+            onChange={(value) => {
+              setEndDateState(value);
+            }}
+          />
         </Propertys>
       </DateTerm>
     );
@@ -288,3 +326,23 @@ const EditProductSetting = () => {
 };
 
 export default EditProductSetting;
+const largeCategory = [
+  { value: '0', label: '대분류' },
+  { value: '1', label: '뭐들어가지' },
+  { value: '2', label: '뭐들어가지2' },
+  { value: '3', label: '뭐들어가지3' },
+];
+
+const middleCategory = [
+  { value: '0', label: '중분류' },
+  { value: '1', label: '뭐들어가지' },
+  { value: '2', label: '뭐들어가지2' },
+  { value: '3', label: '뭐들어가지3' },
+];
+
+const periodCategory = [
+  { value: '0', label: '상품등록일' },
+  { value: '1', label: '판매시작일' },
+  { value: '2', label: '판매종료일' },
+  { value: '3', label: '최종수정일' },
+];

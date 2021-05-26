@@ -38,6 +38,13 @@ const Button = styled(OriginButton)`
 `;
 
 const Table = ({ table, count, setTable }) => {
+  const [productSortSelectState, setProductSortSelectState] = React.useState(
+    [],
+  );
+  const [productCountSelectState, setProductCountSelectState] = React.useState(
+    [],
+  );
+
   const [selectedTableKeys, setSelectedTableKeys] = React.useState([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState('');
@@ -209,8 +216,18 @@ const Table = ({ table, count, setTable }) => {
       <HeaderContainer>
         <Title>상품목록(총 {count}개)</Title>
         <ButtonContainer>
-          <BasicSelectBoxStyled list={SortViewList}></BasicSelectBoxStyled>
-          <BasicSelectBoxStyled list={CountList}></BasicSelectBoxStyled>
+          <BasicSelectBoxStyled
+            onChange={(value) => {
+              setProductSortSelectState(value);
+            }}
+            list={SortViewList}
+          ></BasicSelectBoxStyled>
+          <BasicSelectBoxStyled
+            onChange={(value) => {
+              setProductCountSelectState(value);
+            }}
+            list={CountList}
+          ></BasicSelectBoxStyled>
           <Button onClick={setExcelDown}>엑셀다운</Button>
         </ButtonContainer>
       </HeaderContainer>
