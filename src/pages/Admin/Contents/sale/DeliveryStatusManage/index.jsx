@@ -5,7 +5,7 @@ import Filter from './Filter';
 import Table from './Table';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
 import { notification } from 'utils/notification';
-import { getPaidWithShipConfirmed } from 'apis/payment';
+import { getPaidWithPaymentConfirmedList } from 'apis/payment';
 
 const Icon = css`
   font-size: 4rem;
@@ -26,7 +26,7 @@ const DeliveryStatusManage = () => {
   useEffect(() => {
     async function fetchAndSetUser() {
       try {
-        const result = await getPaidWithShipConfirmed();
+        const result = await getPaidWithPaymentConfirmedList();
         const customList = result.data.data.list.map((item) => {
           return { ...item, key: item.id };
         });

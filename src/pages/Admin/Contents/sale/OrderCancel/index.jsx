@@ -5,7 +5,7 @@ import Filter from './Filter';
 import Table from './Table';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
 import { notification } from 'utils/notification';
-import { getPaidWithCanceled } from 'apis/payment';
+import { getCanceledPaymentList } from 'apis/payment';
 
 const Icon = css`
   font-size: 4rem;
@@ -30,7 +30,7 @@ const OrderCancel = () => {
   useEffect(() => {
     async function fetchAndSetUser() {
       try {
-        const result = await getPaidWithCanceled();
+        const result = await getCanceledPaymentList();
         const customList = result.data.data.list.map((item) => {
           return { ...item, key: item.id };
         });

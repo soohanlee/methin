@@ -5,7 +5,7 @@ import Filter from './Filter';
 import Table from './Table';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
 import { notification } from 'utils/notification';
-import { getPaidWithRefunded } from 'apis/payment';
+import { getRefundedPaymentList } from 'apis/payment';
 
 const Icon = css`
   font-size: 4rem;
@@ -26,7 +26,7 @@ const OrderReturn = () => {
   useEffect(() => {
     async function fetchAndSetUser() {
       try {
-        const result = await getPaidWithRefunded();
+        const result = await getRefundedPaymentList();
         const customList = result.data.data.list.map((item) => {
           return { ...item, key: item.id };
         });
