@@ -101,10 +101,6 @@ const Filter = () => {
         />
       </LabelContents>
 
-      <LabelContents title="자동구매 확정 대상여부">
-        <SelectBox list={autoBuy} onChange={handleAutoBuyChange} />
-      </LabelContents>
-
       <ButtonContainer>
         <Button>검색</Button>
       </ButtonContainer>
@@ -144,10 +140,4 @@ const waitingForShipmentList = [
   { label: '신규주문', value: 'newOrder' },
   { label: '발주확인', value: 'confirmOfOrder' },
   { label: '발주확인 해제', value: 'cancelOrderConfirm' },
-];
-
-const autoBuy = [
-  { label: '전체', value: 'all' },
-  { label: '등록', value: 'yes' },
-  { label: '미등록', value: 'no' },
 ];

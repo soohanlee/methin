@@ -59,11 +59,14 @@ const setModifyReturnCollection = () => {
   alert('수거정보 수정');
 };
 
-const Table = ({ data }) => {
+const Table = ({ data, count }) => {
+  console.log('data');
+
+  console.log(data);
   return (
     <Container>
       <HeaderContainer>
-        <Title>목록(총 0개)</Title>
+        <Title>목록(총 {count}개)</Title>
         <ButtonContainer>
           <Button onClick={setExcelDown}>엑셀다운</Button>
         </ButtonContainer>
@@ -96,30 +99,30 @@ export default Table;
 const columns = [
   {
     title: '주문번호',
-    dataIndex: 'orderNumber',
+    dataIndex: 'id',
   },
   {
     title: '주문상태',
-    dataIndex: 'orderState',
+    dataIndex: 'status',
   },
   {
     title: '반품 처리상태',
-    dataIndex: 'orderReturnState',
+    dataIndex: 'refund_status',
   },
   {
     title: '수거방법',
-    dataIndex: 'orderCollectWay',
+    dataIndex: 'refund_type',
   },
   {
     title: '수거상태',
-    dataIndex: 'orderCollectState',
+    dataIndex: '',
   },
   {
     title: '결제일',
-    dataIndex: 'settlementDay',
+    dataIndex: 'paid_at',
   },
   {
     title: '반품요청일',
-    dataIndex: 'orderReturnDate',
+    dataIndex: 'refunded_at',
   },
 ];

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import Filter from './Filter';
 import Table from './Table';
 import BoardHeader from 'pages/Admin/components/BoardHeader';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
+import { notification } from 'utils/notification';
+import { getPaidWithPaymentConfirmedList } from 'apis/payment';
 
 const Icon = css`
   font-size: 4rem;
@@ -16,6 +18,27 @@ const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
 `;
 // 발주 확인/발송관리
 const OrderConfirm = () => {
+  const [table, setTable] = useState([]);
+  const [tableCount, setTableCount] = useState(0);
+
+  useEffect(() => {
+    async function fetchAndSetUser() {
+      try {
+        const result = await getPaidWithPaymentConfirmedList();
+        const customList = result.data.data.list.map((item) => {
+          return { ...item, key: item.id };
+        });
+        // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
+
+        setTable(customList);
+        setTableCount(result.data.data.count);
+      } catch (e) {
+        notification.error('상품 정보를 가져오지 못했습니다.');
+      }
+    }
+    fetchAndSetUser();
+  }, []);
+
   const handleClick = (value) => {
     switch (value) {
       case 'todayDelay':
@@ -67,7 +90,7 @@ const OrderConfirm = () => {
         orderCountTableColumns={orderCountTableColumns}
         orderCountTableData={orderCountTableData}
         orderSheetList={orderSheetList}
-        tableData={tableData}
+        tableData={table}
       />
     </div>
   );
@@ -79,11 +102,6 @@ const list = [
   {
     title: '먼저 확인해주세요!',
     itemList: [
-      {
-        label: '오늘 출발 지연',
-        value: 'todayDelay',
-        img: <AppstoreTwoToneIcon />,
-      },
       {
         label: '신규주문 지연',
         value: 'newOrderDelay',
@@ -109,7 +127,6 @@ const list = [
   {
     title: '발송처리를 진행해 주세요!',
     itemList: [
-      { label: '오늘출발', value: 'todayStart', img: <AppstoreTwoToneIcon /> },
       { label: '신규주문', value: 'newOrder', img: <AppstoreTwoToneIcon /> },
       {
         label: '발주확인 완료',
@@ -197,21 +214,5 @@ const orderSheetList = [
     adress:
       '(650759) 경상남도 통영시 무전동 한진로즈힐 1054/2 한진로즈힐 106동 1406호',
     phoneNum: '010-6295-1039 / 010-8541-1039 (010-6295-1039)',
-  },
-];
-
-const tableData = [
-  {
-    key: '0',
-    productOrderNumber: '2021',
-    orderNumber: '2021',
-    buyerDeliveryType: '택배,등기,소포',
-    deliveryType: '',
-    courier: '',
-    invoiceNumber: '',
-    trackingShipping: '',
-    shipmentDate: '2021.05.22',
-    salesChannel: '스마트스토어',
-    talktalk: '톡톡하기',
   },
 ];

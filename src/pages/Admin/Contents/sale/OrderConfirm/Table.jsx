@@ -343,49 +343,155 @@ export default Table;
 
 const columns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
-  },
-  {
     title: '주문번호',
-    dataIndex: 'orderNumber',
+    dataIndex: 'id',
   },
   {
     title: '배송방법(구매자요청)',
-    dataIndex: 'buyerDeliveryType',
+    dataIndex: '',
   },
   {
     title: '배송방법',
-    dataIndex: 'deliveryType',
+    dataIndex: 'ship_type',
     render: () => <BasicSelectBox list={selctBoxList} />,
   },
   {
     title: '택배사',
-    dataIndex: 'courier',
+    dataIndex: 'ship_company_name',
     render: () => <BasicSelectBox list={selctBoxList} disabled />,
   },
   {
     title: '송장번호',
-    dataIndex: 'invoiceNumber',
+    dataIndex: 'ship_number',
     render: () => <BasicTextInputBox list={selctBoxList} disabled />,
   },
   {
     title: '배송추적',
-    dataIndex: 'trackingShipping',
+    dataIndex: '',
   },
   {
     title: '발송일',
-    dataIndex: 'shipmentDate',
+    dataIndex: '',
   },
   {
-    title: '판매채널',
-    dataIndex: 'salesChannel',
+    title: '구매자명',
+    dataIndex: 'buyer_name',
   },
   {
-    title: '톡톡하기',
-    dataIndex: 'talktalk',
-    render: (text) => <a href="https://www.naver.com">{text}</a>,
+    title: '구매자ID',
+    dataIndex: 'buyer_id',
+  },
+  {
+    title: '수취인명',
+    dataIndex: 'recipient_name',
+  },
+  {
+    title: '주문상태',
+    dataIndex: 'status',
+  },
+  {
+    title: '결제일',
+    dataIndex: 'paid_at',
+  },
+  {
+    title: '상품번호',
+    dataIndex: 'product_id',
+  },
+  {
+    title: '상품명',
+    dataIndex: 'product_name',
+  },
+  {
+    title: '상품종류',
+    dataIndex: '',
+  },
+  {
+    title: '옵션정보',
+    dataIndex: '',
+  },
+  {
+    title: '수량',
+    dataIndex: 'count',
+  },
+  {
+    title: '옵션가격',
+    dataIndex: 'option_add_price',
+  },
+  {
+    title: '상품가격',
+    dataIndex: 'price',
+  },
+  {
+    title: '총 주문금액',
+    dataIndex: 'total_price',
+  },
+  {
+    title: '발주확인일',
+    dataIndex: 'order_confirmed_at',
+  },
+  {
+    title: '발송기한',
+    dataIndex: '',
+  },
+  {
+    title: '발송처리일',
+    dataIndex: '',
+  },
+  {
+    title: '송장출력일',
+    dataIndex: '',
+  },
+  {
+    title: '배송비 형태',
+    dataIndex: 'ship_pay_type',
+  },
+  {
+    title: '배송비 묶음번호',
+    dataIndex: '',
+  },
+  {
+    title: '배송비 유형',
+    dataIndex: 'ship_category',
+  },
+  {
+    title: '배송비 합계',
+    dataIndex: 'total_ship_amount',
+  },
+  {
+    title: '배송비 할인액',
+    dataIndex: 'ship_discount_amount',
+  },
+  {
+    title: '수취인 연락처',
+    dataIndex: 'recipient_phone',
+  },
+  {
+    title: '배송지',
+    dataIndex: 'ship_address_main',
+  },
+  {
+    title: '구매자 연락처',
+    dataIndex: 'buyer_phone',
+  },
+  {
+    title: '우편번호',
+    dataIndex: 'released_zip_code',
+  },
+  {
+    title: '배송메세지',
+    dataIndex: 'ship_message',
+  },
+  {
+    title: '출고지',
+    dataIndex: 'released_address_main',
+  },
+  {
+    title: '결제수단',
+    dataIndex: '',
+  },
+  {
+    title: '주문일시',
+    dataIndex: 'created_at',
   },
 ];
 
