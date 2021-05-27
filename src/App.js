@@ -43,13 +43,6 @@ const UserContainer = styled(Layout)`
   height: 100%;
 `;
 
-const CustomHeader = styled(Header)`
-  display: flex;
-  height: 10rem;
-
-  padding: 0;
-`;
-
 const CustomContent = styled(Content)`
   display: flex;
   flex-direction: column;
@@ -132,9 +125,7 @@ function App() {
             </Switch>
           ) : (
             <UserContainer>
-              <CustomHeader>
-                <Navigation />
-              </CustomHeader>
+              <Navigation />
 
               <CustomContent>
                 <Switch>
