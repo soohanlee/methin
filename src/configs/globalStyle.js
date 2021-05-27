@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import './font.scss';
 
 const GlobalStyle = createGlobalStyle`
     html,
@@ -116,7 +117,7 @@ const GlobalStyle = createGlobalStyle`
     body {
 
         div {
-
+            line-height: 1;
             &::-webkit-scrollbar-corner {
                 background: transparent;
             }
@@ -135,7 +136,7 @@ const GlobalStyle = createGlobalStyle`
 
         }
 
-        font-family: 'NanumSquare', sans-serif;
+        font-family: Noto Sans CJK KR, "Noto Sans CJK KR", 'NanumSquare', sans-serif;
         .normal		{ font-weight: 400 }
         .bold		{ font-weight: 700 }
         .bolder		{ font-weight: 800 }
@@ -164,12 +165,12 @@ const GlobalStyle = createGlobalStyle`
     }
 
     input, textarea {
-        font-family: 'NanumSquare', sans-serif;
+        font-family: Noto Sans CJK KR, "Noto Sans CJK KR", 'NanumSquare', sans-serif;
         font-size: 1.6rem;
 
         &::placeholder {
             font-size: 1.6rem;
-            font-family: 'NanumSquare', sans-serif;
+            font-family: Noto Sans CJK KR, "Noto Sans CJK KR", 'NanumSquare', sans-serif;
         }
     }
 
@@ -209,7 +210,6 @@ const GlobalStyle = createGlobalStyle`
         -ms-user-select: none;
         user-select: none;
     }
-
 `;
 
 export default GlobalStyle;
