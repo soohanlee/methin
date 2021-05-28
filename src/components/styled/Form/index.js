@@ -7,7 +7,7 @@ export const Input = styled.input`
 
 export const Form = styled.form``;
 
-export const Label = styled.div`
+export const Label = styled.label`
   color: ${(props) => props.theme.TEXT_MAIN};
 `;
 

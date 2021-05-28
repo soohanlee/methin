@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Selectbox from 'components/Form/Selectbox';
+import CheckboxLabel from 'components/Form/CheckboxLabel';
 
 const Container = styled.div``;
 
