@@ -104,10 +104,6 @@ const columns = [
     dataIndex: 'ship_number',
   },
   {
-    title: '배송추적',
-    dataIndex: '',
-  },
-  {
     title: '발송일',
     dataIndex: 'ship_confirmed_at',
   },
@@ -134,7 +130,7 @@ const columns = [
   },
   {
     title: '옵션정보',
-    dataIndex: '',
+    dataIndex: 'option_name',
   },
   {
     title: '수량',
@@ -157,10 +153,6 @@ const columns = [
     dataIndex: 'paid_at',
   },
   {
-    title: '배송비 묶음번호',
-    dataIndex: '',
-  },
-  {
     title: '배송비 형태',
     dataIndex: 'ship_pay_type',
   },
@@ -175,10 +167,6 @@ const columns = [
   {
     title: '제주/도서 추가배송비',
     dataIndex: 'ship_add_amount',
-  },
-  {
-    title: '배송비 할인액',
-    dataIndex: '',
   },
   {
     title: '수취인 연락처',

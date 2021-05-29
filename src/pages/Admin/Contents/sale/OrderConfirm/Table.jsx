@@ -347,10 +347,6 @@ const columns = [
     dataIndex: 'id',
   },
   {
-    title: '배송방법(구매자요청)',
-    dataIndex: '',
-  },
-  {
     title: '배송방법',
     dataIndex: 'ship_type',
     render: () => <BasicSelectBox list={selctBoxList} />,
@@ -364,14 +360,6 @@ const columns = [
     title: '송장번호',
     dataIndex: 'ship_number',
     render: () => <BasicTextInputBox list={selctBoxList} disabled />,
-  },
-  {
-    title: '배송추적',
-    dataIndex: '',
-  },
-  {
-    title: '발송일',
-    dataIndex: '',
   },
   {
     title: '구매자명',
@@ -402,12 +390,8 @@ const columns = [
     dataIndex: 'product_name',
   },
   {
-    title: '상품종류',
-    dataIndex: '',
-  },
-  {
     title: '옵션정보',
-    dataIndex: '',
+    dataIndex: 'option_name',
   },
   {
     title: '수량',
@@ -430,24 +414,8 @@ const columns = [
     dataIndex: 'order_confirmed_at',
   },
   {
-    title: '발송기한',
-    dataIndex: '',
-  },
-  {
-    title: '발송처리일',
-    dataIndex: '',
-  },
-  {
-    title: '송장출력일',
-    dataIndex: '',
-  },
-  {
     title: '배송비 형태',
     dataIndex: 'ship_pay_type',
-  },
-  {
-    title: '배송비 묶음번호',
-    dataIndex: '',
   },
   {
     title: '배송비 유형',
@@ -484,10 +452,6 @@ const columns = [
   {
     title: '출고지',
     dataIndex: 'released_address_main',
-  },
-  {
-    title: '결제수단',
-    dataIndex: '',
   },
   {
     title: '주문일시',

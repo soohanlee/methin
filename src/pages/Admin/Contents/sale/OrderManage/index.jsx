@@ -68,7 +68,6 @@ const OrderManage = () => {
     async function fetchData() {
       try {
         const result = await getPaymentList();
-        console.log(result);
         setTable(result.data.data.list);
         setTableCount(result.data.data.count);
       } catch (e) {
@@ -179,7 +178,7 @@ const columns = [
   },
   {
     title: '옵션',
-    dataIndex: 'option',
+    dataIndex: 'option_name',
   },
   {
     title: '수량',
