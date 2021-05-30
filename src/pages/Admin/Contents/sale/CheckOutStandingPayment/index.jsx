@@ -81,7 +81,7 @@ const CheckOutStandingPayment = () => {
         </ButtonContainer>
       </TitleContainer>
 
-      <Table data={table} columns={columns} />
+      <Table scroll={{ x: '130vw', y: 500 }} data={table} columns={columns} />
     </Container>
   );
 };
@@ -111,10 +111,6 @@ const columns = [
     dataIndex: 'recipient_name',
   },
   {
-    title: '결제/입금기한',
-    dataIndex: '',
-  },
-  {
     title: '상품번호',
     dataIndex: 'product_id',
     render: (Text) => <a href="https://www.naver.com">{Text}</a>,
@@ -125,7 +121,7 @@ const columns = [
   },
   {
     title: '옵션',
-    dataIndex: '',
+    dataIndex: 'option_name',
   },
   {
     title: '수량',
@@ -142,29 +138,5 @@ const columns = [
   {
     title: '총 주문금액',
     dataIndex: 'total_price',
-  },
-  {
-    title: '배송비 형태',
-    dataIndex: '',
-  },
-  {
-    title: '배송비 묶음번호',
-    dataIndex: '',
-  },
-  {
-    title: '배송비 유형',
-    dataIndex: '',
-  },
-  {
-    title: '배송비 합계',
-    dataIndex: '',
-  },
-  {
-    title: '배송비 할인액',
-    dataIndex: '',
-  },
-  {
-    title: '결제수단',
-    dataIndex: '',
   },
 ];

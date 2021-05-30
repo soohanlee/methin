@@ -72,7 +72,12 @@ const Table = ({ data, count }) => {
         </ButtonContainer>
       </HeaderContainer>
 
-      <OriginTable data={data} columns={columns} selectionType="checkbox" />
+      <OriginTable
+        scroll={{ x: '50vw', y: 500 }}
+        data={data}
+        columns={columns}
+        selectionType="checkbox"
+      />
 
       <ButtomContainer>
         <LabelContents title="반품처리">

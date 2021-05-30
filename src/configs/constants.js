@@ -23,7 +23,8 @@ export const leftNavigationMenu = [
     submenuList: [
       { title: '주문조회', path: ROUTE_PATH.admin.manageSale },
       { title: '미결제 확인', path: ROUTE_PATH.admin.checkOutstanding },
-      { title: '발송(주문)확인/발송관리', path: ROUTE_PATH.admin.orderConfirm },
+      { title: '발송(주문)확인', path: ROUTE_PATH.admin.orderConfirm },
+      { title: '발송관리', path: ROUTE_PATH.admin.orderManage },
       { title: '배송현황 관리', path: ROUTE_PATH.admin.deliveryStatusManage },
       { title: '취소관리', path: ROUTE_PATH.admin.orderCancel },
       { title: '판매방해 고객관리', path: ROUTE_PATH.admin.orderDisturb },

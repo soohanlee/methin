@@ -15,6 +15,7 @@ export const ROUTE_PATH = {
     manageSale: '/manage-sale',
     checkOutstanding: '/check-outstanding',
     orderConfirm: '/order-confirm',
+    orderManage: '/order-manage',
     orderCancel: '/order-cancel',
     orderReturn: '/order-return',
     orderDisturb: '/order-disturb',

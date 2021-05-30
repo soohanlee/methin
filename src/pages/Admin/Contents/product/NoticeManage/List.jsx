@@ -81,7 +81,12 @@ const List = ({ data }) => {
         <ButtonContainer>
           <Button>선택삭제</Button>
         </ButtonContainer>
-        <Table columns={columns} data={data} selectionType={'checkbox'} />
+        <Table
+          scroll={{ x: '50vw', y: 500 }}
+          columns={columns}
+          data={data}
+          selectionType={'checkbox'}
+        />
       </BodyContainer>
     </Container>
   );

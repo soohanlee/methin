@@ -10,7 +10,11 @@ const CustomTable = styled(OriginTable)`
 const Table = ({ data }) => {
   return (
     <>
-      <CustomTable columns={columns} data={data} />
+      <CustomTable
+        scroll={{ x: '50vw', y: 500 }}
+        columns={columns}
+        data={data}
+      />
     </>
   );
 };

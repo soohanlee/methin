@@ -32,7 +32,12 @@ const editTemplateProductTable = ({ data }) => {
 
   return (
     <>
-      <TableStyled data={data} columns={columns} selectionType={'checkbox'} />
+      <TableStyled
+        scroll={{ x: '50vw', y: 500 }}
+        data={data}
+        columns={columns}
+        selectionType={'checkbox'}
+      />
       <EditDeliveryMenuBtn>
         {renderSetButton('등록')}
         {renderSetButton('선택삭제')}

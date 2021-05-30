@@ -50,7 +50,12 @@ const Table = ({ data, count }) => {
         </ButtonContainer>
       </HeaderContainer>
 
-      <OriginTable data={data} columns={columns} selectionType="checkbox" />
+      <OriginTable
+        scroll={{ x: '50vw', y: 500 }}
+        data={data}
+        columns={columns}
+        selectionType="checkbox"
+      />
 
       <ButtomContainer>
         <Button onClick={setSuccessCancelProcess}>취소 완료처리</Button>

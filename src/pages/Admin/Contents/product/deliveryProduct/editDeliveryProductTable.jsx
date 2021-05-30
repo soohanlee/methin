@@ -206,7 +206,12 @@ const EditDeliveryProductTable = ({
         ></BasicButton>
       </EditDeliveryMenuBtn>
 
-      <TableStyled columns={columns} data={data} selectionType={'checkbox'} />
+      <TableStyled
+        scroll={{ x: '100vw', y: 500 }}
+        columns={columns}
+        data={data}
+        selectionType={'checkbox'}
+      />
     </>
   );
 };
