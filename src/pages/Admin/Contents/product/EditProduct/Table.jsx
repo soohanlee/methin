@@ -238,6 +238,7 @@ const Table = ({ table, count, setTable }) => {
       </HeaderContainer>
 
       <OriginTable
+        scroll={{ x: '250vw', y: 500 }}
         data={table}
         columns={columns}
         selectionType="checkbox"

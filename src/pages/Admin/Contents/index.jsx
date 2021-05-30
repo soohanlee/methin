@@ -9,9 +9,10 @@ import DeliveryProduct from 'pages/Admin/Contents/product/deliveryProduct/delive
 import TemplateProduct from 'pages/Admin/Contents/product/templateProduct/templateProduct';
 import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnce';
 import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/Index';
-import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
+import OrderSerach from 'pages/Admin/Contents/sale/OrderSerach';
 import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingPayment';
 import OrderConfirm from 'pages/Admin/Contents/sale/OrderConfirm';
+import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
 import OrderCancel from 'pages/Admin/Contents/sale/OrderCancel';
 import OrderReturn from 'pages/Admin/Contents/sale/OrderReturn';
 import SaleDisturb from 'pages/Admin/Contents/sale/SaleDisturb';
@@ -69,7 +70,7 @@ const Contents = () => {
         <Route
           exact
           path={`${prePath}${ROUTE_PATH.admin.manageSale}`}
-          component={OrderManage}
+          component={OrderSerach}
         />
         <Route
           exact
@@ -80,6 +81,11 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.orderConfirm}`}
           component={OrderConfirm}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.orderManage}`}
+          component={OrderManage}
         />
         <Route
           exact

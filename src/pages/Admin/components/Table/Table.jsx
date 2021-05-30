@@ -59,6 +59,8 @@ const Table = ({
   columns,
   onChange,
   data,
+  scroll,
+  x,
   ...props
 }) => {
   // selectionType = 'checkbox' | 'radio' 타입은 둘중 하나로 들어와야합니다.
@@ -94,7 +96,7 @@ const Table = ({
       columns={customColumns}
       dataSource={data}
       bordered
-      scroll={{ x: '100vw', y: 500 }}
+      scroll={scroll}
       {...props}
     />
   );

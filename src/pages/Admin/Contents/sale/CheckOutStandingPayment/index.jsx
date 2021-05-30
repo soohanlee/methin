@@ -81,7 +81,7 @@ const CheckOutStandingPayment = () => {
         </ButtonContainer>
       </TitleContainer>
 
-      <Table data={table} columns={columns} />
+      <Table scroll={{ x: '130vw', y: 500 }} data={table} columns={columns} />
     </Container>
   );
 };

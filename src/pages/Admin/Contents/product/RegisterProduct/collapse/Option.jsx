@@ -141,7 +141,7 @@ const Option = () => {
       <LabelContents title="옵션목록">
         <SelectBox list={optionSortList} onChange={handleOptionSortChange} />
       </LabelContents>
-      <Table columns={columns} />
+      <Table scroll={{ x: '100vw', y: 500 }} columns={columns} />
     </CustomCollapse>
   );
 };

@@ -6,8 +6,7 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTable from 'pages/Admin/components/Table/Table';
 
-import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/orderSheetModal';
-import OrderCountTableModal from 'pages/Admin/Contents/sale/OrderConfirm/orderCountTableModal';
+import OrderSheetModal from 'pages/Admin/Contents/sale/OrderManage/orderSheetModal';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 const Container = styled.div`
@@ -57,7 +56,16 @@ const Table = ({
   const [orderAdressChangeFunction, setOrderAdressChangeFunction] = useState(
     false,
   );
+  const [orderProcessFunction, setOrderProcessFunction] = useState(false);
+  const [orderExcelFunction, setOrderExcelFunction] = useState(false);
+  const [
+    orderCombinedPackingFunction,
+    setOrderCombinedPackingFunction,
+  ] = useState(false);
+  const [orderGoodsflowFunction, setOrderGoodsflowFunction] = useState(false);
+  const [orderModifyFunction, setOrderModifyFunction] = useState(false);
   const [saleCancelFunction, setOrderCancelFunction] = useState(false);
+  const [collectionCancelFunction, setCollectionFunction] = useState(false);
   const [label, setLabel] = useState('');
 
   const tableBtn = (id) => {
@@ -71,11 +79,27 @@ const Table = ({
         setOrderFunction(orderConfirmFunction);
         break;
       }
-      case 'orderAdressChange': {
+      case 'order': {
+        setLabel(
+          '배송방법이 선택되지 않은 주문 건이 있습니다. 발송처리하실 배송방법을 선택해주세요.',
+        );
+        setOrderFunction(orderProcessFunction);
+
+        break;
+      }
+      case 'orderExcel': {
         setLabel(
           '선택하신 1개의 주문 건 중 1개 발주확인 처리 가능합니다. 발송기한 내 발송처리가 진행되지 않을 경우, 판매관리 패널티가 부여되며 구매고객에게는 상품준비중으로 노출됩니다. 발주확인 처리를 하시겠습니까?',
         );
-        setOrderFunction(orderAdressChangeFunction);
+        setOrderFunction(orderExcelFunction);
+
+        break;
+      }
+      case 'orderCombinedPacking': {
+        setLabel(
+          '선택하신 1개의 주문 건 중 1개 합포장 일괄 발송처리 가능합니다. 합포장 일괄 발송처리를 계속 진행하시겠습니까?',
+        );
+        setOrderFunction(orderCombinedPackingFunction);
 
         break;
       }
@@ -84,6 +108,14 @@ const Table = ({
           '선택하신 1개의 주문 건 중 1개 발주확인 처리 가능합니다. 발송기한 내 발송처리가 진행되지 않을 경우, 판매관리 패널티가 부여되며 구매고객에게는 상품준비중으로 노출됩니다. 발주확인 처리를 하시겠습니까?',
         );
         setOrderFunction(saleCancelFunction);
+
+        break;
+      }
+      case 'collectionCancel': {
+        setLabel(
+          "선택하신 1개의 주문 건 중 1개 판매취소 가능합니다. 실제 취소사유와 다르게 취소가 되는 경우, '고의적 부당행위'로 불이익이 발생할 수 있으므로 주의해주세요. 판매취소를 진행하시겠습니까?",
+        );
+        setOrderFunction(collectionCancelFunction);
 
         break;
       }
@@ -139,7 +171,6 @@ const Table = ({
 
       <BasicTable
         scroll={{ x: '300vw', y: 500 }}
-        x="300vw"
         data={tableData}
         columns={columns}
         selectionType="checkbox"
@@ -156,20 +187,27 @@ const Table = ({
       </ButtonContainer>
 
       <ButtomContainer>
-        <LabelContents title="주문확인">
+        <LabelContents title="발송처리">
           <Button
             onClick={() => {
-              tableBtn('OrderConfirmation');
+              tableBtn('order');
             }}
           >
-            발주확인
+            발송처리
           </Button>
           <Button
             onClick={() => {
-              tableBtn('orderAdressChange');
+              tableBtn('orderExcel');
             }}
           >
-            고객 배송지 정보수정
+            엑셀 일괄 발송처리
+          </Button>
+          <Button
+            onClick={() => {
+              tableBtn('orderCombinedPacking');
+            }}
+          >
+            합포장 일괄 발송처리
           </Button>
         </LabelContents>
 
@@ -180,6 +218,13 @@ const Table = ({
             }}
           >
             판매취소
+          </Button>
+          <Button
+            onClick={() => {
+              tableBtn('collectionCancel');
+            }}
+          >
+            집하취소
           </Button>
         </LabelContents>
       </ButtomContainer>
@@ -197,7 +242,6 @@ const columns = [
   {
     title: '배송방법',
     dataIndex: 'ship_type',
-
     render: () => <BasicSelectBox list={selctBoxList} />,
   },
   {
