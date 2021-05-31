@@ -31,6 +31,8 @@ const Icon = styled.div`
   right: 0;
 `;
 
+const Img = styled.img``;
+
 const SearchInput = (
   { color = '#ffffff', onKeyPress, onClick, placeholder, className },
   ref,
@@ -44,8 +46,13 @@ const SearchInput = (
         placeholder={placeholder}
       />
       <Icon onClick={onClick} color={color}>
-        아이콘
+        <Img
+          src={
+            process.env.PUBLIC_URL + '/assets/images/top-white-search-icon.svg'
+          }
+        />
       </Icon>
+      <TestImg />
       {/* 아이콘 svg로 받아야 색이 변경됨 */}
     </InputContainer>
   );

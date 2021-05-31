@@ -86,6 +86,15 @@ const MenuItem = styled.div`
   padding: 0 2rem;
 `;
 
+const LogoImg = styled.img`
+  width: 110px;
+`;
+
+const Img = styled.img`
+  width: 25px;
+  height: 25px;
+`;
+
 const Navigation = () => {
   const history = useHistory();
   const userState = useContext(UserContext);
@@ -114,7 +123,11 @@ const Navigation = () => {
   return (
     <>
       <Container>
-        <Logo onClick={handleMoveMainPage}>methin</Logo>
+        <Logo onClick={handleMoveMainPage}>
+          <LogoImg
+            src={process.env.PUBLIC_URL + '/assets/images/logo-icon.svg'}
+          />
+        </Logo>
         <SearchInput
           onClick={handleSearchClick}
           placeholder={'이 달의 베스트! 프로 다이어터를 위한 식품 대전'}
@@ -123,15 +136,36 @@ const Navigation = () => {
           {userState.loginState === LOGGED_IN ? (
             <UserContainer>
               <IconContainer>
-                <Icon>장바구니</Icon>
+                <Icon>
+                  <Img
+                    src={
+                      process.env.PUBLIC_URL +
+                      '/assets/images/top-white-like-icon.svg'
+                    }
+                  />
+                </Icon>
                 <InfoContainer>
-                  <Icon>정보</Icon>
+                  <Icon>
+                    <Img
+                      src={
+                        process.env.PUBLIC_URL +
+                        '/assets/images/top-white-cart-icon.svg'
+                      }
+                    />
+                  </Icon>
                   <ListContainer>
                     <ItemLabel>마이페이지</ItemLabel>
-                    <ItemLabel>개인정보수정</ItemLabel>
                     <ItemLabel onClick={handleLogout}>로그아웃</ItemLabel>
                   </ListContainer>
                 </InfoContainer>
+                <Icon>
+                  <Img
+                    src={
+                      process.env.PUBLIC_URL +
+                      '/assets/images/top-white-mypage-icon.svg'
+                    }
+                  />
+                </Icon>
               </IconContainer>
             </UserContainer>
           ) : (
