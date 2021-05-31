@@ -4,13 +4,17 @@ import { Label } from 'components/styled/Form';
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
+  max-width: 35rem;
 `;
 
 const ImgContainer = styled.div`
   position: relative;
 `;
 
-const Img = styled.img``;
+const Img = styled.img`
+  width: 100%;
+`;
 
 const CartContainer = styled.div`
   width: 5rem;
@@ -18,21 +22,50 @@ const CartContainer = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
+  background: ${(props) => props.theme.SIGNITURE_MAIN};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-const CategoryLabel = styled(Label)``;
+const CartImg = styled.img.attrs({
+  src: process.env.PUBLIC_URL + '/assets/images/top-white-cart-icon.svg',
+})``;
 
-const DescripitonLabel = styled(Label)``;
+const CategoryLabel = styled(Label)`
+  font-size: 1.4rem;
+`;
 
-const PriceContainer = styled.div``;
+const DescripitonLabel = styled(Label)`
+  color: ${(props) => props.theme.TEXT_INFORMATION};
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+`;
 
-const PriceWrap = styled.div``;
+const PriceContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
-const BeforePrice = styled.div``;
+const PriceWrap = styled.div`
+  display: flex;
+`;
 
-const AfterPrice = styled.div``;
+const BeforePrice = styled.div`
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-decoration: line-through;
+`;
 
-const SalePercentage = styled.div``;
+const AfterPrice = styled.div`
+  font-size: 2rem;
+  font-weight: 500;
+`;
+
+const SalePercentage = styled.div`
+  font-size: 2rem;
+  color: ${(props) => props.theme.SIGNITURE_MAIN};
+`;
 
 const ProductItem = ({
   id,
@@ -42,20 +75,24 @@ const ProductItem = ({
   beforePrice,
   afterPrice,
   salePercentage,
+  className,
+  span,
 }) => {
   return (
-    <Container>
+    <Container className={className} key={id} span={span}>
       <ImgContainer>
         <Img src={process.env.PUBLIC_URL + img} />
-        <CartContainer>장바구니</CartContainer>
+        <CartContainer>
+          <CartImg />
+        </CartContainer>
       </ImgContainer>
 
       <CategoryLabel>{catergory}</CategoryLabel>
       <DescripitonLabel>{description}</DescripitonLabel>
       <PriceContainer>
         <PriceWrap>
-          <BeforePrice>{beforePrice}</BeforePrice>
           <AfterPrice>{afterPrice}</AfterPrice>
+          <BeforePrice>{beforePrice}</BeforePrice>
         </PriceWrap>
         <SalePercentage>{salePercentage}</SalePercentage>
       </PriceContainer>

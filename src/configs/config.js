@@ -3,6 +3,7 @@ export const ROUTE_PATH = {
   login: '/login',
   signup: '/signup',
   findId: '/findId',
+  product: '/product',
   admin: {
     main: '/admin',
     test: '/test',

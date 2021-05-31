@@ -28,3 +28,9 @@ export const SelectableLabel = styled.div`
     margin-bottom: 0;
   }
 `;
+
+export const PageTitle = styled.div`
+  font-size: 3.8rem;
+  font-weight: 300;
+  margin-bottom: 5rem;
+`;

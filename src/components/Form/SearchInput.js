@@ -52,7 +52,6 @@ const SearchInput = (
           }
         />
       </Icon>
-      <TestImg />
       {/* 아이콘 svg로 받아야 색이 변경됨 */}
     </InputContainer>
   );
