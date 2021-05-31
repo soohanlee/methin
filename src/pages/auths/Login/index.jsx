@@ -8,6 +8,7 @@ import {
   setAccessToken,
   setRefreshToken,
   cleanToken,
+  getAccessToken,
 } from 'utils/tokenManager';
 import { ROUTE_PATH } from 'configs/config';
 import { notification } from 'utils/notification';
@@ -84,6 +85,12 @@ const Login = () => {
   useEffect(() => {
     if (login.loginState === LOGGED_IN) {
       history.push(`/main`);
+    }
+  });
+
+  useEffect(() => {
+    if (getAccessToken()) {
+      login.changeUserState(LOGGED_IN);
     }
   });
 

@@ -41,14 +41,13 @@ const UserContainer = styled(Layout)`
   flex-direction: column;
   overflow-y: auto;
   height: 100%;
+  background: ${(props) => props.theme.BACKGROUND};
 `;
 
 const CustomContent = styled(Content)`
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 100%;
-  background: ${(props) => props.theme.BACKGROUND};
 `;
 
 function App() {
@@ -84,7 +83,11 @@ function App() {
     fetchAndSetUser();
   }, []);
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (getAccessToken()) {
+      changeUserState(LOGGED_IN);
+    }
+  });
 
   const changeUserState = (data) => {
     setIsLogin(data);
