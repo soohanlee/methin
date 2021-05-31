@@ -7,7 +7,8 @@ import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTable from 'pages/Admin/components/Table/Table';
 
 import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/orderSheetModal';
-import OrderCountTableModal from 'pages/Admin/Contents/sale/OrderConfirm/orderCountTableModal';
+import AdressModifyModal from 'pages/Admin/Contents/sale/OrderConfirm/adressModifyModal';
+import SaleCanccelModal from 'pages/Admin/Contents/sale/OrderConfirm/saleCanccelModal';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 const Container = styled.div`
@@ -48,8 +49,9 @@ const Table = ({
 }) => {
   const invoiceNumber = useRef(null);
 
-  const [orderVisible, setOrderVisible] = useState(false);
+  const [adressModifyVisible, setAdressModifyVisible] = useState(false);
   const [orderSheetVisible, setOrderSheetVisible] = useState(false);
+  const [saleCancelVisible, setSaleCancelVisible] = useState(false);
 
   const [orderFunction, setOrderFunction] = useState(false);
 
@@ -61,30 +63,24 @@ const Table = ({
   const [label, setLabel] = useState('');
 
   const tableBtn = (id) => {
-    setOrderVisible(true);
-
     switch (id) {
       case 'OrderConfirmation': {
-        setLabel(
+        var returnValue = window.confirm(
           '선택하신 1개의 주문 건 중 1개 발주확인 처리 가능합니다. 발송기한 내 발송처리가 진행되지 않을 경우, 판매관리 패널티가 부여되며 구매고객에게는 상품준비중으로 노출됩니다. 발주확인 처리를 하시겠습니까?',
         );
-        setOrderFunction(orderConfirmFunction);
+        if (returnValue) {
+          alert('1건 중 1건의 발주확인 처리가 완료되었습니다.');
+        }
+
         break;
       }
       case 'orderAdressChange': {
-        setLabel(
-          '선택하신 1개의 주문 건 중 1개 발주확인 처리 가능합니다. 발송기한 내 발송처리가 진행되지 않을 경우, 판매관리 패널티가 부여되며 구매고객에게는 상품준비중으로 노출됩니다. 발주확인 처리를 하시겠습니까?',
-        );
-        setOrderFunction(orderAdressChangeFunction);
+        setAdressModifyVisible(true);
 
         break;
       }
       case 'saleCancel': {
-        setLabel(
-          '선택하신 1개의 주문 건 중 1개 발주확인 처리 가능합니다. 발송기한 내 발송처리가 진행되지 않을 경우, 판매관리 패널티가 부여되며 구매고객에게는 상품준비중으로 노출됩니다. 발주확인 처리를 하시겠습니까?',
-        );
-        setOrderFunction(saleCancelFunction);
-
+        setSaleCancelVisible(true);
         break;
       }
       default: {
@@ -95,23 +91,21 @@ const Table = ({
 
   return (
     <Container>
-      <Modal
-        title="주문서 출력"
+      <AdressModifyModal
         centered
-        visible={orderVisible}
+        title="고객 배송지 정보수정"
+        visible={adressModifyVisible}
         onOk={() => {
-          setOrderVisible(true);
+          setAdressModifyVisible(true);
         }}
         onCancel={() => {
-          setOrderVisible(false);
+          setAdressModifyVisible(false);
         }}
         width={500}
         okText="확인"
         cancelText="취소"
-      >
-        {label}
-      </Modal>
-
+        orderSheetList={orderSheetList}
+      ></AdressModifyModal>
       <OrderSheetModal
         centered
         visible={orderSheetVisible}
@@ -128,7 +122,23 @@ const Table = ({
       >
         {label}
       </OrderSheetModal>
-
+      <SaleCanccelModal
+        centered
+        title="선택건 판매취소"
+        visible={saleCancelVisible}
+        onOk={() => {
+          setSaleCancelVisible(false);
+        }}
+        onCancel={() => {
+          setSaleCancelVisible(false);
+        }}
+        width={500}
+        okText="확인"
+        cancelText="취소"
+        orderSheetList={orderSheetList}
+      >
+        {label}>
+      </SaleCanccelModal>
       <SearchContainer>
         <LabelContents title="배송정보 한번에 입력하기">
           <PeirodSelectBox list={deliveryTypeList} />
@@ -328,3 +338,20 @@ const deliveryCompanyList = [
   { label: '선택', value: 'select' },
   { label: 'CJ 대한통운', value: 'cj' },
 ];
+
+// <Modal
+//         title="주문서 출력"
+//         centered
+//         visible={orderVisible}
+//         onOk={() => {
+//           setOrderVisible(false);
+//         }}
+//         onCancel={() => {
+//           setOrderVisible(false);
+//         }}
+//         width={500}
+//         okText="확인"
+//         cancelText="취소"
+//       >
+//         {label}
+//       </Modal>
