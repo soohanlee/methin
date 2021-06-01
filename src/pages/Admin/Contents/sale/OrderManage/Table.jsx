@@ -1,12 +1,15 @@
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Button as OriginButton, Modal, Input } from 'antd';
+import { Button as OriginButton, Input } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTable from 'pages/Admin/components/Table/Table';
 
 import OrderSheetModal from 'pages/Admin/Contents/sale/OrderManage/orderSheetModal';
+import ExcelModal from 'pages/Admin/Contents/sale/OrderManage/excelModal';
+import PackingModal from 'pages/Admin/Contents/sale/OrderManage/packingModal';
+import SaleCancelModal from 'pages/Admin/Contents/sale/OrderManage/saleCancelModal';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 const Container = styled.div`
@@ -47,8 +50,10 @@ const Table = ({
 }) => {
   const invoiceNumber = useRef(null);
 
-  const [orderVisible, setOrderVisible] = useState(false);
   const [orderSheetVisible, setOrderSheetVisible] = useState(false);
+  const [excelVisible, setExcelVisible] = useState(false);
+  const [packingVisible, setPackingVisible] = useState(false);
+  const [saleCancelVisible, setSaleCancelVisible] = useState(false);
 
   const [orderFunction, setOrderFunction] = useState(false);
 
@@ -66,56 +71,32 @@ const Table = ({
   const [orderModifyFunction, setOrderModifyFunction] = useState(false);
   const [saleCancelFunction, setOrderCancelFunction] = useState(false);
   const [collectionCancelFunction, setCollectionFunction] = useState(false);
-  const [label, setLabel] = useState('');
 
   const tableBtn = (id) => {
-    setOrderVisible(true);
-
     switch (id) {
-      case 'OrderConfirmation': {
-        setLabel(
-          '선택하신 1개의 주문 건 중 1개 발주확인 처리 가능합니다. 발송기한 내 발송처리가 진행되지 않을 경우, 판매관리 패널티가 부여되며 구매고객에게는 상품준비중으로 노출됩니다. 발주확인 처리를 하시겠습니까?',
-        );
-        setOrderFunction(orderConfirmFunction);
-        break;
-      }
       case 'order': {
-        setLabel(
-          '배송방법이 선택되지 않은 주문 건이 있습니다. 발송처리하실 배송방법을 선택해주세요.',
-        );
-        setOrderFunction(orderProcessFunction);
-
+        alert('선택하신 1개의 주문 건 중 1개를 발송처리했습니다.');
         break;
       }
       case 'orderExcel': {
-        setLabel(
-          '선택하신 1개의 주문 건 중 1개 발주확인 처리 가능합니다. 발송기한 내 발송처리가 진행되지 않을 경우, 판매관리 패널티가 부여되며 구매고객에게는 상품준비중으로 노출됩니다. 발주확인 처리를 하시겠습니까?',
-        );
-        setOrderFunction(orderExcelFunction);
-
+        setExcelVisible(true);
         break;
       }
       case 'orderCombinedPacking': {
-        setLabel(
-          '선택하신 1개의 주문 건 중 1개 합포장 일괄 발송처리 가능합니다. 합포장 일괄 발송처리를 계속 진행하시겠습니까?',
-        );
-        setOrderFunction(orderCombinedPackingFunction);
-
+        setPackingVisible(true);
         break;
       }
       case 'saleCancel': {
-        setLabel(
-          '선택하신 1개의 주문 건 중 1개 발주확인 처리 가능합니다. 발송기한 내 발송처리가 진행되지 않을 경우, 판매관리 패널티가 부여되며 구매고객에게는 상품준비중으로 노출됩니다. 발주확인 처리를 하시겠습니까?',
-        );
-        setOrderFunction(saleCancelFunction);
-
+        setSaleCancelVisible(true);
         break;
       }
-      case 'collectionCancel': {
-        setLabel(
-          "선택하신 1개의 주문 건 중 1개 판매취소 가능합니다. 실제 취소사유와 다르게 취소가 되는 경우, '고의적 부당행위'로 불이익이 발생할 수 있으므로 주의해주세요. 판매취소를 진행하시겠습니까?",
+      case 'pickup': {
+        const result = window.confirm(
+          '2개 송장 출력건에 대해 택배사에 집하취소 요청을 하시겠습니까?\n요청시 동일 송장번호 내 모든 주문건에 대해 집하 취소 처리가 진행됩니다.',
         );
-        setOrderFunction(collectionCancelFunction);
+        if (result) {
+          alert('2건 중 2건의 집하취소 처리가 완료되었습니다.');
+        }
 
         break;
       }
@@ -127,22 +108,35 @@ const Table = ({
 
   return (
     <Container>
-      <Modal
-        title="주문서 출력"
+      <ExcelModal
+        title="송장번호 일괄등록"
         centered
-        visible={orderVisible}
+        visible={excelVisible}
         onOk={() => {
-          setOrderVisible(true);
+          setExcelVisible(false);
         }}
         onCancel={() => {
-          setOrderVisible(false);
+          setExcelVisible(false);
         }}
         width={500}
         okText="확인"
         cancelText="취소"
-      >
-        {label}
-      </Modal>
+      ></ExcelModal>
+
+      <PackingModal
+        title="묶음그룹 일괄 발송처리"
+        centered
+        visible={packingVisible}
+        onOk={() => {
+          setPackingVisible(false);
+        }}
+        onCancel={() => {
+          setPackingVisible(false);
+        }}
+        width={500}
+        okText="확인"
+        cancelText="취소"
+      ></PackingModal>
 
       <OrderSheetModal
         centered
@@ -157,9 +151,23 @@ const Table = ({
         okText="확인"
         cancelText="취소"
         orderSheetList={orderSheetList}
-      >
-        {label}
-      </OrderSheetModal>
+      ></OrderSheetModal>
+
+      <SaleCancelModal
+        centered
+        title="선택건 판매취소"
+        visible={saleCancelVisible}
+        onOk={() => {
+          setSaleCancelVisible(false);
+        }}
+        onCancel={() => {
+          setSaleCancelVisible(false);
+        }}
+        width={500}
+        okText="확인"
+        cancelText="취소"
+        orderSheetList={orderSheetList}
+      ></SaleCancelModal>
 
       <SearchContainer>
         <LabelContents title="배송정보 한번에 입력하기">
@@ -221,7 +229,7 @@ const Table = ({
           </Button>
           <Button
             onClick={() => {
-              tableBtn('collectionCancel');
+              tableBtn('pickup');
             }}
           >
             집하취소

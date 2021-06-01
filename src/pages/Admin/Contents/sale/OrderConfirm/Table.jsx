@@ -8,7 +8,7 @@ import BasicTable from 'pages/Admin/components/Table/Table';
 
 import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/orderSheetModal';
 import AdressModifyModal from 'pages/Admin/Contents/sale/OrderConfirm/adressModifyModal';
-import SaleCanccelModal from 'pages/Admin/Contents/sale/OrderConfirm/saleCanccelModal';
+import SaleCancelModal from 'pages/Admin/Contents/sale/OrderConfirm/saleCancelModal';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 const Container = styled.div`
@@ -60,7 +60,6 @@ const Table = ({
     false,
   );
   const [saleCancelFunction, setOrderCancelFunction] = useState(false);
-  const [label, setLabel] = useState('');
 
   const tableBtn = (id) => {
     switch (id) {
@@ -119,10 +118,8 @@ const Table = ({
         okText="확인"
         cancelText="취소"
         orderSheetList={orderSheetList}
-      >
-        {label}
-      </OrderSheetModal>
-      <SaleCanccelModal
+      ></OrderSheetModal>
+      <SaleCancelModal
         centered
         title="선택건 판매취소"
         visible={saleCancelVisible}
@@ -136,9 +133,7 @@ const Table = ({
         okText="확인"
         cancelText="취소"
         orderSheetList={orderSheetList}
-      >
-        {label}>
-      </SaleCanccelModal>
+      ></SaleCancelModal>
       <SearchContainer>
         <LabelContents title="배송정보 한번에 입력하기">
           <PeirodSelectBox list={deliveryTypeList} />
