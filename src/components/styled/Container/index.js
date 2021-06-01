@@ -9,3 +9,7 @@ export const ListContainer = styled.div`
   border: 0.1rem solid ${(props) => props.theme.TEXT_MAIN};
   background: ${(props) => props.theme.BACKGROUND};
 `;
+
+export const PaddingContainer = styled.div`
+  padding: 5% 10%;
+`;

@@ -34,6 +34,7 @@ import Admin from 'pages/Admin';
 import Login from 'pages/auths/Login';
 import SignUp from 'pages/auths/sign-up';
 import Product from 'pages/Product';
+import ProductDetail from 'pages/product-detail';
 
 const { Header, Content } = Layout;
 
@@ -139,6 +140,10 @@ function App() {
                   <Route exact path={ROUTE_PATH.login} component={Login} />
                   <Route exact path={ROUTE_PATH.signup} component={SignUp} />
                   <Route exact path={ROUTE_PATH.product} component={Product} />
+                  <Route
+                    path={`${ROUTE_PATH.product}:id`}
+                    component={ProductDetail}
+                  />
                 </Switch>
                 <MainFooter />
               </CustomContent>

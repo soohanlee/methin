@@ -6,12 +6,15 @@ import ProductItem from 'pages/Product/ProductItem';
 import { PageTitle, Label } from 'components/styled/Form';
 import Selectbox from 'components/Form/Selectbox';
 
-const Container = styled.div`
+import { PaddingContainer } from 'components/styled/Container';
+import { ROUTE_PATH } from 'configs/config';
+import { useHistory } from 'react-router';
+
+const Container = styled(PaddingContainer)`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5% 10%;
 `;
 
 const FilterHeader = styled.div`
@@ -67,6 +70,7 @@ const selectList = [
 ];
 
 const Product = () => {
+  const history = useHistory();
   const [selectedItem, setSelectedItem] = useState(selectList[0]);
 
   const renderFilterList = () => {
@@ -82,6 +86,10 @@ const Product = () => {
 
   const handleSelectedItem = (value) => {
     setSelectedItem(value);
+  };
+
+  const handleProductDetailClick = (id) => {
+    history.push(`${ROUTE_PATH.product}:${id}`);
   };
 
   const renderProductList = () => {
@@ -105,6 +113,7 @@ const Product = () => {
             afterPrice={afterPrice}
             salePercentage={salePercentage}
             span={4}
+            onClick={() => handleProductDetailClick(id)}
           />
         );
       },

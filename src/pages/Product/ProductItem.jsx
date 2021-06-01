@@ -77,9 +77,10 @@ const ProductItem = ({
   salePercentage,
   className,
   span,
+  onClick,
 }) => {
   return (
-    <Container className={className} key={id} span={span}>
+    <Container className={className} key={id} span={span} onClick={onClick}>
       <ImgContainer>
         <Img src={process.env.PUBLIC_URL + img} />
         <CartContainer>
