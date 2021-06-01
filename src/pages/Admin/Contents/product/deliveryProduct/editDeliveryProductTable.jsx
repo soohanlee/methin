@@ -1,10 +1,11 @@
-import React from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import Table from 'pages/Admin/components/Table/Table';
-import BasicDropBox from 'pages/Admin/components/Form/BasicDropBox';
+import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
+import DeliveryUpdateModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryUpdateModal';
 
 const EditDeliveryTitlesCss = css`
   width: 100%;
@@ -39,7 +40,7 @@ const TitleText = styled.div`
 
 const TableStyled = styled(Table)``;
 
-const BasicDropBoxStyled = styled(BasicDropBox)`
+const BasicSelectBoxStyled = styled(BasicSelectBox)`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   padding-left: ${(props) => props.paddingleft};
@@ -47,70 +48,178 @@ const BasicDropBoxStyled = styled(BasicDropBox)`
   margin-right: 5rem;
 `;
 
-const SetButton = (label) => {
-  return <BasicButton label={label}></BasicButton>;
-};
+const EditDeliveryProductTable = ({
+  updateDeliveryDetailData,
+  deleteDeliveryData,
+  updateDeliveryData,
+  result,
+  count,
+}) => {
+  const [modifyVisible, setModifyVisible] = useState(false);
+  const [addVisible, setAddVisible] = useState(false);
+  const [data, setDatas] = useState([]);
+  const [index, setIndex] = useState([]);
 
-const editDeliveryProductTable = () => {
+  //테이블데이터
+  const groupNamesRef = useRef(null);
+  const [useStatusState, setUseStatusState] = useState('');
+  const [calculationWayState, setCalculationWayState] = useState('');
+  const [addPriceState, setAddPriceState] = useState('');
+
+  useEffect(() => {
+    setDatas(result);
+  }, [result]);
+
+  const setRegistConnectProduct = () => {
+    showAddModal();
+  };
+
+  const showModifyModal = (_index) => {
+    setIndex(_index);
+    setModifyVisible(true);
+  };
+
+  const showDeleteModal = (index) => {
+    deleteDeliveryData(index);
+  };
+
+  const showAddModal = () => {
+    setAddVisible(true);
+  };
+
+  const modifyDataSave = () => {
+    console.log(useStatusState);
+
+    const data = {
+      body: groupNamesRef.current.state.value,
+      status: useStatusState,
+    };
+    updateDeliveryDetailData(index, data);
+  };
+
+  const addDataSave = () => {
+    const data = {
+      body: groupNamesRef.current.state.value,
+      amount1: 1000,
+      amount2: 2000,
+    };
+    updateDeliveryData(data);
+  };
+
+  const columns = [
+    {
+      title: '수정',
+      dataIndex: 'id',
+      render: (id) => (
+        <BasicButton
+          onClick={() => {
+            showModifyModal(id);
+          }}
+          label="수정"
+        ></BasicButton>
+      ),
+    },
+    {
+      title: '삭제',
+      dataIndex: 'id',
+      render: (id) => (
+        <BasicButton
+          onClick={() => showDeleteModal(id)}
+          label="삭제"
+        ></BasicButton>
+      ),
+    },
+    {
+      title: '그룹번호',
+      dataIndex: 'id',
+    },
+    {
+      title: '그룹명',
+      dataIndex: 'body',
+    },
+
+    {
+      title: '기본배송비',
+      dataIndex: 'amount1',
+    },
+    {
+      title: '제주,산간 배송비',
+      dataIndex: 'amount2',
+    },
+    {
+      title: '사용여부',
+      dataIndex: 'status',
+    },
+    {
+      title: '등록일',
+      dataIndex: 'created_at',
+    },
+    {
+      title: '수정일',
+      dataIndex: 'updated_at',
+    },
+  ];
+  for (var i = 0; i < data.length; i++) {
+    switch (data[i].status) {
+      case 0:
+        data[i].status = '미사용';
+        break;
+      case 1:
+        data[i].status = '사용';
+        break;
+    }
+  }
+
   return (
     <>
+      <DeliveryUpdateModal
+        visible={modifyVisible}
+        setVisible={setModifyVisible}
+        onClick={modifyDataSave}
+        title="배송비묶음그룹"
+        groupNamesRef={groupNamesRef}
+        setUseStatusState={setUseStatusState}
+        setCalculationWayState={setCalculationWayState}
+        setAddPriceState={setAddPriceState}
+      />
+      <DeliveryUpdateModal
+        visible={addVisible}
+        setVisible={setAddVisible}
+        onClick={addDataSave}
+        title="배송비묶음그룹"
+        groupNamesRef={groupNamesRef}
+        setUseStatusState={setUseStatusState}
+        setCalculationWayState={setCalculationWayState}
+        setAddPriceState={setAddPriceState}
+      />
+
       <EditDeliveryTitles>
         <TitleTexts>
-          <TitleText>조회 건수 (총 N 건) </TitleText>
-          <BasicDropBoxStyled label="50 개씩" />
+          <TitleText>조회 건수 (총 {count} 건) </TitleText>
+          <BasicSelectBoxStyled width="12rem" list={list} />
         </TitleTexts>
       </EditDeliveryTitles>
-      <EditDeliveryMenuBtn>{SetButton('+ 묶음그룹 추가')}</EditDeliveryMenuBtn>
-      <TableStyled columns={columns} selectionType={'checkbox'}/>
+      <EditDeliveryMenuBtn>
+        <BasicButton
+          onClick={setRegistConnectProduct}
+          label={'+ 묶음그룹 추가'}
+        ></BasicButton>
+      </EditDeliveryMenuBtn>
+
+      <TableStyled
+        scroll={{ x: '100vw', y: 500 }}
+        columns={columns}
+        data={data}
+        selectionType={'checkbox'}
+      />
     </>
   );
 };
 
-const columns = [
-  {
-    title: '수정',
-    dataIndex: 'modify',
-  },
-  {
-    title: '삭제',
-    dataIndex: 'delete',
-  },
-  {
-    title: '그룹번호',
-    dataIndex: 'groupNumber',
-  },
-  {
-    title: '그룹명',
-    dataIndex: 'groupName',
-  },
-  {
-    title: '계산방식',
-    dataIndex: 'calculationMethod',
-  },
-  {
-    title: '권역구분',
-    dataIndex: 'areaClassification',
-  },
-  {
-    title: '권역2 추가배송비',
-    dataIndex: 'addDrivePrice2',
-  },
-  {
-    title: '권역3 추가배송비',
-    dataIndex: 'addDrivePrice3',
-  },
-  {
-    title: '사용여부',
-    dataIndex: 'useStatus',
-  },
-  {
-    title: '등록일',
-    dataIndex: 'registrationDate',
-  },
-  {
-    title: '수정일',
-    dataIndex: 'modifyDate',
-  }
+export default EditDeliveryProductTable;
+const list = [
+  { value: 'ten', label: '10개씩' },
+  { value: 'fifty', label: '50개씩' },
+  { value: 'hundred', label: '100개씩' },
+  { value: 'fiveHundred', label: '500개씩' },
 ];
-
-export default editDeliveryProductTable;

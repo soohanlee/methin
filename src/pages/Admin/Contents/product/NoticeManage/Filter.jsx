@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Radio, Button } from 'antd';
+import { useHistory } from 'react-router';
+import { ROUTE_PATH } from 'configs/config';
 
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
@@ -44,28 +46,9 @@ const ItemWrap = styled.div`
   align-items: center;
 `;
 
-const searchNameList = [
-  { label: '제목', value: 'title' },
-  { label: '번호', value: 'number' },
-];
-
-const typeList = [
-  { label: '분류 전체', value: 'all' },
-  { label: '일반', value: 'normal' },
-  { label: '이벤트', value: 'event' },
-  { label: '배송지연', value: 'delivery' },
-  { label: '상품', value: 'product' },
-];
-
-const displayList = [
-  { label: '전시상태 전체', value: 'all' },
-  { label: '전시대기', value: 'wait' },
-  { label: '전시중', value: 'ing' },
-  { label: '전시중지', value: 'stop' },
-];
-
 const Filter = () => {
   const titleRef = useRef(null);
+  const history = useHistory();
 
   const [dateRange, setDateRange] = useState('today');
 
@@ -89,8 +72,15 @@ const Filter = () => {
     console.log(value);
   };
 
+  const handleRegisterNotice = () => {
+    console.log(history);
+    history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
+  };
   return (
     <Container>
+      <LabelContents title="상품 공지사항 조회">
+        <Button onClick={handleRegisterNotice}>새 상품 공지사항 등록</Button>
+      </LabelContents>
       <LabelContents title="검색어">
         <BasicSelectBox
           list={searchNameList}
@@ -136,3 +126,23 @@ const Filter = () => {
 };
 
 export default Filter;
+
+const searchNameList = [
+  { label: '제목', value: 'title' },
+  { label: '번호', value: 'number' },
+];
+
+const typeList = [
+  { label: '분류 전체', value: 'all' },
+  { label: '일반', value: 'normal' },
+  { label: '이벤트', value: 'event' },
+  { label: '배송지연', value: 'delivery' },
+  { label: '상품', value: 'product' },
+];
+
+const displayList = [
+  { label: '전시상태 전체', value: 'all' },
+  { label: '전시대기', value: 'wait' },
+  { label: '전시중', value: 'ing' },
+  { label: '전시중지', value: 'stop' },
+];

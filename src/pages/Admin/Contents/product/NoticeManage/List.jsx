@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import Table from 'pages/Admin/components/Table/Table';
+import { useHistory } from 'react-router';
+import { ROUTE_PATH } from 'configs/config';
 
 const Container = styled.div`
   background: #fff;
@@ -26,67 +28,65 @@ const BodyContainer = styled.div`
   padding: 2rem;
 `;
 
-const columns = [
-  {
-    title: '수정',
-    dataIndex: 'edit',
-  },
-  {
-    title: '번호',
-    dataIndex: 'number',
-  },
-  {
-    title: '분류',
-    dataIndex: 'devide',
-  },
-  {
-    title: 'state',
-    dataIndex: 'address',
-  },
-  {
-    title: '제목',
-    dataIndex: 'title',
-  },
-];
+const ButtonStyled = styled(Button)``;
 
-const data = [
-  {
-    key: '1',
-    name: 'edit',
-    age: 32,
-    address: 'number',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'devide',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'address',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'title',
-  },
-];
+const List = ({ data }) => {
+  const history = useHistory();
 
-const List = () => {
+  const handleModifyNotice = () => {
+    console.log(history);
+    history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
+  };
+
+  const columns = [
+    {
+      title: '수정',
+      dataIndex: 'modify',
+      render: () => (
+        <ButtonStyled onClick={handleModifyNotice}>수정</ButtonStyled>
+      ),
+    },
+    {
+      title: '번호',
+      dataIndex: 'number',
+    },
+    {
+      title: '분류',
+      dataIndex: 'classification',
+    },
+    {
+      title: '상태',
+      dataIndex: 'status',
+    },
+    {
+      title: '제목',
+      dataIndex: 'title',
+    },
+    {
+      title: '등록일',
+      dataIndex: 'registerDate',
+    },
+    {
+      title: '삭제일',
+      dataIndex: 'deleteDate',
+    },
+  ];
+
   return (
     <Container>
       <TitleContainer>
-        <Title>상품 공지사항 목록 (총 {data.length}개)</Title>
+        <Title>상품 공지사항 목록 (총 {0}개)</Title>
       </TitleContainer>
       <BodyContainer>
         <ButtonContainer>
           <Button>선택삭제</Button>
         </ButtonContainer>
-        <Table columns={columns} data={data} selectionType={'checkbox'} />
+        <Table
+          scroll={{ x: '50vw', y: 500 }}
+          columns={columns}
+          data={data}
+          selectionType={'checkbox'}
+        />
       </BodyContainer>
     </Container>
   );

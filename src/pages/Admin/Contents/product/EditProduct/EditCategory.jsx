@@ -22,10 +22,11 @@ const EditCategorys = styled.div`
 `;
 
 const CategoryType = styled.div`
-  width: 30rem;
+  width: 17rem;
   display: flex;
-  justify-content: center;
   align-items: center;
+  cursor: Pointer;
+  margin-right: 10rem;
 `;
 
 const CategoryTexts = styled.div``;
@@ -54,6 +55,42 @@ const CheckCircleTwoToneIcon = styled(CheckCircleTwoTone)`
   ${Icon}
 `;
 
+const categoryTextArray = ['전체', '판매중', '품절', '판매중지', '판매종료'];
+
+const EditCategory = ({ count }) => {
+  const renderSetCaterogy = () => {
+    const result = [];
+    for (let i = 0; i < 5; i++) {
+      result.push(
+        <>
+          <CategoryType
+            key={i}
+            onClick={() => categoryTypeClick(categoryTextArray[i])}
+          >
+            {categoryTypeArray[i]}
+            <CategoryTexts>
+              <TitleText>{categoryTextArray[i]}</TitleText>
+              <SubTitleText>{count} 건</SubTitleText>
+            </CategoryTexts>
+          </CategoryType>
+        </>,
+      );
+    }
+    return result;
+  };
+
+  const categoryTypeClick = (value) => {
+    alert(value);
+  };
+  return (
+    <>
+      <EditCategorys>{renderSetCaterogy()}</EditCategorys>
+    </>
+  );
+};
+
+export default EditCategory;
+
 const categoryTypeArray = [
   <AppstoreTwoToneIcon />,
   <DollarCircleTwoToneIcon />,
@@ -61,33 +98,3 @@ const categoryTypeArray = [
   <CloseCircleTwoToneIcon />,
   <CheckCircleTwoToneIcon />,
 ];
-
-const categoryTextArray = ['전체', '판매중', '품절', '판매중지', '판매종료'];
-
-const SetCaterogy = () => {
-  const result = [];
-  for (let i = 0; i < 5; i++) {
-    result.push(
-      <>
-        <CategoryType>
-          {categoryTypeArray[i]}
-          <CategoryTexts>
-            <TitleText>{categoryTextArray[i]}</TitleText>
-            <SubTitleText>8 건</SubTitleText>
-          </CategoryTexts>
-        </CategoryType>
-      </>,
-    );
-  }
-  return result;
-};
-
-const EditCategory = () => {
-  return (
-    <>
-      <EditCategorys>{SetCaterogy()}</EditCategorys>
-    </>
-  );
-};
-
-export default EditCategory;

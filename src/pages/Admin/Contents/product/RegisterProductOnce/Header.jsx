@@ -1,6 +1,9 @@
-import React from 'react';
+import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
+import CategoryModal from 'pages/Admin/Contents/product/RegisterProductOnce/CategoryModal';
+import CountryModal from 'pages/Admin/Contents/product/RegisterProductOnce/CountryModal';
+import ImageModal from 'pages/Admin/Contents/product/RegisterProductOnce/ImageModal';
 
 const Container = styled.div`
   display: flex;
@@ -18,41 +21,77 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const header = () => {
+const Header = ({ dataList }) => {
+  const categoryRef = useRef(null);
+  const countryRef = useRef(null);
+  const [categoryVisible, setCategoryVisible] = useState(false);
+  const [countryVisible, setCountryVisible] = useState(false);
+  const [imageVisible, setImageVisible] = useState(false);
+  const [conturySelect, setConturySelect] = useState('korea');
+  const [adressSelect, setAdressSelect] = useState('korea');
+
   const handleCategoryClick = () => {
-    alert("카테고리 찾기 클릭")
-  }
+    setCategoryVisible(true);
+  };
 
   const handleOriginClick = () => {
-    alert("원산지 찾기 클릭")
-  }
+    setCountryVisible(true);
+  };
 
   const handleExcelClick = () => {
-    alert("엑셀양식다운로드 클릭")
-  }
+    alert('엑셀양식다운로드 클릭');
+  };
 
   const handleImageClick = () => {
-    alert("이미지업로드 클릭")
-  }
+    setImageVisible(true);
+  };
 
   const handleFileClick = () => {
-    alert("파일 업로드 클릭")
-  }
+    alert('파일 업로드 클릭');
+  };
 
+  const searchData = () => {};
+  const addVisible = () => {};
+  const setAddVisible = () => {};
   return (
-    <Container>
-      <ButtonContainer>
-        <Button onClick={handleCategoryClick}>카테고리 찾기</Button>
-        <Button onClick={handleOriginClick}>원산지 찾기</Button>
-      </ButtonContainer>
+    <>
+      <CategoryModal
+        visible={categoryVisible}
+        setVisible={setCategoryVisible}
+        onClick={setCategoryVisible}
+        title="카테고리 찾기"
+        categoryRef={categoryRef}
+        dataList={dataList}
+      />
+      <CountryModal
+        visible={countryVisible}
+        setVisible={setCountryVisible}
+        onClick={setCountryVisible}
+        title="원산지 찾기"
+        countryRef={countryRef}
+        setConturySelect={setConturySelect}
+        setAdressSelect={setAdressSelect}
+      />
+      <ImageModal
+        visible={imageVisible}
+        setVisible={setImageVisible}
+        onClick={setImageVisible}
+        countryRef={countryRef}
+      />
+      <Container>
+        <ButtonContainer>
+          <Button onClick={handleCategoryClick}>카테고리 찾기</Button>
+          <Button onClick={handleOriginClick}>원산지 찾기</Button>
+        </ButtonContainer>
 
-      <ButtonContainer>
-        <Button onClick={handleExcelClick}>엑셀양식다운로드</Button>
-        <Button onClick={handleImageClick}>이미지업로드</Button>
-        <Button onClick={handleFileClick}>파일 업로드</Button>
-      </ButtonContainer>
-    </Container>
+        <ButtonContainer>
+          <Button onClick={handleExcelClick}>엑셀양식다운로드</Button>
+          <Button onClick={handleImageClick}>이미지업로드</Button>
+          <Button onClick={handleFileClick}>파일 업로드</Button>
+        </ButtonContainer>
+      </Container>
+    </>
   );
 };
 
-export default header;
+export default Header;

@@ -31,30 +31,32 @@ const TitleText = styled.div`
   color: #66dd89;
 `;
 
-const categoryTextArray = ['배송비 묶음그룹 관리'];
+const editDeliveryProductCategory = () => {
+  const categoryTextArray = ['배송비 묶음그룹 관리'];
 
-const SetCaterogy = () => {
-  const CategoryClick = () => {
-    alert('카테고리 클릭');
+  const renderSetCaterogy = () => {
+    const CategoryClick = (e) => {
+      alert(e.target.innerText);
+    };
+
+    const result = [];
+    for (let i = 0; i < 5; i++) {
+      result.push(
+        <>
+          <CategoryType key={i}>
+            <TitleText onClick={CategoryClick}>
+              {categoryTextArray[i]}
+            </TitleText>
+          </CategoryType>
+        </>,
+      );
+    }
+    return result;
   };
 
-  const result = [];
-  for (let i = 0; i < 5; i++) {
-    result.push(
-      <>
-        <CategoryType>
-          <TitleText onClick={CategoryClick}>{categoryTextArray[i]}</TitleText>
-        </CategoryType>
-      </>,
-    );
-  }
-  return result;
-};
-
-const editDeliveryProductCategory = () => {
   return (
     <>
-      <EditCategorys>{SetCaterogy()}</EditCategorys>
+      <EditCategorys>{renderSetCaterogy()}</EditCategorys>
     </>
   );
 };

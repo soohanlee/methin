@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
@@ -38,21 +38,7 @@ const SelectBoxStyled = styled(BasicSelectBox)`
 const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
   width: 30rem;
 `;
-const SetMenu = () => {
-  const groupNameSelectBox = useRef(null); //배송비 묶음그룹 명 셀렉트박스
-  const groupNameInputBox = useRef(null); //배송비 묶음그룹 명 인풋박스
-  return (
-    <>
-      <SelectBoxStyled
-        label="배송비 묶음그룹 명"
-        ref={groupNameSelectBox}
-        width="20rem"
-        marginleft="20rem"
-      />
-      <BasicTextInputBoxStyled label="" ref={groupNameInputBox} />
-    </>
-  );
-};
+
 const Line = styled.div`
   display: flex;
   justify-content: center;
@@ -64,39 +50,74 @@ const BasicButtonStyled = styled(BasicButton)`
   margin-left: ${(props) => props.marginleft};
 `;
 
-const SetSelect = () => {
-  const setSearchBtn = () => {
-    alert('검색 버튼 클릭');
-  };
-
-  const setResetBtn = () => {
-    alert('초기화 버튼 클릭');
-  };
-
+const EditDeliveryProductSetting = ({
+  getSearchDeliveryData,
+  getAllDeliveryData,
+  initDeliveryData,
+}) => {
+  const [searchValue, setSearchValue] = useState('deliveryPriceNames');
+  const groupNameInputBox = useRef(null); //배송비 묶음그룹 명 인풋박스
   const searchBtn = useRef(null); //검색
 
-  return (
-    <Line>
-      <BasicButtonStyled
-        label="검색"
-        width="13rem"
-        height="5rem"
-        type="primary"
-        ref={searchBtn}
-        onClick={setSearchBtn}
-      />
-      <BasicButtonStyled
-        label="초기화"
-        width="13rem"
-        height="5rem"
-        marginleft="2rem"
-        onClick={setResetBtn}
-      />
-    </Line>
-  );
-};
+  const handleSelectChange = (value) => {
+    setSearchValue(value);
+  };
 
-const editDeliveryProductSetting = () => {
+  const RenderSetMenu = () => {
+    return (
+      <>
+        <SelectBoxStyled
+          label="배송비 묶음그룹명"
+          width="20rem"
+          marginleft="20rem"
+          onChange={handleSelectChange}
+          value={searchValue}
+          list={[
+            { value: 'deliveryPriceNames', label: '배송비 묶음그룹명' },
+            { value: 'deliveryPriceNumbers', label: '배송비 묶음그룹번호' },
+          ]}
+        />
+        <BasicTextInputBoxStyled label="" ref={groupNameInputBox} />
+      </>
+    );
+  };
+
+  const RenderSetSelect = () => {
+    const setSearchBtn = () => {
+      let value = groupNameInputBox.current.state.value;
+      if (!value) {
+        getAllDeliveryData();
+      } else {
+        getSearchDeliveryData(value);
+      }
+    };
+
+    const setResetBtn = () => {
+      initDeliveryData();
+      handleSelectChange('deliveryPriceNames');
+    };
+
+    return (
+      <Line>
+        <BasicButtonStyled
+          label="검색"
+          width="13rem"
+          height="5rem"
+          type="primary"
+          ref={searchBtn}
+          onClick={setSearchBtn}
+        />
+        <BasicButtonStyled
+          label="초기화"
+          width="13rem"
+          height="5rem"
+          marginleft="2rem"
+          onClick={setResetBtn}
+        />
+      </Line>
+    );
+  };
+
   return (
     <EditDeliveryTitles>
       <TitleTexts>
@@ -104,11 +125,11 @@ const editDeliveryProductSetting = () => {
       </TitleTexts>
       <TitleTexts backColor="#F8F9FD">
         <SubText>검색어 </SubText>
-        {SetMenu()}
+        {RenderSetMenu()}
       </TitleTexts>
-      {SetSelect()}
+      {RenderSetSelect()}
     </EditDeliveryTitles>
   );
 };
 
-export default editDeliveryProductSetting;
+export default EditDeliveryProductSetting;

@@ -1,186 +1,218 @@
-import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
-import { Radio, Input } from 'antd';
+import React, { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
 
-import LabelContents from 'pages/Admin/components/Label/LabelContents';
-import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
-import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
-import Table from 'pages/Admin/components/Table/Table';
+import Filter from './Filter';
+import Table from './Table';
+import BoardHeader from 'pages/Admin/components/BoardHeader';
+import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
+import { notification } from 'utils/notification';
+import { getPaidWithPaymentConfirmedList } from 'apis/payment';
 
-// 주문통합검색
-const SelectBox = styled(BasicSelectBox)`
-  width: 300px;
-`;
-
-const PeirodSelectBox = styled(SelectBox)`
-  margin-bottom: 1rem;
-`;
-
-const SearhSelectBox = styled(SelectBox)`
+const Icon = css`
+  font-size: 4rem;
   margin-right: 1rem;
 `;
 
-const Container = styled.div``;
-
-const HeaderContainer = styled.div`
-  background: #fff;
-  padding: 3rem;
-  margin-bottom: 2rem;
+const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
+  ${Icon}
 `;
-
-const BodyContainer = styled.div`
-  background: #fff;
-  padding: 3rem;
-`;
-
-const ItemContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ItemWrap = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-`;
-
-const BodyHeaderContainer = styled.div`
-  padding: 2rem;
-`;
-
-const Title = styled.div`
-  font-size: 2rem;
-`;
-
+// 발주 확인/발송관리
 const OrderManage = () => {
-  const [datePeriod, setDatePeriod] = useState('');
+  const [table, setTable] = useState([]);
+  const [tableCount, setTableCount] = useState(0);
 
-  const handleStartDateChange = (value) => {
-    console.log(value);
+  useEffect(() => {
+    async function fetchAndSetUser() {
+      try {
+        const result = await getPaidWithPaymentConfirmedList();
+        const customList = result.data.data.list.map((item) => {
+          return { ...item, key: item.id };
+        });
+        // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
+
+        setTable(customList);
+        setTableCount(result.data.data.count);
+      } catch (e) {
+        notification.error('상품 정보를 가져오지 못했습니다.');
+      }
+    }
+    fetchAndSetUser();
+  }, []);
+
+  const handleClick = (value) => {
+    switch (value) {
+      case 'todayDelay':
+        console.log('todayDelay');
+        break;
+      case 'preOrderDelay':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        break;
+      case 'newOrderDelay':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        break;
+      case 'deliveryPreparationDelay':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        break;
+      case 'cancleRequest':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        break;
+      case 'changeDelivery':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        break;
+      case 'autoProcessing':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        break;
+      case 'todayStart':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        break;
+      case 'prePurchase':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        break;
+      case 'newOrder':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        break;
+      case 'confirmOrderCheck':
+        console.log('Mangoes and papayas are $2.79 a pound.');
+        break;
+
+      default:
+        console.log(`Sorry, we are out of .`);
+    }
   };
 
-  const handleEndDateChange = (value) => {
-    console.log(value);
-  };
-
-  const periodRef = useRef(null);
+  const data = [{ value: 1 }, { value: 2 }, { value: 3 }];
 
   return (
-    <Container>
-      <HeaderContainer>
-        <LabelContents title="조회기간">
-          <ItemContainer>
-            <ItemWrap>
-              <PeirodSelectBox list={peirodList} />
-            </ItemWrap>
-            <ItemWrap>
-              <ButtonContainer>
-                <Radio.Group
-                  value={datePeriod}
-                  onChange={(e) => setDatePeriod(e.target.value)}
-                >
-                  <Radio.Button value="today">오늘</Radio.Button>
-                  <Radio.Button value="1week">1주일</Radio.Button>
-                  <Radio.Button value="1month">1개월</Radio.Button>
-                  <Radio.Button value="3month">3개월</Radio.Button>
-                </Radio.Group>
-              </ButtonContainer>
-            </ItemWrap>
-            <ItemWrap>
-              <BasicDatePicker onChange={handleStartDateChange} />
-              {`　~　`}
-              <BasicDatePicker onChange={handleEndDateChange} />
-            </ItemWrap>
-          </ItemContainer>
-        </LabelContents>
-        <LabelContents title="조회기간">
-          <ItemWrap>
-            <SearhSelectBox list={detailList} />
-            <Input ref={periodRef} />
-          </ItemWrap>
-        </LabelContents>
-      </HeaderContainer>
-
-      <BodyContainer>
-        <BodyHeaderContainer>
-          <Title>목록 (총{data.length}개)</Title>
-        </BodyHeaderContainer>
-        <Table selectionType="checkbox" data={data} columns={columns} />
-      </BodyContainer>
-    </Container>
+    <div>
+      <BoardHeader list={list} onClick={handleClick} data={data} />
+      <Filter />
+      <Table
+        orderCountTableColumns={orderCountTableColumns}
+        orderCountTableData={orderCountTableData}
+        orderSheetList={orderSheetList}
+        tableData={table}
+      />
+    </div>
   );
 };
 
 export default OrderManage;
 
-const peirodList = [
-  { label: '결제일', value: 'pament' },
-  { label: '발주 확인일', value: 'orderConfirm' },
-  { label: '발송처리일', value: 'orderProcess' },
+const list = [
+  {
+    title: '먼저 확인해주세요!',
+    itemList: [
+      {
+        label: '신규주문 지연',
+        value: 'newOrderDelay',
+        img: <AppstoreTwoToneIcon />,
+      },
+      {
+        label: '배송준비 지연',
+        value: 'deliveryPreparationDelay',
+        img: <AppstoreTwoToneIcon />,
+      },
+      {
+        label: '발송전 취소요청',
+        value: 'cancleRequest',
+        img: <AppstoreTwoToneIcon />,
+      },
+      {
+        label: '발송전 배송지변경',
+        value: 'changeDelivery',
+        img: <AppstoreTwoToneIcon />,
+      },
+    ],
+  },
+  {
+    title: '발송처리를 진행해 주세요!',
+    itemList: [
+      { label: '신규주문', value: 'newOrder', img: <AppstoreTwoToneIcon /> },
+      {
+        label: '발주확인 완료',
+        value: 'confirmOrderCheck',
+        img: <AppstoreTwoToneIcon />,
+      },
+    ],
+  },
 ];
 
-const detailList = [
-  { label: '전체', value: 'all' },
-  { label: '수취인명', value: 'nameOfRecipient' },
-  { label: '구매자명', value: 'buyerName' },
-  { label: '구매자연락처', value: 'buyerContact' },
-  { label: '구매자ID', value: 'buyerID' },
-  { label: '주문번호', value: 'orderNumber' },
-  { label: '상품주문번호', value: 'productOrderNumber' },
-  { label: '상품번호', value: 'productNumber' },
-  { label: '송장번호', value: 'invoiceNumber' },
-];
-
-const columns = [
+const orderCountTableColumns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-    render: (text) => <a href={'www.naver.com'}>{text}</a>,
-  },
-  {
-    title: '주문번호',
-    dataIndex: 'orderNumber',
-  },
-  {
-    title: '주문일시',
-    dataIndex: 'orderDate',
-  },
-  {
-    title: '주문상태',
-    dataIndex: 'orderState',
-  },
-  {
-    title: '클레임상태',
-    dataIndex: 'claimState',
+    title: '출고지',
+    dataIndex: 'location',
   },
   {
     title: '상품번호',
-    dataIndex: 'productNumber',
+    dataIndex: 'productNum',
+  },
+  {
+    title: '상품명',
+    dataIndex: 'productName',
+    sorter: {
+      compare: (a, b) => a.math - b.math,
+      multiple: 2,
+    },
+  },
+  {
+    title: '옵션값',
+    dataIndex: 'optionValue',
+  },
+  {
+    title: '수량',
+    dataIndex: 'count',
   },
 ];
 
-const data = [
+const orderCountTableData = [
   {
     key: '1',
-    productOrderNumber: '판매완료',
-    orderNumber: '',
-    orderDate: '123124125',
-    orderState: '판매완료',
-    claimState: '소고기',
-    productNumber: '소고기 안심',
+    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
+    productNum: '5359856047',
+    productName:
+      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
+    optionValue: '패키지: 돼지안심 4개',
+    count: 1,
   },
   {
     key: '2',
-    productOrderNumber: '판매완료',
-    orderNumber: '',
-    orderDate: '123124125',
-    orderState: '판매완료',
-    claimState: '소고기',
-    productNumber: '소고기 안심',
+    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
+    productNum: '5359856047',
+    productName:
+      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
+    optionValue: '패키지: 돼지안심 4개',
+    count: 1,
+  },
+  {
+    key: '3',
+    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
+    productNum: '5359856047',
+    productName:
+      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
+    optionValue: '패키지: 돼지안심 4개',
+    count: 1,
+  },
+  {
+    key: '4',
+    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
+    productNum: '5359856047',
+    productName:
+      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
+    optionValue: '패키지: 돼지안심 4개',
+    count: 1,
+  },
+];
+
+const orderSheetList = [
+  {
+    date: '2021.05.20 2021052098897071',
+    productName:
+      '국내산 한돈1+ 돼지안심 수비드 미띤(2021052064444061) 옵션 패키지: 양념돼지안심 7개',
+    price: '34,300원 (1개)',
+    process: '선결제',
+    name: '한명서 (한명서)',
+    adress:
+      '(650759) 경상남도 통영시 무전동 한진로즈힐 1054/2 한진로즈힐 106동 1406호',
+    phoneNum: '010-6295-1039 / 010-8541-1039 (010-6295-1039)',
   },
 ];

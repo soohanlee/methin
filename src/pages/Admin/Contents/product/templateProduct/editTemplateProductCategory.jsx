@@ -31,6 +31,35 @@ const TitleText = styled.div`
   color: #66dd89;
 `;
 
+const editTemplateProductCategory = () => {
+  const renderSetCaterogy = () => {
+    const CategoryClick = (e) => {
+      alert(e.target.innerText);
+    };
+
+    const result = [];
+    for (let i = 0; i < categoryTextArray.length; i++) {
+      result.push(
+        <>
+          <CategoryType key={i}>
+            <TitleText name={categoryTextArray[i]} onClick={CategoryClick}>
+              {categoryTextArray[i]}
+            </TitleText>
+          </CategoryType>
+        </>,
+      );
+    }
+    return result;
+  };
+
+  return (
+    <>
+      <EditCategorys>{renderSetCaterogy()}</EditCategorys>
+    </>
+  );
+};
+
+export default editTemplateProductCategory;
 const categoryTextArray = [
   '배송비 템플릿 관리',
   '카테고리 템플릿 관리',
@@ -39,33 +68,3 @@ const categoryTextArray = [
   '문의 템플릿 관리',
   '상품정보제공고시 템플릿 관리',
 ];
-
-const SetCaterogy = () => {
-  const CategoryClick = (e) => {
-    alert(e.target.innerText);
-  };
-
-  const result = [];
-  for (let i = 0; i < categoryTextArray.length; i++) {
-    result.push(
-      <>
-        <CategoryType key={i}>
-          <TitleText name={categoryTextArray[i]} onClick={CategoryClick}>
-            {categoryTextArray[i]}
-          </TitleText>
-        </CategoryType>
-      </>,
-    );
-  }
-  return result;
-};
-
-const editTemplateProductCategory = () => {
-  return (
-    <>
-      <EditCategorys>{SetCaterogy()}</EditCategorys>
-    </>
-  );
-};
-
-export default editTemplateProductCategory;

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import OriginTable from 'pages/Admin/components/Table/Table';
+import QueryItemModal from 'pages/Admin/Contents/sale/CheckOutStandingPayment/QueryItemModal';
 
 const Container = styled.div`
   background: #fff;
@@ -30,26 +31,35 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = () => {
+const Table = ({ data, count }) => {
+  const [QueryItemVisible, setQueryItemVisible] = useState(false);
+
   return (
     <Container>
+      <QueryItemModal
+        visible={QueryItemVisible}
+        setVisible={() => {
+          setQueryItemVisible(false);
+        }}
+        onClick={() => {
+          setQueryItemVisible(false);
+        }}
+        title="조회항목 설정(미결제확인)"
+      />
+
       <HeaderContainer>
-        <Title>목록(총 0개)</Title>
+        <Title>목록(총 {count}개)</Title>
         <ButtonContainer>
-          <Button>조회항목 설정</Button>
           <Button>엑셀다운</Button>
         </ButtonContainer>
       </HeaderContainer>
-      <HeaderContainer>
-        <ButtonContainer>
-          <Button>송장수정</Button>
-          <Button>판매자 직접 반품</Button>
-          <Button>판매자 직접교환</Button>
-        </ButtonContainer>
-        <Button>구매 확정 후 취소처리 바로가기</Button>
-      </HeaderContainer>
 
-      <OriginTable data={data} columns={columns} selectionType="checkbox" />
+      <OriginTable
+        scroll={{ x: '300vw', y: 500 }}
+        data={data}
+        columns={columns}
+        selectionType="checkbox"
+      />
 
       <ButtomContainer>
         <LabelContents title="구매확정 관리">
@@ -74,70 +84,109 @@ export default Table;
 
 const columns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-  },
-  {
     title: '주문번호',
-    dataIndex: 'orderNumber',
+    dataIndex: 'id',
+    render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
-    title: '배송방법(구매자 요청)',
-    dataIndex: 'deliveryWayBuyer',
+    title: '발송처리일',
+    dataIndex: 'ship_confirmed_at',
+  },
+  {
+    title: '주문상태',
+    dataIndex: 'status',
   },
   {
     title: '배송방법',
-    dataIndex: 'deliveryWay',
+    dataIndex: 'ship_type',
   },
   {
     title: '택배사',
-    dataIndex: 'address',
+    dataIndex: 'ship_company_name',
   },
   {
     title: '송장번호',
-    dataIndex: 'address',
-  },
-  {
-    title: '배송추적',
-    dataIndex: 'address',
+    dataIndex: 'ship_number',
   },
   {
     title: '발송일',
-    dataIndex: 'address',
+    dataIndex: 'ship_confirmed_at',
   },
   {
-    title: '판매채널',
-    dataIndex: 'address',
+    title: '구매자명',
+    dataIndex: 'buyer_name',
   },
   {
-    title: '톡톡하기',
-    dataIndex: 'address',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
+    title: '구매자ID',
+    dataIndex: 'buyer_id',
   },
   {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
+    title: '수취인명',
+    dataIndex: 'recipient_name',
   },
   {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
+    title: '상품번호',
+    dataIndex: 'product_id',
+    render: (Text) => <a href="https://www.naver.com">{Text}</a>,
   },
   {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
+    title: '상품명',
+    dataIndex: 'product_name',
+  },
+  {
+    title: '옵션정보',
+    dataIndex: 'option_name',
+  },
+  {
+    title: '수량',
+    dataIndex: 'count',
+  },
+  {
+    title: '상품가격',
+    dataIndex: 'price',
+  },
+  {
+    title: '옵션가격',
+    dataIndex: 'option_add_price',
+  },
+  {
+    title: '총 주문금액',
+    dataIndex: 'total_price',
+  },
+  {
+    title: '결제일',
+    dataIndex: 'paid_at',
+  },
+  {
+    title: '배송비 형태',
+    dataIndex: 'ship_pay_type',
+  },
+  {
+    title: '배송비 유형',
+    dataIndex: 'ship_category',
+  },
+  {
+    title: '배송비 합계',
+    dataIndex: 'total_ship_amount',
+  },
+  {
+    title: '제주/도서 추가배송비',
+    dataIndex: 'ship_add_amount',
+  },
+  {
+    title: '수취인 연락처',
+    dataIndex: 'recipient_phone',
+  },
+  {
+    title: '배송지',
+    dataIndex: 'ship_address_main',
+  },
+  {
+    title: '구매자 연락처',
+    dataIndex: 'buyer_phone',
+  },
+  {
+    title: '우편번호',
+    dataIndex: 'ship_zip_code',
   },
 ];

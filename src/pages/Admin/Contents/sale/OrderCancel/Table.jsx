@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
-
-import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import OriginTable from 'pages/Admin/components/Table/Table';
 
 const Container = styled.div`
@@ -30,30 +28,38 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = () => {
+const setExcelDown = () => {
+  alert('엑셀다운');
+};
+
+const setSuccessCancelProcess = () => {
+  alert('취소완료처리');
+};
+
+const setRejectCancelProcess = () => {
+  alert('취소거부처리');
+};
+
+const Table = ({ data, count }) => {
   return (
     <Container>
       <HeaderContainer>
-        <Title>목록(총 0개)</Title>
+        <Title>목록(총 {count}개)</Title>
         <ButtonContainer>
-          <Button>엑셀다운</Button>
+          <Button onClick={setExcelDown}>엑셀다운</Button>
         </ButtonContainer>
-      </HeaderContainer>
-      <HeaderContainer>
-        <ButtonContainer>
-          <Button>취소완료</Button>
-          <Button>취소거부</Button>
-        </ButtonContainer>
-        <Button>구매 확정 후 취소처리 바로가기</Button>
       </HeaderContainer>
 
-      <OriginTable data={data} columns={columns} selectionType="checkbox" />
+      <OriginTable
+        scroll={{ x: '50vw', y: 500 }}
+        data={data}
+        columns={columns}
+        selectionType="checkbox"
+      />
 
       <ButtomContainer>
-        <LabelContents title="취소처리">
-          <Button>취소 완료처리</Button>
-          <Button>취소 거부처리</Button>
-        </LabelContents>
+        <Button onClick={setSuccessCancelProcess}>취소 완료처리</Button>
+        <Button onClick={setRejectCancelProcess}>취소 거부처리</Button>
       </ButtomContainer>
     </Container>
   );
@@ -63,70 +69,27 @@ export default Table;
 
 const columns = [
   {
-    title: '상품주문번호',
-    dataIndex: 'productOrderNumber',
-  },
-  {
     title: '주문번호',
-    dataIndex: 'orderNumber',
+    dataIndex: 'id',
   },
   {
     title: '주문상태',
-    dataIndex: 'orderState',
+    dataIndex: 'status',
   },
   {
     title: '취소 처리상태',
-    dataIndex: 'orderCancelState',
+    dataIndex: 'cancel_status',
   },
   {
     title: '결제일',
-    dataIndex: 'settlementDay',
+    dataIndex: 'paid_at',
   },
   {
     title: '취소요청일',
-    dataIndex: 'orderCancelDate',
-  },
-  {
-    title: '접수채널',
-    dataIndex: 'receiveChannel',
-  },
-  {
-    title: '톡톡하기',
-    dataIndex: 'address',
+    dataIndex: 'canceled_at',
   },
   {
     title: '취소사유',
-    dataIndex: 'cancelReason',
-  },
-  {
-    title: '취소승인일',
-    dataIndex: 'orderCancelApprovalDate',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
+    dataIndex: 'cancel_reason',
   },
 ];

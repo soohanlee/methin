@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Input as OriginInput, Radio, Select, Checkbox } from 'antd';
+import { useState } from 'react';
+import { Input as OriginInput, Radio, Select } from 'antd';
 import styled from 'styled-components';
 
-import { changeNumberDigits, removeRest } from 'utils/common';
+import {} from 'utils/common';
 
 import CustomCollapse from 'pages/Admin/components/Collapse';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
@@ -22,17 +22,23 @@ const Input = styled(OriginInput)`
   max-width: 300px;
 `;
 
-const Price = () => {
-  const [price, setPrice] = useState('');
-  const [sale, setSale] = useState('setting'); //setting, noSetting
-
+const Price = ({
+  price,
+  setPrice,
+  salePrice,
+  setSalePrice,
+  sale,
+  setSale,
+  saleTypePrice,
+  saleType,
+  VAT,
+  setSaleTypePrice,
+  setSaleType,
+  setVAT,
+}) => {
   const [isAllSale, setIsAllSale] = useState(false);
   const [isPCSale, setIsPCSale] = useState(false);
   const [isMobileSale, setIsMobileSale] = useState(false);
-
-  const [saleType, setSaleType] = useState('won'); // won, percentage
-  const [saleTypePrice, setSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
-  const [salePrice, setSalePrice] = useState(''); //할인된 가격
 
   const [mobileSaleType, setMobileSaleType] = useState('won'); // won, percentage
   const [mobileSaleTypePrice, setMobileSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
@@ -41,58 +47,65 @@ const Price = () => {
   const [salesPeriod, setSalesPeriod] = useState('setting');
   const [selectedDate, setSelectedDate] = useState('3');
 
-  const [VAT, setVAT] = useState('taxable'); //taxable, dutyFree, small
-
   const handleBlur = () => {
-    const changeValue = changeNumberDigits(price);
-    setPrice(changeValue);
-    calcPcPrice();
-    calcMobilePrice();
+    if (typeof price === 'string') {
+      const changeValue = price;
+      setPrice(changeValue);
+      calcPcPrice();
+      calcMobilePrice();
+    }
   };
 
   const handleFocus = () => {
-    const changeValue = removeRest(price);
-    setPrice(changeValue);
+    if (typeof price === 'string') {
+      const changeValue = price;
+      setPrice(changeValue);
+    }
   };
 
   const calcPcPrice = () => {
-    const purePrice = removeRest(price);
-    const pureSaleTypePrice = removeRest(saleTypePrice);
-
-    if (saleType === 'won') {
-      const result = purePrice - pureSaleTypePrice;
-      setSalePrice(changeNumberDigits(result.toString()));
-    } else {
-      const result = purePrice - purePrice * (pureSaleTypePrice / 100);
-      setSalePrice(changeNumberDigits(result.toString()));
+    if (typeof price === 'string') {
+      const purePrice = price;
+      const pureSaleTypePrice = saleTypePrice;
+      if (saleType === 'won') {
+        const result = purePrice - pureSaleTypePrice;
+        setSalePrice(result.toString());
+      } else {
+        const result = purePrice - purePrice * (pureSaleTypePrice / 100);
+        setSalePrice(result.toString());
+      }
     }
   };
 
   const calcMobilePrice = () => {
-    const purePrice = removeRest(price);
-    const pureMobileSaleTypePrice = removeRest(mobileSaleTypePrice);
+    const purePrice = price;
+    const pureMobileSaleTypePrice = mobileSaleTypePrice;
 
     if (mobileSaleType === 'won') {
       const result = purePrice - pureMobileSaleTypePrice;
-      setMobileSalePrice(changeNumberDigits(result.toString()));
+      setMobileSalePrice(result.toString());
     } else {
       const result = purePrice - purePrice * (pureMobileSaleTypePrice / 100);
-      setMobileSalePrice(changeNumberDigits(result.toString()));
+      setMobileSalePrice(result.toString());
     }
   };
 
   const handleSaleTypeBlur = () => {
-    calcPcPrice();
-    setSaleTypePrice(changeNumberDigits(saleTypePrice));
+    if (typeof saleTypePrice === 'string') {
+      calcPcPrice();
+      setSaleTypePrice(saleTypePrice);
+    }
   };
 
   const handleSaleTypeFocus = () => {
-    setSaleTypePrice(removeRest(saleTypePrice));
+    if (typeof saleTypePrice === 'string') {
+      setSaleTypePrice(saleTypePrice);
+    }
   };
 
   const handleSaleTypePriceChange = (e) => {
     if (saleType === 'percentage') {
-      if (Number(removeRest(saleTypePrice)) <= 100) {
+      if (Number(saleTypePrice) <= 100) {
         setSaleTypePrice(e.target.value);
       } else {
         setSaleTypePrice('');
@@ -100,43 +113,6 @@ const Price = () => {
     } else {
       setSaleTypePrice(e.target.value);
     }
-  };
-
-  const handleMobileSaleTypePriceChange = (e) => {
-    if (mobileSaleType === 'percentage') {
-      if (Number(removeRest(mobileSaleTypePrice)) <= 100) {
-        setMobileSaleTypePrice(e.target.value);
-      } else {
-        setMobileSaleTypePrice('');
-      }
-    } else {
-      setMobileSaleTypePrice(e.target.value);
-    }
-  };
-
-  const handleMobileSaleTypeBlur = () => {
-    calcMobilePrice();
-    setMobileSaleTypePrice(changeNumberDigits(mobileSaleTypePrice));
-  };
-
-  const handleMobileSaleTypeFocus = () => {
-    setMobileSaleTypePrice(removeRest(mobileSaleTypePrice));
-  };
-
-  const handleAllSaleChange = (e) => {
-    setIsAllSale(e.target.checked);
-    setIsPCSale(false);
-    setIsMobileSale(false);
-  };
-
-  const handlePCSaleChange = (e) => {
-    setIsPCSale(e.target.checked);
-    setIsAllSale(false);
-  };
-
-  const handleMobileSaleChange = (e) => {
-    setIsMobileSale(e.target.checked);
-    setIsAllSale(false);
   };
 
   const selectAfter = (
@@ -174,37 +150,12 @@ const Price = () => {
             <Radio.Button value="setting">설정함</Radio.Button>
             <Radio.Button value="noSetting">설정안함</Radio.Button>
           </Radio.Group>
-          {sale === 'setting' && (
-            <CheckContainer>
-              <Checkbox
-                onChange={(e) => handleAllSaleChange(e)}
-                value={'all'}
-                checked={isAllSale}
-              >
-                전체 할인
-              </Checkbox>
-              <Checkbox
-                onChange={(e) => handlePCSaleChange(e)}
-                value={'pc'}
-                checked={isPCSale}
-              >
-                PC만 할인
-              </Checkbox>
-              <Checkbox
-                onChange={(e) => handleMobileSaleChange(e)}
-                value={'mobile'}
-                checked={isMobileSale}
-              >
-                모바일만 할인
-              </Checkbox>
-            </CheckContainer>
-          )}
         </ItemContainer>
       </LabelContents>
 
-      {sale === 'setting' && isAllSale && !isPCSale && !isMobileSale && (
+      {sale === 'setting' && (
         <>
-          <LabelContents title="전체 할인">
+          <LabelContents title="할인">
             <Input
               onChange={handleSaleTypePriceChange}
               addonAfter={selectAfter}
@@ -214,38 +165,6 @@ const Price = () => {
             />
           </LabelContents>
           <LabelContents title="할인가">{salePrice}원</LabelContents>
-        </>
-      )}
-
-      {sale === 'setting' && isPCSale && (
-        <>
-          <LabelContents title="pc 할인">
-            <Input
-              onChange={handleSaleTypePriceChange}
-              addonAfter={selectAfter}
-              value={saleTypePrice}
-              onBlur={handleSaleTypeBlur}
-              onFocus={handleSaleTypeFocus}
-            />
-          </LabelContents>
-          <LabelContents title="pc 할인가">{salePrice}원</LabelContents>
-        </>
-      )}
-
-      {sale === 'setting' && isMobileSale && (
-        <>
-          <LabelContents title="모바일 할인">
-            <Input
-              onChange={handleMobileSaleTypePriceChange}
-              addonAfter={mobileSelectAfter}
-              value={mobileSaleTypePrice}
-              onBlur={handleMobileSaleTypeBlur}
-              onFocus={handleMobileSaleTypeFocus}
-            />
-          </LabelContents>
-          <LabelContents title="모바일 할인가">
-            {mobileSalePrice}원
-          </LabelContents>
         </>
       )}
 
@@ -278,9 +197,9 @@ const Price = () => {
 
       <LabelContents title="부가세">
         <Radio.Group value={VAT} onChange={(e) => setVAT(e.target.value)}>
-          <Radio.Button value="taxable">과세상품</Radio.Button>
-          <Radio.Button value="dutyFree">면세상품</Radio.Button>
-          <Radio.Button value="small">영세상품</Radio.Button>
+          <Radio.Button value={0}>과세상품</Radio.Button>
+          <Radio.Button value={1}>면세상품</Radio.Button>
+          <Radio.Button value={2}>영세상품</Radio.Button>
         </Radio.Group>
       </LabelContents>
     </CustomCollapse>

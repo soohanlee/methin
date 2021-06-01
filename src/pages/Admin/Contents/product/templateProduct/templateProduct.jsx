@@ -8,9 +8,19 @@ const templateProduct = () => {
     <>
       <EditTemplateProductTitle />
       <EditTemplateProductCategory />
-      <EditTemplateProductTable />
+      <EditTemplateProductTable data={data} />
     </>
   );
 };
 
 export default templateProduct;
+
+const data = [
+  {
+    ID: 'Test',
+    templateName: 'TestName',
+    modify: '수정',
+    registrationDate: '2021',
+    modifyDate: '2021',
+  },
+];

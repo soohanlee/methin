@@ -23,17 +23,25 @@ const Button = styled(OriginButton)`
   margin-right: 0.5rem;
 `;
 
-const Table = () => {
+const Table = ({ data }) => {
+  const setSelectRelease = () => {
+    alert('선택건 해제하기');
+  };
+
   return (
     <Container>
       <HeaderContainer>
         <ButtonContainer>
-          <Button>선택건 해제하기</Button>
+          <Button onClick={setSelectRelease}>선택건 해제하기</Button>
         </ButtonContainer>
-        <Button>구매 확정 후 취소처리 바로가기</Button>
       </HeaderContainer>
 
-      <OriginTable data={data} columns={columns} selectionType="checkbox" />
+      <OriginTable
+        scroll={{ x: '50vw', y: 500 }}
+        data={data}
+        columns={columns}
+        selectionType="checkbox"
+      />
     </Container>
   );
 };
@@ -54,34 +62,7 @@ const columns = [
     dataIndex: 'registerDate',
   },
   {
-    title: '배송방법',
-    dataIndex: 'registerContent',
-  },
-];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
+    title: '등록사유',
+    dataIndex: 'registerWhy',
   },
 ];

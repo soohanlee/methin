@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table as OriginTable } from 'antd';
+import styled from 'styled-components';
 
 // 컬럼 예시 테이블 헤드
 // const columns = [
@@ -48,23 +49,34 @@ import { Table as OriginTable } from 'antd';
 
 // https://ant.design/components/table/#components-table-demo-grouping-columns table antd doc
 
+const CustomTable = styled(OriginTable)`
+  overflow: auto;
+`;
+
 const Table = ({
   selectionType,
   className,
   columns,
   onChange,
   data,
+  scroll,
+  x,
   ...props
 }) => {
   // selectionType = 'checkbox' | 'radio' 타입은 둘중 하나로 들어와야합니다.
+
+  const customColumns =
+    columns &&
+    columns.map((item) => {
+      return { ...item, width: 100 };
+    });
+
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        'selectedRows: ',
-        selectedRows,
-      );
+      onChange(selectedRowKeys, selectedRows);
     },
+    // selectedRowKeys 는 key값만 들어있는 배열
+    // selectedRows 는 data전체가 들어있는 배열
     getCheckboxProps: (record) => ({
       disabled: record.name === 'Disabled User',
       // Column configuration not to be checked
@@ -72,36 +84,22 @@ const Table = ({
     }),
   };
 
-  const renderTable = () => {
-    if (selectionType) {
-      return (
-        <OriginTable
-          className={className}
-          rowSelection={{
-            type: selectionType,
-            ...rowSelection,
-          }}
-          columns={columns}
-          dataSource={data}
-          bordered
-          onChange={onChange}
-          {...props}
-        />
-      );
-    } else {
-      return (
-        <OriginTable
-          className={className}
-          columns={columns}
-          dataSource={data}
-          bordered
-          {...props}
-        />
-      );
-    }
-  };
-
-  return renderTable();
+  return (
+    <CustomTable
+      className={className}
+      rowSelection={
+        selectionType && {
+          type: selectionType,
+          ...rowSelection,
+        }
+      }
+      columns={customColumns}
+      dataSource={data}
+      bordered
+      scroll={scroll}
+      {...props}
+    />
+  );
 };
 
 export default Table;

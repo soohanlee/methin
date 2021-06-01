@@ -1,7 +1,7 @@
 export const ROUTE_PATH = {
-  main: '/',
+  main: '/main',
   login: '/login',
-  signup: '/console',
+  signup: '/signup',
   findId: '/findId',
   admin: {
     main: '/admin',
@@ -9,18 +9,19 @@ export const ROUTE_PATH = {
     editProduct: '/edit-product',
     registerProduct: '/register-product',
     registerAllProduct: '/register-all-product',
-    connectProduct: '/connect-product',
     deliveryProduct: '/delivery-product',
     templateProduct: '/template-product',
     noticeManage: '/notice-manage',
     manageSale: '/manage-sale',
     checkOutstanding: '/check-outstanding',
     orderConfirm: '/order-confirm',
+    orderManage: '/order-manage',
     orderCancel: '/order-cancel',
     orderReturn: '/order-return',
     orderDisturb: '/order-disturb',
     deliveryStatusManage: '/delivery-status-manage',
     reviewManage: '/review-manage',
+    registerNotice: '/register-notice',
   },
 };
 
@@ -31,4 +32,8 @@ export const LOCAL_STORAGE_KEYS = {
 export const COOKIE_KEYS = {
   UserRefreshToken: '__user_refresh_token__',
   UserAccessToken: '__user_access_token__',
+};
+
+export const DateFormat = {
+  Default: 'YYYY-MM-DD',
 };

@@ -6,9 +6,9 @@ import { Checkbox } from 'antd';
 //   console.log(`checked = ${e.target.checked}`);
 // }
 
-const CheckBoxLabel = ({ className, label }, ref) => {
+const CheckBoxLabel = ({ onChange, className, label }, ref) => {
   return (
-    <Checkbox ref={ref} className={className}>
+    <Checkbox ref={ref} onChange={onChange} className={className}>
       {label}
     </Checkbox>
   );

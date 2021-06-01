@@ -14,7 +14,7 @@ const RegistertBox = styled.div`
 `;
 
 const SelectBox = styled(BasicSelectBox)`
-  width: 10rem;
+  width: ${(props) => props.width};
   margin-bottom: ${(props) => props.marginbottom};
 `;
 
@@ -67,8 +67,13 @@ const Content = styled.div`
   width: 80%;
   padding: 2rem;
 `;
+
 const RegistertionConditions = () => {
   const registrationConditions = useRef(null);
+
+  const regist = () => {
+    alert('등록');
+  };
 
   return (
     <RegistertBox>
@@ -77,7 +82,11 @@ const RegistertionConditions = () => {
         <Box>
           <Title>등록조건</Title>
           <Content>
-            <SelectBox list={ResisterTypeList} marginbottom="1rem" />
+            <SelectBox
+              list={ResisterTypeList}
+              width="15rem"
+              marginbottom="1rem"
+            />
             <InputBox
               ref={registrationConditions}
               height="10rem"
@@ -105,7 +114,12 @@ const RegistertionConditions = () => {
         </Box>
       </Registert>
       <ButtonBox>
-        <BasicButtonStyled label="등록" width="8rem" height="4rem" />
+        <BasicButtonStyled
+          onClick={regist}
+          label="등록"
+          width="8rem"
+          height="4rem"
+        />
       </ButtonBox>
     </RegistertBox>
   );
@@ -133,6 +147,11 @@ const InquiryConditions = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
+const search = () => {
+  alert('조회하기');
+};
+
 const DisturbSales = () => {
   const disturbSales = useRef(null);
 
@@ -142,9 +161,9 @@ const DisturbSales = () => {
       <InquiryConditionsBox>
         <InquiryConditions>
           <div>조회조건</div>
-          <SelectBox list={InquiryConditionsTypeList} />
+          <SelectBox width="10rem" list={InquiryConditionsTypeList} />
           <InputBox ref={disturbSales} width="30rem" />
-          <BasicButtonStyled label="조회하기" width="10rem" />
+          <BasicButtonStyled onClick={search} label="조회하기" width="10rem" />
         </InquiryConditions>
       </InquiryConditionsBox>
     </DisturbSalesBox>
@@ -153,52 +172,52 @@ const DisturbSales = () => {
 
 // 발주 확인/발송관리
 const SaleDisturb = () => {
-  const handleClick = (value) => {
-    switch (value) {
-      case 'todayDelay':
-        console.log('todayDelay');
-        break;
-      case 'preOrderDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'newOrderDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'deliveryPreparationDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'cancleRequest':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'changeDelivery':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'autoProcessing':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'todayStart':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'prePurchase':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'newOrder':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'confirmOrderCheck':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
+  // const handleClick = (value) => {
+  //   switch (value) {
+  //     case 'todayDelay':
+  //       console.log('todayDelay');
+  //       break;
+  //     case 'preOrderDelay':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'newOrderDelay':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'deliveryPreparationDelay':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'cancleRequest':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'changeDelivery':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'autoProcessing':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'todayStart':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'prePurchase':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'newOrder':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
+  //     case 'confirmOrderCheck':
+  //       console.log('Mangoes and papayas are $2.79 a pound.');
+  //       break;
 
-      default:
-        console.log(`Sorry, we are out of .`);
-    }
-  };
+  //     default:
+  //       console.log(`Sorry, we are out of .`);
+  //   }
+  // };
 
   return (
     <div>
       <div>{RegistertionConditions()}</div>
       <div>{DisturbSales()}</div>
-      <Table />
+      <Table data={data} />
     </div>
   );
 };
@@ -212,4 +231,31 @@ const InquiryConditionsTypeList = [
   { label: '전체', value: 'all' },
   { label: '구매자ID', value: 'buyerID' },
   { label: '상품주문번호', value: 'productOrderNumber' },
+];
+
+const data = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+  },
+  {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+  },
+  {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+  },
+  {
+    key: '4',
+    name: 'Disabled User',
+    age: 99,
+    address: 'Sidney No. 1 Lake Park',
+  },
 ];
