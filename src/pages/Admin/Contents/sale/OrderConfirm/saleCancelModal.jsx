@@ -4,7 +4,7 @@ import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import TextAreaBox from 'pages/Admin/components/Form/TextAreaBox';
 import styled from 'styled-components';
 
-const saleCanccelModal = (property) => {
+const saleCancelModal = (property) => {
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
@@ -53,7 +53,7 @@ const saleCanccelModal = (property) => {
     </>
   );
 };
-export default saleCanccelModal;
+export default saleCancelModal;
 
 const SortViewList = [
   { label: '상품품절', value: 'soldOut' },
