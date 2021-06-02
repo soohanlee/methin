@@ -1,4 +1,4 @@
-import { Modal, Table } from 'antd';
+import { Modal } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';

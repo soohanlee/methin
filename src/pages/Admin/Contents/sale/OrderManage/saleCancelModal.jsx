@@ -2,7 +2,6 @@ import { Modal } from 'antd';
 import 'antd/dist/antd.css';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import TextAreaBox from 'pages/Admin/components/Form/TextAreaBox';
-import styled from 'styled-components';
 
 const saleCancelModal = (property) => {
   const onChange = (pagination, filters, sorter, extra) => {
