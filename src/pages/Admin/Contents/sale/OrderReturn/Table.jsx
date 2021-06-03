@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import OriginTable from 'pages/Admin/components/Table/Table';
+import ReturnRefusalModal from 'pages/Admin/Contents/sale/OrderReturn/ReturnRefusalModal';
+import ReturnHoldModal from 'pages/Admin/Contents/sale/OrderReturn/ReturnHoldModal';
+import ReturnReasonModifyMadal from 'pages/Admin/Contents/sale/OrderReturn/ReturnReasonModifyMadal';
 
 const Container = styled.div`
   background: #fff;
@@ -30,41 +33,79 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const setExcelDown = () => {
-  alert('엑셀다운');
-};
-
-const setCollectionComplete = () => {
-  alert('수거 완료처리');
-};
-const setReturnComplete2 = () => {
-  alert('반품 완료처리');
-};
-const setReturnReject = () => {
-  alert('반품 거부처리');
-};
-const setChangeTrade2 = () => {
-  alert('교환으로 변경');
-};
-const setRefundHold = () => {
-  alert('환불보류 설정');
-};
-const setRefundHoldRelease = () => {
-  alert('환불보류 해제');
-};
-const setModifyReturnReason = () => {
-  alert('반품사유 수정');
-};
-const setModifyReturnCollection = () => {
-  alert('수거정보 수정');
-};
-
 const Table = ({ data, count }) => {
-  console.log('data');
+  const [returnRefusalVisible, setReturnRefusalVisible] = useState(false);
+  const [returnHoldVisible, setReturnHoldVisible] = useState(false);
+  const [returnReasonVisible, setReturnReasonVisible] = useState(false);
 
-  console.log(data);
+  const setCollectionComplete = () => {
+    window.confirm('1건 중 1건 수거 완료처리를 진행하시겠습니까?');
+  };
+  const setReturnComplete = () => {
+    window.confirm(
+      '수거 완료되지않은 상품은 수거완료처리가 동시에 진행됩니다. \n반품 완료처리를 진행하시겠습니까?',
+    );
+  };
+  const setReturnReject = () => {
+    setReturnRefusalVisible(true);
+  };
+  const setChangeTrade = () => {
+    alert('교환으로 변경');
+  };
+  const setRefundHold = () => {
+    setReturnHoldVisible(true);
+  };
+  const setRefundHoldRelease = () => {
+    window.confirm('환불보류를 해제하시겠습니까?');
+  };
+  const setModifyReturnReason = () => {
+    setReturnReasonVisible(true);
+  };
+  const setModifyReturnCollection = () => {
+    alert('수거정보 수정');
+  };
+  const setExcelDown = () => {
+    alert('엑셀다운');
+  };
   return (
     <Container>
+      <ReturnRefusalModal
+        centered
+        title="반품 거부처리"
+        visible={returnRefusalVisible}
+        onOk={() => {
+          setReturnRefusalVisible(false);
+        }}
+        onCancel={() => {
+          setReturnRefusalVisible(false);
+        }}
+        width={500}
+      ></ReturnRefusalModal>
+      <ReturnHoldModal
+        centered
+        title="환불보류 설정"
+        visible={returnHoldVisible}
+        onOk={() => {
+          setReturnHoldVisible(false);
+        }}
+        onCancel={() => {
+          setReturnHoldVisible(false);
+        }}
+        width={500}
+      ></ReturnHoldModal>
+      <ReturnReasonModifyMadal
+        centered
+        title="반품사유 수정"
+        visible={returnReasonVisible}
+        onOk={() => {
+          setReturnReasonVisible(false);
+        }}
+        onCancel={() => {
+          setReturnReasonVisible(false);
+        }}
+        width={500}
+      ></ReturnReasonModifyMadal>
+
       <HeaderContainer>
         <Title>목록(총 {count}개)</Title>
         <ButtonContainer>
@@ -82,9 +123,9 @@ const Table = ({ data, count }) => {
       <ButtomContainer>
         <LabelContents title="반품처리">
           <Button onClick={setCollectionComplete}>수거 완료처리</Button>
-          <Button onClick={setReturnComplete2}>반품 완료처리</Button>
+          <Button onClick={setReturnComplete}>반품 완료처리</Button>
           <Button onClick={setReturnReject}>반품 거부처리</Button>
-          <Button onClick={setChangeTrade2}>교환으로 변경</Button>
+          <Button onClick={setChangeTrade}>교환으로 변경</Button>
         </LabelContents>
         <LabelContents title="환불 보류">
           <Button onClick={setRefundHold}>환불보류 설정</Button>

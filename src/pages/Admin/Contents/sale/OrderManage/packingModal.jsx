@@ -1,7 +1,7 @@
 import { Modal, Table } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import BasicBasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
@@ -34,12 +34,12 @@ const packingModal = (property) => {
     {
       title: '배송방법',
       dataIndex: 'id',
-      render: (_, record) => <BasicBasicSelectBox lsit={deliveryWayCategory} />,
+      render: (_, record) => <BasicSelectBox lsit={deliveryWayCategory} />,
     },
     {
       title: '택배사',
       dataIndex: 'id',
-      render: (_, record) => <BasicBasicSelectBox lsit={deliveryWayCategory} />,
+      render: (_, record) => <BasicSelectBox lsit={deliveryWayCategory} />,
     },
     {
       title: '송장번호',
@@ -61,8 +61,8 @@ const packingModal = (property) => {
         cancelText="취소"
       >
         <SelectBoxContainer>
-          <BasicBasicSelectBox list={Category} />
-          <BasicBasicSelectBox list={deliveryCategory} />
+          <BasicSelectBox list={Category} />
+          <BasicSelectBox list={deliveryCategory} />
           <BasicTextInputBoxStyled disabled />
           <BasicButton label="선택건적용" />
         </SelectBoxContainer>
