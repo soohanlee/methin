@@ -54,11 +54,6 @@ const Contents = () => {
         />
         <Route
           exact
-          path={`${prePath}${ROUTE_PATH.admin.templateProduct}`}
-          component={TemplateProduct}
-        />
-        <Route
-          exact
           path={`${prePath}${ROUTE_PATH.admin.noticeManage}`}
           component={NoticeManage}
         />
