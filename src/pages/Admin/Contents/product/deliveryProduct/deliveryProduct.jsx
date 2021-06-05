@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
-import EditDeliveryProductSetting from 'pages/Admin/Contents/product/deliveryProduct/editDeliveryProductSetting';
-import EditDeliveryProductCategory from 'pages/Admin/Contents/product/deliveryProduct/editDeliveryProductCategory';
-import EditDeliveryProductTitle from 'pages/Admin/Contents/product/deliveryProduct/editDeliveryProductTitle';
-import EditDeliveryProductTable from 'pages/Admin/Contents/product/deliveryProduct/editDeliveryProductTable';
+import EditDeliveryProductSetting from 'pages/Admin/Contents/product/DeliveryProduct/EditDeliveryProductSetting';
+import EditDeliveryProductCategory from 'pages/Admin/Contents/product/DeliveryProduct/EditDeliveryProductCategory';
+import EditDeliveryProductTitle from 'pages/Admin/Contents/product/DeliveryProduct/EditDeliveryProductTitle';
+import EditDeliveryProductTable from 'pages/Admin/Contents/product/DeliveryProduct/EditDeliveryProductTable';
 
 import {
   updateDelivery,
@@ -12,6 +12,7 @@ import {
   searchDeliveryProduct,
   deleteDeliveryDetail,
 } from 'apis/delivery';
+import { getProductList } from 'apis/product';
 import { notification } from 'utils/notification';
 
 const DeliveryProduct = () => {

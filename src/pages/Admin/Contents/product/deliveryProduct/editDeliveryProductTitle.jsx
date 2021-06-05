@@ -25,7 +25,7 @@ const PageBtn = styled(PageHeaderBtn)`
   padding: 0px;
 `;
 
-const editDeliveryProductTitle = () => {
+const EditDeliveryProductTitle = () => {
   return (
     <EditDeliveryTitles>
       <TitleTexts>
@@ -36,4 +36,4 @@ const editDeliveryProductTitle = () => {
   );
 };
 
-export default editDeliveryProductTitle;
+export default EditDeliveryProductTitle;
