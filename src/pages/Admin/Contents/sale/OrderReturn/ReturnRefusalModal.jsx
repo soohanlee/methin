@@ -1,7 +1,7 @@
 import { Modal, Table } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import TextAreaBox from 'pages/Admin/components/Form/TextAreaBox';
+import TextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
 
 const LabelBoxContainer = styled.div`
   margin-top: 2rem;

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Table from './Table';
 import { Input } from 'antd';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
-import CheckBoxLabel from 'pages/Admin/components/Form/CheckBoxLabel';
+import BasicCheckBox from 'pages/Admin/components/Form/BasicCheckBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 
 const RegistertBox = styled.div`
@@ -99,10 +99,10 @@ const RegistertionConditions = () => {
           <Title>제한사유</Title>
           <Content>
             <SelectCheckBox>
-              <CheckBoxLabel label="구매의사 없는 반복구매" />
-              <CheckBoxLabel label="언어폭력" />
-              <CheckBoxLabel label="영업방해" />
-              <CheckBoxLabel label="기타" />
+              <BasicCheckBox label="구매의사 없는 반복구매" />
+              <BasicCheckBox label="언어폭력" />
+              <BasicCheckBox label="영업방해" />
+              <BasicCheckBox label="기타" />
             </SelectCheckBox>
             <InputBox
               ref={registrationConditions}

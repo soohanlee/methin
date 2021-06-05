@@ -1,7 +1,7 @@
 import { Modal, Table } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import TextAreaBox from 'pages/Admin/components/Form/TextAreaBox';
+import TextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';

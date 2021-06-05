@@ -8,7 +8,7 @@ import { notification } from 'utils/notification';
 import { getProductList } from 'apis/product';
 
 const EditProduct = () => {
-  const [table, setTable] = useState([]);
+  const [tableList, setTableList] = useState([]);
   const [tableCount, setTableCount] = useState(0);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const EditProduct = () => {
         });
         // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
 
-        setTable(customList);
+        setTableList(customList);
         setTableCount(result.data.data.count);
       } catch (e) {
         notification.error('상품 정보를 가져오지 못했습니다.');
@@ -34,7 +34,11 @@ const EditProduct = () => {
       <EditTitle />
       <EditCategory count={tableCount} />
       <EditProductSetting />
-      <Table table={table} setTable={setTable} count={tableCount} />
+      <Table
+        tableList={tableList}
+        setTableList={setTableList}
+        count={tableCount}
+      />
     </>
   );
 };
