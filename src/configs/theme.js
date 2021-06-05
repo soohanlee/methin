@@ -11,7 +11,7 @@ const CommonTheme = Object.freeze({
 export const LightTheme = Object.freeze({
   BACKGROUND: '#ffffff',
 
-  PANEL: '#fcfcfc',
+  PANEL: '#f7f7f7',
 
   // OBJECT_MAIN: '#545762',
   // OBJECT_DEACTIVE: '#b5b6be',
@@ -36,6 +36,7 @@ export const LightTheme = Object.freeze({
   // TRIGGER_OFF: '#b5b6be',
 
   LINE: '#efefef',
+  BORDER: '#c8c8c8',
   SCROLL: '#8b8d99',
 
   LARGE_PANEL_SHADOW: '0px 1rem 4rem 0.4rem #aaaaaa;',

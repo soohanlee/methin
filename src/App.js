@@ -35,6 +35,8 @@ import Login from 'pages/auths/Login';
 import SignUp from 'pages/auths/sign-up';
 import Product from 'pages/Product';
 import ProductDetail from 'pages/product-detail';
+import MyPage from 'pages/my-page';
+import Review from 'pages/my-page/Review';
 
 const { Header, Content } = Layout;
 
@@ -43,13 +45,16 @@ const UserContainer = styled(Layout)`
   flex-direction: column;
   overflow-y: auto;
   height: 100%;
-  background: ${(props) => props.theme.BACKGROUND};
+  &&& {
+    background: ${(props) => props.theme.BACKGROUND};
+  }
 `;
 
 const CustomContent = styled(Content)`
   display: flex;
   flex-direction: column;
   flex: 1;
+  background: inherit;
 `;
 
 function App() {
@@ -143,6 +148,11 @@ function App() {
                   <Route
                     path={`${ROUTE_PATH.product}:id`}
                     component={ProductDetail}
+                  />
+
+                  <Route
+                    path={`${ROUTE_PATH.mypage.main}`}
+                    component={MyPage}
                   />
                 </Switch>
                 <MainFooter />

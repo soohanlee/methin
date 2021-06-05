@@ -4,6 +4,12 @@ export const ROUTE_PATH = {
   signup: '/signup',
   findId: '/findId',
   product: '/product',
+  mypage: {
+    main: '/mypage',
+    destination: '/destination',
+    cancel: '/cancel',
+    review: '/review',
+  },
   admin: {
     main: '/admin',
     test: '/test',

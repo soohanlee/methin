@@ -37,7 +37,8 @@ const ListContainer = styled(OriginListContainer)`
   width: 150px;
   right: 0;
   display: none;
-  top: 4.5rem;
+  top: 5.5rem;
+  flex-direction: column;
 `;
 
 const Icon = styled.div`
@@ -47,8 +48,8 @@ const Icon = styled.div`
 const InfoContainer = styled.div`
   position: relative;
   padding: 2rem;
-  &:hover ${ListContainer} {
-    display: block;
+  &:hover > ${ListContainer} {
+    display: flex;
   }
 `;
 
@@ -120,6 +121,10 @@ const Navigation = () => {
     }
   };
 
+  const handleMoveMyPage = () => {
+    history.push(`${ROUTE_PATH.mypage.main}`);
+  };
+
   return (
     <>
       <Container>
@@ -136,14 +141,17 @@ const Navigation = () => {
           {userState.loginState === LOGGED_IN ? (
             <UserContainer>
               <IconContainer>
-                <Icon>
-                  <Img
-                    src={
-                      process.env.PUBLIC_URL +
-                      '/assets/images/top-white-like-icon.svg'
-                    }
-                  />
-                </Icon>
+                <InfoContainer>
+                  <Icon>
+                    <Img
+                      src={
+                        process.env.PUBLIC_URL +
+                        '/assets/images/top-white-like-icon.svg'
+                      }
+                    />
+                  </Icon>
+                </InfoContainer>
+
                 <InfoContainer>
                   <Icon>
                     <Img
@@ -153,19 +161,23 @@ const Navigation = () => {
                       }
                     />
                   </Icon>
+                </InfoContainer>
+
+                <InfoContainer>
+                  <Icon>
+                    <Img
+                      src={
+                        process.env.PUBLIC_URL +
+                        '/assets/images/top-white-mypage-icon.svg'
+                      }
+                    />
+                  </Icon>
+
                   <ListContainer>
-                    <ItemLabel>마이페이지</ItemLabel>
+                    <ItemLabel onClick={handleMoveMyPage}>마이페이지</ItemLabel>
                     <ItemLabel onClick={handleLogout}>로그아웃</ItemLabel>
                   </ListContainer>
                 </InfoContainer>
-                <Icon>
-                  <Img
-                    src={
-                      process.env.PUBLIC_URL +
-                      '/assets/images/top-white-mypage-icon.svg'
-                    }
-                  />
-                </Icon>
               </IconContainer>
             </UserContainer>
           ) : (

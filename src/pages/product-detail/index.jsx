@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { PaddingContainer } from 'components/styled/Container';
 import { MainButton } from 'components/styled/Button';
 import RelatedProducts from 'pages/product-detail/RelatedProducts';
+import ReviewContainer from 'components/review/ReviewContainer';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -191,6 +192,7 @@ const ProductDetail = () => {
       </ProductInfoContainer>
       <Border />
       <RelatedProducts list={[{}, {}]} />
+      <ReviewContainer count={224} />
     </Container>
   );
 };

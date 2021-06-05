@@ -1,12 +1,12 @@
 import MyPageOrderListContainer from 'components/MyPageOrderListContainer';
 import React from 'react';
 
-const Destination = () => {
+const CancelOrderList = () => {
   return (
     <div>
-      <MyPageOrderListContainer />
+      <MyPageOrderListContainer title={'취소 교환 반품 조회'} />
     </div>
   );
 };
 
-export default Destination;
+export default CancelOrderList;

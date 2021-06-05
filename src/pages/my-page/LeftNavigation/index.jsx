@@ -1,0 +1,88 @@
+import { ROUTE_PATH } from 'configs/config';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  width: 20rem;
+`;
+
+const PageContainer = styled.div`
+  margin-bottom: 5rem;
+`;
+
+const Title = styled.div`
+  font-size: 3.8rem;
+  margin-bottom: 7.5rem;
+`;
+
+const Border = styled.div`
+  border: 0.1rem solid ${(props) => props.theme.TEXT_MAIN};
+  margin: 2rem 0;
+`;
+
+const Label = styled.div`
+  color: ${(props) =>
+    props.select ? props.theme.TEXT_MAIN : props.theme.TEXT_INFORMATION};
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+`;
+
+const LeftNavigation = () => {
+  const [select, setSelect] = useState('destination');
+
+  const history = useHistory();
+  const handleMovePage = (pathName) => {
+    setSelect(pathName);
+    history.push(`${ROUTE_PATH.mypage.main}${pathName}`);
+  };
+
+  return (
+    <Container>
+      <Title>마이페이지</Title>
+      <PageContainer>
+        <Label select>쇼핑 정보</Label>
+        <Border />
+        <Label
+          select={select === `${ROUTE_PATH.mypage.destination}`}
+          onClick={() => handleMovePage(`${ROUTE_PATH.mypage.destination}`)}
+        >
+          주문배송조회
+        </Label>
+        <Label
+          select={select === `${ROUTE_PATH.mypage.cancel}`}
+          onClick={() => handleMovePage(`${ROUTE_PATH.mypage.cancel}`)}
+        >
+          취소 교환 반품 조회
+        </Label>
+        <Label
+          select={select === `${ROUTE_PATH.mypage.review}`}
+          onClick={() => handleMovePage(`${ROUTE_PATH.mypage.review}`)}
+        >
+          상품 리뷰
+        </Label>
+      </PageContainer>
+
+      <PageContainer>
+        <Label select>계정 설정</Label>
+        <Border />
+        <Label select onClick={() => handleMovePage('/edit-my-info')}>
+          내 정보 수정
+        </Label>
+        <Label onClick={() => handleMovePage('/level')}>회원 등급</Label>
+      </PageContainer>
+
+      <PageContainer>
+        <Label select>고객센터</Label>
+        <Border />
+        <Label select onClick={() => handleMovePage('/ask')}>
+          1:1 문의내역
+        </Label>
+        <Label onClick={() => handleMovePage('/qna')}>상품 QNA현황</Label>
+        <Label onClick={() => handleMovePage('/faq')}>FAQ</Label>
+      </PageContainer>
+    </Container>
+  );
+};
+
+export default LeftNavigation;
