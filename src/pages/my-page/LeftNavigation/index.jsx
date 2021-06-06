@@ -67,7 +67,7 @@ const LeftNavigation = () => {
         <Label select>계정 설정</Label>
         <Border />
         <Label
-          select
+          select={select === `${ROUTE_PATH.mypage.myInformation}`}
           onClick={() => handleMovePage(ROUTE_PATH.mypage.myInformation)}
         >
           내 정보 수정
@@ -77,13 +77,13 @@ const LeftNavigation = () => {
       <PageContainer>
         <Label select>고객센터</Label>
         <Border />
-        <Label select onClick={() => handleMovePage(ROUTE_PATH.mypage.ask)}>
-          1:1 문의내역
-        </Label>
-        <Label onClick={() => handleMovePage(ROUTE_PATH.mypage.qna)}>
+
+        <Label
+          select={select === `${ROUTE_PATH.mypage.qna}`}
+          onClick={() => handleMovePage(ROUTE_PATH.mypage.qna)}
+        >
           상품 QNA현황
         </Label>
-        <Label onClick={() => handleMovePage(ROUTE_PATH.mypage.faq)}>FAQ</Label>
       </PageContainer>
     </Container>
   );

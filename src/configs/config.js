@@ -16,8 +16,7 @@ export const ROUTE_PATH = {
   },
   serviceCenter: {
     main: '/service-center',
-    ask: '/ask',
-    qna: '/qna',
+    notice: '/notice',
     faq: '/faq',
   },
   admin: {
@@ -52,4 +51,11 @@ export const COOKIE_KEYS = {
 
 export const DateFormat = {
   Default: 'YYYY-MM-DD',
+};
+
+export const BreakPoint = {
+  xl: 1200,
+  l: 1024,
+  m: 768,
+  s: 640,
 };

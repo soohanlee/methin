@@ -3,6 +3,11 @@ import styled from 'styled-components';
 
 const Container = styled.div``;
 
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Title = styled.div`
   font-size: 2.3rem;
   margin-bottom: 3rem;
@@ -19,13 +24,23 @@ const Border = styled.div`
   border-bottom: 0.1rem solid ${(props) => props.theme.TEXT_MAIN};
 `;
 
-const BorderTitleContainer = ({ children, title, titleDesc, className }) => {
+const BorderTitleContainer = ({
+  children,
+  title,
+  titleDesc,
+  className,
+  titleComponent,
+}) => {
   return (
     <Container className={className}>
-      <Title>
-        {title}
-        {titleDesc && <OptionLabel>{titleDesc}</OptionLabel>}
-      </Title>
+      <TitleContainer>
+        <Title>
+          {title}
+          {titleDesc && <OptionLabel>{titleDesc}</OptionLabel>}
+        </Title>
+        {titleComponent && titleComponent}
+      </TitleContainer>
+
       <Border />
       {children}
     </Container>

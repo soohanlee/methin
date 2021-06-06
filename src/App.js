@@ -45,6 +45,7 @@ const UserContainer = styled(Layout)`
   flex-direction: column;
   overflow-y: auto;
   height: 100%;
+  min-width: 105rem;
   &&& {
     background: ${(props) => props.theme.BACKGROUND};
   }

@@ -1,13 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Route, useRouteMatch } from 'react-router';
-import { ROUTE_PATH } from 'configs/config';
+import { BreakPoint, ROUTE_PATH } from 'configs/config';
+
 import LeftNavigation from 'pages/service-center/LeftNavigation';
 import Notice from 'pages/service-center/Notice';
 
 const Container = styled.div`
   display: flex;
   padding: 10rem 10%;
+  @media screen and (max-width: ${BreakPoint.xl}px) {
+    padding: 4rem 5%;
+  }
 `;
 
 const Contents = styled.div`

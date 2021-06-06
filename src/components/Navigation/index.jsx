@@ -139,7 +139,7 @@ const Navigation = () => {
 
   const handleMoveServiceCenter = () => {
     history.push(
-      `${ROUTE_PATH.serviceCenter.main}${ROUTE_PATH.serviceCenter.ask}`,
+      `${ROUTE_PATH.serviceCenter.main}${ROUTE_PATH.serviceCenter.notice}`,
     );
   };
 

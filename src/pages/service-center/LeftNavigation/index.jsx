@@ -44,15 +44,16 @@ const LeftNavigation = () => {
         <Label select>고객센터</Label>
         <Border />
         <Label
-          select
-          onClick={() => handleMovePage(ROUTE_PATH.serviceCenter.ask)}
+          select={select === `${ROUTE_PATH.serviceCenter.notice}`}
+          onClick={() => handleMovePage(ROUTE_PATH.serviceCenter.notice)}
         >
-          1:1 문의내역
+          공지사항
         </Label>
-        <Label onClick={() => handleMovePage(ROUTE_PATH.serviceCenter.qna)}>
-          상품 QNA현황
-        </Label>
-        <Label onClick={() => handleMovePage(ROUTE_PATH.serviceCenter.faq)}>
+
+        <Label
+          select={select === `${ROUTE_PATH.serviceCenter.faq}`}
+          onClick={() => handleMovePage(ROUTE_PATH.serviceCenter.faq)}
+        >
           FAQ
         </Label>
       </PageContainer>
