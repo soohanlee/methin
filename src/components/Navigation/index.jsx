@@ -43,6 +43,7 @@ const ListContainer = styled(OriginListContainer)`
 
 const Icon = styled.div`
   position: relative;
+  cursor: pointer;
 `;
 
 const InfoContainer = styled.div`
@@ -95,6 +96,12 @@ const LogoImg = styled.img`
 const Img = styled.img`
   width: 25px;
   height: 25px;
+`;
+
+const LoginButton = styled.div`
+  color: ${(props) => props.theme.BACKGROUND};
+  font-weight: 500;
+  cursor: pointer;
 `;
 
 const Navigation = () => {
@@ -195,7 +202,7 @@ const Navigation = () => {
               </IconContainer>
             </UserContainer>
           ) : (
-            <button onClick={handleMoveLoginPage}>Login</button>
+            <LoginButton onClick={handleMoveLoginPage}>로그인</LoginButton>
           )}
         </UserContainer>
       </Container>
