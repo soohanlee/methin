@@ -7,6 +7,7 @@ import Destination from 'pages/my-page/Destination';
 import { ROUTE_PATH } from 'configs/config';
 import Review from 'pages/my-page/Review';
 import CancelOrderList from 'pages/my-page/CancelOrderList';
+import Myinfo from 'pages/my-page/MyInfomation';
 
 const Container = styled.div`
   display: flex;
@@ -42,6 +43,27 @@ const MyPage = () => {
           exact
           path={`${match.path}${ROUTE_PATH.mypage.review}`}
           component={Review}
+        />
+
+        <Route
+          exact
+          path={`${match.path}${ROUTE_PATH.mypage.myInformation}`}
+          component={Myinfo}
+        />
+        <Route
+          exact
+          path={`${match.path}${ROUTE_PATH.mypage.ask}`}
+          component={Myinfo}
+        />
+        <Route
+          exact
+          path={`${match.path}${ROUTE_PATH.mypage.qna}`}
+          component={Myinfo}
+        />
+        <Route
+          exact
+          path={`${match.path}${ROUTE_PATH.mypage.faq}`}
+          component={Myinfo}
         />
       </Contents>
     </Container>

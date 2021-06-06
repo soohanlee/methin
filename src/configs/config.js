@@ -9,6 +9,16 @@ export const ROUTE_PATH = {
     destination: '/destination',
     cancel: '/cancel',
     review: '/review',
+    myInformation: '/my-information',
+    ask: '/ask',
+    qna: '/qna',
+    faq: '/faq',
+  },
+  serviceCenter: {
+    main: '/service-center',
+    ask: '/ask',
+    qna: '/qna',
+    faq: '/faq',
   },
   admin: {
     main: '/admin',

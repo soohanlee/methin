@@ -51,6 +51,7 @@ const ContentsHeader = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  margin-bottom: 3rem;
 `;
 
 const ContentsBody = styled.div``;

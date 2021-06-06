@@ -2,7 +2,10 @@ import styled, { css } from 'styled-components';
 export const Input = styled.input`
   display: flex;
   border: 0;
-  border-bottom: 0.1rem solid ${(props) => props.theme.LINE};
+  border-bottom: 0.1rem solid ${(props) => props.theme.TEXT_DISABLE};
+  ::placeholder {
+    color: ${(props) => props.theme.TEXT_INFORMATION};
+  }
 `;
 
 export const Form = styled.form``;

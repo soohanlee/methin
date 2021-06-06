@@ -66,20 +66,24 @@ const LeftNavigation = () => {
       <PageContainer>
         <Label select>계정 설정</Label>
         <Border />
-        <Label select onClick={() => handleMovePage('/edit-my-info')}>
+        <Label
+          select
+          onClick={() => handleMovePage(ROUTE_PATH.mypage.myInformation)}
+        >
           내 정보 수정
         </Label>
-        <Label onClick={() => handleMovePage('/level')}>회원 등급</Label>
       </PageContainer>
 
       <PageContainer>
         <Label select>고객센터</Label>
         <Border />
-        <Label select onClick={() => handleMovePage('/ask')}>
+        <Label select onClick={() => handleMovePage(ROUTE_PATH.mypage.ask)}>
           1:1 문의내역
         </Label>
-        <Label onClick={() => handleMovePage('/qna')}>상품 QNA현황</Label>
-        <Label onClick={() => handleMovePage('/faq')}>FAQ</Label>
+        <Label onClick={() => handleMovePage(ROUTE_PATH.mypage.qna)}>
+          상품 QNA현황
+        </Label>
+        <Label onClick={() => handleMovePage(ROUTE_PATH.mypage.faq)}>FAQ</Label>
       </PageContainer>
     </Container>
   );

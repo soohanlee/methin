@@ -85,6 +85,7 @@ const MenuContainer = styled.div`
 
 const MenuItem = styled.div`
   padding: 0 2rem;
+  cursor: pointer;
 `;
 
 const LogoImg = styled.img`
@@ -112,6 +113,10 @@ const Navigation = () => {
     history.push(`${ROUTE_PATH.main}`);
   };
 
+  const handleMovePage = (path) => {
+    history.push(`${path}`);
+  };
+
   const handleLogout = async () => {
     try {
       cleanToken();
@@ -122,7 +127,13 @@ const Navigation = () => {
   };
 
   const handleMoveMyPage = () => {
-    history.push(`${ROUTE_PATH.mypage.main}`);
+    history.push(`${ROUTE_PATH.mypage.main}${ROUTE_PATH.mypage.destination}`);
+  };
+
+  const handleMoveServiceCenter = () => {
+    history.push(
+      `${ROUTE_PATH.serviceCenter.main}${ROUTE_PATH.serviceCenter.ask}`,
+    );
   };
 
   return (
@@ -175,6 +186,9 @@ const Navigation = () => {
 
                   <ListContainer>
                     <ItemLabel onClick={handleMoveMyPage}>마이페이지</ItemLabel>
+                    <ItemLabel onClick={handleMoveServiceCenter}>
+                      고객센터
+                    </ItemLabel>
                     <ItemLabel onClick={handleLogout}>로그아웃</ItemLabel>
                   </ListContainer>
                 </InfoContainer>
@@ -187,7 +201,9 @@ const Navigation = () => {
       </Container>
       <MenuContainer>
         <MenuItem>전체보기</MenuItem>
-        <MenuItem>신상품</MenuItem>
+        <MenuItem onClick={() => handleMovePage(ROUTE_PATH.product)}>
+          신상품
+        </MenuItem>
         <MenuItem>베스트</MenuItem>
         <MenuItem>알뜰쇼핑</MenuItem>
         <MenuItem>금주혜택</MenuItem>

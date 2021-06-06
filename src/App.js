@@ -36,7 +36,7 @@ import SignUp from 'pages/auths/sign-up';
 import Product from 'pages/Product';
 import ProductDetail from 'pages/product-detail';
 import MyPage from 'pages/my-page';
-import Review from 'pages/my-page/Review';
+import ServiceCenter from 'pages/service-center';
 
 const { Header, Content } = Layout;
 
@@ -153,6 +153,10 @@ function App() {
                   <Route
                     path={`${ROUTE_PATH.mypage.main}`}
                     component={MyPage}
+                  />
+                  <Route
+                    path={`${ROUTE_PATH.serviceCenter.main}`}
+                    component={ServiceCenter}
                   />
                 </Switch>
                 <MainFooter />

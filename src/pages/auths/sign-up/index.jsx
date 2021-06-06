@@ -187,9 +187,9 @@ const SignUp = () => {
           {errors.phone && <span>필수 입력란입니다.</span>}
           {!isFirstVisit ? (
             isVerifyPhoneNumber ? (
-              <span>인증되지 않았습니다.</span>
+              <span>인증되었습니다</span>
             ) : (
-              <span>인증되었습니다.</span>
+              <span>인증되지 않았습니다.</span>
             )
           ) : null}
         </InputContainer>
