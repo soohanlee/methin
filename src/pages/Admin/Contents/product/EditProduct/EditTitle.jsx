@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import QuestionCircleOutlined from '@ant-design/icons/QuestionCircleOutlined';
 import PageHeaderBtn from 'pages/Admin/components/Form/PageHeaderBtn';
 
-const EditTitles = styled.div`
+const EditTitlesStyled = styled.div`
   width: 100%;
   height: 7rem;
   background-color: #ffffff;
@@ -13,33 +13,33 @@ const EditTitles = styled.div`
   margin-bottom: 1.5rem;
 `;
 
-const TitleTexts = styled.div`
+const TitleTextsStyled = styled.div`
   padding-top: 2rem;
   display: flex;
 `;
 
-const TitleText = styled.div`
+const TitleTextStyled = styled.div`
   padding-right: 1rem;
   font-size: 25px;
 `;
 
-const QuestionIcon = styled(QuestionCircleOutlined)`
+const QuestionIconStyled = styled(QuestionCircleOutlined)`
   font-size: 25px;
 `;
 
-const PageBtn = styled(PageHeaderBtn)`
+const PageBtnStyled = styled(PageHeaderBtn)`
   padding: 0px;
 `;
 
 const EditTitle = () => {
   return (
-    <EditTitles>
-      <TitleTexts>
-        <PageBtn />
-        <TitleText>상품 조회/수정 </TitleText>
-        <QuestionIcon />
-      </TitleTexts>
-    </EditTitles>
+    <EditTitlesStyled>
+      <TitleTextsStyled>
+        <PageBtnStyled />
+        <TitleTextStyled>상품 조회/수정 </TitleTextStyled>
+        <QuestionIconStyled />
+      </TitleTextsStyled>
+    </EditTitlesStyled>
   );
 };
 

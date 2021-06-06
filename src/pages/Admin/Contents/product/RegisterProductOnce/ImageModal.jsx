@@ -12,7 +12,7 @@ const ModalStyled = styled(Modal)`
   justify-content: center;
 `;
 
-const TitleText = styled.div`
+const TitleTextStyled = styled.div`
   padding: 4.5rem;
   padding-top: 0rem;
   padding-bottom: 2rem;
@@ -20,7 +20,7 @@ const TitleText = styled.div`
   text-align: center;
 `;
 
-const SubText = styled.div`
+const SubTextStyled = styled.div`
   padding: 4.5rem;
   padding-top: 0rem;
   padding-bottom: 2rem;
@@ -29,7 +29,7 @@ const SubText = styled.div`
   text-align: center;
 `;
 
-const ButtonStyled = styled.div`
+const SubButtonStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,22 +66,22 @@ const ImageModal = (property) => {
         width={800}
         footer={[]}
       >
-        <TitleText>
+        <TitleTextStyled>
           한 번에 500장까지 사진 첨부가 가능합니다. <br />
           (한 장당 20MB, 전체 500MB) <br />
           JPG, GIF, PNG, BMP 이미지 파일을 올릴 수 있습니다.
-        </TitleText>
+        </TitleTextStyled>
 
-        <SubText>
+        <SubTextStyled>
           저작권 등 다른 사람의 권리를 침해하는 사진은 관련 법률에 의해 제재를
           받으실 수 있습니다.
-        </SubText>
+        </SubTextStyled>
 
-        <ButtonStyled>
+        <SubButtonStyled>
           <Upload {...imageUpload}>
             <BasicButton onClick={imageUpload} label="사진추가" />
           </Upload>
-        </ButtonStyled>
+        </SubButtonStyled>
       </ModalStyled>
     </>
   );

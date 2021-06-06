@@ -6,7 +6,7 @@ import { Checkbox } from 'antd';
 //   console.log(`checked = ${e.target.checked}`);
 // }
 
-const CheckBoxLabel = ({ onChange, className, label }, ref) => {
+const BasicCheckBox = ({ onChange, className, label }, ref) => {
   return (
     <Checkbox ref={ref} onChange={onChange} className={className}>
       {label}
@@ -14,4 +14,4 @@ const CheckBoxLabel = ({ onChange, className, label }, ref) => {
   );
 };
 
-export default forwardRef(CheckBoxLabel);
+export default forwardRef(BasicCheckBox);

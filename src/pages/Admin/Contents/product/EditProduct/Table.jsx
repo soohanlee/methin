@@ -6,48 +6,50 @@ import { deleteProduct } from 'apis/product';
 import { notification } from 'utils/notification';
 import { ROUTE_PATH } from 'configs/config';
 
-import OriginTable from 'pages/Admin/components/Table/Table';
+import BasicTable from 'pages/Admin/components/Table/Table';
+import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicModal from 'pages/Admin/components/Modal/BasicModal';
 
-const BasicSelectBoxStyled = styled(BasicSelectBox)`
-  width: 15rem;
-  margin-right: 0.5rem;
-`;
-
-const Container = styled.div`
+const ContainerStyled = styled.div`
   background: #fff;
   padding: 3rem;
 `;
 
-const HeaderContainer = styled.div`
+const HeaderContainerStyled = styled.div`
   display: flex;
   justify-content: space-between;
   width: ${(props) => props.width};
   padding-bottom: 2rem;
 `;
 
-const Title = styled.div``;
-
-const ButtonContainer = styled.div`
+const ButtonContainerStyled = styled.div`
   display: flex;
 `;
 
-const Button = styled(OriginButton)`
+const BasicButtonStyled = styled(BasicButton)`
   margin-right: 0.5rem;
 `;
 
-const Table = ({ table, count, setTable }) => {
+const BasicSelectBoxStyled = styled(BasicSelectBox)`
+  width: 15rem;
+  margin-right: 0.5rem;
+`;
+
+const Table = ({ tableList, count, setTableList }) => {
   const [productSortSelectState, setProductSortSelectState] = React.useState(
     [],
   );
   const [productCountSelectState, setProductCountSelectState] = React.useState(
     [],
   );
-
-  const [selectedTableKeys, setSelectedTableKeys] = React.useState([]);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
-  const [selectedProduct, setSelectedProduct] = React.useState('');
+  const [selectedTableKeysState, setSelectedTableKeysState] = React.useState(
+    [],
+  );
+  const [isDeleteModalOpenState, setisDeleteModalOpenState] = React.useState(
+    false,
+  );
+  const [selectedProductState, setSelectedProductState] = React.useState('');
   const history = useHistory();
 
   const setExcelDown = () => {
@@ -66,18 +68,20 @@ const Table = ({ table, count, setTable }) => {
       title: '수정',
       dataIndex: 'modify',
       render: (_, record) => (
-        <OriginButton onClick={() => handleMoveEditPage(record.id)}>
-          수정
-        </OriginButton>
+        <BasicButton
+          onClick={() => handleMoveEditPage(record.id)}
+          label="수정"
+        ></BasicButton>
       ),
     },
     {
       title: '삭제',
       dataIndex: 'delete',
       render: (_, record) => (
-        <OriginButton onClick={() => handleDeleteModalOpen(record.id)}>
-          삭제
-        </OriginButton>
+        <BasicButton
+          onClick={() => handleDeleteModalOpen(record.id)}
+          label="삭제"
+        ></BasicButton>
       ),
     },
     {
@@ -157,27 +161,13 @@ const Table = ({ table, count, setTable }) => {
     },
   ];
 
-  const SortViewList = [
-    { label: '연관상품 ID순', value: 'associatedProductID' },
-    { label: '대표 상품명순', value: 'representativeProduct' },
-    { label: '등록일순', value: 'registrationDate' },
-    { label: '최종수정일순', value: 'lastModifiedDate' },
-  ];
-
-  const CountList = [
-    { label: '50개씩', value: 'fiftyCount' },
-    { label: '100개씩', value: 'hundredCount' },
-    { label: '300개씩', value: 'threeHundredCount' },
-    { label: '500개씩', value: 'fiveHundredCount' },
-  ];
-
   const handleChange = (selectedRowKeys, selectedRows) => {
-    setSelectedTableKeys(selectedRowKeys);
+    setSelectedTableKeysState(selectedRowKeys);
   };
 
   const handleDeleteModalOpen = (id) => {
-    setSelectedProduct(id);
-    setIsDeleteModalOpen(true);
+    setSelectedProductState(id);
+    setisDeleteModalOpenState(true);
   };
 
   const setSelectDelete = () => {
@@ -186,36 +176,34 @@ const Table = ({ table, count, setTable }) => {
 
   const handleDeleteProduct = async () => {
     try {
-      const result = await deleteProduct(selectedProduct);
+      const result = await deleteProduct(selectedProductState);
       if (result.status === 200) {
-        const newTable = table.filter((item) => {
-          return item.id !== selectedProduct;
+        const newTable = tableList.filter((item) => {
+          return item.id !== selectedProductState;
         });
-        console.log(newTable);
-        setTable(newTable);
+        setTableList(newTable);
       } else if (result.status === 404) {
         notification.error('이미 삭제되었습니다.');
       }
-      setIsDeleteModalOpen(false);
+      setisDeleteModalOpenState(false);
     } catch (e) {
-      console.log(e, 'e');
       if (e.response && e.response.status === 404) {
         notification.error('이미 삭제되었습니다.');
       }
-      setIsDeleteModalOpen(false);
+      setisDeleteModalOpenState(false);
     }
   };
 
   const handleDeleteModalClose = () => {
-    setIsDeleteModalOpen(false);
-    setSelectedProduct('');
+    setisDeleteModalOpenState(false);
+    setSelectedProductState('');
   };
 
   return (
-    <Container>
-      <HeaderContainer>
-        <Title>상품목록(총 {count}개)</Title>
-        <ButtonContainer>
+    <ContainerStyled>
+      <HeaderContainerStyled>
+        <div>상품목록(총 {count}개)</div>
+        <ButtonContainerStyled>
           <BasicSelectBoxStyled
             onChange={(value) => {
               setProductSortSelectState(value);
@@ -228,31 +216,46 @@ const Table = ({ table, count, setTable }) => {
             }}
             list={CountList}
           ></BasicSelectBoxStyled>
-          <Button onClick={setExcelDown}>엑셀다운</Button>
-        </ButtonContainer>
-      </HeaderContainer>
-      <HeaderContainer>
-        <ButtonContainer>
-          <Button onClick={setSelectDelete}>선택삭제</Button>
-        </ButtonContainer>
-      </HeaderContainer>
+          <BasicButtonStyled onClick={setExcelDown}>엑셀다운</BasicButtonStyled>
+        </ButtonContainerStyled>
+      </HeaderContainerStyled>
+      <HeaderContainerStyled>
+        <ButtonContainerStyled>
+          <BasicButtonStyled onClick={setSelectDelete}>
+            선택삭제
+          </BasicButtonStyled>
+        </ButtonContainerStyled>
+      </HeaderContainerStyled>
 
-      <OriginTable
+      <BasicTable
         scroll={{ x: '250vw', y: 500 }}
-        data={table}
+        data={tableList}
         columns={columns}
         selectionType="checkbox"
         onChange={handleChange}
       />
       <BasicModal
-        visible={isDeleteModalOpen}
+        visible={isDeleteModalOpenState}
         onOk={handleDeleteProduct}
         onCancel={handleDeleteModalClose}
       >
         정말 삭제하시겠습니까?
       </BasicModal>
-    </Container>
+    </ContainerStyled>
   );
 };
 
 export default Table;
+const SortViewList = [
+  { label: '연관상품 ID순', value: 'associatedProductID' },
+  { label: '대표 상품명순', value: 'representativeProduct' },
+  { label: '등록일순', value: 'registrationDate' },
+  { label: '최종수정일순', value: 'lastModifiedDate' },
+];
+
+const CountList = [
+  { label: '50개씩', value: 'fiftyCount' },
+  { label: '100개씩', value: 'hundredCount' },
+  { label: '300개씩', value: 'threeHundredCount' },
+  { label: '500개씩', value: 'fiveHundredCount' },
+];

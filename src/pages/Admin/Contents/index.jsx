@@ -5,8 +5,7 @@ import { ROUTE_PATH } from 'configs/config';
 
 import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';
-import DeliveryProduct from 'pages/Admin/Contents/product/deliveryProduct/deliveryProduct';
-import TemplateProduct from 'pages/Admin/Contents/product/templateProduct/templateProduct';
+import DeliveryProduct from 'pages/Admin/Contents/product/DeliveryProduct/DeliveryProduct';
 import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnce';
 import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/Index';
 import OrderSerach from 'pages/Admin/Contents/sale/OrderSerach';
@@ -51,11 +50,6 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.deliveryProduct}`}
           component={DeliveryProduct}
-        />
-        <Route
-          exact
-          path={`${prePath}${ROUTE_PATH.admin.templateProduct}`}
-          component={TemplateProduct}
         />
         <Route
           exact

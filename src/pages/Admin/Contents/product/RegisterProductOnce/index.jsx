@@ -5,8 +5,8 @@ import { getProductList } from 'apis/product';
 import { notification } from 'utils/notification';
 
 const RegisterProductOnce = () => {
-  const [table, setTable] = useState([]);
-  const [tableCount, setTableCount] = useState(0);
+  const [tableDataState, setTableDataState] = useState([]);
+  const [tableCountState, setTableCountState] = useState(0);
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -17,8 +17,8 @@ const RegisterProductOnce = () => {
         });
         // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
 
-        setTable(customList);
-        setTableCount(result.data.data.count);
+        setTableDataState(customList);
+        setTableCountState(result.data.data.count);
       } catch (e) {
         notification.error('상품 정보를 가져오지 못했습니다.');
       }
@@ -29,7 +29,7 @@ const RegisterProductOnce = () => {
   return (
     <div>
       <Header dataList={dataList} />
-      <Table data={table} />
+      <Table data={tableDataState} />
     </div>
   );
 };
@@ -59,28 +59,3 @@ const dataList = {
   ],
   곡물: ['오트밀'],
 };
-
-const data = [
-  {
-    key: '0',
-    state: '판매완료',
-    fail: '',
-    number: '123124125',
-    saleState: '판매완료',
-    category: '소고기',
-    name: '소고기 안심',
-    price: '8900',
-    available: '40',
-  },
-  {
-    key: '1',
-    state: '판매완료',
-    fail: 32,
-    number: '123123154155',
-    saleState: 'saleState',
-    category: 'category',
-    name: 'John Brown',
-    price: 'price',
-    available: 'available',
-  },
-];

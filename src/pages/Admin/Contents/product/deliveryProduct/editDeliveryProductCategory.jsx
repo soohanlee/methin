@@ -31,7 +31,7 @@ const TitleText = styled.div`
   color: #66dd89;
 `;
 
-const editDeliveryProductCategory = () => {
+const EditDeliveryProductCategory = () => {
   const categoryTextArray = ['배송비 묶음그룹 관리'];
 
   const renderSetCaterogy = () => {
@@ -61,4 +61,4 @@ const editDeliveryProductCategory = () => {
   );
 };
 
-export default editDeliveryProductCategory;
+export default EditDeliveryProductCategory;

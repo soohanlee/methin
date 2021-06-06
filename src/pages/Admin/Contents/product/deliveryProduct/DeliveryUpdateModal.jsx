@@ -2,8 +2,6 @@ import 'antd/dist/antd.css';
 import { Modal, Radio } from 'antd';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
-import 'antd/dist/antd.css';
-
 const DeliveryModalBox = styled.div`
   padding: 2rem;
   padding-bottom: 0px;
