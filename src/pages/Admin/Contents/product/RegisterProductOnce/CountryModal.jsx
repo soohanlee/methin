@@ -1,27 +1,25 @@
-import 'antd/dist/antd.css';
-import { Modal } from 'antd';
+import { useState } from 'react';
 import styled from 'styled-components';
+import 'antd/dist/antd.css';
+import { Modal, Radio } from 'antd';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
-import 'antd/dist/antd.css';
-import { Radio } from 'antd';
-import { useState } from 'react';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 
-const CategoryModalBox = styled.div`
+const ContainerStyled = styled.div`
   padding: 2rem;
   padding-bottom: 0px;
   border: 1px solid #f0f0f0;
 `;
 
-const CategoryModalContent = styled.div`
+const SubContainerStyled = styled.div`
   width: 100%;
   display: flex;
   margin-bottom: 2rem;
   align-items: center;
 `;
 
-const ContentTitle = styled.div`
+const TitleTextStyled = styled.div`
   margin-right: 3rem;
 `;
 
@@ -68,28 +66,28 @@ const CountryModal = (property) => {
           }}
           label="전체코드 다운로드"
         ></BasicButtonStyled>
-        <CategoryModalBox>
-          <CategoryModalContent>
-            <ContentTitle>원산지</ContentTitle>
+        <ContainerStyled>
+          <SubContainerStyled>
+            <TitleTextStyled>원산지</TitleTextStyled>
             <Radio.Group onChange={onCountryBtnClick}>
               <Radio value="korea">국산</Radio>
               <Radio value="oceanic">원양산</Radio>
               <Radio value="Income">수입산</Radio>
               <Radio value="etc">기타</Radio>
             </Radio.Group>
-          </CategoryModalContent>
+          </SubContainerStyled>
 
-          <CategoryModalContent>
-            <ContentTitle>상세지역</ContentTitle>
+          <SubContainerStyled>
+            <TitleTextStyled>상세지역</TitleTextStyled>
             <BasicSelectBox list={list} onChange={onAdressBtnClick} />
             <BasicSelectBox />
-          </CategoryModalContent>
+          </SubContainerStyled>
 
-          <CategoryModalContent>
-            <ContentTitle>원산지 코드</ContentTitle>
+          <SubContainerStyled>
+            <TitleTextStyled>원산지 코드</TitleTextStyled>
             <BasicTextInputBoxStyled ref={property.countryRef} />
-          </CategoryModalContent>
-        </CategoryModalBox>
+          </SubContainerStyled>
+        </ContainerStyled>
       </Modal>
     </>
   );

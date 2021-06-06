@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
-import OriginTextAreaBox from 'pages/Admin/components/Form/TextAreaBox';
+import BasicTextArea from 'pages/Admin/components/Form/BasicTextArea';
 
 const Container = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ const TextInnerContainer = styled.div`
   display: flex;
 `;
 
-const TextAreaBox = styled(OriginTextAreaBox)`
+const TextAreaBox = styled(BasicTextArea)`
   margin-bottom: 2rem;
 `;
 

@@ -10,7 +10,6 @@ export const ROUTE_PATH = {
     registerProduct: '/register-product',
     registerAllProduct: '/register-all-product',
     deliveryProduct: '/delivery-product',
-    templateProduct: '/template-product',
     noticeManage: '/notice-manage',
     manageSale: '/manage-sale',
     checkOutstanding: '/check-outstanding',

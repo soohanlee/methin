@@ -9,7 +9,7 @@ import WarningTwoTone from '@ant-design/icons/WarningTwoTone';
 import CloseCircleTwoTone from '@ant-design/icons/CloseCircleTwoTone';
 import CheckCircleTwoTone from '@ant-design/icons/CheckCircleTwoTone';
 
-const EditCategorys = styled.div`
+const EditCategorysSyled = styled.div`
   width: 100%;
   height: 12rem;
   background-color: #ffffff;
@@ -21,7 +21,7 @@ const EditCategorys = styled.div`
   margin-bottom: 1.5rem;
 `;
 
-const CategoryType = styled.div`
+const CategoryTypeSyled = styled.div`
   width: 17rem;
   display: flex;
   align-items: center;
@@ -29,30 +29,25 @@ const CategoryType = styled.div`
   margin-right: 10rem;
 `;
 
-const CategoryTexts = styled.div``;
-
-const TitleText = styled.div``;
-const SubTitleText = styled.div``;
-
-const Icon = css`
+const IconCss = css`
   font-size: 6rem;
   margin: 2rem;
 `;
 
-const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
-  ${Icon}
+const AppstoreTwoToneIconSyled = styled(AppstoreTwoTone)`
+  ${IconCss}
 `;
-const DollarCircleTwoToneIcon = styled(DollarCircleTwoTone)`
-  ${Icon}
+const DollarCircleTwoToneIconSyled = styled(DollarCircleTwoTone)`
+  ${IconCss}
 `;
-const WarningTwoToneIcon = styled(WarningTwoTone)`
-  ${Icon}
+const WarningTwoToneIconSyled = styled(WarningTwoTone)`
+  ${IconCss}
 `;
-const CloseCircleTwoToneIcon = styled(CloseCircleTwoTone)`
-  ${Icon}
+const CloseCircleTwoToneIconSyled = styled(CloseCircleTwoTone)`
+  ${IconCss}
 `;
-const CheckCircleTwoToneIcon = styled(CheckCircleTwoTone)`
-  ${Icon}
+const CheckCircleTwoToneIconSyled = styled(CheckCircleTwoTone)`
+  ${IconCss}
 `;
 
 const categoryTextArray = ['전체', '판매중', '품절', '판매중지', '판매종료'];
@@ -63,16 +58,16 @@ const EditCategory = ({ count }) => {
     for (let i = 0; i < 5; i++) {
       result.push(
         <>
-          <CategoryType
+          <CategoryTypeSyled
             key={i}
             onClick={() => categoryTypeClick(categoryTextArray[i])}
           >
             {categoryTypeArray[i]}
-            <CategoryTexts>
-              <TitleText>{categoryTextArray[i]}</TitleText>
-              <SubTitleText>{count} 건</SubTitleText>
-            </CategoryTexts>
-          </CategoryType>
+            <div>
+              <div>{categoryTextArray[i]}</div>
+              <div>{count} 건</div>
+            </div>
+          </CategoryTypeSyled>
         </>,
       );
     }
@@ -84,7 +79,7 @@ const EditCategory = ({ count }) => {
   };
   return (
     <>
-      <EditCategorys>{renderSetCaterogy()}</EditCategorys>
+      <EditCategorysSyled>{renderSetCaterogy()}</EditCategorysSyled>
     </>
   );
 };
@@ -92,9 +87,9 @@ const EditCategory = ({ count }) => {
 export default EditCategory;
 
 const categoryTypeArray = [
-  <AppstoreTwoToneIcon />,
-  <DollarCircleTwoToneIcon />,
-  <WarningTwoToneIcon />,
-  <CloseCircleTwoToneIcon />,
-  <CheckCircleTwoToneIcon />,
+  <AppstoreTwoToneIconSyled />,
+  <DollarCircleTwoToneIconSyled />,
+  <WarningTwoToneIconSyled />,
+  <CloseCircleTwoToneIconSyled />,
+  <CheckCircleTwoToneIconSyled />,
 ];

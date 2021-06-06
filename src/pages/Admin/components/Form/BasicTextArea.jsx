@@ -4,7 +4,7 @@ import { Input } from 'antd';
 
 const { TextArea } = Input;
 
-const TextAreaBox = ({ onChange, label, className }, ref) => {
+const BasicTextArea = ({ disabled, onChange, label, className }, ref) => {
   return (
     <TextArea
       onChange={onChange}
@@ -12,7 +12,8 @@ const TextAreaBox = ({ onChange, label, className }, ref) => {
       ref={ref}
       rows={4}
       placeholder={label}
+      disabled={disabled}
     />
   );
 };
-export default forwardRef(TextAreaBox);
+export default forwardRef(BasicTextArea);

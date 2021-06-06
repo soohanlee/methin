@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
-import styled from 'styled-components';
 import 'antd/dist/antd.css';
+import styled from 'styled-components';
 import Table from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
-import DeliveryUpdateModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryUpdateModal';
+import DeliveryUpdateModal from 'pages/Admin/Contents/product/DeliveryProduct/DeliveryUpdateModal';
 
 const EditDeliveryTitlesCss = css`
   width: 100%;

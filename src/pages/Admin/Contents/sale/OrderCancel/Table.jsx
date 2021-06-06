@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
 import OriginTable from 'pages/Admin/components/Table/Table';
+import ReturnRefusalModal from 'pages/Admin/Contents/sale/OrderCancel/ReturnRefusalModal';
 
 const Container = styled.div`
   background: #fff;
@@ -28,21 +29,38 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const setExcelDown = () => {
-  alert('엑셀다운');
-};
-
-const setSuccessCancelProcess = () => {
-  alert('취소완료처리');
-};
-
-const setRejectCancelProcess = () => {
-  alert('취소거부처리');
-};
-
 const Table = ({ data, count }) => {
+  const [returnRefusalVisible, setReturnRefusalVisible] = useState(false);
+
+  const setExcelDown = () => {
+    alert('엑셀다운');
+  };
+
+  const setSuccessCancelProcess = () => {
+    window.confirm(
+      '1건 중 1건 환불처리 가능합니다. 환불 처리 진행하시겠습니까',
+    );
+  };
+
+  const setRejectCancelProcess = () => {
+    setReturnRefusalVisible(true);
+  };
+
   return (
     <Container>
+      <ReturnRefusalModal
+        centered
+        title="취소건발송처리"
+        visible={returnRefusalVisible}
+        onOk={() => {
+          setReturnRefusalVisible(false);
+        }}
+        onCancel={() => {
+          setReturnRefusalVisible(false);
+        }}
+        width={500}
+      ></ReturnRefusalModal>
+
       <HeaderContainer>
         <Title>목록(총 {count}개)</Title>
         <ButtonContainer>

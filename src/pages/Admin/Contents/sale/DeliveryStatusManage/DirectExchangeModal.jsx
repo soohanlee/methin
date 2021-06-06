@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
-import BasicTextAreaBox from 'pages/Admin/components/Form/TextAreaBox';
+import BasicTextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
 
 const DirectExchangeModal = (property) => {
   const onChange = (pagination, filters, sorter, extra) => {
