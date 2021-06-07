@@ -20,6 +20,7 @@ const IdLine = styled.div`
 `;
 
 const ListContainer = styled.div``;
+
 const Label = styled.div`
   font-size: 1.55rem;
   font-weight: ${(props) => (props.bold ? 500 : 300)};
@@ -79,7 +80,7 @@ const OrderMessageContainer = styled.div`
 const MyPageOrderListContainer = ({ title }) => {
   return (
     <Container>
-      <Title>{title || '주문배송조회'}</Title>
+      <Title>{title || '주문 배송 조회'}</Title>
       <ListContainer>
         <IdLine>
           <Label bold>2021.04.27</Label>

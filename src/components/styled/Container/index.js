@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import { BreakPoint } from 'configs/config';
 export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -14,4 +14,7 @@ export const ListContainer = styled.div`
 
 export const PaddingContainer = styled.div`
   padding: 5% 10%;
+  @media screen and (max-width: ${BreakPoint.xl}px) {
+    padding: 4rem 5%;
+  }
 `;
