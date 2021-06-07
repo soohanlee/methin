@@ -1,21 +1,20 @@
 import React from 'react';
-import BorderTitleContainer from 'components/container/BorderTitleContainer';
 import styled from 'styled-components';
+import BorderTitleContainer from 'components/container/BorderTitleContainer';
 import CollapseList from 'components/Collapse/CollapseList';
 
 const Container = styled.div``;
-
-const ProductQNA = () => {
+const FAQ = () => {
   return (
     <Container>
-      <BorderTitleContainer title="QNA" titleComponent={<div>전체 필터</div>}>
+      <BorderTitleContainer title="FAQ" titleComponent={<div>전체 필터</div>}>
         <CollapseList list={list} />
       </BorderTitleContainer>
     </Container>
   );
 };
 
-export default ProductQNA;
+export default FAQ;
 
 const list = [
   {

@@ -5,6 +5,7 @@ import { BreakPoint, ROUTE_PATH } from 'configs/config';
 
 import LeftNavigation from 'pages/service-center/LeftNavigation';
 import Notice from 'pages/service-center/Notice';
+import FAQ from 'pages/service-center/FAQ';
 
 const Container = styled.div`
   display: flex;
@@ -28,8 +29,13 @@ const ServiceCenter = () => {
       <Contents>
         <Route
           exact
-          path={`${match.path}${ROUTE_PATH.serviceCenter.ask}`}
+          path={`${match.path}${ROUTE_PATH.serviceCenter.notice}`}
           component={Notice}
+        />
+        <Route
+          exact
+          path={`${match.path}${ROUTE_PATH.serviceCenter.faq}`}
+          component={FAQ}
         />
       </Contents>
     </Container>
