@@ -34,6 +34,6 @@ export const SelectableLabel = styled.div`
 
 export const PageTitle = styled.div`
   font-size: 3.8rem;
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 5rem;
 `;

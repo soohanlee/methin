@@ -47,7 +47,7 @@ const LeftNavigation = () => {
           select={select === `${ROUTE_PATH.mypage.destination}`}
           onClick={() => handleMovePage(`${ROUTE_PATH.mypage.destination}`)}
         >
-          주문배송조회
+          주문 배송 조회
         </Label>
         <Label
           select={select === `${ROUTE_PATH.mypage.cancel}`}

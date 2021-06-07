@@ -37,6 +37,7 @@ import Product from 'pages/Product';
 import ProductDetail from 'pages/product-detail';
 import MyPage from 'pages/my-page';
 import ServiceCenter from 'pages/service-center';
+import Order from 'pages/Order';
 
 const { Header, Content } = Layout;
 
@@ -159,6 +160,7 @@ function App() {
                     path={`${ROUTE_PATH.serviceCenter.main}`}
                     component={ServiceCenter}
                   />
+                  <Route path={`${ROUTE_PATH.order}`} component={Order} />
                 </Switch>
                 <MainFooter />
               </CustomContent>
