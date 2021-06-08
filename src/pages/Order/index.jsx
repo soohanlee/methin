@@ -127,6 +127,7 @@ const InfoContainer = styled.div`
 const BorderTitleContainer = styled(OriginBorderTitleContainer)`
   margin-bottom: 10rem;
 `;
+
 const DeliveryWrap = styled.div`
   display: flex;
   align-items: center;

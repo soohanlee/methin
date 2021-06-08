@@ -38,6 +38,7 @@ import ProductDetail from 'pages/product-detail';
 import MyPage from 'pages/my-page';
 import ServiceCenter from 'pages/service-center';
 import Order from 'pages/Order';
+import Cart from 'pages/Cart';
 
 const { Header, Content } = Layout;
 
@@ -161,6 +162,7 @@ function App() {
                     component={ServiceCenter}
                   />
                   <Route path={`${ROUTE_PATH.order}`} component={Order} />
+                  <Route path={`${ROUTE_PATH.cart}`} component={Cart} />
                 </Switch>
                 <MainFooter />
               </CustomContent>

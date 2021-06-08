@@ -143,6 +143,10 @@ const Navigation = () => {
     );
   };
 
+  const handleMoveCartPage = () => {
+    history.push(`${ROUTE_PATH.cart}`);
+  };
+
   return (
     <>
       <Container>
@@ -171,7 +175,7 @@ const Navigation = () => {
                 </InfoContainer>
 
                 <InfoContainer>
-                  <Icon>
+                  <Icon onClick={handleMoveCartPage}>
                     <Img
                       src={
                         process.env.PUBLIC_URL +

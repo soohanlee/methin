@@ -64,7 +64,7 @@ const CheckboxLabel = styled(OriginCheckboxLabel)`
   margin-top: 2rem;
 `;
 
-const Receipt = () => {
+const Receipt = ({ isCart }) => {
   const [isAgree, setIsAgree] = useState(false);
   const handleAgreeChange = (e) => {
     setIsAgree(e.target.checked);
@@ -96,27 +96,32 @@ const Receipt = () => {
         </InfoContainer>
       </InfoWrap>
 
-      <InfoWrap>
-        <AgreeInfoContainer>
+      {!isCart && (
+        <>
+          <InfoWrap>
+            <AgreeInfoContainer>
+              <InfoContainer>
+                <InfoTitle>개인정보 제 3자 제공고지</InfoTitle>
+                <InfoTitle>{'>'}</InfoTitle>
+              </InfoContainer>
+              <InfoContainer>
+                <InfoTitle>전자상거래 구매안전 서비스 안내</InfoTitle>
+                <InfoTitle>{'>'}</InfoTitle>
+              </InfoContainer>
+            </AgreeInfoContainer>
+          </InfoWrap>
           <InfoContainer>
-            <InfoTitle>개인정보 제 3자 제공고지</InfoTitle>
-            <InfoTitle>{'>'}</InfoTitle>
+            <CheckboxLabel
+              id={'agree'}
+              value={isAgree}
+              onChange={handleAgreeChange}
+            >
+              결제 진행 동의
+            </CheckboxLabel>
           </InfoContainer>
-          <InfoContainer>
-            <InfoTitle>전자상거래 구매안전 서비스 안내</InfoTitle>
-            <InfoTitle>{'>'}</InfoTitle>
-          </InfoContainer>
-        </AgreeInfoContainer>
-      </InfoWrap>
-      <InfoContainer>
-        <CheckboxLabel
-          id={'agree'}
-          value={isAgree}
-          onChange={handleAgreeChange}
-        >
-          결제 진행 동의
-        </CheckboxLabel>
-      </InfoContainer>
+        </>
+      )}
+
       <MainButton>구매하기</MainButton>
     </Container>
   );

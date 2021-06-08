@@ -19,6 +19,7 @@ export const ROUTE_PATH = {
     notice: '/notice',
     faq: '/faq',
   },
+  cart: '/cart',
   order: '/order',
   admin: {
     main: '/admin',
