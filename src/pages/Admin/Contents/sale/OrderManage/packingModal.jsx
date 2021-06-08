@@ -5,7 +5,7 @@ import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
-const packingModal = (property) => {
+const PackingModal = (property) => {
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
@@ -71,7 +71,7 @@ const packingModal = (property) => {
     </>
   );
 };
-export default packingModal;
+export default PackingModal;
 
 const Category = [
   { value: '0', label: '선택' },
