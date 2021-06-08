@@ -35,7 +35,6 @@ const ButtomContainer = styled.div`
 
 const Table = ({ data, count }) => {
   const [returnRefusalVisible, setReturnRefusalVisible] = useState(false);
-  const [returnHoldVisible, setReturnHoldVisible] = useState(false);
   const [returnReasonVisible, setReturnReasonVisible] = useState(false);
 
   const setCollectionComplete = () => {
@@ -51,12 +50,6 @@ const Table = ({ data, count }) => {
   };
   const setChangeTrade = () => {
     alert('교환으로 변경');
-  };
-  const setRefundHold = () => {
-    setReturnHoldVisible(true);
-  };
-  const setRefundHoldRelease = () => {
-    window.confirm('환불보류를 해제하시겠습니까?');
   };
   const setModifyReturnReason = () => {
     setReturnReasonVisible(true);
@@ -81,18 +74,6 @@ const Table = ({ data, count }) => {
         }}
         width={500}
       ></ReturnRefusalModal>
-      <ReturnHoldModal
-        centered
-        title="환불보류 설정"
-        visible={returnHoldVisible}
-        onOk={() => {
-          setReturnHoldVisible(false);
-        }}
-        onCancel={() => {
-          setReturnHoldVisible(false);
-        }}
-        width={500}
-      ></ReturnHoldModal>
       <ReturnReasonModifyMadal
         centered
         title="반품사유 수정"
@@ -126,10 +107,6 @@ const Table = ({ data, count }) => {
           <Button onClick={setReturnComplete}>반품 완료처리</Button>
           <Button onClick={setReturnReject}>반품 거부처리</Button>
           <Button onClick={setChangeTrade}>교환으로 변경</Button>
-        </LabelContents>
-        <LabelContents title="환불 보류">
-          <Button onClick={setRefundHold}>환불보류 설정</Button>
-          <Button onClick={setRefundHoldRelease}>환불보류 해제</Button>
         </LabelContents>
         <LabelContents title="정보수정">
           <Button onClick={setModifyReturnReason}>반품사유 수정</Button>
