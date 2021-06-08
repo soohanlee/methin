@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import OriginBorderTitleContainer from 'components/container/BorderTitleContainer';
 import { PaddingContainer } from 'components/styled/Container';
@@ -9,6 +9,7 @@ import {
   MainButton as OriginMainButton,
   SubButton as OriginSubButton,
 } from 'components/styled/Button';
+import SelectDelivery from 'components/SelectDelivery';
 
 const PageTitle = styled(OriginPageTitle)`
   text-align: center;
@@ -154,92 +155,99 @@ const MainButton = styled(OriginMainButton)`
 `;
 
 const Order = () => {
+  const [isOpenChangeDevliveryModal, setIsOpenChangeDevliveryModal] = useState(
+    false,
+  );
+
   return (
-    <PaddingContainer>
-      {/* 결제화면 */}
-      <PageTitle>주문 및 결제</PageTitle>
-      <OrderContainer>
-        <Contents>
-          <BorderTitleContainer title="주문 상품 정보">
-            <ProductItemLine>
-              <ProductItemContainer>
-                <ProductItemImgContainer></ProductItemImgContainer>
+    <>
+      <SelectDelivery isOpen={isOpenChangeDevliveryModal} onCancel />
+      <PaddingContainer>
+        {/* 결제화면 */}
+        <PageTitle>주문 및 결제</PageTitle>
+        <OrderContainer>
+          <Contents>
+            <BorderTitleContainer title="주문 상품 정보">
+              <ProductItemLine>
+                <ProductItemContainer>
+                  <ProductItemImgContainer></ProductItemImgContainer>
 
-                <ProductItemTextContainer>
-                  <Label bold>인기 샐러드 도시락</Label>
-                  <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
-                  <Label bold>39,800원</Label>
-                </ProductItemTextContainer>
+                  <ProductItemTextContainer>
+                    <Label bold>인기 샐러드 도시락</Label>
+                    <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
+                    <Label bold>39,800원</Label>
+                  </ProductItemTextContainer>
 
-                <CountContainer>
-                  <CountButton>-</CountButton>
-                  <CountDiv>1</CountDiv>
-                  <CountButton>+</CountButton>
-                </CountContainer>
-                <Price>39,800원</Price>
-              </ProductItemContainer>
-            </ProductItemLine>
-          </BorderTitleContainer>
+                  <CountContainer>
+                    <CountButton>-</CountButton>
+                    <CountDiv>1</CountDiv>
+                    <CountButton>+</CountButton>
+                  </CountContainer>
+                  <Price>39,800원</Price>
+                </ProductItemContainer>
+              </ProductItemLine>
+            </BorderTitleContainer>
 
-          <BorderTitleContainer title="주문자 정보">
-            <ProductItemLine>
-              <InfoContainer>
-                <ProductSubInfoContainer>
-                  <ProductSubTitle info>아이디</ProductSubTitle>
-                  <ProductSubTitle>김애용</ProductSubTitle>
-                </ProductSubInfoContainer>
-                <ProductSubInfoContainer>
-                  <ProductSubTitle info>연락처</ProductSubTitle>
-                  <ProductSubTitle>010.1234.7854</ProductSubTitle>
-                </ProductSubInfoContainer>
-              </InfoContainer>
-            </ProductItemLine>
-          </BorderTitleContainer>
+            <BorderTitleContainer title="주문자 정보">
+              <ProductItemLine>
+                <InfoContainer>
+                  <ProductSubInfoContainer>
+                    <ProductSubTitle info>아이디</ProductSubTitle>
+                    <ProductSubTitle>김애용</ProductSubTitle>
+                  </ProductSubInfoContainer>
+                  <ProductSubInfoContainer>
+                    <ProductSubTitle info>연락처</ProductSubTitle>
+                    <ProductSubTitle>010.1234.7854</ProductSubTitle>
+                  </ProductSubInfoContainer>
+                </InfoContainer>
+              </ProductItemLine>
+            </BorderTitleContainer>
 
-          <BorderTitleContainer title="배송 정보">
-            <ProductItemLine>
-              <InfoContainer>
-                <LabelWithComponents
-                  title="배송지"
-                  components={
-                    <DeliveryWrap>
-                      <DeliveryContainer>
-                        <Label bold highlight>
-                          기본배송지
-                        </Label>
-                        <Label bold>김애용 010 1234 7854</Label>
-                        <Label bold>
-                          [12345] 경기도 광주시 퇴촌면 도수길 11-2 (레츠빌)
-                          101동 11호
-                        </Label>
-                      </DeliveryContainer>
-                      <SubButton>수정</SubButton>
-                    </DeliveryWrap>
-                  }
-                />
-              </InfoContainer>
-            </ProductItemLine>
-          </BorderTitleContainer>
+            <BorderTitleContainer title="배송 정보">
+              <ProductItemLine>
+                <InfoContainer>
+                  <LabelWithComponents
+                    title="배송지"
+                    components={
+                      <DeliveryWrap>
+                        <DeliveryContainer>
+                          <Label bold highlight>
+                            기본배송지
+                          </Label>
+                          <Label bold>김애용 010 1234 7854</Label>
+                          <Label bold>
+                            [12345] 경기도 광주시 퇴촌면 도수길 11-2 (레츠빌)
+                            101동 11호
+                          </Label>
+                        </DeliveryContainer>
+                        <SubButton>수정</SubButton>
+                      </DeliveryWrap>
+                    }
+                  />
+                </InfoContainer>
+              </ProductItemLine>
+            </BorderTitleContainer>
 
-          <BorderTitleContainer title="결제 수단">
-            <ProductItemLine>
-              <PayButtonContainer>
-                <MainButton reverse>신용 체크카드</MainButton>
-                <MainButton>토스</MainButton>
-                <MainButton>페이코</MainButton>
-                <MainButton>삼성 페이</MainButton>
-                <MainButton>카카오 페이</MainButton>
-                <MainButton>네이버 페이</MainButton>
-                <MainButton>실시간계좌이체</MainButton>
-                <MainButton>무통장 입금[가상계좌]</MainButton>
-                <MainButton>휴대폰 결제</MainButton>
-              </PayButtonContainer>
-            </ProductItemLine>
-          </BorderTitleContainer>
-        </Contents>
-        <Receipt />
-      </OrderContainer>
-    </PaddingContainer>
+            <BorderTitleContainer title="결제 수단">
+              <ProductItemLine>
+                <PayButtonContainer>
+                  <MainButton reverse>신용 체크카드</MainButton>
+                  <MainButton>토스</MainButton>
+                  <MainButton>페이코</MainButton>
+                  <MainButton>삼성 페이</MainButton>
+                  <MainButton>카카오 페이</MainButton>
+                  <MainButton>네이버 페이</MainButton>
+                  <MainButton>실시간계좌이체</MainButton>
+                  <MainButton>무통장 입금[가상계좌]</MainButton>
+                  <MainButton>휴대폰 결제</MainButton>
+                </PayButtonContainer>
+              </ProductItemLine>
+            </BorderTitleContainer>
+          </Contents>
+          <Receipt />
+        </OrderContainer>
+      </PaddingContainer>
+    </>
   );
 };
 
