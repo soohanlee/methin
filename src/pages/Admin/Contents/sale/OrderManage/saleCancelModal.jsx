@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import TextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
 
-const saleCancelModal = (property) => {
+const SaleCancelModal = (property) => {
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
@@ -52,7 +52,7 @@ const saleCancelModal = (property) => {
     </>
   );
 };
-export default saleCancelModal;
+export default SaleCancelModal;
 
 const SortViewList = [
   { label: '상품품절', value: 'soldOut' },

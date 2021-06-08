@@ -17,7 +17,7 @@ import OrderReturn from 'pages/Admin/Contents/sale/OrderReturn';
 import SaleDisturb from 'pages/Admin/Contents/sale/SaleDisturb';
 import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage';
 import ReviewManage from 'pages/Admin/Contents/review/ReviewManage';
-import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice';
+import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice/Index';
 
 const Container = styled.div`
   width: 100%;

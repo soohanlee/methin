@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-
 import Filter from './Filter';
 import Table from './Table';
 import BoardHeader from 'pages/Admin/components/BoardHeader';

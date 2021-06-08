@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 
-const excelModal = (property) => {
+const ExcelModal = (property) => {
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
@@ -43,4 +43,4 @@ const excelModal = (property) => {
     </>
   );
 };
-export default excelModal;
+export default ExcelModal;
