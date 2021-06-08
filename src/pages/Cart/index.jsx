@@ -31,11 +31,6 @@ const ProductItemLine = styled.div`
   width: 100%;
 `;
 
-const ProductSubInfoContainer = styled.div`
-  display: flex;
-  margin-bottom: 2rem;
-`;
-
 const Label = styled.div`
   font-size: 1.55rem;
   font-weight: ${(props) => (props.bold ? 500 : 300)};

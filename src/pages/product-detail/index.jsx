@@ -4,6 +4,8 @@ import { PaddingContainer } from 'components/styled/Container';
 import { MainButton } from 'components/styled/Button';
 import RelatedProducts from 'pages/product-detail/RelatedProducts';
 import ReviewContainer from 'components/review/ReviewContainer';
+import { ROUTE_PATH } from 'configs/config';
+import { useHistory } from 'react-router';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -127,6 +129,12 @@ const CountDiv = styled(CountButton)`
 // const GreyStarIcon = styled.img``
 
 const ProductDetail = () => {
+  const history = useHistory();
+
+  const handleMovePage = (path) => {
+    history.push(`${path}`);
+  };
+
   return (
     <Container>
       <ProductInfoContainer>
@@ -185,8 +193,12 @@ const ProductDetail = () => {
             <CountButton>+</CountButton>
           </CountContainer>
           <ButtonContainer>
-            <MainButton reverse>장바구니</MainButton>
-            <MainButton>구매하기</MainButton>
+            <MainButton reverse onClick={() => handleMovePage(ROUTE_PATH.cart)}>
+              장바구니
+            </MainButton>
+            <MainButton onClick={() => handleMovePage(ROUTE_PATH.order)}>
+              구매하기
+            </MainButton>
           </ButtonContainer>
         </TextInfoContainer>
       </ProductInfoContainer>
