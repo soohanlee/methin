@@ -13,6 +13,7 @@ const PageTitle = styled(OriginPageTitle)`
 
 const CartContainer = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 const Contents = styled.div`

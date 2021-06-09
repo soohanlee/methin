@@ -5,7 +5,7 @@ import { Label } from 'components/styled/Form';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 35rem;
+  width: 24%;
 `;
 
 const ImgContainer = styled.div`

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+
 import { useHistory } from 'react-router-dom';
 import Selectbox from 'components/Form/Selectbox';
-import CheckboxLabel from 'components/Form/CheckboxLabel';
+import MainCarousel from 'pages/Main/Carousel';
 
 const Container = styled.div``;
 
@@ -20,9 +20,9 @@ const Main = () => {
 
   return (
     <Container>
-      main
+      <MainCarousel />
       <br />
-      <img src={process.env.PUBLIC_URL + '/assets/images/치카 로고.png'} />
+
       <button onClick={handleMoveAdminPage}>어드민페이지</button>
       <Selectbox
         list={selectedBoxList}

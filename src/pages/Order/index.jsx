@@ -18,6 +18,7 @@ const PageTitle = styled(OriginPageTitle)`
 
 const OrderContainer = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 const Contents = styled.div`
