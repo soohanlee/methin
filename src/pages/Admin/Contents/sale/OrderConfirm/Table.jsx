@@ -6,9 +6,9 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTable from 'pages/Admin/components/Table/Table';
 
-import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/orderSheetModal';
-import AdressModifyModal from 'pages/Admin/Contents/sale/OrderConfirm/adressModifyModal';
-import SaleCancelModal from 'pages/Admin/Contents/sale/OrderConfirm/saleCancelModal';
+import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/OrderSheetModal';
+import AdressModifyModal from 'pages/Admin/Contents/sale/OrderConfirm/AdressModifyModal';
+import SaleCancelModal from 'pages/Admin/Contents/sale/OrderConfirm/SaleCancelModal';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 const Container = styled.div`

@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import BasicTextArea from 'pages/Admin/components/Form/BasicTextArea';
+import { getProductQNA } from 'apis/product';
+import { notification } from 'utils/notification';
 
 const Container = styled.div`
   display: flex;
@@ -53,6 +55,26 @@ const TextAreaBox = styled(BasicTextArea)`
 const MyAnswerContainer = styled.div``;
 
 const ReviewManage = () => {
+  const [tableList, setTableList] = useState([]);
+
+  useEffect(() => {
+    async function fetchAndSetUser() {
+      try {
+        const result = await getProductQNA();
+        const customList = result.data.data.list.map((item) => {
+          return { ...item, key: item.id };
+        });
+        // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
+
+        setTableList(customList);
+        console.log(result);
+      } catch (e) {
+        notification.error('리뷰 정보를 가져오지 못했습니다.');
+      }
+    }
+    fetchAndSetUser();
+  }, []);
+
   const [isClickAnswer, setIsAnswer] = useState(false);
   const [answer, setAnswer] = useState('');
   const textAreaRef = useRef('');
@@ -67,22 +89,22 @@ const ReviewManage = () => {
   };
 
   const renderItem = (
-    { title, isLock, isAnswer, clientId, date, description },
+    { question_title, isLock, isAnswer, name, created_at, question_body },
     index,
   ) => {
     return (
-      <ItemContainer key={clientId + index}>
+      <ItemContainer key={name + index}>
         <ItemInnerContainer>
           <Img />
           <InfoContainer>
             <InfoTitle>
-              {title} {isLock ? '잠김' : '공개'}{' '}
+              {question_title} {isLock ? '잠김' : '공개'}{' '}
               {isAnswer ? '답변완료' : '답변 미완료'}
             </InfoTitle>
             <InfoClientContainer>
-              {clientId} {date}
+              {name} {created_at}
             </InfoClientContainer>
-            <Description>{description}</Description>
+            <Description>{question_body}</Description>
             <Button onClick={handleAnswerButtonClick}>답글</Button>
           </InfoContainer>
         </ItemInnerContainer>
@@ -101,7 +123,7 @@ const ReviewManage = () => {
   };
 
   const renderList = () => {
-    return data.map((item, index) => {
+    return tableList.map((item, index) => {
       return renderItem(item, index);
     });
   };
@@ -110,15 +132,3 @@ const ReviewManage = () => {
 };
 
 export default ReviewManage;
-
-const data = [
-  {
-    title: '국내산 한동1+ 돼지안심 수비드 미띤',
-    isLock: true,
-    isAnswer: true,
-    clientId: 'asdfasdf',
-    date: '시간',
-    description:
-      '저도 밑에 분처럼 어제 받았는데 제조일자가 21일 이었어요.ㅠ재구매이고 지난번 구매후 제조일이랑 비린내 부분 말씀드렸고 긍정적으로 답을 주셔서 의심없이 재주문했는데 제조일은 더 늣은걸로 보내주시고 냄새부분도 전혀ㅠ판매자분에 대한 신뢰가 깨지는 느낌.다시 구매할지 여부는 고민해 봐야 했어요ㅠ',
-  },
-];

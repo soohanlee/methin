@@ -6,6 +6,7 @@ import { getPaymentList } from 'apis/payment';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import Table from 'pages/Admin/components/Table/Table';
 import { notification } from 'utils/notification';
 
@@ -47,8 +48,8 @@ const ItemWrap = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+  justify-content: center;
+  margin-bottom: 5rem;
 `;
 
 const BodyHeaderContainer = styled.div`
@@ -59,6 +60,9 @@ const Title = styled.div`
   font-size: 2rem;
 `;
 
+const BasicButtonStyled = styled(BasicButton)`
+  width: 10rem;
+`;
 const OrderSerach = () => {
   const [datePeriod, setDatePeriod] = useState('');
   const [table, setTable] = useState([]);
@@ -125,8 +129,12 @@ const OrderSerach = () => {
 
       <BodyContainer>
         <BodyHeaderContainer>
+          <ButtonContainer>
+            <BasicButtonStyled label="검색"></BasicButtonStyled>
+          </ButtonContainer>
           <Title>목록 (총{tableCount}개)</Title>
         </BodyHeaderContainer>
+
         <Table
           scroll={{ x: '120vw', y: 500 }}
           selectionType="checkbox"

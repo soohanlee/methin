@@ -37,9 +37,13 @@ const Styled = styled.div`
 
 const ContainerStyled = styled.div`
   width: 100%;
-  display: flex;
   margin-bottom: 2rem;
   align-items: center;
+`;
+
+const _ContainerStyled = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
 `;
 
 const TitleTextStyled = styled.div`
@@ -89,12 +93,12 @@ const CategoryModal = (property) => {
   const renderCategorySearch = () => {
     return (
       <>
-        <ContainerStyled>
+        <_ContainerStyled>
           <TitleTextStyled>카테고리명</TitleTextStyled>
           <BasicTextInputBoxStyled
             ref={property.catagoryRef}
           ></BasicTextInputBoxStyled>
-        </ContainerStyled>
+        </_ContainerStyled>
 
         <ContainerStyled>
           <TitleTextStyled>선택한 카테고리 :</TitleTextStyled>

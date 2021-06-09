@@ -13,7 +13,6 @@ import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingP
 import OrderConfirm from 'pages/Admin/Contents/sale/OrderConfirm';
 import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
 import OrderCancel from 'pages/Admin/Contents/sale/OrderCancel';
-import OrderReturn from 'pages/Admin/Contents/sale/OrderReturn';
 import SaleDisturb from 'pages/Admin/Contents/sale/SaleDisturb';
 import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage';
 import ReviewManage from 'pages/Admin/Contents/review/ReviewManage';
@@ -85,11 +84,6 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.orderCancel}`}
           component={OrderCancel}
-        />
-        <Route
-          exact
-          path={`${prePath}${ROUTE_PATH.admin.orderReturn}`}
-          component={OrderReturn}
         />
         <Route
           exact
