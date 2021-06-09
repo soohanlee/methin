@@ -41,6 +41,13 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+`;
+
 const Table = ({
   data,
   orderCountTableColumns,
