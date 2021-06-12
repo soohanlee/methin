@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useHistory } from 'react-router';
+import { BreakPoint } from 'configs/config';
 
+import ResponsiveTemplate from 'template/ResponsiveTemplate';
 const Slider = styled(OriginSlider)`
   .slick-arrow {
     z-index: 999;
@@ -30,6 +32,28 @@ const Slider = styled(OriginSlider)`
   .slick-dots {
     bottom: 1rem;
   }
+
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    width: 100vw;
+    .slick-next {
+      right: 3rem;
+      background: url('/assets/images/black-r-arrow-icon.svg') no-repeat center;
+      width: 5rem;
+      height: 5rem;
+      :before {
+        display: none;
+      }
+    }
+    .slick-prev {
+      background: url('/assets/images/black-l-arrow-icon.svg') no-repeat center;
+      left: 3rem;
+      width: 5rem;
+      height: 5rem;
+      :before {
+        display: none;
+      }
+    }
+  }
 `;
 
 const Div = styled.div`
@@ -43,6 +67,10 @@ const Div = styled.div`
 const Img = styled.img`
   width: 100%;
   object-fit: cover;
+`;
+
+const MobileImg = styled.img`
+  width: 100vw;
 `;
 
 const Carousel = ({ list }) => {
@@ -72,7 +100,27 @@ const Carousel = ({ list }) => {
       })
     );
   };
-  return <Slider {...settings}>{renderImgList()}</Slider>;
+
+  const renderMobileImgList = () => {
+    return (
+      list &&
+      list.map(({ mobileImg, link }, index) => {
+        return (
+          <Div onClick={() => handleMovePage(link)} key={mobileImg}>
+            <MobileImg alt={mobileImg + index} src={mobileImg} />
+          </Div>
+        );
+      })
+    );
+  };
+
+  return (
+    <ResponsiveTemplate
+      NonPCContents={<Slider {...settings}>{renderMobileImgList()}</Slider>}
+    >
+      <Slider {...settings}>{renderImgList()}</Slider>;
+    </ResponsiveTemplate>
+  );
 };
 
 export default Carousel;

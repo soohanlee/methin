@@ -54,12 +54,17 @@ const UserContainer = styled(Layout)`
   &&& {
     background: ${(props) => props.theme.BACKGROUND};
   }
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    min-width: unset;
+    width: 100vw;
+  }
 `;
 
 const CustomContent = styled(Content)`
   display: flex;
   flex-direction: column;
   flex: 1;
+  overflow: auto !important;
   background: inherit;
 `;
 

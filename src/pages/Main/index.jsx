@@ -9,12 +9,13 @@ import { Row as OriginRow } from 'antd';
 import { ROUTE_PATH } from 'configs/config';
 import { PaddingContainer } from 'components/styled/Container';
 import ResponsiveTemplate from 'template/ResponsiveTemplate';
+import MobileMain from 'pages/Main/mobile';
+
+const Container = styled.div``;
 
 const Row = styled(OriginRow)`
   row-gap: 1rem;
 `;
-
-const Container = styled.div``;
 
 const Main = () => {
   const [selectedItem, setSelectedItem] = useState({
@@ -22,10 +23,6 @@ const Main = () => {
     value: '신상품순',
   });
   const history = useHistory();
-
-  const handleMoveAdminPage = () => {
-    history.push('/admin');
-  };
 
   const handleProductDetailClick = (id) => {
     history.push(`${ROUTE_PATH.product}:${id}`);
@@ -61,7 +58,14 @@ const Main = () => {
   };
 
   return (
-    <ResponsiveTemplate NonPCContents={<div>dfdf</div>}>
+    <ResponsiveTemplate
+      NonPCContents={
+        <Container>
+          <MainCarousel />
+          <MobileMain onProductDetailClick={handleProductDetailClick} />
+        </Container>
+      }
+    >
       <Container>
         <MainCarousel />
         <PaddingContainer>
