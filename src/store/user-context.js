@@ -3,6 +3,7 @@ import React from 'react';
 export const LOGGING_IN = 'loggingIn';
 export const LOGGED_IN = 'loggedIn';
 export const NOT_LOGGED_IN = 'notLoggedIn';
+export const veiwType = 'PC';
 
 const initUserState = NOT_LOGGED_IN;
 
@@ -18,4 +19,5 @@ export let userState = {
 export const UserContext = React.createContext({
   loginState: userState.loginState,
   changeUserState: userState.changeUserState,
+  viewType: veiwType,
 });

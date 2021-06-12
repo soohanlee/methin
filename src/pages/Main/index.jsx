@@ -4,6 +4,15 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Selectbox from 'components/Form/Selectbox';
 import MainCarousel from 'pages/Main/Carousel';
+import ProductItem from 'pages/Product/ProductItem';
+import { Row as OriginRow } from 'antd';
+import { ROUTE_PATH } from 'configs/config';
+import { PaddingContainer } from 'components/styled/Container';
+import ResponsiveTemplate from 'template/ResponsiveTemplate';
+
+const Row = styled(OriginRow)`
+  row-gap: 1rem;
+`;
 
 const Container = styled.div``;
 
@@ -18,18 +27,50 @@ const Main = () => {
     history.push('/admin');
   };
 
-  return (
-    <Container>
-      <MainCarousel />
-      <br />
+  const handleProductDetailClick = (id) => {
+    history.push(`${ROUTE_PATH.product}:${id}`);
+  };
 
-      <button onClick={handleMoveAdminPage}>어드민페이지</button>
-      <Selectbox
-        list={selectedBoxList}
-        onSelectedItem={setSelectedItem}
-        selectedItem={selectedItem}
-      />
-    </Container>
+  const renderProductList = () => {
+    return productList.map(
+      ({
+        id,
+        img,
+        catergory,
+        description,
+        beforePrice,
+        afterPrice,
+        salePercentage,
+      }) => {
+        return (
+          <ProductItem
+            key={id}
+            id={id}
+            img={img}
+            catergory={catergory}
+            description={description}
+            beforePrice={beforePrice}
+            afterPrice={afterPrice}
+            salePercentage={salePercentage}
+            span={4}
+            onClick={() => handleProductDetailClick(id)}
+          />
+        );
+      },
+    );
+  };
+
+  return (
+    <ResponsiveTemplate NonPCContents={<div>dfdf</div>}>
+      <Container>
+        <MainCarousel />
+        <PaddingContainer>
+          <Row justify="space-between" style={{ rowGap: '1.6rem' }}>
+            {renderProductList()}
+          </Row>
+        </PaddingContainer>
+      </Container>
+    </ResponsiveTemplate>
   );
 };
 
@@ -40,4 +81,52 @@ const selectedBoxList = [
   { key: 2, value: '판매순' },
   { key: 3, value: '할인율순' },
   { key: 4, value: '낮은가격순' },
+];
+
+const productList = [
+  {
+    id: '123',
+    img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
+    catergory: '식품',
+    description: '마시썽',
+    beforePrice: '6000',
+    afterPrice: '5000',
+    salePercentage: '-1000',
+  },
+  {
+    id: '1234',
+    img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
+    catergory: '식품',
+    description: '마시썽',
+    beforePrice: '6000',
+    afterPrice: '5000',
+    salePercentage: '-1000',
+  },
+  {
+    id: '1235',
+    img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
+    catergory: '식품',
+    description: '마시썽',
+    beforePrice: '6000',
+    afterPrice: '5000',
+    salePercentage: '-1000',
+  },
+  {
+    id: '1236',
+    img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
+    catergory: '식품',
+    description: '마시썽',
+    beforePrice: '6000',
+    afterPrice: '5000',
+    salePercentage: '-1000',
+  },
+  {
+    id: '1237',
+    img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
+    catergory: '식품',
+    description: '마시썽',
+    beforePrice: '6000',
+    afterPrice: '5000',
+    salePercentage: '-1000',
+  },
 ];

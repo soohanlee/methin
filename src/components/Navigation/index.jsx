@@ -11,6 +11,9 @@ import { notification } from 'utils/notification';
 import { ListContainer as OriginListContainer } from 'components/styled/Container';
 import { Label } from 'components/styled/Form';
 
+import ResponsiveTemplate from 'template/ResponsiveTemplate';
+import MobileNavigation from 'components/Navigation/mobile';
+
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -148,79 +151,83 @@ const Navigation = () => {
   };
 
   return (
-    <>
-      <Container>
-        <Logo onClick={handleMoveMainPage}>
-          <LogoImg
-            src={process.env.PUBLIC_URL + '/assets/images/logo-icon.svg'}
+    <ResponsiveTemplate NonPCContents={<MobileNavigation />}>
+      <>
+        <Container>
+          <Logo onClick={handleMoveMainPage}>
+            <LogoImg
+              src={process.env.PUBLIC_URL + '/assets/images/logo-icon.svg'}
+            />
+          </Logo>
+          <SearchInput
+            onClick={handleSearchClick}
+            placeholder={'이 달의 베스트! 프로 다이어터를 위한 식품 대전'}
           />
-        </Logo>
-        <SearchInput
-          onClick={handleSearchClick}
-          placeholder={'이 달의 베스트! 프로 다이어터를 위한 식품 대전'}
-        />{' '}
-        <UserContainer>
-          {userState.loginState === LOGGED_IN ? (
-            <UserContainer>
-              <IconContainer>
-                <InfoContainer>
-                  <Icon>
-                    <Img
-                      src={
-                        process.env.PUBLIC_URL +
-                        '/assets/images/top-white-like-icon.svg'
-                      }
-                    />
-                  </Icon>
-                </InfoContainer>
+          <UserContainer>
+            {userState.loginState === LOGGED_IN ? (
+              <UserContainer>
+                <IconContainer>
+                  <InfoContainer>
+                    <Icon>
+                      <Img
+                        src={
+                          process.env.PUBLIC_URL +
+                          '/assets/images/top-white-like-icon.svg'
+                        }
+                      />
+                    </Icon>
+                  </InfoContainer>
 
-                <InfoContainer>
-                  <Icon onClick={handleMoveCartPage}>
-                    <Img
-                      src={
-                        process.env.PUBLIC_URL +
-                        '/assets/images/top-white-cart-icon.svg'
-                      }
-                    />
-                  </Icon>
-                </InfoContainer>
+                  <InfoContainer>
+                    <Icon onClick={handleMoveCartPage}>
+                      <Img
+                        src={
+                          process.env.PUBLIC_URL +
+                          '/assets/images/top-white-cart-icon.svg'
+                        }
+                      />
+                    </Icon>
+                  </InfoContainer>
 
-                <InfoContainer>
-                  <Icon>
-                    <Img
-                      src={
-                        process.env.PUBLIC_URL +
-                        '/assets/images/top-white-mypage-icon.svg'
-                      }
-                    />
-                  </Icon>
+                  <InfoContainer>
+                    <Icon>
+                      <Img
+                        src={
+                          process.env.PUBLIC_URL +
+                          '/assets/images/top-white-mypage-icon.svg'
+                        }
+                      />
+                    </Icon>
 
-                  <ListContainer>
-                    <ItemLabel onClick={handleMoveMyPage}>마이페이지</ItemLabel>
-                    <ItemLabel onClick={handleMoveServiceCenter}>
-                      고객센터
-                    </ItemLabel>
-                    <ItemLabel onClick={handleLogout}>로그아웃</ItemLabel>
-                  </ListContainer>
-                </InfoContainer>
-              </IconContainer>
-            </UserContainer>
-          ) : (
-            <LoginButton onClick={handleMoveLoginPage}>로그인</LoginButton>
-          )}
-        </UserContainer>
-      </Container>
-      <MenuContainer>
-        <MenuItem>전체보기</MenuItem>
-        <MenuItem onClick={() => handleMovePage(ROUTE_PATH.product)}>
-          신상품
-        </MenuItem>
-        <MenuItem>베스트</MenuItem>
-        <MenuItem>알뜰쇼핑</MenuItem>
-        <MenuItem>금주혜택</MenuItem>
-        <MenuItem>브랜드스토리</MenuItem>
-      </MenuContainer>
-    </>
+                    <ListContainer>
+                      <ItemLabel onClick={handleMoveMyPage}>
+                        마이페이지
+                      </ItemLabel>
+                      <ItemLabel onClick={handleMoveServiceCenter}>
+                        고객센터
+                      </ItemLabel>
+                      <ItemLabel onClick={handleLogout}>로그아웃</ItemLabel>
+                    </ListContainer>
+                  </InfoContainer>
+                </IconContainer>
+              </UserContainer>
+            ) : (
+              <LoginButton onClick={handleMoveLoginPage}>로그인</LoginButton>
+            )}
+          </UserContainer>
+        </Container>
+        <MenuContainer>
+          <MenuItem>전체보기</MenuItem>
+          <MenuItem onClick={() => handleMovePage(ROUTE_PATH.product)}>
+            신상품
+          </MenuItem>
+          <MenuItem>베스트</MenuItem>
+          <MenuItem>알뜰쇼핑</MenuItem>
+          <MenuItem>금주혜택</MenuItem>
+          <MenuItem>브랜드스토리</MenuItem>
+        </MenuContainer>
+      </>
+    </ResponsiveTemplate>
   );
 };
 
