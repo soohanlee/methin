@@ -160,6 +160,47 @@ const Table = ({ tableList, count, setTableList }) => {
       dataIndex: 'updated_at',
     },
   ];
+  //판매상태
+  for (var i = 0; i < tableList.length; i++) {
+    switch (tableList[i].status) {
+      case 0:
+        tableList[i].status = '판매준비';
+        break;
+      case 1:
+        tableList[i].status = '판매중';
+        break;
+      case 2:
+        tableList[i].status = '판매종료';
+        break;
+    }
+    //전시상태
+    switch (tableList[i].preview_status) {
+      case 0:
+        tableList[i].preview_status = 'NO';
+        break;
+      case 1:
+        tableList[i].preview_status = 'YES';
+        break;
+    }
+    //배송비유형
+    switch (tableList[i].ship_category) {
+      case 0:
+        tableList[i].ship_category = '무료';
+        break;
+      case 1:
+        tableList[i].ship_category = '유료';
+        break;
+    }
+    //배송비지불유형
+    switch (tableList[i].ship_pay_type) {
+      case 0:
+        tableList[i].ship_pay_type = '선불';
+        break;
+      case 1:
+        tableList[i].ship_pay_type = '착불';
+        break;
+    }
+  }
 
   const handleChange = (selectedRowKeys, selectedRows) => {
     setSelectedTableKeysState(selectedRowKeys);

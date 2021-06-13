@@ -8,12 +8,26 @@ const CustomTable = styled(OriginTable)`
 `;
 
 const Table = ({ data }) => {
+  //판매상태
+  for (var i = 0; i < data.length; i++) {
+    switch (data[i].status) {
+      case 0:
+        data[i].status = '판매준비';
+        break;
+      case 1:
+        data[i].status = '판매중';
+      case 2:
+        data[i].status = '판매종료';
+        break;
+    }
+  }
   return (
     <>
       <CustomTable
         scroll={{ x: '50vw', y: 500 }}
         columns={columns}
         data={data}
+        onChange={() => {}}
       />
     </>
   );

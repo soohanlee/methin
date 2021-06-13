@@ -211,6 +211,7 @@ const EditDeliveryProductTable = ({
         columns={columns}
         data={data}
         selectionType={'checkbox'}
+        onChange={() => {}}
       />
     </>
   );

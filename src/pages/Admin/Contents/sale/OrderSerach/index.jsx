@@ -91,6 +91,32 @@ const OrderSerach = () => {
 
   const periodRef = useRef(null);
 
+  for (var i = 0; i < table.length; i++) {
+    switch (table[i].status) {
+      case 0:
+        table[i].status = '결제대기';
+        break;
+      case 1:
+        table[i].status = '결제완료';
+        break;
+      case 2:
+        table[i].status = '상품준비';
+        break;
+      case 3:
+        table[i].status = '배송중';
+        break;
+      case 4:
+        table[i].status = '배송완료';
+        break;
+      case 5:
+        table[i].status = '취소완료';
+        break;
+      case 6:
+        table[i].status = '반품완료';
+        break;
+    }
+  }
+
   return (
     <Container>
       <HeaderContainer>
@@ -140,6 +166,7 @@ const OrderSerach = () => {
           selectionType="checkbox"
           data={table}
           columns={columns}
+          onChange={() => {}}
         />
       </BodyContainer>
     </Container>

@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Input as OriginInput, Select, Button } from 'antd';
+import { InputNumber, Select, Button } from 'antd';
 
 import CustomCollapse from 'pages/Admin/components/Collapse';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 
 import { changeNumberDigits, removeRest } from 'utils/common';
 
-const Input = styled(OriginInput)`
-  max-width: 300px;
+const Input = styled(InputNumber)`
+  width: 20rem;
 `;
-
+const SelectStyled = styled(Select)`
+  width: 20rem;
+`;
 const { Option } = Select;
 const ReturnExchange = () => {
   const [deliveryCompany, setDeliveryCompany] = useState('');
@@ -48,41 +50,43 @@ const ReturnExchange = () => {
   };
 
   return (
-    <CustomCollapse header="반품/교환" extra={'뭔가옴'}>
+    <CustomCollapse header="반품/교환" extra={''}>
       <LabelContents title="반품/교환 택배사">
-        <Select
+        <SelectStyled
           value={deliveryCompany}
           onChange={(value) => setDeliveryCompany(value)}
         >
           <Option value="default">우체국 택배</Option>
-        </Select>
+        </SelectStyled>
       </LabelContents>
       <LabelContents title="반품배송비(편도)">
         <Input
-          onChange={(e) => setOneway(e.target.value)}
+          onChange={setOneway}
           addonAfter={'원'}
           value={oneway}
           onBlur={handleOnewayBlur}
           onFocus={handleOnewayFocus}
         />
+        원
       </LabelContents>
       <LabelContents title="교환배송비(왕복)">
         <Input
-          onChange={(e) => setExchange(e.target.value)}
+          onChange={setExchange}
           addonAfter={'원'}
           value={exchange}
           onBlur={handleExchangeBlur}
           onFocus={handleExchangeFocus}
         />
+        원
       </LabelContents>
       <LabelContents title="반품/교환지">
         <Input
           value={shipment}
-          onChange={(e) => setShipment(e.target.value)}
+          onChange={setShipment}
           addonAfter={<div onClick={handleShipmentSaveButtonClick}>저장</div>}
           placeholder="반품/교환지 입력"
         />
-        <Button>판매자 주소록 버튼</Button>
+        원<Button>판매자 주소록 버튼</Button>
       </LabelContents>
     </CustomCollapse>
   );

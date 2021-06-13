@@ -85,6 +85,7 @@ const List = ({ data }) => {
           columns={columns}
           data={data}
           selectionType={'checkbox'}
+          onChange={() => {}}
         />
       </BodyContainer>
     </Container>
