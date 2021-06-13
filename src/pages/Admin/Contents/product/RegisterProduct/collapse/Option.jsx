@@ -83,7 +83,7 @@ const Option = () => {
   const tagChild = tags.map(forMap);
 
   return (
-    <CustomCollapse header="옵션" extra={'뭔가옴'}>
+    <CustomCollapse header="옵션" extra={''}>
       <LabelContents title="옵션그룹 개수">
         <SelectBox
           list={optionNumberList}
@@ -141,7 +141,11 @@ const Option = () => {
       <LabelContents title="옵션목록">
         <SelectBox list={optionSortList} onChange={handleOptionSortChange} />
       </LabelContents>
-      <Table scroll={{ x: '100vw', y: 500 }} columns={columns} />
+      <Table
+        onChange={() => {}}
+        scroll={{ x: '100vw', y: 500 }}
+        columns={columns}
+      />
     </CustomCollapse>
   );
 };

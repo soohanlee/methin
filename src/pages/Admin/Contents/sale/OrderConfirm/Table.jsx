@@ -6,9 +6,9 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTable from 'pages/Admin/components/Table/Table';
 
-import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/orderSheetModal';
-import AdressModifyModal from 'pages/Admin/Contents/sale/OrderConfirm/adressModifyModal';
-import SaleCancelModal from 'pages/Admin/Contents/sale/OrderConfirm/saleCancelModal';
+import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/OrderSheetModal';
+import AdressModifyModal from 'pages/Admin/Contents/sale/OrderConfirm/AdressModifyModal';
+import SaleCancelModal from 'pages/Admin/Contents/sale/OrderConfirm/SaleCancelModal';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 const Container = styled.div`
@@ -29,11 +29,15 @@ const SearchContainer = styled.div`
 `;
 
 const SelectBox = styled(BasicSelectBox)`
-  width: 300px;
+  width: 20rem;
 `;
 
 const PeirodSelectBox = styled(SelectBox)`
   margin-right: 1rem;
+`;
+
+const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
+  width: 40rem;
 `;
 
 const ButtomContainer = styled.div`
@@ -138,7 +142,8 @@ const Table = ({
         <LabelContents title="배송정보 한번에 입력하기">
           <PeirodSelectBox list={deliveryTypeList} />
           <PeirodSelectBox list={deliveryCompanyList} />
-          <Input ref={invoiceNumber} />
+          <BasicTextInputBoxStyled ref={invoiceNumber} />
+          <Button>검색</Button>
         </LabelContents>
       </SearchContainer>
 
@@ -148,6 +153,7 @@ const Table = ({
         data={tableData}
         columns={columns}
         selectionType="checkbox"
+        onChange={() => {}}
       />
 
       <ButtonContainer>

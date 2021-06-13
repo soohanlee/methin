@@ -6,6 +6,7 @@ import { getPaymentList } from 'apis/payment';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import Table from 'pages/Admin/components/Table/Table';
 import { notification } from 'utils/notification';
 
@@ -47,8 +48,8 @@ const ItemWrap = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+  justify-content: center;
+  margin-bottom: 5rem;
 `;
 
 const BodyHeaderContainer = styled.div`
@@ -59,6 +60,9 @@ const Title = styled.div`
   font-size: 2rem;
 `;
 
+const BasicButtonStyled = styled(BasicButton)`
+  width: 10rem;
+`;
 const OrderSerach = () => {
   const [datePeriod, setDatePeriod] = useState('');
   const [table, setTable] = useState([]);
@@ -86,6 +90,32 @@ const OrderSerach = () => {
   };
 
   const periodRef = useRef(null);
+
+  for (var i = 0; i < table.length; i++) {
+    switch (table[i].status) {
+      case 0:
+        table[i].status = '결제대기';
+        break;
+      case 1:
+        table[i].status = '결제완료';
+        break;
+      case 2:
+        table[i].status = '상품준비';
+        break;
+      case 3:
+        table[i].status = '배송중';
+        break;
+      case 4:
+        table[i].status = '배송완료';
+        break;
+      case 5:
+        table[i].status = '취소완료';
+        break;
+      case 6:
+        table[i].status = '반품완료';
+        break;
+    }
+  }
 
   return (
     <Container>
@@ -125,13 +155,18 @@ const OrderSerach = () => {
 
       <BodyContainer>
         <BodyHeaderContainer>
+          <ButtonContainer>
+            <BasicButtonStyled label="검색"></BasicButtonStyled>
+          </ButtonContainer>
           <Title>목록 (총{tableCount}개)</Title>
         </BodyHeaderContainer>
+
         <Table
           scroll={{ x: '120vw', y: 500 }}
           selectionType="checkbox"
           data={table}
           columns={columns}
+          onChange={() => {}}
         />
       </BodyContainer>
     </Container>

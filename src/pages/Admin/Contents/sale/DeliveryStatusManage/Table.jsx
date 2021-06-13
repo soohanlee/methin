@@ -105,6 +105,7 @@ const Table = ({ data, count }) => {
         data={data}
         columns={columns}
         selectionType="checkbox"
+        onChange={() => {}}
       />
 
       <ButtomContainer>

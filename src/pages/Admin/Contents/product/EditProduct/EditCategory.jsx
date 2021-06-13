@@ -25,7 +25,7 @@ const CategoryTypeSyled = styled.div`
   width: 17rem;
   display: flex;
   align-items: center;
-  cursor: Pointer;
+  cursor: Pointer
   margin-right: 10rem;
 `;
 

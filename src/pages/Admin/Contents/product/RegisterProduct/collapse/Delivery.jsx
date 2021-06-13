@@ -176,7 +176,7 @@ const Delivery = ({
   };
 
   return (
-    <CustomCollapse header="배송" extra={'뭔가옴'}>
+    <CustomCollapse header="배송" extra={''}>
       <LabelContents title="배송여부">
         <Radio.Group
           value={isDelivery}
