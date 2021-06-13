@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import BasicTextArea from 'pages/Admin/components/Form/BasicTextArea';
+import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import { getProductQNA } from 'apis/product';
+import { answerQNA } from 'apis/product';
 import { notification } from 'utils/notification';
 
 const Container = styled.div`
@@ -48,16 +50,37 @@ const TextInnerContainer = styled.div`
   display: flex;
 `;
 
-const TextAreaBox = styled(BasicTextArea)`
-  margin-bottom: 2rem;
+const TitleTextAreaBox = styled(BasicTextInputBox)`
+  width: 110rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-left: -1rem;
+`;
+const ButtonStyled = styled(Button)`
+  margin-bottom: 1rem;
 `;
 
-const MyAnswerContainer = styled.div``;
+const TextAreaBox = styled(BasicTextArea)`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const MyAnswerContainer = styled.div`
+  margin-top: 1rem;
+`;
 
 const ReviewManage = () => {
   const [tableList, setTableList] = useState([]);
 
   useEffect(() => {
+    GetData();
+  }, []);
+
+  const [isClickAnswer, setIsAnswer] = useState(false);
+  const textTitleAreaRef = useRef('');
+  const textAreaRef = useRef('');
+
+  const GetData = () => {
     async function fetchAndSetUser() {
       try {
         const result = await getProductQNA();
@@ -73,23 +96,35 @@ const ReviewManage = () => {
       }
     }
     fetchAndSetUser();
-  }, []);
-
-  const [isClickAnswer, setIsAnswer] = useState(false);
-  const [answer, setAnswer] = useState('');
-  const textAreaRef = useRef('');
+  };
 
   const handleAnswerButtonClick = () => {
     setIsAnswer(!isClickAnswer);
   };
 
-  const handleAnswerRegitser = () => {
-    console.log(textAreaRef);
-    setAnswer(textAreaRef.current.resizableTextArea.props.value);
+  const handleAnswerRegitser = (product_id, qna_id) => {
+    let data = {
+      answer_title: textTitleAreaRef.current.resizableTextArea.props.value,
+      answer_body: textAreaRef.current.resizableTextArea.props.value,
+    };
+    answerQNA(product_id, qna_id, data);
+    GetData();
+    // setAnswer(textAreaRef.current.resizableTextArea.props.value);
   };
 
   const renderItem = (
-    { question_title, isLock, isAnswer, name, created_at, question_body },
+    {
+      product_id,
+      id,
+      question_title,
+      isLock,
+      isAnswer,
+      name,
+      created_at,
+      question_body,
+      answer_title,
+      answer_body,
+    },
     index,
   ) => {
     return (
@@ -112,11 +147,26 @@ const ReviewManage = () => {
         {isClickAnswer && (
           <AnswerContainer>
             <TextInnerContainer>
-              <TextAreaBox ref={textAreaRef} />{' '}
-              <Button onClick={handleAnswerRegitser}>등록</Button>
+              <div>
+                제목 <TitleTextAreaBox ref={textTitleAreaRef} /> 내용{' '}
+                <TextAreaBox ref={textAreaRef} />{' '}
+                <ButtonStyled
+                  onClick={() => {
+                    handleAnswerRegitser(product_id, id);
+                  }}
+                >
+                  등록
+                </ButtonStyled>
+              </div>
             </TextInnerContainer>
-            <MyAnswerContainer>{answer}</MyAnswerContainer>
           </AnswerContainer>
+        )}
+
+        {isClickAnswer && (
+          <>
+            <MyAnswerContainer>{'제목 : ' + answer_title}</MyAnswerContainer>
+            <MyAnswerContainer>{'내용 : ' + answer_body}</MyAnswerContainer>
+          </>
         )}
       </ItemContainer>
     );

@@ -29,7 +29,7 @@ const DetailedDescription = () => {
   };
 
   return (
-    <CustomCollapse header="상세설명" extra={'뭔가옴'}>
+    <CustomCollapse header="상세설명" extra={''}>
       <Editor
         editorState={editorState}
         onEditorStateChange={handleEditorStateChange}

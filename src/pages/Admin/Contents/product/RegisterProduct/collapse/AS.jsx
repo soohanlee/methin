@@ -18,7 +18,7 @@ const AS = () => {
   );
   const [specialMatters, setSpecialMatters] = useState();
   return (
-    <CustomCollapse header="AS, 특이사항" extra={'뭔가옴'}>
+    <CustomCollapse header="AS, 특이사항">
       <LabelContents title="A/S전화번호">
         <Input
           onChange={(e) => setPhoneNmuber(e.target.value)}

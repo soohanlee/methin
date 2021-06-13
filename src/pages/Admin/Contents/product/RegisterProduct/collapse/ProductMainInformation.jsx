@@ -42,7 +42,7 @@ const ProductMainInformation = () => {
   };
 
   return (
-    <CustomCollapse header="상품 주요정보" extra={'뭔가옴'}>
+    <CustomCollapse header="상품 주요정보" extra={''}>
       <LabelContents title="원산지">
         <Select value={origin} onChange={(value) => setOrigin(value)}>
           <Option value="yet">선택</Option>

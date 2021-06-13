@@ -79,7 +79,7 @@ const ProductImage = () => {
     return isJpgOrPng && isLt2M;
   }
   return (
-    <CustomCollapse header="상품이미지" extra={'뭔가옴'}>
+    <CustomCollapse header="상품이미지" extra={''}>
       <LabelContents title="대표이미지">
         <Upload
           name="avatar"
