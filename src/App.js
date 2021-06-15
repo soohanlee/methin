@@ -92,6 +92,7 @@ function App() {
       const accessToken = await getAccessToken();
 
       if (await getIsValidUser()) {
+        console.log('여기');
         axios.defaults.headers.common[
           'Authorization'
         ] = `Bearer ${accessToken}`;
@@ -144,7 +145,7 @@ function App() {
     changeUserState,
     viewType,
   };
-  console.log('viewType', viewType);
+
   return (
     <ThemeProvider theme={THEME}>
       <GlobalStyle theme={THEME} />

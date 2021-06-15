@@ -18,6 +18,7 @@ const Header = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 1rem;
 `;
 
 const Label = styled(OriginLabel)`

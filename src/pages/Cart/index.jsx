@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
+import { getCartList } from 'apis/cart';
+
 import { PaddingContainer } from 'components/styled/Container';
 import { PageTitle as OriginPageTitle } from 'components/styled/Form';
 import OriginBorderTitleContainer from 'components/container/BorderTitleContainer';
 import Receipt from 'pages/Order/Receipt';
 import { SubButton as OriginSubButton } from 'components/styled/Button';
+import { notification } from 'utils/notification';
 
 const PageTitle = styled(OriginPageTitle)`
   text-align: center;
@@ -59,6 +62,11 @@ const ProductItemImgContainer = styled.div`
   margin-right: 2rem;
 `;
 
+const Img = styled.img`
+  width: 100%;
+  object-fit: cover;
+`;
+
 const ProductItemTextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -105,6 +113,72 @@ const SubButton = styled(OriginSubButton)`
 `;
 
 const Cart = () => {
+  const [cartList, setCartList] = useState([]);
+  const [finalPrice, setFinalPrice] = useState(0);
+
+  useEffect(() => {
+    async function fetchCart() {
+      try {
+        const result = await getCartList();
+        if (result && result.status === 200) {
+          setCartList(result.data.data);
+        }
+        const priceList = cartList.map(({ actual_price }) => actual_price);
+        console.log('priceList', priceList);
+        const calcFinalPrice = priceList.reduce(function add(sum, currValue) {
+          return sum + currValue;
+        }, 0);
+        setFinalPrice(calcFinalPrice);
+        console.log(result);
+      } catch (e) {
+        notification.error('새로고침 해주세요.');
+      }
+    }
+    fetchCart();
+  }, []);
+
+  const renderCartList = () => {
+    return cartList.map(
+      ({
+        id,
+        product_id,
+        count,
+        name,
+        price,
+        discount_amount,
+        actual_price,
+        main_image_url,
+        min_quantity,
+        max_quantity,
+        created_at,
+      }) => {
+        return (
+          <ProductItemLine id={id}>
+            <ProductItemContainer>
+              <Checkbox />
+              <ProductItemImgContainer>
+                <Img src={main_image_url} />
+              </ProductItemImgContainer>
+
+              <ProductItemTextContainer>
+                <Label bold>{name}</Label>
+                <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
+                <Label bold>{price}원</Label>
+              </ProductItemTextContainer>
+
+              <CountContainer>
+                <CountButton>-</CountButton>
+                <CountDiv>1</CountDiv>
+                <CountButton>+</CountButton>
+              </CountContainer>
+              <Price>{actual_price}원</Price>
+            </ProductItemContainer>
+          </ProductItemLine>
+        );
+      },
+    );
+  };
+
   return (
     <PaddingContainer>
       {/* 장바구니 */}
@@ -112,28 +186,16 @@ const Cart = () => {
       <CartContainer>
         <Contents>
           <BorderTitleContainer title="냉장 식품">
-            <ProductItemLine>
-              <ProductItemContainer>
-                <Checkbox />
-                <ProductItemImgContainer></ProductItemImgContainer>
-
-                <ProductItemTextContainer>
-                  <Label bold>인기 샐러드 도시락</Label>
-                  <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
-                  <Label bold>39,800원</Label>
-                </ProductItemTextContainer>
-
-                <CountContainer>
-                  <CountButton>-</CountButton>
-                  <CountDiv>1</CountDiv>
-                  <CountButton>+</CountButton>
-                </CountContainer>
-                <Price>39,800원</Price>
-              </ProductItemContainer>
-            </ProductItemLine>
+            {renderCartList()}
           </BorderTitleContainer>
         </Contents>
-        <Receipt isCart />
+        <Receipt
+          isCart
+          finalPrice={finalPrice}
+          discountPrice={0}
+          productPrice={0}
+          deliveryPrice={0}
+        />
       </CartContainer>
       <SubButton>선택 삭제</SubButton>
     </PaddingContainer>

@@ -160,9 +160,16 @@ const Order = () => {
     false,
   );
 
+  const handleOpenDeliveryChangeModal = () => {
+    setIsOpenChangeDevliveryModal(true);
+  };
+
   return (
     <>
-      <SelectDelivery isOpen={isOpenChangeDevliveryModal} onCancel />
+      <SelectDelivery
+        isOpen={isOpenChangeDevliveryModal}
+        onCancel={() => setIsOpenChangeDevliveryModal(false)}
+      />
       <PaddingContainer>
         {/* 결제화면 */}
         <PageTitle>주문 및 결제</PageTitle>
@@ -221,7 +228,9 @@ const Order = () => {
                             101동 11호
                           </Label>
                         </DeliveryContainer>
-                        <SubButton>수정</SubButton>
+                        <SubButton onClick={handleOpenDeliveryChangeModal}>
+                          수정
+                        </SubButton>
                       </DeliveryWrap>
                     }
                   />
