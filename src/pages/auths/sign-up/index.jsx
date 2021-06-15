@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { signup, checkExistEmail, checkPhoneNumber } from 'apis/auth';
 import { notification } from 'utils/notification';
-
-import { Button } from 'antd';
 
 import { AuthContainer } from 'pages/auths/styled';
 

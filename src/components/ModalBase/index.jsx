@@ -12,6 +12,7 @@ const Modalbase = ({
   return (
     <Modal
       centered
+      onCancel={onCancel}
       visible={isOpen}
       {...props}
       footer={null}

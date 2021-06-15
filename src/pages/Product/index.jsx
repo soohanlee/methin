@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Row as OriginRow, Col, Divider } from 'antd';
+import { Row as OriginRow } from 'antd';
 
 import ProductItem from 'pages/Product/ProductItem';
 import { PageTitle, Label } from 'components/styled/Form';
@@ -59,10 +59,6 @@ const ContentsBody = styled.div``;
 const Row = styled(OriginRow)`
   row-gap: 1rem;
 `;
-
-const rowStyle = {
-  rowGap: 0,
-};
 
 const selectList = [
   { key: 'sale', value: '판매순' },
@@ -137,7 +133,7 @@ const Product = () => {
           />
         </ContentsHeader>
         <ContentsBody>
-          <Row justify="space-around" style={{ rowGap: '1.6rem' }}>
+          <Row justify="space-between" style={{ rowGap: '1.6rem' }}>
             {renderProductList()}
           </Row>
         </ContentsBody>

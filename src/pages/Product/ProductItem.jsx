@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Label } from 'components/styled/Form';
+import { BreakPoint } from 'configs/config';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 35rem;
+  width: 24%;
+
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    width: unset;
+  }
 `;
 
 const ImgContainer = styled.div`

@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 
 import OriginCheckboxLabel from 'components/Form/CheckboxLabel';
 import { MainButton as OrginMainButton } from 'components/styled/Button';
+import { ROUTE_PATH } from 'configs/config';
+import { useHistory } from 'react-router';
 
 const Container = styled.div`
   width: 275px;
@@ -64,10 +66,21 @@ const CheckboxLabel = styled(OriginCheckboxLabel)`
   margin-top: 2rem;
 `;
 
-const Receipt = ({ isCart }) => {
+const Receipt = ({
+  isCart,
+  finalPrice,
+  discountPrice,
+  productPrice,
+  deliveryPrice,
+}) => {
+  const history = useHistory();
   const [isAgree, setIsAgree] = useState(false);
   const handleAgreeChange = (e) => {
     setIsAgree(e.target.checked);
+  };
+
+  const handleMovePage = (path) => {
+    history.push(`${path}`);
   };
 
   return (
@@ -76,22 +89,22 @@ const Receipt = ({ isCart }) => {
       <InfoWrap>
         <InfoContainer>
           <InfoTitle grey>상품금액</InfoTitle>
-          <InfoTitle bold>39,800원</InfoTitle>
+          <InfoTitle bold>{productPrice}원</InfoTitle>
         </InfoContainer>
         <InfoContainer>
           <InfoTitle grey>할인금액</InfoTitle>
-          <InfoTitle bold>(-) 5,800원</InfoTitle>
+          <InfoTitle bold>(-){discountPrice}원</InfoTitle>
         </InfoContainer>
         <InfoContainer>
           <InfoTitle grey>배송비</InfoTitle>
-          <InfoTitle bold>(-) 0원</InfoTitle>
+          <InfoTitle bold>{deliveryPrice}원</InfoTitle>
         </InfoContainer>
       </InfoWrap>
       <InfoWrap>
         <InfoContainer>
           <InfoTitle grey>총 결제금액</InfoTitle>
           <InfoTitle highlight bold>
-            39,800원
+            {finalPrice}원
           </InfoTitle>
         </InfoContainer>
       </InfoWrap>
@@ -122,7 +135,9 @@ const Receipt = ({ isCart }) => {
         </>
       )}
 
-      <MainButton>구매하기</MainButton>
+      <MainButton onClick={() => handleMovePage(ROUTE_PATH.order)}>
+        구매하기
+      </MainButton>
     </Container>
   );
 };

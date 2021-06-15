@@ -4,11 +4,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
+import { getAccessToken } from 'utils/tokenManager';
 
 const { REACT_APP_BASE_URL: baseUrl } = process.env;
+const accessToken = getAccessToken();
 axios.defaults.baseURL = baseUrl;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-
+axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 require('./utils/notification');
 
 ReactDOM.render(

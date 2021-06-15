@@ -30,9 +30,9 @@ const InfoText = styled.div`
   margin-bottom: 1rem;
 `;
 
-const SelectDelivery = ({ isOpen }) => {
+const SelectDelivery = ({ isOpen, onCancel }) => {
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isOpen} onCancel={onCancel}>
       <Title>배송지 선택</Title>
       <DefaultDelivery>기본배송지</DefaultDelivery>
       <DeliveryItem />
