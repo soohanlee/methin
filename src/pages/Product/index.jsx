@@ -9,6 +9,7 @@ import Selectbox from 'components/Form/Selectbox';
 import { PaddingContainer } from 'components/styled/Container';
 import { ROUTE_PATH } from 'configs/config';
 import { useHistory } from 'react-router';
+import Pagination from 'components/Pagination';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -45,6 +46,7 @@ const FilterLength = styled.div`
 
 const ContentsContainer = styled.div`
   width: 100%;
+  margin-bottom: 8rem;
 `;
 
 const ContentsHeader = styled.div`
@@ -138,6 +140,7 @@ const Product = () => {
           </Row>
         </ContentsBody>
       </ContentsContainer>
+      <Pagination />
     </Container>
   );
 };
