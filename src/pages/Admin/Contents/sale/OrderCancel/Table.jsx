@@ -29,9 +29,36 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ data, count }) => {
+const Table = ({ tableData, count }) => {
   const [returnRefusalVisible, setReturnRefusalVisible] = useState(false);
 
+//주문상태
+for (var i = 0; i < tableData.length; i++) {
+  switch (tableData[i].status) {
+    case 0:
+      tableData[i].status = '결제대기';
+      break;
+    case 1:
+      tableData[i].status = '결제완료';
+      break;
+    case 2:
+      tableData[i].status = '상품준비';
+      break;
+      case 3:
+      tableData[i].status = '배송중';
+      break;
+      case 4:
+      tableData[i].status = '배송완료';
+      break;
+      case 5:
+      tableData[i].status = '취소완료';
+      break;
+      case 6:
+      tableData[i].status = '반품완료';
+      break;
+  }
+}
+  
   const setExcelDown = () => {
     alert('엑셀다운');
   };
@@ -70,7 +97,7 @@ const Table = ({ data, count }) => {
 
       <OriginTable
         scroll={{ x: '50vw', y: 500 }}
-        data={data}
+        data={tableData}
         columns={columns}
         selectionType="checkbox"
         onChange={() => {}}

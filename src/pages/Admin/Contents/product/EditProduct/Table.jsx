@@ -36,7 +36,7 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 0.5rem;
 `;
 
-const Table = ({ tableList, count, setTableList }) => {
+const Table = ({ tableList, setTableList }) => {
   const [productSortSelectState, setProductSortSelectState] = React.useState(
     [],
   );
@@ -243,7 +243,7 @@ const Table = ({ tableList, count, setTableList }) => {
   return (
     <ContainerStyled>
       <HeaderContainerStyled>
-        <div>상품목록(총 {count}개)</div>
+        <div>상품목록(총 {tableList.length}개)</div>
         <ButtonContainerStyled>
           <BasicSelectBoxStyled
             onChange={(value) => {

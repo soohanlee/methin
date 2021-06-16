@@ -45,9 +45,6 @@ const ButtomContainer = styled.div`
 `;
 
 const Table = ({
-  data,
-  orderCountTableColumns,
-  orderCountTableData,
   orderSheetList,
   tableData,
 }) => {
@@ -58,22 +55,49 @@ const Table = ({
   const [packingVisible, setPackingVisible] = useState(false);
   const [saleCancelVisible, setSaleCancelVisible] = useState(false);
 
-  const [orderFunction, setOrderFunction] = useState(false);
-
-  const [orderConfirmFunction, setOrderConfirmFunction] = useState(false);
-  const [orderAdressChangeFunction, setOrderAdressChangeFunction] = useState(
-    false,
-  );
-  const [orderProcessFunction, setOrderProcessFunction] = useState(false);
-  const [orderExcelFunction, setOrderExcelFunction] = useState(false);
-  const [
-    orderCombinedPackingFunction,
-    setOrderCombinedPackingFunction,
-  ] = useState(false);
-  const [orderGoodsflowFunction, setOrderGoodsflowFunction] = useState(false);
-  const [orderModifyFunction, setOrderModifyFunction] = useState(false);
-  const [saleCancelFunction, setOrderCancelFunction] = useState(false);
-  const [collectionCancelFunction, setCollectionFunction] = useState(false);
+//주문상태
+for (var i = 0; i < tableData.length; i++) {
+  switch (tableData[i].status) {
+    case 0:
+      tableData[i].status = '결제대기';
+      break;
+    case 1:
+      tableData[i].status = '결제완료';
+      break;
+    case 2:
+      tableData[i].status = '상품준비';
+      break;
+      case 3:
+      tableData[i].status = '배송중';
+      break;
+      case 4:
+      tableData[i].status = '배송완료';
+      break;
+      case 5:
+      tableData[i].status = '취소완료';
+      break;
+      case 6:
+      tableData[i].status = '반품완료';
+      break;
+  }
+  //배송비형태
+  switch (tableData[i].ship_pay_type) {
+    case 0:
+      tableData[i].ship_pay_type = '선불';
+      break;
+    case 1:
+      tableData[i].ship_pay_type = '착불';
+      break;
+  }
+  switch (tableData[i].ship_category) {
+    case 0:
+      tableData[i].ship_category = '무료';
+      break;
+    case 1:
+      tableData[i].ship_category = '유료';
+      break;
+  }
+}
 
   const tableBtn = (id) => {
     switch (id) {
