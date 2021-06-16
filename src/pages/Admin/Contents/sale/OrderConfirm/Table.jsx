@@ -44,60 +44,57 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({
-  orderSheetList,
-  tableData,
-}) => {
+const Table = ({ orderSheetList, tableData }) => {
   const invoiceNumber = useRef(null);
 
   const [adressModifyVisible, setAdressModifyVisible] = useState(false);
   const [orderSheetVisible, setOrderSheetVisible] = useState(false);
   const [saleCancelVisible, setSaleCancelVisible] = useState(false);
 
-//주문상태
-for (var i = 0; i < tableData.length; i++) {
-  switch (tableData[i].status) {
-    case 0:
-      tableData[i].status = '결제대기';
-      break;
-    case 1:
-      tableData[i].status = '결제완료';
-      break;
-    case 2:
-      tableData[i].status = '상품준비';
-      break;
+  //주문상태
+  for (var i = 0; i < tableData.length; i++) {
+    switch (tableData[i].status) {
+      case 0:
+        tableData[i].status = '결제대기';
+        break;
+      case 1:
+        tableData[i].status = '결제완료';
+        break;
+      case 2:
+        tableData[i].status = '상품준비';
+        break;
       case 3:
-      tableData[i].status = '배송중';
-      break;
+        tableData[i].status = '배송중';
+        break;
       case 4:
-      tableData[i].status = '배송완료';
-      break;
+        tableData[i].status = '배송완료';
+        break;
       case 5:
-      tableData[i].status = '취소완료';
-      break;
+        tableData[i].status = '취소완료';
+        break;
       case 6:
-      tableData[i].status = '반품완료';
-      break;
+        tableData[i].status = '반품완료';
+        break;
+    }
+    //배송비형태
+    switch (tableData[i].ship_pay_type) {
+      case 0:
+        tableData[i].ship_pay_type = '선불';
+        break;
+      case 1:
+        tableData[i].ship_pay_type = '착불';
+        break;
+    }
+    switch (tableData[i].ship_category) {
+      case 0:
+        tableData[i].ship_category = '무료';
+        break;
+      case 1:
+        tableData[i].ship_category = '유료';
+        break;
+    }
   }
-  //배송비형태
-  switch (tableData[i].ship_pay_type) {
-    case 0:
-      tableData[i].ship_pay_type = '선불';
-      break;
-    case 1:
-      tableData[i].ship_pay_type = '착불';
-      break;
-  }
-  switch (tableData[i].ship_category) {
-    case 0:
-      tableData[i].ship_category = '무료';
-      break;
-    case 1:
-      tableData[i].ship_category = '유료';
-      break;
-  }
-}
-  
+
   const tableBtn = (id) => {
     switch (id) {
       case 'OrderConfirmation': {

@@ -31,7 +31,10 @@ export const leftNavigationMenu = [
   },
   {
     title: leftNavigationMenuTitle.reviewManage,
-    submenuList: [{ title: '문의관리', path: ROUTE_PATH.admin.reviewManage }],
+    submenuList: [
+      { title: '문의관리', path: ROUTE_PATH.admin.qnaManage },
+      { title: '리뷰관리', path: ROUTE_PATH.admin.reviewManage },
+    ],
   },
 ];
 
