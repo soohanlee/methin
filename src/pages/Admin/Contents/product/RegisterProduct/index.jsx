@@ -101,18 +101,11 @@ const RegisterProduct = ({ history }) => {
           const {
             actual_price,
             count,
-            created_at,
-            description,
             discount_amount,
-            jsondata,
-            id,
             max_quantity,
             min_quantity,
             name,
-            preview_status,
             price,
-            sales_end_date,
-            sales_start_date,
             ship_amount1,
             ship_amount2,
             ship_attr,
@@ -120,9 +113,7 @@ const RegisterProduct = ({ history }) => {
             ship_free_cond_amount,
             ship_pay_type,
             ship_type,
-            status,
             tax_type,
-            updated_at,
           } = result.data.data;
           setPrice(actual_price);
           setAvailableStock(count);
