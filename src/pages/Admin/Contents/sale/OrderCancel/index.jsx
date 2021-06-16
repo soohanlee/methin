@@ -24,7 +24,7 @@ const categoryTypeClick = (value) => {
 
 // 배송 현황 관리
 const OrderCancel = () => {
-  const [table, setTable] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [tableCount, setTableCount] = useState(0);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const OrderCancel = () => {
         });
         // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
 
-        setTable(customList);
+        setTableData(customList);
         setTableCount(result.data.data.count);
       } catch (e) {
         notification.error('상품 정보를 가져오지 못했습니다.');
@@ -49,7 +49,7 @@ const OrderCancel = () => {
     <Container>
       <BoardHeader onClick={categoryTypeClick} list={list} />
       <Filter />
-      <Table data={table} count={tableCount} />
+      <Table tableData={tableData} count={tableCount} />
     </Container>
   );
 };

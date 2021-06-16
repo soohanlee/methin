@@ -52,7 +52,48 @@ const CheckCircleTwoToneIconSyled = styled(CheckCircleTwoTone)`
 
 const categoryTextArray = ['전체', '판매중', '품절', '판매중지', '판매종료'];
 
+<<<<<<< Updated upstream
 const EditCategory = ({ count }) => {
+=======
+
+const EditCategory = ({ tableList}) => {
+
+  const categoryTextArray = ['전체','판매준비', '판매중', '품절', '판매중지', '판매종료'];
+
+  let all = tableList.length;
+  let ready = 0;
+  let onSale = 0;
+  let soldOut  = 0;
+  let stop = 0;
+  let end = 0;
+
+
+    tableList.forEach(element => {
+      switch(element.status)
+      {
+        case "판매준비": 
+        ready++; 
+        break;
+        case "판매중": 
+        onSale++; 
+        break;
+        case "품절": 
+        soldOut++; 
+        break;
+        case"판매중지": 
+        stop++; 
+        break;
+        case "판매종료": 
+        end++; 
+        break;
+        default:break;
+      }
+    });
+
+    const categoryCountArray = [all,ready, onSale, soldOut, stop, end];
+console.log("====================")
+
+>>>>>>> Stashed changes
   const renderSetCaterogy = () => {
     const result = [];
     for (let i = 0; i < 5; i++) {
