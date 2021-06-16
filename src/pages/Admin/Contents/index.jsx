@@ -15,7 +15,8 @@ import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
 import OrderCancel from 'pages/Admin/Contents/sale/OrderCancel';
 import SaleDisturb from 'pages/Admin/Contents/sale/SaleDisturb';
 import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage';
-import ReviewManage from 'pages/Admin/Contents/review/ReviewManage';
+import QNAManager from 'pages/Admin/Contents/Review/ReviewManage/QNAManager';
+import ReviewManager from 'pages/Admin/Contents/Review/ReviewManage/ReviewManager';
 import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice/Index';
 
 const Container = styled.div`
@@ -97,8 +98,13 @@ const Contents = () => {
         />
         <Route
           exact
+          path={`${prePath}${ROUTE_PATH.admin.qnaManage}`}
+          component={QNAManager}
+        />
+        <Route
+          exact
           path={`${prePath}${ROUTE_PATH.admin.reviewManage}`}
-          component={ReviewManage}
+          component={ReviewManager}
         />
       </Switch>
     </Container>

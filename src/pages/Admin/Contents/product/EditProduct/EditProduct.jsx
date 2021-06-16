@@ -32,7 +32,7 @@ const EditProduct = () => {
   return (
     <>
       <EditTitle />
-      <EditCategory count={tableCount} />
+      <EditCategory tableList={tableList} />
       <EditProductSetting />
       <Table
         tableList={tableList}

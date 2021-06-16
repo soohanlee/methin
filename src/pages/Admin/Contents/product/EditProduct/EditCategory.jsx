@@ -50,45 +50,50 @@ const CheckCircleTwoToneIconSyled = styled(CheckCircleTwoTone)`
   ${IconCss}
 `;
 
-const EditCategory = ({ tableList}) => {
-
-  const categoryTextArray = ['전체','판매준비', '판매중', '품절', '판매중지', '판매종료'];
+const EditCategory = ({ tableList }) => {
+  const categoryTextArray = [
+    '전체',
+    '판매준비',
+    '판매중',
+    '품절',
+    '판매중지',
+    '판매종료',
+  ];
 
   let all = tableList.length;
   let ready = 0;
   let onSale = 0;
-  let soldOut  = 0;
+  let soldOut = 0;
   let stop = 0;
   let end = 0;
 
-
-    tableList.forEach(element => {
-      switch(element.status)
-      {
-        case "판매준비": 
-        ready++; 
+  tableList.forEach((element) => {
+    switch (element.status) {
+      case '판매준비':
+        ready++;
         break;
-        case "판매중": 
-        onSale++; 
+      case '판매중':
+        onSale++;
         break;
-        case "품절": 
-        soldOut++; 
+      case '품절':
+        soldOut++;
         break;
-        case"판매중지": 
-        stop++; 
+      case '판매중지':
+        stop++;
         break;
-        case "판매종료": 
-        end++; 
+      case '판매종료':
+        end++;
         break;
-        default:break;
-      }
-    });
-
-console.log("====================")
+      default:
+        break;
+    }
+  });
+  const categoryCountArray = [all, ready, onSale, soldOut, stop, end];
+  console.log('====================');
 
   const renderSetCaterogy = () => {
     const result = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
       result.push(
         <>
           <CategoryTypeSyled
@@ -98,7 +103,7 @@ console.log("====================")
             {categoryTypeArray[i]}
             <div>
               <div>{categoryTextArray[i]}</div>
-              <div>{tableList.length} 건</div>
+              <div>{categoryCountArray[i]} 건</div>
             </div>
           </CategoryTypeSyled>
         </>,
@@ -121,6 +126,7 @@ export default EditCategory;
 
 const categoryTypeArray = [
   <AppstoreTwoToneIconSyled />,
+  <DollarCircleTwoToneIconSyled />,
   <DollarCircleTwoToneIconSyled />,
   <WarningTwoToneIconSyled />,
   <CloseCircleTwoToneIconSyled />,
