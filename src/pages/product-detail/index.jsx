@@ -1,11 +1,13 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { ROUTE_PATH } from 'configs/config';
+import { useHistory } from 'react-router';
+
+import OriginDescriptions from 'components/Descriptions';
 import { PaddingContainer } from 'components/styled/Container';
 import { MainButton } from 'components/styled/Button';
 import RelatedProducts from 'pages/product-detail/RelatedProducts';
 import ReviewContainer from 'components/review/ReviewContainer';
-import { ROUTE_PATH } from 'configs/config';
-import { useHistory } from 'react-router';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -125,6 +127,10 @@ const CountDiv = styled(CountButton)`
   border-right: 0;
 `;
 
+const Descriptions = styled(OriginDescriptions)`
+  margin-bottom: 5rem;
+`;
+
 // const RedStarIcon = styled.img``
 // const GreyStarIcon = styled.img``
 
@@ -204,6 +210,7 @@ const ProductDetail = () => {
       </ProductInfoContainer>
       <Border />
       <RelatedProducts list={[{}, {}]} />
+      <Descriptions />
       <ReviewContainer count={224} />
     </Container>
   );

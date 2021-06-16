@@ -10,8 +10,17 @@ export const Input = styled.input`
 
 export const Form = styled.form``;
 
-export const Label = styled.label`
-  color: ${(props) => props.theme.TEXT_MAIN};
+export const Label = styled.div`
+  font-size: 1.55rem;
+  font-weight: ${(props) => (props.bold ? 500 : 300)};
+  color: ${(props) =>
+    props.grey ? props.theme.TEXT_INFORMATION : props.theme.TEXT_MAIN};
+
+  ${(props) =>
+    props.highlight &&
+    css`
+      color: ${props.theme.SIGNITURE_MAIN};
+    `}
 `;
 
 export const SelectableLabel = styled.div`
