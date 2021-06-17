@@ -7,6 +7,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 24%;
+  margin-bottom: 10rem;
 
   @media screen and (max-width: ${BreakPoint.s}px) {
     width: unset;
@@ -15,10 +16,22 @@ const Container = styled.div`
 
 const ImgContainer = styled.div`
   position: relative;
+  margin-bottom: 3rem;
+  width: 100%;
+  height: 0;
+  background: grey;
+  padding-bottom: 120%;
 `;
 
 const Img = styled.img`
   width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 const CartContainer = styled.div`
@@ -39,37 +52,57 @@ const CartImg = styled.img.attrs({
 
 const CategoryLabel = styled(Label)`
   font-size: 1.4rem;
+  margin-bottom: 1.4rem;
 `;
 
 const DescripitonLabel = styled(Label)`
   color: ${(props) => props.theme.TEXT_INFORMATION};
   font-size: 1.4rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const PriceContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
 `;
 
 const PriceWrap = styled.div`
   display: flex;
+  align-items: flex-end;
 `;
 
 const BeforePrice = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   font-weight: 500;
   text-decoration: line-through;
 `;
 
 const AfterPrice = styled.div`
-  font-size: 2rem;
-  font-weight: 500;
+  font-size: 3.1rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
 `;
 
 const SalePercentage = styled.div`
-  font-size: 2rem;
+  font-size: 3.1rem;
   color: ${(props) => props.theme.SIGNITURE_MAIN};
+`;
+
+const TagContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const Tag = styled.div`
+  border: 0.1rem solid ${(props) => props.theme.TEXT_INFORMATION};
+  border-radius: 0.2rem;
+  padding: 0.2rem;
+  text-align: center;
+  line-height: 1.4rem;
+  font-size: 1rem;
+  margin-right: 0.3rem;
 `;
 
 const ProductItem = ({
@@ -102,6 +135,9 @@ const ProductItem = ({
         </PriceWrap>
         <SalePercentage>{salePercentage}</SalePercentage>
       </PriceContainer>
+      <TagContainer>
+        <Tag>무료배송</Tag>
+      </TagContainer>
     </Container>
   );
 };

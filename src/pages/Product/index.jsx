@@ -25,7 +25,7 @@ const FilterHeader = styled.div`
 const FilterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 3rem 0rem 3rem 3rem;
+  padding: 3rem 0rem 3rem 4rem;
   border-top: 0.1rem solid ${(props) => props.theme.TEXT_MAIN};
   border-bottom: 0.1rem solid ${(props) => props.theme.TEXT_MAIN};
 `;
@@ -164,8 +164,8 @@ const productList = [
     catergory: '식품',
     description: '마시썽',
     beforePrice: '6000',
-    afterPrice: '5000',
-    salePercentage: '-1000',
+    afterPrice: 19800,
+    salePercentage: '-15',
   },
   {
     id: '1234',
@@ -173,8 +173,8 @@ const productList = [
     catergory: '식품',
     description: '마시썽',
     beforePrice: '6000',
-    afterPrice: '5000',
-    salePercentage: '-1000',
+    afterPrice: '19800',
+    salePercentage: '-15',
   },
   {
     id: '1235',
@@ -182,8 +182,8 @@ const productList = [
     catergory: '식품',
     description: '마시썽',
     beforePrice: '6000',
-    afterPrice: '5000',
-    salePercentage: '-1000',
+    afterPrice: '19800',
+    salePercentage: '-15',
   },
   {
     id: '1236',
@@ -191,8 +191,8 @@ const productList = [
     catergory: '식품',
     description: '마시썽',
     beforePrice: '6000',
-    afterPrice: '5000',
-    salePercentage: '-1000',
+    afterPrice: '19800',
+    salePercentage: '-15',
   },
   {
     id: '1237',
@@ -200,7 +200,7 @@ const productList = [
     catergory: '식품',
     description: '마시썽',
     beforePrice: '6000',
-    afterPrice: '5000',
-    salePercentage: '-1000',
+    afterPrice: '19800',
+    salePercentage: '-15',
   },
 ];

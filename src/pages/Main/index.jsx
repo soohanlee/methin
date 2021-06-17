@@ -92,7 +92,8 @@ const productList = [
     id: '123',
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
     catergory: '식품',
-    description: '마시썽',
+    description:
+      '인기 샐러드 간편식 도시락 모음전 [닭가슴살 / 그리믹스 / 베이컨]',
     beforePrice: '6000',
     afterPrice: '5000',
     salePercentage: '-1000',
@@ -101,7 +102,8 @@ const productList = [
     id: '1234',
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
     catergory: '식품',
-    description: '마시썽',
+    description:
+      '인기 샐러드 간편식 도시락 모음전 [닭가슴살 / 그리믹스 / 베이컨]',
     beforePrice: '6000',
     afterPrice: '5000',
     salePercentage: '-1000',
@@ -110,7 +112,8 @@ const productList = [
     id: '1235',
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
     catergory: '식품',
-    description: '마시썽',
+    description:
+      '인기 샐러드 간편식 도시락 모음전 [닭가슴살 / 그리믹스 / 베이컨]',
     beforePrice: '6000',
     afterPrice: '5000',
     salePercentage: '-1000',
@@ -119,7 +122,8 @@ const productList = [
     id: '1236',
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
     catergory: '식품',
-    description: '마시썽',
+    description:
+      '인기 샐러드 간편식 도시락 모음전 [닭가슴살 / 그리믹스 / 베이컨]',
     beforePrice: '6000',
     afterPrice: '5000',
     salePercentage: '-1000',
@@ -128,7 +132,8 @@ const productList = [
     id: '1237',
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
     catergory: '식품',
-    description: '마시썽',
+    description:
+      '인기 샐러드 간편식 도시락 모음전 [닭가슴살 / 그리믹스 / 베이컨]',
     beforePrice: '6000',
     afterPrice: '5000',
     salePercentage: '-1000',

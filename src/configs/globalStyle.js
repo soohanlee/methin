@@ -86,10 +86,9 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         border: 0;
-        font: inherit;
+        font-family:"Montserrat", Noto Sans CJK KR, "Noto Sans CJK KR",  'NanumSquare', sans-serif;
         font-size: 100%;
         vertical-align: baseline;
-        font-size: 1.6rem;
         font-size: 16px;
         box-sizing: border-box;
     }
@@ -136,7 +135,7 @@ const GlobalStyle = createGlobalStyle`
 
         }
 
-        font-family: Noto Sans CJK KR, "Noto Sans CJK KR", 'NanumSquare', sans-serif;
+        font-family:"Montserrat", Noto Sans CJK KR, "Noto Sans CJK KR",  'NanumSquare', sans-serif;
         .normal		{ font-weight: 400 }
         .bold		{ font-weight: 700 }
         .bolder		{ font-weight: 800 }
@@ -165,12 +164,12 @@ const GlobalStyle = createGlobalStyle`
     }
 
     input, textarea {
-        font-family: Noto Sans CJK KR, "Noto Sans CJK KR", 'NanumSquare', sans-serif;
+        font-family: inherit;
         font-size: 1.6rem;
 
         &::placeholder {
             font-size: 1.6rem;
-            font-family: Noto Sans CJK KR, "Noto Sans CJK KR", 'NanumSquare', sans-serif;
+            font-family: inherit;
         }
     }
 

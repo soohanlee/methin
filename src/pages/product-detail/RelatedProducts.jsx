@@ -89,7 +89,7 @@ const RelatedProducts = ({ list }) => {
           <ProductCategory>
             인기 샐러드 간편식 도시락 모음전 [닭가슴살 / 그릭믹스]
           </ProductCategory>
-          <Price>19,800</Price>
+          <Price>19800</Price>
         </ItemContainer>
       );
     });
