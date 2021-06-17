@@ -84,7 +84,7 @@ const QNAManager = () => {
     async function fetchAndSetUser() {
       try {
         const result = await getProductQNA();
-        notification.error('리뷰 정보를 가져왔습니다.');
+        notification.success('리뷰 정보를 가져왔습니다.');
 
         const customList = result.data.data.list.map((item) => {
           return { ...item, key: item.id };
