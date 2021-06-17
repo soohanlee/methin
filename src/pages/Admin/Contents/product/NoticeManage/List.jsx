@@ -30,12 +30,14 @@ const BodyContainer = styled.div`
 
 const ButtonStyled = styled(Button)``;
 
-const List = ({ data }) => {
+const List = ({ tableData }) => {
   const history = useHistory();
 
   const handleModifyNotice = () => {
     history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
   };
+
+  console.log(tableData)
 
   const columns = [
     {
@@ -47,34 +49,41 @@ const List = ({ data }) => {
     },
     {
       title: '번호',
-      dataIndex: 'number',
+      dataIndex: 'id',
     },
     {
-      title: '분류',
-      dataIndex: 'classification',
-    },
-    {
-      title: '상태',
-      dataIndex: 'status',
-    },
-    {
-      title: '제목',
+      title: '공지사항',
       dataIndex: 'title',
     },
     {
-      title: '등록일',
-      dataIndex: 'registerDate',
+      title: '카테고리',
+      dataIndex: 'category',
     },
     {
-      title: '삭제일',
-      dataIndex: 'deleteDate',
+      title: '전시상태',
+      dataIndex: 'preview_status',
     },
+    {
+      title: '등록일',
+      dataIndex: 'created_at',
+    }
   ];
+
+  for (var i = 0; i < tableData.length; i++) {
+    switch (tableData[i].preview_status) {
+      case 0:
+        tableData[i].preview_status = 'NO';
+        break;
+      case 1:
+        tableData[i].preview_status = 'YES';
+        break;
+    }
+  }
 
   return (
     <Container>
       <TitleContainer>
-        <Title>상품 공지사항 목록 (총 {0}개)</Title>
+        <Title>상품 공지사항 목록 (총 {tableData.length}개)</Title>
       </TitleContainer>
       <BodyContainer>
         <ButtonContainer>
@@ -83,7 +92,7 @@ const List = ({ data }) => {
         <Table
           scroll={{ x: '50vw', y: 500 }}
           columns={columns}
-          data={data}
+          data={tableData}
           selectionType={'checkbox'}
           onChange={() => {}}
         />
