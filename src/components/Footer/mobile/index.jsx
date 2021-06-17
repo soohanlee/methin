@@ -46,6 +46,8 @@ const MobileFooter = () => {
   };
 
   const main = ROUTE_PATH.main;
+  const category = ROUTE_PATH.category;
+  const subscribe = ROUTE_PATH.subscribe;
 
   return (
     <Container>
@@ -56,15 +58,24 @@ const MobileFooter = () => {
         <Img src={'/assets/images/mobile/main-on-icon.svg'} />
         <Label>메인으로</Label>
       </IconConatiner>
-      <IconConatiner onClick={() => handleMovePage(ROUTE_PATH.category)}>
+      <IconConatiner
+        selected={pathname === category}
+        onClick={() => handleMovePage(ROUTE_PATH.category)}
+      >
         <Img src={'/assets/images/mobile/product-off-icon.svg'} />
         <Label>카테고리</Label>
       </IconConatiner>
-      <IconConatiner onClick={() => handleMovePage(ROUTE_PATH.subscribe)}>
+      <IconConatiner
+        selected={pathname === subscribe}
+        onClick={() => handleMovePage(subscribe)}
+      >
         <Img src={'/assets/images/mobile/history-off-icon.svg'} />
         <Label>정기결제</Label>
       </IconConatiner>
-      <IconConatiner onClick={() => handleMovePage(ROUTE_PATH.mypage.main)}>
+      <IconConatiner
+        selected={pathname === ROUTE_PATH.mypage.main}
+        onClick={() => handleMovePage(ROUTE_PATH.mypage.main)}
+      >
         <Img src={'/assets/images/mobile/service-off-icon.svg'} />
         <Label>마이페이지</Label>
       </IconConatiner>
