@@ -5,7 +5,7 @@ import Table from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
-import DeliveryUpdateModal from 'pages/Admin/Contents/product/DeliveryProduct/DeliveryUpdateModal';
+import DeliveryUpdateModal from 'pages/Admin/Contents/product/deliveryProduct/DeliveryUpdateModal';
 
 const EditDeliveryTitlesCss = css`
   width: 100%;

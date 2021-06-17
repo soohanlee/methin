@@ -49,6 +49,10 @@ const ProductName = styled.div`
 
 const PriceContainer = styled.div`
   display: flex;
+  align-items: flex-end;
+  > div {
+    font-weight: 500;
+  }
 `;
 
 const SalePercentage = styled.div`
@@ -62,6 +66,7 @@ const BeforePrice = styled.div`
 `;
 const AfterPrice = styled.div`
   font-size: 2.5rem;
+  margin: 0 1rem;
 `;
 
 const Border = styled.div`
@@ -151,15 +156,16 @@ const ProductDetail = () => {
           </ProductName>
           <PriceContainer>
             <SalePercentage>15%</SalePercentage>
-            <AfterPrice>12800</AfterPrice>
-            <BeforePrice>19000</BeforePrice>
+            <AfterPrice>12,800원</AfterPrice>
+            <BeforePrice>19,000</BeforePrice>
           </PriceContainer>
           <Border />
           <ProductInfoTitle>상품 정보</ProductInfoTitle>
           <ProductSubInfoContainer>
-            <ProductSubTitle info>포장타입</ProductSubTitle>
-            <ProductSubTitle>냉장 종이포장</ProductSubTitle>
+            <ProductSubTitle info>중량/용량</ProductSubTitle>
+            <ProductSubTitle>200g</ProductSubTitle>
           </ProductSubInfoContainer>
+
           <ProductSubInfoContainer>
             <ProductSubTitle info>알레르기 정보</ProductSubTitle>
             <ProductSubTitle>달고기 토마토 난류 대두 잣 함유</ProductSubTitle>
@@ -170,17 +176,14 @@ const ProductDetail = () => {
           </ProductSubInfoContainer>
           <Border />
           <ProductInfoTitle>배송 정보</ProductInfoTitle>
+
           <ProductSubInfoContainer>
-            <ProductSubTitle info>배송 예정</ProductSubTitle>
-            <ProductSubTitle>
-              오후 17시 이전 주문시 3일이내 도착예정
-            </ProductSubTitle>
+            <ProductSubTitle info>배송구분</ProductSubTitle>
+            <ProductSubTitle>일반배송</ProductSubTitle>
           </ProductSubInfoContainer>
           <ProductSubInfoContainer>
-            <ProductSubTitle info>배송비</ProductSubTitle>
-            <ProductSubTitle>
-              30,000원 이상 구매시 무료배송/ 미만시 배송비 2,500원
-            </ProductSubTitle>
+            <ProductSubTitle info>포장타입</ProductSubTitle>
+            <ProductSubTitle>냉장 종이포장</ProductSubTitle>
           </ProductSubInfoContainer>
           <Border />
           <ProductSubInfoContainer>
