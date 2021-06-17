@@ -151,7 +151,16 @@ const Navigation = () => {
   };
 
   return (
-    <ResponsiveTemplate NonPCContents={<MobileNavigation />}>
+    <ResponsiveTemplate
+      NonPCContents={
+        <MobileNavigation
+          onClickMovePage={handleMovePage}
+          onSearchClick={handleSearchClick}
+          onLogoClick={handleMoveMainPage}
+          onCartClick={handleMoveCartPage}
+        />
+      }
+    >
       <>
         <Container>
           <Logo onClick={handleMoveMainPage}>

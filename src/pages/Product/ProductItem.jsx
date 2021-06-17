@@ -11,6 +11,8 @@ const Container = styled.div`
 
   @media screen and (max-width: ${BreakPoint.s}px) {
     width: unset;
+    width: 50%;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -21,6 +23,9 @@ const ImgContainer = styled.div`
   height: 0;
   background: grey;
   padding-bottom: 120%;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    margin-bottom: 0;
+  }
 `;
 
 const Img = styled.img`
@@ -53,12 +58,14 @@ const CartImg = styled.img.attrs({
 const CategoryLabel = styled(Label)`
   font-size: 1.4rem;
   margin-bottom: 1.4rem;
+  display: flex;
 `;
 
 const DescripitonLabel = styled(Label)`
   color: ${(props) => props.theme.TEXT_INFORMATION};
   font-size: 1.4rem;
   margin-bottom: 1rem;
+  display: flex;
 `;
 
 const PriceContainer = styled.div`
@@ -83,11 +90,17 @@ const AfterPrice = styled.div`
   font-size: 3.1rem;
   font-weight: 600;
   margin-right: 0.5rem;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    font-size: 2rem;
+  }
 `;
 
 const SalePercentage = styled.div`
   font-size: 3.1rem;
   color: ${(props) => props.theme.SIGNITURE_MAIN};
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    font-size: 2rem;
+  }
 `;
 
 const TagContainer = styled.div`
@@ -103,6 +116,12 @@ const Tag = styled.div`
   line-height: 1.4rem;
   font-size: 1rem;
   margin-right: 0.3rem;
+`;
+
+const InfoContainer = styled.div`
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    padding: 1rem;
+  }
 `;
 
 const ProductItem = ({
@@ -126,18 +145,20 @@ const ProductItem = ({
         </CartContainer>
       </ImgContainer>
 
-      <CategoryLabel>{catergory}</CategoryLabel>
-      <DescripitonLabel>{description}</DescripitonLabel>
-      <PriceContainer>
-        <PriceWrap>
-          <AfterPrice>{afterPrice}</AfterPrice>
-          <BeforePrice>{beforePrice}</BeforePrice>
-        </PriceWrap>
-        <SalePercentage>{salePercentage}</SalePercentage>
-      </PriceContainer>
-      <TagContainer>
-        <Tag>무료배송</Tag>
-      </TagContainer>
+      <InfoContainer>
+        <CategoryLabel>{catergory}</CategoryLabel>
+        <DescripitonLabel>{description}</DescripitonLabel>
+        <PriceContainer>
+          <PriceWrap>
+            <AfterPrice>{afterPrice}</AfterPrice>
+            <BeforePrice>{beforePrice}</BeforePrice>
+          </PriceWrap>
+          <SalePercentage>{salePercentage}</SalePercentage>
+        </PriceContainer>
+        <TagContainer>
+          <Tag>무료배송</Tag>
+        </TagContainer>
+      </InfoContainer>
     </Container>
   );
 };

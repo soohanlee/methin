@@ -7,7 +7,7 @@ import { PageTitle, Label } from 'components/styled/Form';
 import Selectbox from 'components/Form/Selectbox';
 
 import { PaddingContainer } from 'components/styled/Container';
-import { ROUTE_PATH } from 'configs/config';
+import { ROUTE_PATH, BreakPoint } from 'configs/config';
 import { useHistory } from 'react-router';
 import Pagination from 'components/Pagination';
 
@@ -16,10 +16,16 @@ const Container = styled(PaddingContainer)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    padding: 0;
+  }
 `;
 
 const FilterHeader = styled.div`
   margin-bottom: 7rem;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    display: none;
+  }
 `;
 
 const FilterContainer = styled.div`
@@ -47,6 +53,9 @@ const FilterLength = styled.div`
 const ContentsContainer = styled.div`
   width: 100%;
   margin-bottom: 8rem;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    margin-bottom: 3rem;
+  }
 `;
 
 const ContentsHeader = styled.div`
@@ -54,6 +63,9 @@ const ContentsHeader = styled.div`
   width: 100%;
   justify-content: space-between;
   margin-bottom: 3rem;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    display: none;
+  }
 `;
 
 const ContentsBody = styled.div``;

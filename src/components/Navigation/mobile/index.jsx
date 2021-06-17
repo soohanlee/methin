@@ -1,24 +1,28 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { ROUTE_PATH } from 'configs/config';
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100vw;
 `;
 
-const Logo = styled.img.attrs({ src: '/assets/images/logo-icon.svg' })``;
+const Logo = styled.img.attrs({ src: '/assets/images/logo-icon.svg' })`
+  width: 6rem;
+`;
 
 const SearchIcon = styled.img.attrs({
   src: '/assets/images/top-white-search-icon.svg',
 })`
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
 `;
 
 const CartIcon = styled.img.attrs({
   src: '/assets/images/top-white-cart-icon.svg',
 })`
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
   margin-left: 2rem;
 `;
 
@@ -38,16 +42,44 @@ const LogoWithIconContainer = styled.div`
 const MenuContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 2rem;
   background: ${(props) => props.theme.BACKGROUND};
 `;
 
 const MenuItem = styled.div`
   color: ${(props) => props.theme.TEXT_INFORMATION};
   font-size: 1.55rem;
+  border-bottom: 0.2rem transparent;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  line-height: 4.6rem;
+  padding: 0 0.5rem;
+  ${(props) =>
+    props.selected &&
+    css`
+      color: ${(props) => props.theme.SIGNITURE_MAIN};
+    `}
 `;
 
-const MobileNavigation = ({ onCartClick, onSearchClick, onLogoClick }) => {
+const Border = styled.div`
+  border-bottom: 0.2rem transparent;
+  width: 100%;
+  ${(props) =>
+    props.selected &&
+    css`
+      border-bottom: 0.2rem solid ${(props) => props.theme.SIGNITURE_MAIN};
+    `}
+`;
+
+const MobileNavigation = ({
+  onCartClick,
+  onSearchClick,
+  onLogoClick,
+  onClickMovePage,
+}) => {
+  const { pathname } = useLocation();
+  const product = ROUTE_PATH.product;
   return (
     <Container>
       <LogoWithIconContainer>
@@ -59,11 +91,15 @@ const MobileNavigation = ({ onCartClick, onSearchClick, onLogoClick }) => {
       </LogoWithIconContainer>
 
       <MenuContainer>
-        <MenuItem>신상품</MenuItem>
+        <MenuItem
+          selected={pathname === product}
+          onClick={() => onClickMovePage(product)}
+        >
+          신상품
+          <Border selected={pathname === product} />
+        </MenuItem>
         <MenuItem>베스트</MenuItem>
         <MenuItem>알뜰쇼핑</MenuItem>
-        <MenuItem>금주혜택</MenuItem>
-        <MenuItem>브랜드스토리</MenuItem>
       </MenuContainer>
     </Container>
   );
