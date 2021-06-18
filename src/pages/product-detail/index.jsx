@@ -1,11 +1,14 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { ROUTE_PATH } from 'configs/config';
+import { useHistory } from 'react-router';
+
+import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import { PaddingContainer } from 'components/styled/Container';
 import { MainButton } from 'components/styled/Button';
 import RelatedProducts from 'pages/product-detail/RelatedProducts';
 import ReviewContainer from 'components/review/ReviewContainer';
-import { ROUTE_PATH } from 'configs/config';
-import { useHistory } from 'react-router';
+import MobileProductDetail from './mobile';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -141,74 +144,79 @@ const ProductDetail = () => {
   };
 
   return (
-    <Container>
-      <ProductInfoContainer>
-        <MainImgContainer>
-          <MainImg
-            src={process.env.PUBLIC_URL + '/assets/images/detailspage.jpg'}
-          />
-        </MainImgContainer>
+    <ResponsiveTemplate NonPCContents={<MobileProductDetail />}>
+      <Container>
+        <ProductInfoContainer>
+          <MainImgContainer>
+            <MainImg
+              src={process.env.PUBLIC_URL + '/assets/images/detailspage.jpg'}
+            />
+          </MainImgContainer>
 
-        <TextInfoContainer>
-          <ProductCategory>샐러드-채식</ProductCategory>
-          <ProductName>
-            인기 샐러드 간편식 도시락 모음전 [닭가슴살 / 그릭미스]
-          </ProductName>
-          <PriceContainer>
-            <SalePercentage>15%</SalePercentage>
-            <AfterPrice>12,800원</AfterPrice>
-            <BeforePrice>19,000</BeforePrice>
-          </PriceContainer>
-          <Border />
-          <ProductInfoTitle>상품 정보</ProductInfoTitle>
-          <ProductSubInfoContainer>
-            <ProductSubTitle info>중량/용량</ProductSubTitle>
-            <ProductSubTitle>200g</ProductSubTitle>
-          </ProductSubInfoContainer>
+          <TextInfoContainer>
+            <ProductCategory>샐러드-채식</ProductCategory>
+            <ProductName>
+              인기 샐러드 간편식 도시락 모음전 [닭가슴살 / 그릭미스]
+            </ProductName>
+            <PriceContainer>
+              <SalePercentage>15%</SalePercentage>
+              <AfterPrice>12,800원</AfterPrice>
+              <BeforePrice>19,000</BeforePrice>
+            </PriceContainer>
+            <Border />
+            <ProductInfoTitle>상품 정보</ProductInfoTitle>
+            <ProductSubInfoContainer>
+              <ProductSubTitle info>중량/용량</ProductSubTitle>
+              <ProductSubTitle>200g</ProductSubTitle>
+            </ProductSubInfoContainer>
 
-          <ProductSubInfoContainer>
-            <ProductSubTitle info>알레르기 정보</ProductSubTitle>
-            <ProductSubTitle>달고기 토마토 난류 대두 잣 함유</ProductSubTitle>
-          </ProductSubInfoContainer>
-          <ProductSubInfoContainer>
-            <ProductSubTitle info>유통기한</ProductSubTitle>
-            <ProductSubTitle>수령일 포함 최소 3일</ProductSubTitle>
-          </ProductSubInfoContainer>
-          <Border />
-          <ProductInfoTitle>배송 정보</ProductInfoTitle>
+            <ProductSubInfoContainer>
+              <ProductSubTitle info>알레르기 정보</ProductSubTitle>
+              <ProductSubTitle>달고기 토마토 난류 대두 잣 함유</ProductSubTitle>
+            </ProductSubInfoContainer>
+            <ProductSubInfoContainer>
+              <ProductSubTitle info>유통기한</ProductSubTitle>
+              <ProductSubTitle>수령일 포함 최소 3일</ProductSubTitle>
+            </ProductSubInfoContainer>
+            <Border />
+            <ProductInfoTitle>배송 정보</ProductInfoTitle>
 
-          <ProductSubInfoContainer>
-            <ProductSubTitle info>배송구분</ProductSubTitle>
-            <ProductSubTitle>일반배송</ProductSubTitle>
-          </ProductSubInfoContainer>
-          <ProductSubInfoContainer>
-            <ProductSubTitle info>포장타입</ProductSubTitle>
-            <ProductSubTitle>냉장 종이포장</ProductSubTitle>
-          </ProductSubInfoContainer>
-          <Border />
-          <ProductSubInfoContainer>
-            <ProductSubTitle info>상품선택</ProductSubTitle>
-            상품선택 옵션 필요
-          </ProductSubInfoContainer>
-          <CountContainer>
-            <CountButton>-</CountButton>
-            <CountDiv>1</CountDiv>
-            <CountButton>+</CountButton>
-          </CountContainer>
-          <ButtonContainer>
-            <MainButton reverse onClick={() => handleMovePage(ROUTE_PATH.cart)}>
-              장바구니
-            </MainButton>
-            <MainButton onClick={() => handleMovePage(ROUTE_PATH.order)}>
-              구매하기
-            </MainButton>
-          </ButtonContainer>
-        </TextInfoContainer>
-      </ProductInfoContainer>
-      <Border />
-      <RelatedProducts list={[{}, {}]} />
-      <ReviewContainer count={224} />
-    </Container>
+            <ProductSubInfoContainer>
+              <ProductSubTitle info>배송구분</ProductSubTitle>
+              <ProductSubTitle>일반배송</ProductSubTitle>
+            </ProductSubInfoContainer>
+            <ProductSubInfoContainer>
+              <ProductSubTitle info>포장타입</ProductSubTitle>
+              <ProductSubTitle>냉장 종이포장</ProductSubTitle>
+            </ProductSubInfoContainer>
+            <Border />
+            <ProductSubInfoContainer>
+              <ProductSubTitle info>상품선택</ProductSubTitle>
+              상품선택 옵션 필요
+            </ProductSubInfoContainer>
+            <CountContainer>
+              <CountButton>-</CountButton>
+              <CountDiv>1</CountDiv>
+              <CountButton>+</CountButton>
+            </CountContainer>
+            <ButtonContainer>
+              <MainButton
+                reverse
+                onClick={() => handleMovePage(ROUTE_PATH.cart)}
+              >
+                장바구니
+              </MainButton>
+              <MainButton onClick={() => handleMovePage(ROUTE_PATH.order)}>
+                구매하기
+              </MainButton>
+            </ButtonContainer>
+          </TextInfoContainer>
+        </ProductInfoContainer>
+        <Border />
+        <RelatedProducts list={[{}, {}]} />
+        <ReviewContainer count={224} />
+      </Container>
+    </ResponsiveTemplate>
   );
 };
 

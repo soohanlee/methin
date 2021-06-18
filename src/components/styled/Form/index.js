@@ -1,4 +1,6 @@
 import styled, { css } from 'styled-components';
+import { BreakPoint } from 'configs/config';
+
 export const Input = styled.input`
   display: flex;
   border: 0;
@@ -11,7 +13,18 @@ export const Input = styled.input`
 export const Form = styled.form``;
 
 export const Label = styled.label`
-  color: ${(props) => props.theme.TEXT_MAIN};
+  color: ${(props) =>
+    props.grey ? props.theme.TEXT_INFORMATION : props.theme.TEXT_MAIN};
+  font-size: 1.55rem;
+  @media screen and (max-width: ${BreakPoint.xl}px) {
+    font-size: 1.4rem;
+  }
+`;
+
+export const SubLabel = styled.label`
+  font-size: 1.4rem;
+  color: ${(props) =>
+    props.grey ? props.theme.TEXT_INFORMATION : props.theme.TEXT_MAIN};
 `;
 
 export const SelectableLabel = styled.div`
@@ -19,10 +32,10 @@ export const SelectableLabel = styled.div`
   margin-bottom: 1rem;
   border-bottom: 0.1rem solid transparent;
   color: ${(props) =>
-    props.seleted ? props.theme.SIGNITURE_MAIN : props.theme.TEXT_MAIN};
+    props.selected ? props.theme.SIGNITURE_MAIN : props.theme.TEXT_MAIN};
 
   ${(props) =>
-    props.seleted &&
+    props.selected &&
     css`
       border-bottom: 0.1rem solid ${props.theme.SIGNITURE_MAIN};
     `}
