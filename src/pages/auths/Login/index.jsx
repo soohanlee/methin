@@ -18,6 +18,7 @@ import {
   LOGGING_IN,
   NOT_LOGGED_IN,
 } from 'store/user-context';
+import ResponsiveTemplate from 'template/ResponsiveTemplate';
 
 import {
   Input as OriginInput,
@@ -29,6 +30,8 @@ import {
   SubButton as OriginSubButton,
 } from 'components/styled/Button';
 import { AuthContainer } from 'pages/auths/styled';
+
+import MobileLogin from './mobile';
 
 const Container = styled(AuthContainer)`
   display: flex;
@@ -123,33 +126,35 @@ const Login = () => {
   };
 
   return (
-    <Container>
-      <Label>로그인</Label>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <InputContainer>
-          <Input
-            {...register('id', { required: true })}
-            type="text"
-            placeholder="아이디를 입력해주세요"
-          />
-          {errors.id && <span>This field is required</span>}
-        </InputContainer>
+    <ResponsiveTemplate NonPCContents={<MobileLogin />}>
+      <Container>
+        <Label>로그인</Label>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <InputContainer>
+            <Input
+              {...register('id', { required: true })}
+              type="text"
+              placeholder="아이디를 입력해주세요"
+            />
+            {errors.id && <span>This field is required</span>}
+          </InputContainer>
 
-        <InputContainer>
-          <Input
-            {...register('password', { required: true })}
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-          />
-          {errors.password && <span>This field is required</span>}
-        </InputContainer>
+          <InputContainer>
+            <Input
+              {...register('password', { required: true })}
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+            />
+            {errors.password && <span>This field is required</span>}
+          </InputContainer>
 
-        <MainButton type="submit">로그인</MainButton>
-        <SubButton onClick={handleMoveSignupPage}>회원가입</SubButton>
+          <MainButton type="submit">로그인</MainButton>
+          <SubButton onClick={handleMoveSignupPage}>회원가입</SubButton>
 
-        {login.loginState === LOGGING_IN && <div>로그인중</div>}
-      </Form>
-    </Container>
+          {login.loginState === LOGGING_IN && <div>로그인중</div>}
+        </Form>
+      </Container>
+    </ResponsiveTemplate>
   );
 };
 

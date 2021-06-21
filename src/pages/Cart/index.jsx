@@ -130,12 +130,10 @@ const Cart = () => {
         }, 0);
         setFinalPrice(calcFinalPrice);
         console.log(result);
-      } catch (e) {
-        notification.error('새로고침 해주세요.');
-      }
+      } catch (e) {}
     }
     fetchCart();
-  }, []);
+  }, [cartList]);
 
   const renderCartList = () => {
     return cartList.map(

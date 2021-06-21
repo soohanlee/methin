@@ -1,4 +1,28 @@
 @font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: bold;
+  unicode-range: U+0041-005A, U+0061-007A, U+0030-0039;
+  src: url('./font/Montserrat-Bold.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  unicode-range: U+0041-005A, U+0061-007A, U+0030-0039;
+  src: url('./font/Montserrat-Medium.ttf') format('ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: thin;
+  unicode-range: U+0041-005A, U+0061-007A, U+0030-0039;
+  src: url('./font/Montserrat-Regular.ttf') format('ttf');
+}
+
+@font-face {
   font-family: 'Noto Sans CJK KR';
   font-style: normal;
   font-weight: 100;

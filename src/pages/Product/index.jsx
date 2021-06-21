@@ -7,7 +7,7 @@ import { PageTitle, Label } from 'components/styled/Form';
 import Selectbox from 'components/Form/Selectbox';
 
 import { PaddingContainer } from 'components/styled/Container';
-import { ROUTE_PATH } from 'configs/config';
+import { ROUTE_PATH, BreakPoint } from 'configs/config';
 import { useHistory } from 'react-router';
 import Pagination from 'components/Pagination';
 
@@ -16,16 +16,22 @@ const Container = styled(PaddingContainer)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    padding: 0;
+  }
 `;
 
 const FilterHeader = styled.div`
   margin-bottom: 7rem;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    display: none;
+  }
 `;
 
 const FilterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 3rem 0rem 3rem 3rem;
+  padding: 3rem 0rem 3rem 4rem;
   border-top: 0.1rem solid ${(props) => props.theme.TEXT_MAIN};
   border-bottom: 0.1rem solid ${(props) => props.theme.TEXT_MAIN};
 `;
@@ -47,6 +53,9 @@ const FilterLength = styled.div`
 const ContentsContainer = styled.div`
   width: 100%;
   margin-bottom: 8rem;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    margin-bottom: 3rem;
+  }
 `;
 
 const ContentsHeader = styled.div`
@@ -54,6 +63,9 @@ const ContentsHeader = styled.div`
   width: 100%;
   justify-content: space-between;
   margin-bottom: 3rem;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    display: none;
+  }
 `;
 
 const ContentsBody = styled.div``;
@@ -164,8 +176,8 @@ const productList = [
     catergory: '식품',
     description: '마시썽',
     beforePrice: '6000',
-    afterPrice: '5000',
-    salePercentage: '-1000',
+    afterPrice: 19800,
+    salePercentage: '-15',
   },
   {
     id: '1234',
@@ -173,8 +185,8 @@ const productList = [
     catergory: '식품',
     description: '마시썽',
     beforePrice: '6000',
-    afterPrice: '5000',
-    salePercentage: '-1000',
+    afterPrice: '19800',
+    salePercentage: '-15',
   },
   {
     id: '1235',
@@ -182,8 +194,8 @@ const productList = [
     catergory: '식품',
     description: '마시썽',
     beforePrice: '6000',
-    afterPrice: '5000',
-    salePercentage: '-1000',
+    afterPrice: '19800',
+    salePercentage: '-15',
   },
   {
     id: '1236',
@@ -191,8 +203,8 @@ const productList = [
     catergory: '식품',
     description: '마시썽',
     beforePrice: '6000',
-    afterPrice: '5000',
-    salePercentage: '-1000',
+    afterPrice: '19800',
+    salePercentage: '-15',
   },
   {
     id: '1237',
@@ -200,7 +212,7 @@ const productList = [
     catergory: '식품',
     description: '마시썽',
     beforePrice: '6000',
-    afterPrice: '5000',
-    salePercentage: '-1000',
+    afterPrice: '19800',
+    salePercentage: '-15',
   },
 ];

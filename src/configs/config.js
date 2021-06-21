@@ -21,6 +21,8 @@ export const ROUTE_PATH = {
   },
   cart: '/cart',
   order: '/order',
+  subscribe: '/subscribe',
+  category: '/category',
   admin: {
     main: '/admin',
     test: '/test',

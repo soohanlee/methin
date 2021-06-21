@@ -192,6 +192,23 @@ const SignUp = () => {
           ) : null}
         </InputContainer>
 
+        <InputContainer>
+          <MainButton type="submit">주소검색</MainButton>
+        </InputContainer>
+        <InputContainer>
+          <MainButton type="submit">성별</MainButton>
+        </InputContainer>
+        <InputContainer>
+          <MainButton type="submit">생년월일</MainButton>
+        </InputContainer>
+
+        <InputContainer>
+          <MainButton type="submit">추가 입력 사항</MainButton>
+        </InputContainer>
+
+        <InputContainer>
+          <MainButton type="submit">이용약관동의</MainButton>
+        </InputContainer>
         <MainButton type="submit">회원가입</MainButton>
       </Form>
     </Container>

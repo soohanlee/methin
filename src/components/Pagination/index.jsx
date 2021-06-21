@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { Pagination as OriginPagination } from 'antd';
+import { BreakPoint } from 'configs/config';
 const CustomPagination = styled(OriginPagination)`
   .ant-pagination-item {
     border: 0;
@@ -16,6 +16,9 @@ const CustomPagination = styled(OriginPagination)`
     color: ${(props) => props.theme.SIGNITURE_MAIN};
     font-weight: 500;
     text-decoration: underline;
+  }
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    margin-bottom: 3rem;
   }
 `;
 const Pagination = () => {

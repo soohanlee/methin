@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Route, useRouteMatch } from 'react-router';
+import { Route, useHistory, useRouteMatch } from 'react-router';
 import { BreakPoint, ROUTE_PATH } from 'configs/config';
+import { getAccessToken } from 'utils/tokenManager';
 
 import LeftNavigation from 'pages/my-page/LeftNavigation';
 import UserInfomation from 'pages/my-page/UserInfomation';
@@ -26,6 +27,13 @@ const Contents = styled.div`
 
 const MyPage = () => {
   const match = useRouteMatch();
+  const history = useHistory();
+  useEffect(() => {
+    const accessToken = getAccessToken();
+    if (!accessToken) {
+      history.push(ROUTE_PATH.login);
+    }
+  }, [history]);
 
   return (
     <Container>
