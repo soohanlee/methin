@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
-import EditDeliveryProductSetting from 'pages/Admin/Contents/product/deliveryProduct/EditDeliveryProductSetting';
-import EditDeliveryProductCategory from 'pages/Admin/Contents/product/deliveryProduct/EditDeliveryProductCategory';
-import EditDeliveryProductTitle from 'pages/Admin/Contents/product/deliveryProduct/EditDeliveryProductTitle';
-import EditDeliveryProductTable from 'pages/Admin/Contents/product/deliveryProduct/EditDeliveryProductTable';
+import EditDeliveryProductSetting from 'pages/Admin/Contents/product/DeliveryProduct/EditDeliveryProductSetting';
+import EditDeliveryProductCategory from 'pages/Admin/Contents/product/DeliveryProduct/EditDeliveryProductCategory';
+import EditDeliveryProductTitle from 'pages/Admin/Contents/product/DeliveryProduct/EditDeliveryProductTitle';
+import EditDeliveryProductTable from 'pages/Admin/Contents/product/DeliveryProduct/EditDeliveryProductTable';
 
 import {
   updateDelivery,

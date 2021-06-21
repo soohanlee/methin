@@ -63,3 +63,7 @@ export const BreakPoint = {
   m: 768,
   s: 640,
 };
+
+export const SEPCIAL_CONTAINER_ID_LIST = Object.freeze({
+  MODAL: "modal-container",
+});

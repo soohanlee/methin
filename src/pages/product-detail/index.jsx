@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { ROUTE_PATH } from 'configs/config';
 import { useHistory } from 'react-router';
-
+import { Descriptions as OriginDescriptions } from 'antd';
 import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import { PaddingContainer } from 'components/styled/Container';
 import { MainButton } from 'components/styled/Button';

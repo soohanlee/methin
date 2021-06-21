@@ -18,6 +18,7 @@ import {
 } from 'components/styled/Form';
 import { ROUTE_PATH } from 'configs/config';
 import { useHistory } from 'react-router';
+import Postcode from 'components/PostcodeModal';
 
 const Container = styled(AuthContainer)`
   display: flex;
@@ -33,9 +34,14 @@ const Form = styled(OriginForm)`
   width: 100%;
 `;
 
-const Label = styled(OriginLabel)`
+const Title = styled(OriginLabel)`
   font-size: 4rem;
   margin-bottom: 7rem;
+  line-height: 1.5;
+`;
+
+const Label = styled(OriginLabel)`
+  font-size: 1.55rem;
   line-height: 1.5;
 `;
 
@@ -44,6 +50,10 @@ const InputContainer = styled.div`
   flex-direction: column;
   margin-bottom: 4rem;
 `;
+
+const RowInputContainer = styled(InputContainer)` 
+  flex-direction: row;
+`
 
 const InputInnerContainer = styled.div`
   display: flex;
@@ -54,7 +64,19 @@ const Input = styled(OriginInput)`
   line-height: 4rem;
   margin-bottom: 1rem;
   border-bottom: 0.1rem solid ${(props) => props.theme.TEXT_DISABLE};
+  &[type="radio"]{
+    line-height: 1rem;
+    margin-bottom: 0rem;
+    width: 1rem;
+    margin-right: 1rem;
+  }
 `;
+
+const RadioContainer = styled.div`
+  display:flex;
+  align-items: center;
+  margin-right: 3rem;
+`
 
 const MainButton = styled(OriginMainButton)`
   line-height: 5rem;
@@ -79,6 +101,9 @@ const SignUp = () => {
   const [isExistEmail, setIsExistEmail] = useState(false);
   const [isVerifyPhoneNumber, setIsVerifyPhoneNumber] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useState(true);
+  const [isOpenPostCode, setIsOpenPostCode] = useState(false);
+
+  const [address, setAddress] = useState(''); // 주소
   const history = useHistory();
 
   const onSubmit = async (data) => {
@@ -133,9 +158,14 @@ const SignUp = () => {
     }
   };
 
+const handleClickPostCode = (e) =>{
+  e.preventDefault();
+  setIsOpenPostCode(true)
+}
+  
   return (
     <Container>
-      <Label>회원가입</Label>
+      <Title>회원가입</Title>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputContainer>
           <InputInnerContainer>
@@ -193,17 +223,25 @@ const SignUp = () => {
         </InputContainer>
 
         <InputContainer>
-          <MainButton type="submit">주소검색</MainButton>
+          <MainButton onClick = {handleClickPostCode} type="submit">주소검색</MainButton>
+          <Postcode setIsOpen={setIsOpenPostCode} setAddress={setAddress} isOpen={isOpenPostCode}/>
+          {address.length> 1 && <Input value={address}/>}
+          {address.length> 1 && <Input placeholder={"상세주소를 입력해주세요"}   {...register('addressDetail', { required: true })}/>}
         </InputContainer>
-        <InputContainer>
-          <MainButton type="submit">성별</MainButton>
-        </InputContainer>
+        <RowInputContainer>
+          <RadioContainer><Input type="radio" id="male" /><Label htmlFor={"male"}>남자</Label></RadioContainer>
+          <RadioContainer><Input type="radio" id="male" /><Label htmlFor={"male"}>여자</Label></RadioContainer>
+          <RadioContainer><Input type="radio" id="male" /><Label htmlFor={"male"}>선택안함</Label></RadioContainer>
+        </RowInputContainer>
         <InputContainer>
           <MainButton type="submit">생년월일</MainButton>
         </InputContainer>
 
         <InputContainer>
-          <MainButton type="submit">추가 입력 사항</MainButton>
+        <Input
+              placeholder="추천인 아이디들 입력해주세요."
+              {...register('recomender', { required: false })}
+            />
         </InputContainer>
 
         <InputContainer>

@@ -26,6 +26,8 @@ import {
   NOT_LOGGED_IN,
 } from 'store/user-context';
 
+import { ModalContainer } from "components/styled/Container";
+
 import Container from './components/container/Container';
 import Main from 'pages/Main';
 import Navigation from 'components/Navigation';
@@ -197,6 +199,7 @@ function App() {
           )}
         </UserContext.Provider>
       </Container>
+      <ModalContainer />
     </ThemeProvider>
   );
 }

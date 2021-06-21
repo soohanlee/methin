@@ -5,7 +5,7 @@ import { ROUTE_PATH } from 'configs/config';
 
 import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';
-import DeliveryProduct from 'pages/Admin/Contents/product/deliveryProduct/DeliveryProduct';
+import DeliveryProduct from 'pages/Admin/Contents/product/DeliveryProduct/DeliveryProduct';
 import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnce';
 import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/Index';
 import OrderSerach from 'pages/Admin/Contents/sale/OrderSerach';

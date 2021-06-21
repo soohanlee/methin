@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { BreakPoint } from 'configs/config';
+import { SEPCIAL_CONTAINER_ID_LIST } from "configs/config";
+
 export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -67,3 +69,7 @@ export const ContentsContainer = styled.div`
   width: 100%;
   height: 100%;
 `;
+
+export const ModalContainer = styled.div.attrs({
+  id: SEPCIAL_CONTAINER_ID_LIST.MODAL,
+})``;
