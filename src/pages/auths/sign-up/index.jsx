@@ -51,9 +51,9 @@ const InputContainer = styled.div`
   margin-bottom: 4rem;
 `;
 
-const RowInputContainer = styled(InputContainer)` 
+const RowInputContainer = styled(InputContainer)`
   flex-direction: row;
-`
+`;
 
 const InputInnerContainer = styled.div`
   display: flex;
@@ -64,7 +64,13 @@ const Input = styled(OriginInput)`
   line-height: 4rem;
   margin-bottom: 1rem;
   border-bottom: 0.1rem solid ${(props) => props.theme.TEXT_DISABLE};
-  &[type="radio"]{
+  &[type='radio'] {
+    line-height: 1rem;
+    margin-bottom: 0rem;
+    width: 1rem;
+    margin-right: 1rem;
+  }
+  &[type='checkbox'] {
     line-height: 1rem;
     margin-bottom: 0rem;
     width: 1rem;
@@ -73,10 +79,10 @@ const Input = styled(OriginInput)`
 `;
 
 const RadioContainer = styled.div`
-  display:flex;
+  display: flex;
   align-items: center;
   margin-right: 3rem;
-`
+`;
 
 const MainButton = styled(OriginMainButton)`
   line-height: 5rem;
@@ -88,6 +94,33 @@ const SubMain = styled(OriginSubButton)`
   margin-bottom: 1rem;
   width: 100px;
   margin-left: 1rem;
+`;
+
+const BirthContainer = styled.div`
+  border: 0.1rem solid ${(props) => props.theme.LINE};
+  border-radius: 0.2rem;
+  padding: 1rem;
+  display: flex;
+`;
+
+const BirthBox = styled.input`
+  width: 100%;
+  height: 40px;
+  border: 0;
+  text-align: center;
+`;
+
+const BirthBar = styled.span`
+  &:after {
+    content: '/';
+    float: left;
+    width: 22px;
+    height: 100%;
+    font-size: 14px;
+    color: #ccc;
+    line-height: 42px;
+    text-align: center;
+  }
 `;
 
 const SignUp = () => {
@@ -158,11 +191,11 @@ const SignUp = () => {
     }
   };
 
-const handleClickPostCode = (e) =>{
-  e.preventDefault();
-  setIsOpenPostCode(true)
-}
-  
+  const handleClickPostCode = (e) => {
+    e.preventDefault();
+    setIsOpenPostCode(true);
+  };
+
   return (
     <Container>
       <Title>회원가입</Title>
@@ -223,29 +256,80 @@ const handleClickPostCode = (e) =>{
         </InputContainer>
 
         <InputContainer>
-          <MainButton onClick = {handleClickPostCode} type="submit">주소검색</MainButton>
-          <Postcode setIsOpen={setIsOpenPostCode} setAddress={setAddress} isOpen={isOpenPostCode}/>
-          {address.length> 1 && <Input value={address}/>}
-          {address.length> 1 && <Input placeholder={"상세주소를 입력해주세요"}   {...register('addressDetail', { required: true })}/>}
+          <MainButton onClick={handleClickPostCode} type="submit">
+            주소검색
+          </MainButton>
+          <Postcode
+            setIsOpen={setIsOpenPostCode}
+            setAddress={setAddress}
+            isOpen={isOpenPostCode}
+          />
+          {address.length > 1 && <Input value={address} />}
+          {address.length > 1 && (
+            <Input
+              placeholder={'상세주소를 입력해주세요'}
+              {...register('addressDetail', { required: true })}
+            />
+          )}
         </InputContainer>
         <RowInputContainer>
-          <RadioContainer><Input type="radio" id="male" /><Label htmlFor={"male"}>남자</Label></RadioContainer>
-          <RadioContainer><Input type="radio" id="male" /><Label htmlFor={"male"}>여자</Label></RadioContainer>
-          <RadioContainer><Input type="radio" id="male" /><Label htmlFor={"male"}>선택안함</Label></RadioContainer>
+          <RadioContainer>
+            <Input type="radio" id="male" name="sex" />
+            <Label htmlFor={'male'}>남자</Label>
+          </RadioContainer>
+          <RadioContainer>
+            <Input type="radio" id="female" name="sex" />
+            <Label htmlFor={'female'}>여자</Label>
+          </RadioContainer>
+          <RadioContainer>
+            <Input type="radio" id="no" name="sex" />
+            <Label htmlFor={'no'}>선택안함</Label>
+          </RadioContainer>
         </RowInputContainer>
         <InputContainer>
-          <MainButton type="submit">생년월일</MainButton>
+          <BirthContainer>
+            <BirthBox maxLength="4" placeholder={'YYYY'} />
+            <BirthBar />
+            <BirthBox maxLength="2" placeholder={'MM'} />
+            <BirthBar />
+            <BirthBox maxLength="2" placeholder={'DD'} />
+          </BirthContainer>
         </InputContainer>
 
         <InputContainer>
-        <Input
-              placeholder="추천인 아이디들 입력해주세요."
-              {...register('recomender', { required: false })}
-            />
+          <Input
+            placeholder="추천인 아이디들 입력해주세요."
+            {...register('recomender', { required: false })}
+          />
         </InputContainer>
 
         <InputContainer>
-          <MainButton type="submit">이용약관동의</MainButton>
+          <RadioContainer>
+            <Input type="checkbox" id={'all'} />
+            <Label htmlFor="all">전체 동의합니다</Label>
+          </RadioContainer>
+          <RadioContainer>
+            <Input type="checkbox" required id="a" />
+            <Label htmlFor="a">이용약관 동의</Label>
+          </RadioContainer>
+          <RadioContainer>
+            <Input type="checkbox" required id="b" />
+            <Label htmlFor="b">개인정보 수집·이용 동의</Label>
+          </RadioContainer>
+          <RadioContainer>
+            <Input type="checkbox" id="c" />
+            <Label htmlFor="c">개인정보 수집·이용 동의</Label>
+          </RadioContainer>
+          <RadioContainer>
+            <Input type="checkbox" id="d" />
+            <Label htmlFor="d">
+              무료배송, 할인쿠폰 등 혜택/정보 수신 동의{' '}
+            </Label>
+          </RadioContainer>
+          <RadioContainer>
+            <Input type="checkbox" required id="e" />
+            <Label htmlFor="e">본인은 만 14세 이상입니다.</Label>
+          </RadioContainer>
         </InputContainer>
         <MainButton type="submit">회원가입</MainButton>
       </Form>
