@@ -10,6 +10,7 @@ import { PaddingContainer } from 'components/styled/Container';
 import { ROUTE_PATH, BreakPoint } from 'configs/config';
 import { useHistory } from 'react-router';
 import Pagination from 'components/Pagination';
+import CartModal from './modal/CartModal';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -83,6 +84,7 @@ const selectList = [
 const Product = () => {
   const history = useHistory();
   const [selectedItem, setSelectedItem] = useState(selectList[0]);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
 
   const renderFilterList = () => {
     return filterList.map(({ key, value, length }) => {
@@ -101,6 +103,18 @@ const Product = () => {
 
   const handleProductDetailClick = (id) => {
     history.push(`${ROUTE_PATH.product}:${id}`);
+  };
+
+  const handleCartClick = (id) => {
+    setIsCartModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsCartModalOpen(false);
+  };
+
+  const onOk = () => {
+    setIsCartModalOpen(false);
   };
 
   const renderProductList = () => {
@@ -124,6 +138,7 @@ const Product = () => {
             afterPrice={afterPrice}
             salePercentage={salePercentage}
             span={4}
+            onCartClick={handleCartClick}
             onClick={() => handleProductDetailClick(id)}
           />
         );
@@ -153,6 +168,7 @@ const Product = () => {
         </ContentsBody>
       </ContentsContainer>
       <Pagination />
+      <CartModal isOpen={isCartModalOpen} onCancel={handleCancel} onOk={onOk} />
     </Container>
   );
 };

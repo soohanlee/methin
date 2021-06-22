@@ -135,12 +135,18 @@ const ProductItem = ({
   className,
   span,
   onClick,
+  onCartClick,
 }) => {
+  const handleCartClick = (e, id) => {
+    e.stopPropagation();
+    console.log(':이거클릭');
+    onCartClick(id);
+  };
   return (
     <Container className={className} key={id} span={span} onClick={onClick}>
       <ImgContainer>
         <Img src={process.env.PUBLIC_URL + img} />
-        <CartContainer>
+        <CartContainer onClick={(e) => handleCartClick(e, id)}>
           <CartImg />
         </CartContainer>
       </ImgContainer>
