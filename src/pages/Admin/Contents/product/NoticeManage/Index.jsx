@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Filter from 'pages/Admin/Contents/product/NoticeManage/Filter';
 import List from './List';
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { notification } from 'utils/notification';
 import { getNotice } from 'apis/notice';
 

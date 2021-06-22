@@ -74,7 +74,6 @@ const RegisterProduct = ({ history }) => {
     setSaleType('won');
     setSaleTypePrice('');
     setVAT(0);
-
     setIsDelivery('yes');
     setDeliveryType(0);
     setDeliveryAttrs(0);
@@ -142,7 +141,6 @@ const RegisterProduct = ({ history }) => {
       notification.error('필수 입력사항을 입력해주세요.');
       return;
     }
-
     try {
       const data = {
         name: productName, //상품이름
@@ -150,7 +148,10 @@ const RegisterProduct = ({ history }) => {
         count: availableStock, // 상품재고수량
         main_image_id: null, // 이미지 ID
         // ship_info_id: 123,
-        price: sale === 'setting' ? removeRest(salePrice) : removeRest(price), // 상품 가격
+        price:
+          sale === 'setting'
+            ? removeRest(salePrice.toString())
+            : removeRest(price.toString()), // 상품 가격
         discount_amount: saleTypePrice, // 할인값,
         min_quantity: minPurchase, // 최소구매수량
         max_quantity: maxPurchase, // 최대구매수량
@@ -167,7 +168,6 @@ const RegisterProduct = ({ history }) => {
         description: 'df', //특이사항
         Option: null,
       };
-
       if (history.location.state) {
         const result = await updateProductDetail(history.location.state, data);
         if (result.status === 200) {

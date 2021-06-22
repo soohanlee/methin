@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import Table from 'pages/Admin/components/Table/Table';
@@ -31,13 +31,18 @@ const BodyContainer = styled.div`
 const ButtonStyled = styled(Button)``;
 
 const List = ({ tableData }) => {
+  const [testState, setTestState] = useState(0);
+
   const history = useHistory();
 
   const handleModifyNotice = () => {
-    history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
+    history.push({
+      pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`,
+      state: { testState: testState },
+    });
   };
 
-  console.log(tableData)
+  console.log(tableData);
 
   const columns = [
     {
@@ -66,7 +71,7 @@ const List = ({ tableData }) => {
     {
       title: '등록일',
       dataIndex: 'created_at',
-    }
+    },
   ];
 
   for (var i = 0; i < tableData.length; i++) {
