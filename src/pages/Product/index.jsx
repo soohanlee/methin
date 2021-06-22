@@ -85,6 +85,7 @@ const Product = () => {
   const history = useHistory();
   const [selectedItem, setSelectedItem] = useState(selectList[0]);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [productId, setProductId] = useState('');
 
   const renderFilterList = () => {
     return filterList.map(({ key, value, length }) => {
@@ -105,7 +106,9 @@ const Product = () => {
     history.push(`${ROUTE_PATH.product}:${id}`);
   };
 
-  const handleCartClick = (id) => {
+  const handleCartClick = (e, id) => {
+    e.stopPropagation();
+    setProductId(id);
     setIsCartModalOpen(true);
   };
 
@@ -113,37 +116,41 @@ const Product = () => {
     setIsCartModalOpen(false);
   };
 
-  const onOk = () => {
+  const handleClickCartButton = () => {
     setIsCartModalOpen(false);
   };
 
   const renderProductList = () => {
-    return productList.map(
-      ({
-        id,
-        img,
-        catergory,
-        description,
-        beforePrice,
-        afterPrice,
-        salePercentage,
-      }) => {
-        return (
-          <ProductItem
-            id={id}
-            img={img}
-            catergory={catergory}
-            description={description}
-            beforePrice={beforePrice}
-            afterPrice={afterPrice}
-            salePercentage={salePercentage}
-            span={4}
-            onCartClick={handleCartClick}
-            onClick={() => handleProductDetailClick(id)}
-          />
-        );
-      },
-    );
+    if (productList.length === 0) {
+      return '상품이 없습니다.';
+    } else {
+      return productList.map(
+        ({
+          id,
+          img,
+          catergory,
+          description,
+          beforePrice,
+          afterPrice,
+          salePercentage,
+        }) => {
+          return (
+            <ProductItem
+              id={id}
+              img={img}
+              catergory={catergory}
+              description={description}
+              beforePrice={beforePrice}
+              afterPrice={afterPrice}
+              salePercentage={salePercentage}
+              span={4}
+              onCartClick={handleCartClick}
+              onClick={() => handleProductDetailClick(id)}
+            />
+          );
+        },
+      );
+    }
   };
 
   return (
@@ -168,7 +175,13 @@ const Product = () => {
         </ContentsBody>
       </ContentsContainer>
       <Pagination />
-      <CartModal isOpen={isCartModalOpen} onCancel={handleCancel} onOk={onOk} />
+      <CartModal
+        isOpen={isCartModalOpen}
+        onCancel={handleCancel}
+        price={12000}
+        onClickCartButton={handleClickCartButton}
+        productId={productId}
+      />
     </Container>
   );
 };

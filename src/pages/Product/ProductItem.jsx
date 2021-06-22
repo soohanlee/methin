@@ -133,20 +133,14 @@ const ProductItem = ({
   afterPrice,
   salePercentage,
   className,
-  span,
-  onClick,
   onCartClick,
+  onClick,
 }) => {
-  const handleCartClick = (e, id) => {
-    e.stopPropagation();
-    console.log(':이거클릭');
-    onCartClick(id);
-  };
   return (
-    <Container className={className} key={id} span={span} onClick={onClick}>
+    <Container className={className} key={id} onClick={onClick}>
       <ImgContainer>
         <Img src={process.env.PUBLIC_URL + img} />
-        <CartContainer onClick={(e) => handleCartClick(e, id)}>
+        <CartContainer onClick={(e) => onCartClick(e, id)}>
           <CartImg />
         </CartContainer>
       </ImgContainer>

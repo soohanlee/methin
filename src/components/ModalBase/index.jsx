@@ -1,14 +1,7 @@
 import React from 'react';
 import { Modal } from 'antd';
 
-const Modalbase = ({
-  isOpen,
-  onOk,
-  onCancel,
-  children,
-  className,
-  ...props
-}) => {
+const Modalbase = ({ isOpen, onCancel, children, className, ...props }) => {
   return (
     <Modal
       centered

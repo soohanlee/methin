@@ -24,7 +24,7 @@ const Contents = styled.div`
 `;
 
 const BorderTitleContainer = styled(OriginBorderTitleContainer)`
-  margin-bottom: 10rem;
+  margin-bottom: 5rem;
 `;
 
 const ProductItemLine = styled.div`
@@ -112,6 +112,14 @@ const SubButton = styled(OriginSubButton)`
   line-height: 4rem;
 `;
 
+const NoCart = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30rem;
+  border-bottom: 0.1rem solid ${(props) => props.theme.LINE};
+`;
+
 const Cart = () => {
   const [cartList, setCartList] = useState([]);
   const [finalPrice, setFinalPrice] = useState(0);
@@ -136,45 +144,49 @@ const Cart = () => {
   }, [cartList]);
 
   const renderCartList = () => {
-    return cartList.map(
-      ({
-        id,
-        product_id,
-        count,
-        name,
-        price,
-        discount_amount,
-        actual_price,
-        main_image_url,
-        min_quantity,
-        max_quantity,
-        created_at,
-      }) => {
-        return (
-          <ProductItemLine id={id}>
-            <ProductItemContainer>
-              <Checkbox />
-              <ProductItemImgContainer>
-                <Img src={main_image_url} />
-              </ProductItemImgContainer>
+    if (cartList.length === 0) {
+      return <NoCart>장바구니에 담긴 상품이 없습니다.</NoCart>;
+    } else {
+      return cartList.map(
+        ({
+          id,
+          product_id,
+          count,
+          name,
+          price,
+          discount_amount,
+          actual_price,
+          main_image_url,
+          min_quantity,
+          max_quantity,
+          created_at,
+        }) => {
+          return (
+            <ProductItemLine id={id}>
+              <ProductItemContainer>
+                <Checkbox />
+                <ProductItemImgContainer>
+                  <Img src={main_image_url} />
+                </ProductItemImgContainer>
 
-              <ProductItemTextContainer>
-                <Label bold>{name}</Label>
-                <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
-                <Label bold>{price}원</Label>
-              </ProductItemTextContainer>
+                <ProductItemTextContainer>
+                  <Label bold>{name}</Label>
+                  <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
+                  <Label bold>{price}원</Label>
+                </ProductItemTextContainer>
 
-              <CountContainer>
-                <CountButton>-</CountButton>
-                <CountDiv>1</CountDiv>
-                <CountButton>+</CountButton>
-              </CountContainer>
-              <Price>{actual_price}원</Price>
-            </ProductItemContainer>
-          </ProductItemLine>
-        );
-      },
-    );
+                <CountContainer>
+                  <CountButton>-</CountButton>
+                  <CountDiv>1</CountDiv>
+                  <CountButton>+</CountButton>
+                </CountContainer>
+                <Price>{actual_price}원</Price>
+              </ProductItemContainer>
+            </ProductItemLine>
+          );
+        },
+      );
+    }
   };
 
   return (
