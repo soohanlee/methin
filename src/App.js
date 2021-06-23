@@ -26,7 +26,7 @@ import {
   NOT_LOGGED_IN,
 } from 'store/user-context';
 
-import { ModalContainer } from "components/styled/Container";
+import { ModalContainer } from 'components/styled/Container';
 
 import Container from './components/container/Container';
 import Main from 'pages/Main';
@@ -47,7 +47,7 @@ import { useWindowSize } from 'hooks/useWindowSize';
 
 const { Content } = Layout;
 
-const UserContainer = styled(Layout)`
+const UserContainer = styled(Layout).attrs({ id: 'UserContainer' })`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -67,7 +67,6 @@ const CustomContent = styled(Content)`
   display: flex;
   flex-direction: column;
   flex: 1;
-  overflow: auto !important;
   background: inherit;
 `;
 
@@ -89,6 +88,11 @@ function App() {
   //     await cleanAllToken();
   //   }
   // }, []);
+  useEffect(() => {
+    const layoutDom = document.getElementById('UserContainer');
+
+    layoutDom?.scrollTo(0, 0);
+  }, [location.pathname]);
 
   useEffect(() => {
     async function fetchAndSetUser() {

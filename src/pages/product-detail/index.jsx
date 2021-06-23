@@ -2,11 +2,11 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { ROUTE_PATH } from 'configs/config';
 import { useHistory } from 'react-router';
-import { Descriptions as OriginDescriptions } from 'antd';
 import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import { PaddingContainer } from 'components/styled/Container';
 import { MainButton } from 'components/styled/Button';
 import RelatedProducts from 'pages/product-detail/RelatedProducts';
+import OriginDescriptions from 'components/Descriptions';
 import ReviewContainer from 'components/review/ReviewContainer';
 import MobileProductDetail from './mobile';
 
@@ -147,6 +147,10 @@ const ProductDetail = () => {
     history.push(`${path}`);
   };
 
+  const renderDescriptions = () => {
+    return;
+  };
+
   return (
     <ResponsiveTemplate NonPCContents={<MobileProductDetail />}>
       <Container>
@@ -217,7 +221,10 @@ const ProductDetail = () => {
           </TextInfoContainer>
         </ProductInfoContainer>
         <Border />
+
         <RelatedProducts list={[{}, {}]} />
+        <Descriptions />
+
         <ReviewContainer count={224} />
       </Container>
     </ResponsiveTemplate>
