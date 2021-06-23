@@ -88,8 +88,6 @@ const EditDeliveryProductTable = ({
   };
 
   const modifyDataSave = () => {
-    console.log(useStatusState);
-
     const data = {
       body: groupNamesRef.current.state.value,
       status: useStatusState,

@@ -31,19 +31,31 @@ const BodyContainer = styled.div`
 const ButtonStyled = styled(Button)``;
 
 const List = ({ tableData }) => {
-  const [testState, setTestState] = useState(0);
+  const [tableState, setTableState] = useState([]);
+  const [selectionType, setSelectionType] = useState('checkbox');
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      setTableState(selectedRows)
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
 
   const history = useHistory();
 
   const handleModifyNotice = () => {
     history.push({
       pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`,
-      state: { testState: testState },
+      state: { tableState: tableState },
     });
   };
 
-  console.log(tableData);
-
+console.log(tableData);
+  
   const columns = [
     {
       title: '수정',
@@ -85,6 +97,11 @@ const List = ({ tableData }) => {
     }
   }
 
+
+  
+
+console.log(rowSelection);
+
   return (
     <Container>
       <TitleContainer>
@@ -100,6 +117,10 @@ const List = ({ tableData }) => {
           data={tableData}
           selectionType={'checkbox'}
           onChange={() => {}}
+          rowSelection={{
+            type: selectionType,
+            ...rowSelection,
+          }}
         />
       </BodyContainer>
     </Container>
