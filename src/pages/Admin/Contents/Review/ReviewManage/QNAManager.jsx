@@ -69,7 +69,7 @@ const MyAnswerContainer = styled.div`
   margin-top: 1rem;
 `;
 
-const ReviewManage = () => {
+const QNAManager = () => {
   const [tableList, setTableList] = useState([]);
 
   useEffect(() => {
@@ -84,6 +84,8 @@ const ReviewManage = () => {
     async function fetchAndSetUser() {
       try {
         const result = await getProductQNA();
+        notification.success('리뷰 정보를 가져왔습니다.');
+
         const customList = result.data.data.list.map((item) => {
           return { ...item, key: item.id };
         });
@@ -143,7 +145,6 @@ const ReviewManage = () => {
             <Button onClick={handleAnswerButtonClick}>답글</Button>
           </InfoContainer>
         </ItemInnerContainer>
-
         {isClickAnswer && (
           <AnswerContainer>
             <TextInnerContainer>
@@ -161,7 +162,6 @@ const ReviewManage = () => {
             </TextInnerContainer>
           </AnswerContainer>
         )}
-
         {isClickAnswer && (
           <>
             <MyAnswerContainer>{'제목 : ' + answer_title}</MyAnswerContainer>
@@ -181,4 +181,4 @@ const ReviewManage = () => {
   return <Container>{renderList()}</Container>;
 };
 
-export default ReviewManage;
+export default QNAManager;

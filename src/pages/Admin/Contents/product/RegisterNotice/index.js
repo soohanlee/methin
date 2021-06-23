@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Input } from 'antd';
+import { useLocation } from 'react-router';
+import { Input, Button } from 'antd';
 import { EditorState } from 'draft-js';
 import styled from 'styled-components';
 import { Radio } from 'antd';
@@ -9,6 +10,8 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import Editor from 'pages/Admin/components/Editor';
 import Calendar from 'pages/Admin/components/Calendar';
+
+import { postNotice } from 'apis/notice';
 
 const Container = styled.div`
   padding: 2rem;
@@ -109,6 +112,18 @@ const RegisterNotice = () => {
     setendPopupDate(value);
   };
 
+  const RegistNotice = () => {
+    const data = {
+      title: title,
+      category: 0,
+      body: editorState.getCurrentContent().getPlainText(),
+      preview_status: 0,
+    };
+    postNotice(data);
+  };
+  const location = useLocation();
+  const testState = location.state.testState;
+  console.log(testState);
   return (
     <Container>
       <LabelContents title="분류">
@@ -186,6 +201,8 @@ const RegisterNotice = () => {
           )}
         </DisplayDateContainer>
       </LabelContents>
+      <Button onClick={RegistNotice}>상품 공지사항 등록</Button>
+      <Button>취소</Button>
     </Container>
   );
 };

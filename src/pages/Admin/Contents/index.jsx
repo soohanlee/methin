@@ -7,7 +7,7 @@ import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';
 import DeliveryProduct from 'pages/Admin/Contents/product/DeliveryProduct/DeliveryProduct';
 import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnce';
-import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/Index';
+import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/index';
 import OrderSerach from 'pages/Admin/Contents/sale/OrderSerach';
 import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingPayment';
 import OrderConfirm from 'pages/Admin/Contents/sale/OrderConfirm';
@@ -15,8 +15,9 @@ import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
 import OrderCancel from 'pages/Admin/Contents/sale/OrderCancel';
 import SaleDisturb from 'pages/Admin/Contents/sale/SaleDisturb';
 import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage';
-import ReviewManage from 'pages/Admin/Contents/review/ReviewManage';
-import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice/Index';
+import QNAManager from 'pages/Admin/Contents/Review/ReviewManage/QNAManager';
+import ReviewManager from 'pages/Admin/Contents/Review/ReviewManage/ReviewManager';
+import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice/index';
 
 const Container = styled.div`
   width: 100%;
@@ -97,8 +98,13 @@ const Contents = () => {
         />
         <Route
           exact
+          path={`${prePath}${ROUTE_PATH.admin.qnaManage}`}
+          component={QNAManager}
+        />
+        <Route
+          exact
           path={`${prePath}${ROUTE_PATH.admin.reviewManage}`}
-          component={ReviewManage}
+          component={ReviewManager}
         />
       </Switch>
     </Container>
