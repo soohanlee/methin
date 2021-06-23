@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { Input, Button } from 'antd';
 import { EditorState } from 'draft-js';
@@ -26,6 +26,10 @@ const DisplayDateContainer = styled.div`
 
 const RegisterNotice = () => {
   const [title, setTitle] = useState('');
+  const [category, setCategory] = useState(0);
+  const [preview_status, setPreview_status] = useState('');
+
+
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [uploadedImages, setUploadedImages] = useState([]);
   const [isDisplayDate, setIsDisplayDate] = useState(false);
@@ -46,6 +50,21 @@ const RegisterNotice = () => {
   );
   const [endPopupDate, setendPopupDate] = useState(moment());
   const [selectedEndPopupDate, setSelectedEndPopupDate] = useState(moment());
+
+  useEffect(() => {
+  if(location.state.tableState.length == 0)
+  {
+    
+  }
+  else
+  {
+    setTitle(location.state.tableState[0].title);
+    setCategory(location.state.tableState[0].category);
+    setPreview_status(location.state.tableState[0].preview_status);
+  }
+  }, []);
+
+  
 
   const handleTypeChange = (value) => {
     console.log(value);
@@ -112,18 +131,28 @@ const RegisterNotice = () => {
     setendPopupDate(value);
   };
 
+  // if(!location.state.tableState)
+  // {
+  // }
+  // else
+  // {
+  //   tableState = location.state.tableState;
+  // }
+
+  const location = useLocation();
+
   const RegistNotice = () => {
     const data = {
       title: title,
-      category: 0,
+      category: category,
       body: editorState.getCurrentContent().getPlainText(),
-      preview_status: 0,
+      preview_status: preview_status,
     };
     postNotice(data);
   };
-  const location = useLocation();
-  const testState = location.state.testState;
-  console.log(testState);
+  console.log(location.state.tableState)
+
+
   return (
     <Container>
       <LabelContents title="분류">
