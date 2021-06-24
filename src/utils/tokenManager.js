@@ -90,9 +90,8 @@ export async function getIsAvalidAccessToken() {
 
   if (accessToken) {
     const response = await jwtVerify();
-    console.log('response', response.message === 'success');
-
-    if (response.message === 'success') {
+    console.log(response);
+    if (response.data.message === 'success') {
       return true;
     }
   } else {
@@ -113,3 +112,15 @@ export async function getIsAvalidAccessRefreshToken() {
 
   return false;
 }
+
+export const getCartCookies = () => {
+  return get(COOKIE_KEYS.cart);
+};
+
+export const setCartCookies = (data) => {
+  set(COOKIE_KEYS.cart, data);
+};
+
+export const removeCartCookies = () => {
+  remove(COOKIE_KEYS.cart);
+};

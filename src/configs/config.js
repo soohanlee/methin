@@ -51,6 +51,7 @@ export const LOCAL_STORAGE_KEYS = {
 export const COOKIE_KEYS = {
   UserRefreshToken: '__user_refresh_token__',
   UserAccessToken: '__user_access_token__',
+  cart: 'CART',
 };
 
 export const DateFormat = {
@@ -65,5 +66,5 @@ export const BreakPoint = {
 };
 
 export const SEPCIAL_CONTAINER_ID_LIST = Object.freeze({
-  MODAL: "modal-container",
+  MODAL: 'modal-container',
 });

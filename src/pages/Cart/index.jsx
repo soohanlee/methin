@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
-import { getCartList } from 'apis/cart';
+import { getCartList, updateCartItemCount } from 'apis/cart';
+import {
+  UserContext,
+  LOGGED_IN,
+  LOGGING_IN,
+  NOT_LOGGED_IN,
+} from 'store/user-context';
+import { notification } from 'utils/notification';
+import { getCartCookies } from 'utils/tokenManager';
 
 import { PaddingContainer } from 'components/styled/Container';
 import { PageTitle as OriginPageTitle } from 'components/styled/Form';
 import OriginBorderTitleContainer from 'components/container/BorderTitleContainer';
 import Receipt from 'pages/Order/Receipt';
 import { SubButton as OriginSubButton } from 'components/styled/Button';
-import { notification } from 'utils/notification';
 
 const PageTitle = styled(OriginPageTitle)`
   text-align: center;
@@ -123,31 +130,54 @@ const NoCart = styled.div`
 const Cart = () => {
   const [cartList, setCartList] = useState([]);
   const [finalPrice, setFinalPrice] = useState(0);
-
+  const login = useContext(UserContext);
   useEffect(() => {
-    async function fetchCart() {
-      try {
-        const result = await getCartList();
-        if (result && result.status === 200) {
-          setCartList(result.data.data);
-        }
-        const priceList = cartList.map(({ actual_price }) => actual_price);
-        console.log('priceList', priceList);
-        const calcFinalPrice = priceList.reduce(function add(sum, currValue) {
-          return sum + currValue;
-        }, 0);
-        setFinalPrice(calcFinalPrice);
-        console.log(result);
-      } catch (e) {}
+    if (login.loginState === LOGGED_IN) {
+      console.log('여기지');
+      setCart();
+    } else if (login.loginState === NOT_LOGGED_IN) {
+      setCookiesCart();
     }
-    fetchCart();
-  }, [cartList]);
+  }, [login.loginState]);
+
+  const setCart = async () => {
+    try {
+      const result = await getCartList();
+      if (result && result.status === 200) {
+        setCartList(result.data.data);
+      }
+      const priceList = cartList.map(({ actual_price }) => actual_price);
+      console.log('priceList', priceList);
+      const calcFinalPrice = priceList.reduce(function add(sum, currValue) {
+        return sum + currValue;
+      }, 0);
+      setFinalPrice(calcFinalPrice);
+      console.log(result);
+    } catch (e) {}
+  };
+
+  const setCookiesCart = () => {
+    const cartList = getCartCookies();
+    if (cartList) {
+      setCartList([]);
+    }
+  };
+
+  const handlePlus = async (id, count) => {
+    count = count + 1;
+    try {
+      const result = await updateCartItemCount(id, { count });
+      console.log('result', result);
+    } catch (e) {}
+  };
+
+  const handleMinus = () => {};
 
   const renderCartList = () => {
-    if (cartList.length === 0) {
+    if (cartList?.length === 0) {
       return <NoCart>장바구니에 담긴 상품이 없습니다.</NoCart>;
     } else {
-      return cartList.map(
+      return cartList?.map(
         ({
           id,
           product_id,
@@ -176,9 +206,13 @@ const Cart = () => {
                 </ProductItemTextContainer>
 
                 <CountContainer>
-                  <CountButton>-</CountButton>
-                  <CountDiv>1</CountDiv>
-                  <CountButton>+</CountButton>
+                  <CountButton onClick={() => handleMinus(product_id, count)}>
+                    -
+                  </CountButton>
+                  <CountDiv>{count}</CountDiv>
+                  <CountButton onClick={() => handlePlus(product_id, count)}>
+                    +
+                  </CountButton>
                 </CountContainer>
                 <Price>{actual_price}원</Price>
               </ProductItemContainer>
@@ -195,7 +229,7 @@ const Cart = () => {
       <PageTitle>장바구니</PageTitle>
       <CartContainer>
         <Contents>
-          <BorderTitleContainer title="냉장 식품">
+          <BorderTitleContainer title="상품 목록">
             {renderCartList()}
           </BorderTitleContainer>
         </Contents>

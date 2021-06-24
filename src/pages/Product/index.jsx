@@ -103,7 +103,8 @@ const Product = () => {
   };
 
   const handleProductDetailClick = (id) => {
-    history.push(`${ROUTE_PATH.product}:${id}`);
+    console.log('id', id);
+    history.push(`${ROUTE_PATH.product}${id}`);
   };
 
   const handleCartClick = (e, id) => {

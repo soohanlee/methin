@@ -107,6 +107,11 @@ const LoginButton = styled.div`
   cursor: pointer;
 `;
 
+const LoginContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Navigation = () => {
   const history = useHistory();
   const userState = useContext(UserContext);
@@ -221,7 +226,19 @@ const Navigation = () => {
                 </IconContainer>
               </UserContainer>
             ) : (
-              <LoginButton onClick={handleMoveLoginPage}>로그인</LoginButton>
+              <LoginContainer>
+                <InfoContainer>
+                  <Icon onClick={handleMoveCartPage}>
+                    <Img
+                      src={
+                        process.env.PUBLIC_URL +
+                        '/assets/images/top-white-cart-icon.svg'
+                      }
+                    />
+                  </Icon>
+                </InfoContainer>
+                <LoginButton onClick={handleMoveLoginPage}>로그인</LoginButton>
+              </LoginContainer>
             )}
           </UserContainer>
         </Container>

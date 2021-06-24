@@ -9,3 +9,7 @@ export const addCartItem = async (data) => {
   // - **count**: number ⇒ 수량
   return await axios.post(`api/cart`, data);
 };
+
+export const updateCartItemCount = async (id, data) => {
+  return await axios.patch(`api/cart/${id}/count`, data);
+};

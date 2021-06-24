@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ROUTE_PATH } from 'configs/config';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { Descriptions as OriginDescriptions } from 'antd';
+import { getUserProductDetail } from 'apis/product';
+import { addCartItem } from 'apis/cart';
+import { addCartList } from 'utils/common';
+
+import { UserContext, LOGGED_IN } from 'store/user-context';
+
 import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import { PaddingContainer } from 'components/styled/Container';
 import { MainButton } from 'components/styled/Button';
 import RelatedProducts from 'pages/product-detail/RelatedProducts';
 import ReviewContainer from 'components/review/ReviewContainer';
 import MobileProductDetail from './mobile';
+import { notification } from 'utils/notification';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -142,9 +149,38 @@ const Descriptions = styled(OriginDescriptions)`
 
 const ProductDetail = () => {
   const history = useHistory();
+  const login = useContext(UserContext);
+  const [productCount, setProductCount] = useState(1);
+
+  const parms = useParams();
+  console.log(parms);
+
+  const getProductDetail = () => {
+    const productDetail = getUserProductDetail();
+  };
+
+  useEffect(() => {}, []);
 
   const handleMovePage = (path) => {
     history.push(`${path}`);
+  };
+
+  const handleAddCartList = async () => {
+    const data = {
+      product_id: parms.id,
+      count: productCount,
+    };
+
+    if (login.loginState === LOGGED_IN) {
+      try {
+        const result = addCartItem(data);
+        if (result && result.message === 'success') {
+          notification.success('장바구니에 상품을 담았습니다.');
+        }
+      } catch (e) {}
+    } else {
+      addCartList(data);
+    }
   };
 
   return (
@@ -204,10 +240,7 @@ const ProductDetail = () => {
               <CountButton>+</CountButton>
             </CountContainer>
             <ButtonContainer>
-              <MainButton
-                reverse
-                onClick={() => handleMovePage(ROUTE_PATH.cart)}
-              >
+              <MainButton reverse onClick={handleAddCartList}>
                 장바구니
               </MainButton>
               <MainButton onClick={() => handleMovePage(ROUTE_PATH.order)}>

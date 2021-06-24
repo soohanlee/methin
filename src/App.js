@@ -14,6 +14,9 @@ import {
   getIsAvalidAccessToken,
   getAccessToken,
   getRefreshToken,
+  setCartCookies,
+  getCartCookies,
+  removeCartCookies,
   // getNewAccessToken,
   // getIsRememberToken,
   // cleanAllToken,
@@ -26,7 +29,7 @@ import {
   NOT_LOGGED_IN,
 } from 'store/user-context';
 
-import { ModalContainer } from "components/styled/Container";
+import { ModalContainer } from 'components/styled/Container';
 
 import Container from './components/container/Container';
 import Main from 'pages/Main';
@@ -95,7 +98,6 @@ function App() {
       const accessToken = await getAccessToken();
 
       if (await getIsValidUser()) {
-        console.log('여기');
         axios.defaults.headers.common[
           'Authorization'
         ] = `Bearer ${accessToken}`;
@@ -111,7 +113,7 @@ function App() {
     if (getAccessToken()) {
       changeUserState(LOGGED_IN);
     }
-  });
+  }, [getAccessToken]);
 
   useEffect(() => {
     if (windowSize.width < BreakPoint.s) {
@@ -120,6 +122,12 @@ function App() {
       setViewType('PC');
     }
   }, [windowSize]);
+
+  useEffect(() => {
+    if (!getCartCookies()) {
+      setCartCookies([]);
+    }
+  }, []);
 
   const changeUserState = (data) => {
     setIsLogin(data);

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const productUrl = `/api/admin/product`;
+const userProductUrl = `/api/product`;
 
 export const getProductList = async () => {
   return await axios.get(`${productUrl}`);
@@ -72,4 +73,8 @@ export const deleteRelatedProduct = async (id, related_product_id) => {
   return await axios.delete(
     `${productUrl}/${id}/related/${related_product_id}`,
   );
+};
+
+export const getUserProductDetail = async (id) => {
+  return await axios.get(`${userProductUrl}/${id}`);
 };

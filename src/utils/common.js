@@ -1,3 +1,5 @@
+import { getCartCookies } from 'utils/tokenManager';
+
 export function getLocalStorageData(name) {
   try {
     const data = window.localStorage.getItem(name);
@@ -23,3 +25,9 @@ export function removeRest(value) {
     return value;
   }
 }
+
+export const addCartList = (data) => {
+  const cartList = getCartCookies();
+  const cartInfo = { product_id: data.id, count: data.count };
+  cartList.push(cartInfo);
+};

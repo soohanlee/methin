@@ -25,7 +25,7 @@ const Main = () => {
   const history = useHistory();
 
   const handleProductDetailClick = (id) => {
-    history.push(`${ROUTE_PATH.product}:${id}`);
+    history.push(`${ROUTE_PATH.product}${id}`);
   };
 
   const renderProductList = () => {
