@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ROUTE_PATH } from 'configs/config';
 import { useHistory, useParams } from 'react-router';
-import { Descriptions as OriginDescriptions } from 'antd';
 import { getUserProductDetail } from 'apis/product';
 import { addCartItem } from 'apis/cart';
 import { addCartList } from 'utils/common';
+import { notification } from 'utils/notification';
 
 import { UserContext, LOGGED_IN } from 'store/user-context';
 
@@ -13,9 +13,9 @@ import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import { PaddingContainer } from 'components/styled/Container';
 import { MainButton } from 'components/styled/Button';
 import RelatedProducts from 'pages/product-detail/RelatedProducts';
+import OriginDescriptions from 'components/Descriptions';
 import ReviewContainer from 'components/review/ReviewContainer';
 import MobileProductDetail from './mobile';
-import { notification } from 'utils/notification';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -155,9 +155,9 @@ const ProductDetail = () => {
   const parms = useParams();
   console.log(parms);
 
-  const getProductDetail = () => {
-    const productDetail = getUserProductDetail();
-  };
+  // const getProductDetail = () => {
+  //   const productDetail = getUserProductDetail();
+  // };
 
   useEffect(() => {}, []);
 
@@ -250,7 +250,10 @@ const ProductDetail = () => {
           </TextInfoContainer>
         </ProductInfoContainer>
         <Border />
+
         <RelatedProducts list={[{}, {}]} />
+        <Descriptions />
+
         <ReviewContainer count={224} />
       </Container>
     </ResponsiveTemplate>
