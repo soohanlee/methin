@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { Input, Button } from 'antd';
-import { EditorState } from 'draft-js';
+import { EditorState, ContentState, convertFromHTML } from 'draft-js';
 import styled from 'styled-components';
 import { Radio } from 'antd';
 import moment from 'moment';
@@ -10,8 +10,9 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import Editor from 'pages/Admin/components/Editor';
 import Calendar from 'pages/Admin/components/Calendar';
+import { notification } from 'utils/notification';
 
-import { postNotice } from 'apis/notice';
+import { postNotice, patchNotice, getNoticeId } from 'apis/notice';
 
 const Container = styled.div`
   padding: 2rem;
@@ -25,10 +26,10 @@ const DisplayDateContainer = styled.div`
 `;
 
 const RegisterNotice = () => {
+  const [noticeID, setNoticeID] = useState(-1);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState(0);
   const [preview_status, setPreview_status] = useState('');
-
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [uploadedImages, setUploadedImages] = useState([]);
@@ -52,19 +53,33 @@ const RegisterNotice = () => {
   const [selectedEndPopupDate, setSelectedEndPopupDate] = useState(moment());
 
   useEffect(() => {
-  if(location.state.tableState.length == 0)
-  {
-    
-  }
-  else
-  {
-    setTitle(location.state.tableState[0].title);
-    setCategory(location.state.tableState[0].category);
-    setPreview_status(location.state.tableState[0].preview_status);
-  }
-  }, []);
+    async function fetchAndSetUser() {
+      try {
+        if (location.state.tableState.length === 0) {
+        } else {
+          const result = await getNoticeId(location.state.tableState[0].id);
+          console.log(result.data.data);
+          const customData = result.data.data;
+          // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
 
-  
+          setNoticeID(customData.id);
+          setTitle(customData.title);
+          setCategory(customData.category);
+          setPreview_status(customData.preview_status);
+          setEditorState(
+            EditorState.createWithContent(
+              ContentState.createFromBlockArray(
+                convertFromHTML(customData.body),
+              ),
+            ),
+          );
+        }
+      } catch (e) {
+        notification.error('상품 정보를 가져오지 못했습니다.');
+      }
+    }
+    fetchAndSetUser();
+  }, []);
 
   const handleTypeChange = (value) => {
     console.log(value);
@@ -148,10 +163,14 @@ const RegisterNotice = () => {
       body: editorState.getCurrentContent().getPlainText(),
       preview_status: preview_status,
     };
-    postNotice(data);
+    if (noticeID !== -1) {
+      console.log('patch');
+      patchNotice(noticeID, data);
+    } else {
+      console.log('post');
+      postNotice(data);
+    }
   };
-  console.log(location.state.tableState)
-
 
   return (
     <Container>
