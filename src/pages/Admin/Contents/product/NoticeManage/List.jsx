@@ -4,6 +4,8 @@ import { Button } from 'antd';
 import Table from 'pages/Admin/components/Table/Table';
 import { useHistory } from 'react-router';
 import { ROUTE_PATH } from 'configs/config';
+import { deleteNotice } from 'apis/notice';
+import { notification } from 'utils/notification';
 
 const Container = styled.div`
   background: #fff;
@@ -30,19 +32,49 @@ const BodyContainer = styled.div`
 
 const ButtonStyled = styled(Button)``;
 
-const List = ({ tableData }) => {
-  const [testState, setTestState] = useState(0);
+const List = ({ tableData, updateTableData }) => {
+  const [tableState, setTableState] = useState([]);
+  const [selectTableKeyState, setSelectTableKeyState] = useState([]);
+  const [selectionType, setSelectionType] = useState('checkbox');
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      setTableState(selectedRows);
+      setSelectTableKeyState(selectedRowKeys);
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
+
+  const deleteSelectTableData = () => {
+    async function fetchAndSetUser(num) {
+      try {
+        const result = await deleteNotice(selectTableKeyState[num]);
+        updateTableData();
+      } catch (e) {
+        notification.error('상품을 삭제하지 못했습니다.');
+      }
+    }
+
+    for (var i = 0; i < selectTableKeyState.length; i++) {
+      if (i == selectTableKeyState.length - 1) {
+        fetchAndSetUser(i);
+      } else {
+        deleteNotice(selectTableKeyState[i]);
+      }
+    }
+  };
 
   const history = useHistory();
 
   const handleModifyNotice = () => {
     history.push({
       pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`,
-      state: { testState: testState },
+      state: { tableState: tableState },
     });
   };
-
-  console.log(tableData);
 
   const columns = [
     {
@@ -92,14 +124,26 @@ const List = ({ tableData }) => {
       </TitleContainer>
       <BodyContainer>
         <ButtonContainer>
-          <Button>선택삭제</Button>
+          <Button
+            onClick={() => {
+              deleteSelectTableData();
+            }}
+          >
+            선택삭제
+          </Button>
         </ButtonContainer>
         <Table
           scroll={{ x: '50vw', y: 500 }}
           columns={columns}
           data={tableData}
           selectionType={'checkbox'}
-          onChange={() => {}}
+          onChange={() => {
+            console.log();
+          }}
+          rowSelection={{
+            type: selectionType,
+            ...rowSelection,
+          }}
         />
       </BodyContainer>
     </Container>

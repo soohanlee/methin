@@ -8,6 +8,10 @@ export const getNotice = async () => {
   return await axios.get(`api/admin/notice`);
 };
 
+export const getNoticeId = async (id) => {
+  return await axios.get(`api/admin/notice/${id}`);
+};
+
 export const patchNotice = async (id, data) => {
   return await axios.patch(`api/admin/notice/${id}`, data);
 };

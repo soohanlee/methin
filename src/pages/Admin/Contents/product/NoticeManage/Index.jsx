@@ -11,6 +11,10 @@ const NoticeManage = () => {
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
+    updateTableData();
+  }, []);
+
+  const updateTableData = () => {
     async function fetchAndSetUser() {
       try {
         const result = await getNotice();
@@ -20,18 +24,17 @@ const NoticeManage = () => {
         // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
 
         setTableData(customList);
-        console.log(customList);
       } catch (e) {
         notification.error('상품 정보를 가져오지 못했습니다.');
       }
     }
     fetchAndSetUser();
-  }, []);
+  };
 
   return (
     <Container>
       <Filter />
-      <List tableData={tableData} />
+      <List tableData={tableData} updateTableData={updateTableData} />
     </Container>
   );
 };
