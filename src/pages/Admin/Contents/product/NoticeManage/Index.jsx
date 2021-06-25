@@ -9,7 +9,7 @@ const Container = styled.div``;
 
 const NoticeManage = () => {
   const [tableData, setTableData] = useState([]);
-
+  const limite = 16;
   useEffect(() => {
     updateTableData();
   }, []);
@@ -17,12 +17,13 @@ const NoticeManage = () => {
   const updateTableData = () => {
     async function fetchAndSetUser() {
       try {
-        const result = await getNotice();
-        const customList = result.data.data.list.map((item) => {
-          return { ...item, key: item.id };
-        });
-        // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
-
+        const result = await getNotice(0);
+        const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+      let customList = [];
+      for (let i = 0; i < maxOffset; i++) {
+        const _result = await getProductList(i);
+        customList = customList.concat(_result.data.data.list);
+      }
         setTableData(customList);
       } catch (e) {
         notification.error('상품 정보를 가져오지 못했습니다.');

@@ -44,14 +44,6 @@ const RegisterNotice = () => {
     moment(),
   );
 
-  const [isUsePopup, setIsUsePopup] = useState(false);
-  const [startPopupDate, setStartPopupDateDate] = useState(moment());
-  const [selectedStartPopupDate, setSelectedStartPopupDate] = useState(
-    moment(),
-  );
-  const [endPopupDate, setendPopupDate] = useState(moment());
-  const [selectedEndPopupDate, setSelectedEndPopupDate] = useState(moment());
-
   useEffect(() => {
     async function fetchAndSetUser() {
       try {
@@ -75,17 +67,12 @@ const RegisterNotice = () => {
           );
         }
       } catch (e) {
-        notification.error('상품 정보를 가져오지 못했습니다.');
       }
     }
     fetchAndSetUser();
   }, []);
 
   const handleTypeChange = (value) => {
-    console.log(value);
-  };
-
-  const handleDisplayAreaChange = (value) => {
     console.log(value);
   };
 
@@ -128,23 +115,6 @@ const RegisterNotice = () => {
     setEndDisplayDate(value);
   };
 
-  const handleStartPopupDateSelect = (value) => {
-    setStartPopupDateDate(value);
-    setSelectedStartPopupDate(value);
-  };
-
-  const handleStartPopupDateChange = (value) => {
-    setStartPopupDateDate(value);
-  };
-
-  const handleEndPopupDateSelect = (value) => {
-    setendPopupDate(value);
-    setSelectedEndPopupDate(value);
-  };
-
-  const handleEndPopupDateChange = (value) => {
-    setendPopupDate(value);
-  };
 
   // if(!location.state.tableState)
   // {
@@ -192,17 +162,14 @@ const RegisterNotice = () => {
           uploadImageCallBack={uploadImageCallBack}
         />
       </LabelContents>
-      <LabelContents title="전시위치">
-        <BasicSelectBox list={displayArea} onChange={handleDisplayAreaChange} />
-      </LabelContents>
-      <LabelContents title="전시기간 설정">
+      <LabelContents title="공지 노출정보">
         <DisplayDateContainer>
           <Radio.Group
             value={isDisplayDate}
             onChange={(e) => setIsDisplayDate(e.target.value)}
           >
-            <Radio.Button value={true}>설정함</Radio.Button>
-            <Radio.Button value={false}>설정안함</Radio.Button>
+            <Radio.Button value={true}>미리보기</Radio.Button>
+            <Radio.Button value={false}>노출</Radio.Button>
           </Radio.Group>
           {isDisplayDate && (
             <>
@@ -222,33 +189,6 @@ const RegisterNotice = () => {
           )}
         </DisplayDateContainer>
       </LabelContents>
-      <LabelContents title="팝업사용">
-        <DisplayDateContainer>
-          <Radio.Group
-            value={isUsePopup}
-            onChange={(e) => setIsUsePopup(e.target.value)}
-          >
-            <Radio.Button value={true}>설정함</Radio.Button>
-            <Radio.Button value={false}>설정안함</Radio.Button>
-          </Radio.Group>
-          {isUsePopup && (
-            <>
-              <Calendar
-                value={startPopupDate}
-                selectedValue={selectedStartPopupDate}
-                onSelect={handleStartPopupDateSelect}
-                onPanelChange={handleStartPopupDateChange}
-              />
-              <Calendar
-                value={endPopupDate}
-                selectedValue={selectedEndPopupDate}
-                onSelect={handleEndPopupDateSelect}
-                onPanelChange={handleEndPopupDateChange}
-              />
-            </>
-          )}
-        </DisplayDateContainer>
-      </LabelContents>
       <Button onClick={RegistNotice}>상품 공지사항 등록</Button>
       <Button>취소</Button>
     </Container>
@@ -262,10 +202,4 @@ const searchNameList = [
   { label: '이벤트', value: 'event' },
   { label: '배송지연', value: 'late' },
   { label: '상품', value: 'product' },
-];
-
-const displayArea = [
-  { label: '전체', value: 'all' },
-  { label: '웹', value: 'web' },
-  { label: '모바일', value: 'mobile' },
 ];

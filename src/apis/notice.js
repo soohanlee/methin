@@ -4,8 +4,8 @@ export const postNotice = async (data) => {
   return await axios.post(`api/admin/notice`, data);
 };
 
-export const getNotice = async () => {
-  return await axios.get(`api/admin/notice`);
+export const getNotice = async (offset) => {
+  return await axios.get(`api/admin/notice?offset=${offset}`);
 };
 
 export const getNoticeId = async (id) => {
