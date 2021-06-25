@@ -67,7 +67,6 @@ const RegisterNotice = () => {
           );
         }
       } catch (e) {
-        notification.error('상품 정보를 가져오지 못했습니다.');
       }
     }
     fetchAndSetUser();

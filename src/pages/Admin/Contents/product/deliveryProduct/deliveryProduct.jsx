@@ -16,6 +16,7 @@ import { getProductList } from 'apis/product';
 import { notification } from 'utils/notification';
 
 const DeliveryProduct = () => {
+  const limite = 16;
   const [tableData, setTableData] = useState([]);
   const [allTableData, setAllTableData] = useState([]);
   const [tableCount, setTableCount] = useState([]);
@@ -29,10 +30,17 @@ const DeliveryProduct = () => {
 
   const getApiAllDeliveryData = async () => {
     try {
-      const result = await allDeliveryProduct();
-      setTableData(result.data.data.list);
-      setAllTableData(result.data.data.list);
-      setTableCount(result.data.data.count);
+      const result = await allDeliveryProduct(0);
+      const count = result.data.data.count;
+      const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+      let customList = [];
+      for (let i = 0; i < maxOffset; i++) {
+        const _result = await getProductList(i);
+        customList = customList.concat(_result.data.data.list);
+      }
+      setTableData(customList);
+      setAllTableData(customList);
+      setTableCount(customList.count);
     } catch (e) {
       notification.error('배송 정보를 가져오지 못했습니다.');
     }

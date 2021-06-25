@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const allDeliveryProduct = async () => {
-  return await axios.get(`api/admin/ship`);
+export const allDeliveryProduct = async (offset) => {
+  return await axios.get(`api/admin/ship?offset=${offset}`);
 };
 
 export const searchDeliveryProduct = async (id) => {
