@@ -21,7 +21,7 @@ const NoticeManage = () => {
         const maxOffset = Math.floor(result.data.data.count / limite) + 1;
       let customList = [];
       for (let i = 0; i < maxOffset; i++) {
-        const _result = await getProductList(i);
+        const _result = await getNotice(i);
         customList = customList.concat(_result.data.data.list);
       }
         setTableData(customList);
