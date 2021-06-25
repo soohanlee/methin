@@ -75,7 +75,7 @@ const QNAManager = () => {
   useEffect(() => {
     GetData();
   }, []);
-
+  const limite = 16;
   const [isClickAnswer, setIsAnswer] = useState(false);
   const textTitleAreaRef = useRef('');
   const textAreaRef = useRef('');
@@ -83,16 +83,15 @@ const QNAManager = () => {
   const GetData = () => {
     async function fetchAndSetUser() {
       try {
-        const result = await getProductQNA();
-        notification.success('리뷰 정보를 가져왔습니다.');
-
-        const customList = result.data.data.list.map((item) => {
-          return { ...item, key: item.id };
-        });
-        // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
-
+        const result = await getProductQNA(0);
+        const count = result.data.data.count;
+        const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+        let customList = [];
+        for (let i = 0; i < maxOffset; i++) {
+          const _result = await getProductQNA(i);
+          customList = customList.concat(_result.data.data.list);
+        }
         setTableList(customList);
-        console.log(result);
       } catch (e) {
         notification.error('리뷰 정보를 가져오지 못했습니다.');
       }

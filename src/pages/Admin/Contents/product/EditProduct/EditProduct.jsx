@@ -14,7 +14,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     async function fetchAndSetUser() {
-      // try {
+      try {
       const result = await getProductList(0);
       // const customList = result.data.data.list.map((item) => {
       //   return { ...item, key: item.id };
@@ -30,9 +30,9 @@ const EditProduct = () => {
       }
       setTableList(customList);
       setTableCount(result.data.data.count);
-      // } catch (e) {
-      //   notification.error('상품 정보를 가져오지 못했습니다.');
-      // }
+      } catch (e) {
+        notification.error('상품 정보를 가져오지 못했습니다.');
+      }
     }
     fetchAndSetUser();
   }, []);

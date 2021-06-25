@@ -64,6 +64,7 @@ const BasicButtonStyled = styled(BasicButton)`
   width: 10rem;
 `;
 const OrderSerach = () => {
+  const limite = 16;
   const [datePeriod, setDatePeriod] = useState('');
   const [table, setTable] = useState([]);
   const [tableCount, setTableCount] = useState(0);
@@ -71,9 +72,19 @@ const OrderSerach = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await getPaymentList();
-        setTable(result.data.data.list);
-        setTableCount(result.data.data.count);
+        const result = await getPaymentList(0);
+
+        const count = result.data.data.count;
+        const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+        let customList = [];
+        for (let i = 0; i < maxOffset; i++) {
+          const _result = await getPaymentList(i);
+          customList = customList.concat(_result.data.data.list);
+        }
+
+        setTable(customList);
+        setTableCount(customList.length);
+
       } catch (e) {
         notification.error(e);
       }
