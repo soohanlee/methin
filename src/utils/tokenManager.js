@@ -86,13 +86,17 @@ export async function getNewAccessToken() {
 }
 
 export async function getIsAvalidAccessToken() {
-  const accessToken = await getAccessToken();
+  const accessToken = getAccessToken();
 
   if (accessToken) {
-    const response = await jwtVerify();
-    console.log(response);
-    if (response.data.message === 'success') {
-      return true;
+    try {
+      const response = await jwtVerify();
+      if (response.data.message === 'success') {
+        console.log('여기오지');
+        return true;
+      }
+    } catch (e) {
+      return false;
     }
   } else {
     return false;

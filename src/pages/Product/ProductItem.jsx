@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Label } from 'components/styled/Form';
 import { BreakPoint } from 'configs/config';
 
@@ -23,6 +23,7 @@ const ImgContainer = styled.div`
   height: 0;
   background: grey;
   padding-bottom: 120%;
+
   @media screen and (max-width: ${BreakPoint.s}px) {
     margin-bottom: 0;
   }
@@ -46,9 +47,14 @@ const CartContainer = styled.div`
   bottom: 0;
   right: 0;
   background: ${(props) => props.theme.SIGNITURE_MAIN};
-  display: flex;
   align-items: center;
   justify-content: center;
+  display: none;
+  ${(props) =>
+    props.isShowImg &&
+    css`
+      display: flex;
+    `}
 `;
 
 const CartImg = styled.img.attrs({
@@ -135,12 +141,16 @@ const ProductItem = ({
   className,
   onCartClick,
   onClick,
+  isShowImg,
 }) => {
   return (
     <Container className={className} key={id} onClick={onClick}>
       <ImgContainer>
         <Img src={process.env.PUBLIC_URL + img} />
-        <CartContainer onClick={(e) => onCartClick(e, id)}>
+        <CartContainer
+          onClick={(e) => onCartClick(e, id)}
+          isShowImg={isShowImg}
+        >
           <CartImg />
         </CartContainer>
       </ImgContainer>

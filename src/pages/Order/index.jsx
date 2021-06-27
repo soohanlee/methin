@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import { notification } from 'utils/notification';
+import { getUserDeliveryList } from 'apis/delivery';
+
 import OriginBorderTitleContainer from 'components/container/BorderTitleContainer';
 import { PaddingContainer } from 'components/styled/Container';
 import { PageTitle as OriginPageTitle } from 'components/styled/Form';
@@ -160,15 +163,38 @@ const Order = () => {
     false,
   );
 
+  const [userDeliveryList, setUserDeliveryList] = useState([]);
+  const [selectedDeliveryItem, setSelectedDeliveryItem] = useState('');
+
   const handleOpenDeliveryChangeModal = () => {
     setIsOpenChangeDevliveryModal(true);
   };
+
+  const getDeliveryList = async () => {
+    try {
+      const result = await getUserDeliveryList();
+      if (result && result.data && result.data.message === 'success') {
+        setUserDeliveryList(result.data.data.list);
+      }
+    } catch (e) {
+      notification.error('새로고침 후 다시 시도해주세요.');
+    }
+  };
+
+  useEffect(() => {
+    getDeliveryList();
+  }, []);
 
   return (
     <>
       <SelectDelivery
         isOpen={isOpenChangeDevliveryModal}
+        list={userDeliveryList}
+        selectedItem={selectedDeliveryItem}
+        setSelectedItem={setSelectedDeliveryItem}
+        setUserDeliveryList={setUserDeliveryList}
         onCancel={() => setIsOpenChangeDevliveryModal(false)}
+        setIsOpenChangeDevliveryModal={setIsOpenChangeDevliveryModal}
       />
       <PaddingContainer>
         {/* 결제화면 */}

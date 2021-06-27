@@ -75,6 +75,18 @@ const SubButton = styled(OriginSubButton)`
   line-height: 5rem;
 `;
 
+const NoticeJoinContainer = styled.div`
+  display: flex;
+  margin-top: 2rem;
+  justify-content: flex-end;
+`;
+
+const NoticeJoin = styled.span`
+  border-bottom: 0.1rem solid ${(props) => props.theme.BORDER};
+  text-align: center;
+  cursor: pointer;
+`;
+
 const Login = () => {
   const {
     register,
@@ -83,6 +95,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const history = useHistory();
+  console.log(history);
   const login = useContext(UserContext);
 
   useEffect(() => {
@@ -125,6 +138,14 @@ const Login = () => {
     history.push(ROUTE_PATH.signup);
   };
 
+  const handleClickNoMember = () => {
+    history.push(ROUTE_PATH.order);
+  };
+
+  const handleSearchProduct = () => {
+    history.push(ROUTE_PATH.order);
+  };
+
   return (
     <ResponsiveTemplate NonPCContents={<MobileLogin />}>
       <Container>
@@ -136,7 +157,7 @@ const Login = () => {
               type="text"
               placeholder="아이디를 입력해주세요"
             />
-            {errors.id && <span>This field is required</span>}
+            {errors.id && <span>아이디를 입력해주세요.</span>}
           </InputContainer>
 
           <InputContainer>
@@ -145,11 +166,20 @@ const Login = () => {
               type="password"
               placeholder="비밀번호를 입력해주세요"
             />
-            {errors.password && <span>This field is required</span>}
+            {errors.password && <span>비밀번호를 입력해주세요</span>}
           </InputContainer>
 
           <MainButton type="submit">로그인</MainButton>
           <SubButton onClick={handleMoveSignupPage}>회원가입</SubButton>
+          {history.location.state?.purchase ? (
+            <NoticeJoinContainer>
+              <NoticeJoin onClick={handleClickNoMember}>비회원 구매</NoticeJoin>
+            </NoticeJoinContainer>
+          ) : (
+            <NoticeJoinContainer>
+              <NoticeJoin onClick={handleSearchProduct}>비회원 조회</NoticeJoin>
+            </NoticeJoinContainer>
+          )}
 
           {login.loginState === LOGGING_IN && <div>로그인중</div>}
         </Form>

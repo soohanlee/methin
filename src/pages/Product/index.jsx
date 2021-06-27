@@ -147,6 +147,7 @@ const Product = () => {
               span={4}
               onCartClick={handleCartClick}
               onClick={() => handleProductDetailClick(id)}
+              isShowImg
             />
           );
         },

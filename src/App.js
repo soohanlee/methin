@@ -19,7 +19,7 @@ import {
   removeCartCookies,
   // getNewAccessToken,
   // getIsRememberToken,
-  // cleanAllToken,
+  cleanToken,
 } from 'utils/tokenManager';
 
 import {
@@ -97,20 +97,19 @@ function App() {
     layoutDom?.scrollTo(0, 0);
   }, [location.pathname]);
 
-  useEffect(() => {
-    async function fetchAndSetUser() {
-      const accessToken = await getAccessToken();
-
+  useEffect(async () => {
+    const accessToken = getAccessToken();
+    if (accessToken) {
       if (await getIsValidUser()) {
         axios.defaults.headers.common[
           'Authorization'
         ] = `Bearer ${accessToken}`;
         changeUserState(LOGGED_IN);
       } else {
+        cleanToken();
         changeUserState(NOT_LOGGED_IN);
       }
     }
-    fetchAndSetUser();
   }, []);
 
   useEffect(() => {
@@ -138,14 +137,15 @@ function App() {
   };
 
   const getIsValidUser = async () => {
-    const accessToken = await getAccessToken();
-    const refreshToken = await getRefreshToken();
+    const accessToken = getAccessToken();
+    const refreshToken = getRefreshToken();
 
     if (accessToken) {
       if (await getIsAvalidAccessToken()) {
         return true;
+      } else {
+        return false;
       }
-      return false;
     } else if (refreshToken) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${refreshToken}`;
       const result = await reissueJwt();

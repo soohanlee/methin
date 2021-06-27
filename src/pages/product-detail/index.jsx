@@ -162,7 +162,16 @@ const ProductDetail = () => {
   useEffect(() => {}, []);
 
   const handleMovePage = (path) => {
-    history.push(`${path}`);
+    if (path === ROUTE_PATH.order) {
+      if (login.loginState === LOGGED_IN) {
+        history.push(`${path}`);
+      } else {
+        history.push({
+          pathname: ROUTE_PATH.login,
+          state: { purchase: true },
+        });
+      }
+    }
   };
 
   const handleAddCartList = async () => {

@@ -25,3 +25,15 @@ export const updateDeliveryDetail = async (id, data) => {
 export const deleteDeliveryDetail = async (id) => {
   return await axios.delete(`api/admin/ship/${id}`);
 };
+
+export const getUserDeliveryList = (data) => {
+  return axios.get(`/api/address`, data);
+};
+
+export const addUserDelivery = (data) => {
+  return axios.post(`/api/address`, data);
+};
+
+export const updateUserDelivery = (id, data) => {
+  return axios.patch(`/api/address/${id}`, data);
+};
