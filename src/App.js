@@ -97,24 +97,14 @@ function App() {
     layoutDom?.scrollTo(0, 0);
   }, [location.pathname]);
 
-  useEffect(async () => {
+  useEffect(() => {
     const accessToken = getAccessToken();
     if (accessToken) {
-      if (await getIsValidUser()) {
-        axios.defaults.headers.common[
-          'Authorization'
-        ] = `Bearer ${accessToken}`;
-        changeUserState(LOGGED_IN);
-      } else {
-        cleanToken();
-        changeUserState(NOT_LOGGED_IN);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (getAccessToken()) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       changeUserState(LOGGED_IN);
+    } else {
+      cleanToken();
+      changeUserState(NOT_LOGGED_IN);
     }
   }, [getAccessToken]);
 

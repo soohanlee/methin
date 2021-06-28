@@ -98,6 +98,7 @@ const DeliveryItem = (props) => {
       setSelectedItem(id);
     }
   }, []);
+
   return (
     <ItemContainer>
       <ItemWrap>
@@ -108,7 +109,7 @@ const DeliveryItem = (props) => {
             for={id}
             name="delivery"
             value={id}
-            checked={id === selectedItem}
+            checked={id == selectedItem}
             onChange={onChange}
           />
           <ColumnContainer>

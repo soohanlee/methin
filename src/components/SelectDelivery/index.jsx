@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { addUserDelivery, updateUserDelivery } from 'apis/delivery';
+import {
+  addUserAddress,
+  updateUserAddress,
+  deleteUserAddress,
+} from 'apis/delivery';
 import DaumPostcode from 'react-daum-postcode';
 
 import ModalBase from 'components/ModalBase';
@@ -65,6 +69,7 @@ const SelectDelivery = ({
   list,
   selectedItem,
   setSelectedItem,
+  getAddressList,
 }) => {
   const [mode, setMode] = useState('selected'); // selected, search, other, edit
 
@@ -92,16 +97,21 @@ const SelectDelivery = ({
     setMode('search');
   };
 
+  const handleRadioButton = (e) => {
+    setSelectedItem(e.target.value);
+  };
+
   const renderDeliveryList = () => {
     return (
       list &&
       list.map((item) => {
         return (
           <DeliveryItem
-            onClickChangeButton={handleClickChangeButton}
+            onClickChangeButton={(id) => handleClickChangeButton(id)}
             setSelectedItem={setSelectedItem}
             selectedItem={selectedItem}
             item={item}
+            onChange={handleRadioButton}
           />
         );
       })
@@ -151,10 +161,10 @@ const SelectDelivery = ({
         address_sub: addOtherAddress,
       };
 
-      const result = await addUserDelivery(data);
-      console.log(result);
+      const result = await addUserAddress(data);
+
       if (result && result.data && result.data.message === 'success') {
-        setMode('selected');
+        init();
       }
     } catch (e) {
       notification.error('새로 고침 후 시도해주세요.');
@@ -178,12 +188,23 @@ const SelectDelivery = ({
         address_main: address_main,
         address_sub: addOtherAddress,
       };
-      const result = await updateUserDelivery(id, data);
+      const result = await updateUserAddress(id, data);
       if (result.data.status === 404) {
         notification.error('수정 되지 않았습니다.');
       }
-      setMode('selected');
+      getAddressList();
+      init();
     } catch (e) {}
+  };
+
+  const handleDeleteDelivery = async () => {
+    console.log('삭제');
+    const isDelete = window.confirm('정말 삭제하시겠습니까?');
+    if (isDelete) {
+      await deleteUserAddress(selectedEditItem[0].id);
+      getAddressList();
+      init();
+    }
   };
 
   const handleCancel = () => {
@@ -245,7 +266,7 @@ const SelectDelivery = ({
           />
 
           <SubButton onClick={handleEditDelivery}>저장</SubButton>
-          <AddDeliveryButton onClick={handleApplyNewDelivery}>
+          <AddDeliveryButton onClick={handleDeleteDelivery}>
             삭제
           </AddDeliveryButton>
         </Container>
