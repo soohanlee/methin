@@ -6,6 +6,7 @@ import { getUserProductDetail } from 'apis/product';
 import { addCartItem } from 'apis/cart';
 import { addCartList } from 'utils/common';
 import { notification } from 'utils/notification';
+import { getCartCookies, removeCartCookies } from 'utils/tokenManager';
 
 import { UserContext, LOGGED_IN } from 'store/user-context';
 
@@ -16,6 +17,7 @@ import RelatedProducts from 'pages/product-detail/RelatedProducts';
 import OriginDescriptions from 'components/Descriptions';
 import ReviewContainer from 'components/review/ReviewContainer';
 import MobileProductDetail from './mobile';
+import QNAContainer from 'components/QNA/QNAContainer';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -150,16 +152,8 @@ const Descriptions = styled(OriginDescriptions)`
 const ProductDetail = () => {
   const history = useHistory();
   const login = useContext(UserContext);
+  const params = useParams();
   const [productCount, setProductCount] = useState(1);
-
-  const parms = useParams();
-  console.log(parms);
-
-  // const getProductDetail = () => {
-  //   const productDetail = getUserProductDetail();
-  // };
-
-  useEffect(() => {}, []);
 
   const handleMovePage = (path) => {
     if (path === ROUTE_PATH.order) {
@@ -175,11 +169,11 @@ const ProductDetail = () => {
   };
 
   const handleAddCartList = async () => {
+    const numberProductId = parseInt(params.id);
     const data = {
-      product_id: parms.id,
+      product_id: numberProductId,
       count: productCount,
     };
-
     if (login.loginState === LOGGED_IN) {
       try {
         const result = addCartItem(data);
@@ -188,7 +182,11 @@ const ProductDetail = () => {
         }
       } catch (e) {}
     } else {
-      addCartList(data);
+      const result = addCartList(data);
+      console.log(result, 'result');
+      if (result === 'isExist') {
+        alert('이미 장바구니에 포함된 상품입니다');
+      }
     }
   };
 
@@ -264,6 +262,7 @@ const ProductDetail = () => {
         <Descriptions />
 
         <ReviewContainer count={224} />
+        <QNAContainer />
       </Container>
     </ResponsiveTemplate>
   );

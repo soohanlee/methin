@@ -75,6 +75,21 @@ export const deleteRelatedProduct = async (id, related_product_id) => {
   );
 };
 
+export const getUserProductList = async (menu_id, data) => {
+  //   - **menu_id: number ⇒ 메뉴ID**
+  // - offset: number (default: 0, optional) ⇒ 페이지 번호
+  // - limit: number (default: 16, optional) ⇒ 페이지별 개수
+  return await axios.get(`${userProductUrl}/menu_id=${menu_id}`, data);
+};
+
 export const getUserProductDetail = async (id) => {
   return await axios.get(`${userProductUrl}/${id}`);
+};
+
+export const getProductReviewDetail = async (id, data) => {
+  return await axios.get(`${userProductUrl}/${id}/review`, data);
+};
+
+export const getProductDetailQNA = async (id, data) => {
+  return await axios.get(`${userProductUrl}/${id}/qna`, data);
 };

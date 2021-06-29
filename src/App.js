@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
-
 import { Layout } from 'antd';
+import axios from 'axios';
 
+import { addCartItem } from 'apis/cart';
 import { LightTheme } from 'configs/theme';
 import { ROUTE_PATH, BreakPoint } from 'configs/config';
 import GlobalStyle from 'configs/globalStyle';
 import { reissueJwt } from 'apis/auth';
 
-import axios from 'axios';
 import {
   getIsAvalidAccessToken,
   getAccessToken,
@@ -77,6 +77,7 @@ function App() {
   // 처음 페이지 들어왔을때 로딩 const [isLoading, setIs Loading] = React.useState(true); 테마
   // 같은 경우 다크테마 라이트테마 변경이 가능하게 확장하기 위해 아래같이 설정.
   const windowSize = useWindowSize();
+
   const [viewType, setViewType] = useState('PC');
 
   const THEME = LightTheme;
@@ -119,6 +120,22 @@ function App() {
   useEffect(() => {
     if (!getCartCookies()) {
       setCartCookies([]);
+    }
+  }, []);
+
+  useEffect(async () => {
+    const cookiesCartList = JSON.parse(getCartCookies());
+
+    if (isLogin === LOGGED_IN && cookiesCartList.length > 0) {
+      const cartList = [];
+      try {
+        for (let i = 0; i < cookiesCartList.length; i++) {
+          cartList.push(addCartItem(cookiesCartList[i]));
+        }
+        Promise.all(cartList).then((res) => {
+          removeCartCookies();
+        });
+      } catch (e) {}
     }
   }, []);
 

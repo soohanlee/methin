@@ -1,4 +1,4 @@
-import { getCartCookies } from 'utils/tokenManager';
+import { getCartCookies, setCartCookies } from 'utils/tokenManager';
 
 export function getLocalStorageData(name) {
   try {
@@ -28,6 +28,14 @@ export function removeRest(value) {
 
 export const addCartList = (data) => {
   const cartList = getCartCookies();
-  const cartInfo = { product_id: data.id, count: data.count };
-  cartList.push(cartInfo);
+  const result = JSON.parse(cartList);
+
+  const cartInfo = [{ product_id: data.product_id, count: data.count }];
+  const addResult = result.concat(cartInfo);
+  if (result.find(({ product_id }) => product_id === data.product_id)) {
+    return 'isExist';
+  } else {
+    setCartCookies(addResult);
+    return 'added';
+  }
 };

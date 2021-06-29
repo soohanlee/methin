@@ -16,6 +16,12 @@ export const Label = styled.label`
   color: ${(props) =>
     props.grey ? props.theme.TEXT_INFORMATION : props.theme.TEXT_MAIN};
   font-size: 1.55rem;
+
+  ${(props) =>
+    props.hightlight &&
+    css`
+      color: ${props.theme.SIGNITURE_MAIN};
+    `}
   @media screen and (max-width: ${BreakPoint.xl}px) {
     font-size: 1.4rem;
   }

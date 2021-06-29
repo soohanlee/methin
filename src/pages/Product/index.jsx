@@ -202,7 +202,7 @@ const filterList = [
 
 const productList = [
   {
-    id: '123',
+    id: 13,
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
     catergory: '식품',
     description: '마시썽',
@@ -211,7 +211,7 @@ const productList = [
     salePercentage: '-15',
   },
   {
-    id: '1234',
+    id: 14,
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
     catergory: '식품',
     description: '마시썽',
@@ -220,7 +220,7 @@ const productList = [
     salePercentage: '-15',
   },
   {
-    id: '1235',
+    id: 15,
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
     catergory: '식품',
     description: '마시썽',
@@ -229,7 +229,7 @@ const productList = [
     salePercentage: '-15',
   },
   {
-    id: '1236',
+    id: 16,
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
     catergory: '식품',
     description: '마시썽',
@@ -238,7 +238,7 @@ const productList = [
     salePercentage: '-15',
   },
   {
-    id: '1237',
+    id: 17,
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
     catergory: '식품',
     description: '마시썽',
