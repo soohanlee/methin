@@ -24,23 +24,28 @@ const OrderConfirm = () => {
 
   useEffect(() => {
     async function fetchAndSetUser() {
-      try {
-        const result = await getPaidWithPaymentConfirmedList(0);
-        const count = result.data.data.count;
+      await getApiDeliveryData();
+    }
+    fetchAndSetUser();
+  }, []);
+
+  const getApiDeliveryData = async () => {
+    try {
+      const result = await getPaidWithPaymentConfirmedList(0);
+      const count = result.data.data.count;
       const maxOffset = Math.floor(result.data.data.count / limite) + 1;
       let customList = [];
       for (let i = 0; i < maxOffset; i++) {
         const _result = await getPaidWithPaymentConfirmedList(i);
         customList = customList.concat(_result.data.data.list);
       }
-        setTable(customList);
-        setTableCount(customList.length);
-      } catch (e) {
-        notification.error('상품 정보를 가져오지 못했습니다.');
-      }
+      setTable(customList);
+      setTableCount(customList.length);
+      notification.success('검색 성공');
+    } catch (e) {
+      notification.error('발송 정보를 가져오지 못했습니다.');
     }
-    fetchAndSetUser();
-  }, []);
+  };
 
   const handleClick = (value) => {
     switch (value) {
@@ -88,7 +93,7 @@ const OrderConfirm = () => {
   return (
     <div>
       <BoardHeader list={list} onClick={handleClick} data={data} />
-      <Filter />
+      <Filter getApiDeliveryData={getApiDeliveryData} />
       <Table
         orderCountTableColumns={orderCountTableColumns}
         orderCountTableData={orderCountTableData}

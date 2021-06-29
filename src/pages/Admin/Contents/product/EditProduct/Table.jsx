@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
 import { Button as OriginButton } from 'antd';
@@ -36,7 +36,9 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 0.5rem;
 `;
 
-const Table = ({ tableList, setTableList }) => {
+const Table = ({ getAllProductyData, result, count }) => {
+  const [data, setDatas] = useState([]);
+
   const [productSortSelectState, setProductSortSelectState] = React.useState(
     [],
   );
@@ -50,6 +52,11 @@ const Table = ({ tableList, setTableList }) => {
     false,
   );
   const [selectedProductState, setSelectedProductState] = React.useState('');
+
+  useEffect(() => {
+    setDatas(result);
+  }, [result]);
+
   const history = useHistory();
 
   const setExcelDown = () => {
@@ -161,43 +168,43 @@ const Table = ({ tableList, setTableList }) => {
     },
   ];
   //판매상태
-  for (var i = 0; i < tableList.length; i++) {
-    switch (tableList[i].status) {
+  for (var i = 0; i < data.length; i++) {
+    switch (data[i].status) {
       case 0:
-        tableList[i].status = '판매준비';
+        data[i].status = '판매준비';
         break;
       case 1:
-        tableList[i].status = '판매중';
+        data[i].status = '판매중';
         break;
       case 2:
-        tableList[i].status = '판매종료';
+        data[i].status = '판매종료';
         break;
     }
     //전시상태
-    switch (tableList[i].preview_status) {
+    switch (data[i].preview_status) {
       case 0:
-        tableList[i].preview_status = 'NO';
+        data[i].preview_status = 'NO';
         break;
       case 1:
-        tableList[i].preview_status = 'YES';
+        data[i].preview_status = 'YES';
         break;
     }
     //배송비유형
-    switch (tableList[i].ship_category) {
+    switch (data[i].ship_category) {
       case 0:
-        tableList[i].ship_category = '무료';
+        data[i].ship_category = '무료';
         break;
       case 1:
-        tableList[i].ship_category = '유료';
+        data[i].ship_category = '유료';
         break;
     }
     //배송비지불유형
-    switch (tableList[i].ship_pay_type) {
+    switch (data[i].ship_pay_type) {
       case 0:
-        tableList[i].ship_pay_type = '선불';
+        data[i].ship_pay_type = '선불';
         break;
       case 1:
-        tableList[i].ship_pay_type = '착불';
+        data[i].ship_pay_type = '착불';
         break;
     }
   }
@@ -219,10 +226,10 @@ const Table = ({ tableList, setTableList }) => {
     try {
       const result = await deleteProduct(selectedProductState);
       if (result.status === 200) {
-        const newTable = tableList.filter((item) => {
+        const newTable = data.filter((item) => {
           return item.id !== selectedProductState;
         });
-        setTableList(newTable);
+        setDatas(newTable);
       } else if (result.status === 404) {
         notification.error('이미 삭제되었습니다.');
       }
@@ -238,12 +245,13 @@ const Table = ({ tableList, setTableList }) => {
   const handleDeleteModalClose = () => {
     setisDeleteModalOpenState(false);
     setSelectedProductState('');
+    getAllProductyData();
   };
 
   return (
     <ContainerStyled>
       <HeaderContainerStyled>
-        <div>상품목록(총 {tableList.length}개)</div>
+        <div>상품목록(총 {count}개)</div>
         <ButtonContainerStyled>
           <BasicSelectBoxStyled
             onChange={(value) => {
@@ -270,7 +278,7 @@ const Table = ({ tableList, setTableList }) => {
 
       <BasicTable
         scroll={{ x: '250vw', y: 500 }}
-        data={tableList}
+        data={data}
         columns={columns}
         selectionType="checkbox"
         onChange={handleChange}

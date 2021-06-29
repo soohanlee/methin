@@ -16,25 +16,29 @@ const NoticeManage = () => {
 
   const updateTableData = () => {
     async function fetchAndSetUser() {
-      try {
-        const result = await getNotice(0);
-        const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+      await getApiNoticeData();
+    }
+    fetchAndSetUser();
+  };
+
+  const getApiNoticeData = async () => {
+    try {
+      const result = await getNotice(0);
+      const maxOffset = Math.floor(result.data.data.count / limite) + 1;
       let customList = [];
       for (let i = 0; i < maxOffset; i++) {
         const _result = await getNotice(i);
         customList = customList.concat(_result.data.data.list);
       }
-        setTableData(customList);
-      } catch (e) {
-        notification.error('상품 정보를 가져오지 못했습니다.');
-      }
+      setTableData(customList);
+    } catch (e) {
+      notification.error('공지 정보를 가져오지 못했습니다.');
     }
-    fetchAndSetUser();
   };
 
   return (
     <Container>
-      <Filter />
+      <Filter getApiNoticeData={getApiNoticeData} />
       <List tableData={tableData} updateTableData={updateTableData} />
     </Container>
   );

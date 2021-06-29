@@ -30,9 +30,15 @@ const OrderCancel = () => {
 
   useEffect(() => {
     async function fetchAndSetUser() {
-      try {
-        const result = await getCanceledPaymentList(0);
-        const count = result.data.data.count;
+      await getApiDeliveryData();
+    }
+    fetchAndSetUser();
+  }, []);
+
+  const getApiDeliveryData = async () => {
+    try {
+      const result = await getCanceledPaymentList(0);
+      const count = result.data.data.count;
       const maxOffset = Math.floor(result.data.data.count / limite) + 1;
       let customList = [];
       for (let i = 0; i < maxOffset; i++) {
@@ -40,19 +46,17 @@ const OrderCancel = () => {
         customList = customList.concat(_result.data.data.list);
       }
 
-        setTableData(customList);
-        setTableCount(customList.length);
-      } catch (e) {
-        notification.error('상품 정보를 가져오지 못했습니다.');
-      }
+      setTableData(customList);
+      setTableCount(customList.length);
+    } catch (e) {
+      notification.error('배송취소 정보를 가져오지 못했습니다.');
     }
-    fetchAndSetUser();
-  }, []);
+  };
 
   return (
     <Container>
       <BoardHeader onClick={categoryTypeClick} list={list} />
-      <Filter />
+      <Filter getApiDeliveryData={getApiDeliveryData} />
       <Table tableData={tableData} count={tableCount} />
     </Container>
   );

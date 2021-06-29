@@ -40,7 +40,7 @@ const DeliveryProduct = () => {
       }
       setTableData(customList);
       setAllTableData(customList);
-      setTableCount(customList.count);
+      setTableCount(customList.length);
     } catch (e) {
       notification.error('배송 정보를 가져오지 못했습니다.');
     }

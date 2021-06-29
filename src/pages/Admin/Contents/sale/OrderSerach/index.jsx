@@ -71,26 +71,31 @@ const OrderSerach = () => {
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const result = await getPaymentList(0);
-
-        const count = result.data.data.count;
-        const maxOffset = Math.floor(result.data.data.count / limite) + 1;
-        let customList = [];
-        for (let i = 0; i < maxOffset; i++) {
-          const _result = await getPaymentList(i);
-          customList = customList.concat(_result.data.data.list);
-        }
-
-        setTable(customList);
-        setTableCount(customList.length);
-
-      } catch (e) {
-        notification.error(e);
-      }
+      await getApiPaymentData();
     }
     fetchData();
   }, []);
+
+  const getApiPaymentData = async () => {
+    try {
+      const result = await getPaymentList(0);
+
+      const count = result.data.data.count;
+      const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+      let customList = [];
+      for (let i = 0; i < maxOffset; i++) {
+        const _result = await getPaymentList(i);
+        customList = customList.concat(_result.data.data.list);
+      }
+
+      setTable(customList);
+      setTableCount(customList.length);
+
+      notification.success('검색 성공');
+    } catch (e) {
+      notification.error(e);
+    }
+  };
 
   const handleStartDateChange = (value) => {
     console.log(value);
@@ -98,6 +103,10 @@ const OrderSerach = () => {
 
   const handleEndDateChange = (value) => {
     console.log(value);
+  };
+
+  const handleSearchOnClick = () => {
+    getApiPaymentData();
   };
 
   const periodRef = useRef(null);
@@ -167,7 +176,10 @@ const OrderSerach = () => {
       <BodyContainer>
         <BodyHeaderContainer>
           <ButtonContainer>
-            <BasicButtonStyled label="검색"></BasicButtonStyled>
+            <BasicButtonStyled
+              onClick={handleSearchOnClick}
+              label="검색"
+            ></BasicButtonStyled>
           </ButtonContainer>
           <Title>목록 (총{tableCount}개)</Title>
         </BodyHeaderContainer>
