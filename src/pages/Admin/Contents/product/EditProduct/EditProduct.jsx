@@ -5,22 +5,24 @@ import EditProductSetting from 'pages/Admin/Contents/product/EditProduct/EditPro
 import Table from 'pages/Admin/Contents/product/EditProduct/Table';
 import { useEffect, useState } from 'react';
 import { notification } from 'utils/notification';
-import { getProductList } from 'apis/product';
+import { getProductList, getProductDetail } from 'apis/product';
 
 const EditProduct = () => {
   const limite = 16;
-  const [tableList, setTableList] = useState([]);
-  const [tableCount, setTableCount] = useState(0);
+  const [tableData, setTableData] = useState([]);
+  const [allTableData, setAllTableData] = useState([]);
+  const [tableCount, setTableCount] = useState([]);
 
   useEffect(() => {
     async function fetchAndSetUser() {
-      try {
-      const result = await getProductList(0);
-      // const customList = result.data.data.list.map((item) => {
-      //   return { ...item, key: item.id };
-      // });
-      // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
+      await getApiProductData();
+    }
+    fetchAndSetUser();
+  }, []);
 
+  const getApiProductData = async () => {
+    try {
+      const result = await getProductList(0);
       const count = result.data.data.count;
       const maxOffset = Math.floor(result.data.data.count / limite) + 1;
       let customList = [];
@@ -28,24 +30,57 @@ const EditProduct = () => {
         const _result = await getProductList(i);
         customList = customList.concat(_result.data.data.list);
       }
-      setTableList(customList);
-      setTableCount(result.data.data.count);
-      } catch (e) {
-        notification.error('상품 정보를 가져오지 못했습니다.');
-      }
+      setTableData(customList);
+      setAllTableData(customList);
+      setTableCount(customList.length);
+    } catch (e) {
+      notification.error('상품 정보를 가져오지 못했습니다.');
     }
-    fetchAndSetUser();
-  }, []);
+  };
+
+  const getAllProductyData = async () => {
+    try {
+      setTableData(allTableData);
+      notification.success('검색 성공');
+    } catch (e) {
+      notification.error('상품 정보를 가져오지 못했습니다.');
+    }
+  };
+
+  const initProductData = async () => {
+    try {
+      getAllProductyData();
+      notification.success('초기화 성공');
+    } catch (e) {
+      notification.error('상품 정보를 초기화하지 못했습니다.');
+    }
+  };
+
+  const getSearchProductData = async (id) => {
+    try {
+      const result = await getProductDetail(id);
+      const resultArray = [result.data.data];
+      setTableData(resultArray);
+      notification.success('검색 성공');
+    } catch (e) {
+      notification.error('상품 정보를 가져오지 못했습니다.');
+    }
+  };
 
   return (
     <>
       <EditTitle />
-      <EditCategory tableList={tableList} />
-      <EditProductSetting />
+      <EditCategory tableList={tableData} />
+      <EditProductSetting
+        getAllProductyData={getAllProductyData}
+        initProductData={initProductData}
+        getSearchProductData={getSearchProductData}
+      />
+
       <Table
-        tableList={tableList}
-        setTableList={setTableList}
+        getAllProductyData={getAllProductyData}
         count={tableCount}
+        result={tableData}
       />
     </>
   );

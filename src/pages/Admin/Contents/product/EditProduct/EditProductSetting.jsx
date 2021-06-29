@@ -101,7 +101,11 @@ const BasicDatePickerStyled = styled(BasicDatePicker)`
   height: 4rem;
 `;
 
-const EditProductSetting = () => {
+const EditProductSetting = ({
+  getAllProductyData,
+  initProductData,
+  getSearchProductData,
+}) => {
   const productNumberRef = useRef(null); //상품 번호
   const productMultiSearchRef = useRef(null); //상품 복수 검색
   const productNameRef = useRef(null); //상품명
@@ -264,11 +268,11 @@ const EditProductSetting = () => {
   const searchBtn = useRef(null); //검색
   const renderSearchButton = () => {
     const setSearchBtn = () => {
-      alert('검색 버튼 클릭');
+      getAllProductyData();
     };
 
     const setResetBtn = () => {
-      alert('초기화 버튼 클릭');
+      getAllProductyData();
     };
 
     return (

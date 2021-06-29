@@ -32,33 +32,39 @@ const ButtomContainer = styled.div`
 const Table = ({ tableData, count }) => {
   const [returnRefusalVisible, setReturnRefusalVisible] = useState(false);
 
-//주문상태
-for (var i = 0; i < tableData.length; i++) {
-  switch (tableData[i].status) {
-    case 0:
-      tableData[i].status = '결제대기';
-      break;
-    case 1:
-      tableData[i].status = '결제완료';
-      break;
-    case 2:
-      tableData[i].status = '상품준비';
-      break;
+  //주문상태
+  for (var i = 0; i < tableData.length; i++) {
+    switch (tableData[i].status) {
+      case 0:
+        tableData[i].status = '결제대기';
+        break;
+      case 1:
+        tableData[i].status = '결제완료';
+        break;
+      case 2:
+        tableData[i].status = '상품준비';
+        break;
       case 3:
-      tableData[i].status = '배송중';
-      break;
+        tableData[i].status = '배송중';
+        break;
       case 4:
-      tableData[i].status = '배송완료';
-      break;
+        tableData[i].status = '배송완료';
+        break;
       case 5:
-      tableData[i].status = '취소완료';
-      break;
+        tableData[i].status = '취소완료';
+        break;
       case 6:
-      tableData[i].status = '반품완료';
-      break;
+        tableData[i].status = '반품완료';
+        break;
+    }
+
+    switch (tableData[i].cancel_status) {
+      case 0:
+        tableData[i].cancel_status = '취소';
+        break;
+    }
   }
-}
-  
+
   const setExcelDown = () => {
     alert('엑셀다운');
   };

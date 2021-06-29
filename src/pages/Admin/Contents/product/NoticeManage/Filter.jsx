@@ -46,7 +46,7 @@ const ItemWrap = styled.div`
   align-items: center;
 `;
 
-const Filter = () => {
+const Filter = ({ getApiNoticeData }) => {
   const titleRef = useRef(null);
   const history = useHistory();
 
@@ -76,6 +76,14 @@ const Filter = () => {
     console.log(history);
     history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
   };
+
+  const handleSearchOnClick = () => {
+    getApiNoticeData();
+  };
+  const handleResetOnClick = () => {
+    getApiNoticeData();
+  };
+
   return (
     <Container>
       <LabelContents title="상품 공지사항 조회">
@@ -118,8 +126,8 @@ const Filter = () => {
         </ItemContainer>
       </LabelContents>
       <ButtonContainer>
-        <Button>검색</Button>
-        <Button>초기화</Button>
+        <Button onClick={handleSearchOnClick}>검색</Button>
+        <Button onClick={handleResetOnClick}>초기화</Button>
       </ButtonContainer>
     </Container>
   );
