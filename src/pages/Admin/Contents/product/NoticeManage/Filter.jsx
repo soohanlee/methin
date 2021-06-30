@@ -48,9 +48,8 @@ const ItemWrap = styled.div`
 
 const Filter = ({ getApiNoticeData }) => {
   const titleRef = useRef(null);
+  const [dateRangeState, setDateRangeState] = useState('today');
   const history = useHistory();
-
-  const [dateRange, setDateRange] = useState('today');
 
   const handleSearchNameChange = (value) => {
     console.log('value', value);
@@ -106,8 +105,8 @@ const Filter = ({ getApiNoticeData }) => {
           </ItemWrap>
           <ItemWrap>
             <Radio.Group
-              value={dateRange}
-              onChange={(e) => setDateRange(e.target.value)}
+              value={dateRangeState}
+              onChange={(e) => setDateRangeState(e.target.value)}
             >
               <Radio.Button value="today">오늘</Radio.Button>
               <Radio.Button value="week">1주일</Radio.Button>

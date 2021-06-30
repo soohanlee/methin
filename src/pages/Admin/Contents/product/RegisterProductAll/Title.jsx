@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
-import CategoryModal from 'pages/Admin/Contents/product/RegisterProductOnce/CategoryModal';
-import CountryModal from 'pages/Admin/Contents/product/RegisterProductOnce/CountryModal';
-import ImageModal from 'pages/Admin/Contents/product/RegisterProductOnce/ImageModal';
+import CategoryModal from './CategoryModal';
+import CountryModal from './CountryModal';
+import ImageModal from './ImageModal';
 
 const Container = styled.div`
   display: flex;
@@ -21,61 +21,55 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const Header = ({ dataList }) => {
+const Title = ({ dataList }) => {
   const categoryRef = useRef(null);
   const countryRef = useRef(null);
-  const [categoryVisible, setCategoryVisible] = useState(false);
-  const [countryVisible, setCountryVisible] = useState(false);
-  const [imageVisible, setImageVisible] = useState(false);
-  const [conturySelect, setConturySelect] = useState('korea');
-  const [adressSelect, setAdressSelect] = useState('korea');
+  const [categoryVisibleState, setCategoryVisibleState] = useState(false);
+  const [countryVisibleState, setCountryVisibleState] = useState(false);
+  const [imageVisibleState, setImageVisibleState] = useState(false);
+  const [conturySelectState, setConturySelectState] = useState('korea');
+  const [adressSelectState, setAdressSelectState] = useState('korea');
 
   const handleCategoryClick = () => {
-    setCategoryVisible(true);
+    setCategoryVisibleState(true);
   };
 
   const handleOriginClick = () => {
-    setCountryVisible(true);
+    setCountryVisibleState(true);
   };
-
+  const handleImageClick = () => {
+    setImageVisibleState(true);
+  };
   const handleExcelClick = () => {
     alert('엑셀양식다운로드 클릭');
-  };
-
-  const handleImageClick = () => {
-    setImageVisible(true);
   };
 
   const handleFileClick = () => {
     alert('파일 업로드 클릭');
   };
-
-  const searchData = () => {};
-  const addVisible = () => {};
-  const setAddVisible = () => {};
   return (
     <>
       <CategoryModal
-        visible={categoryVisible}
-        setVisible={setCategoryVisible}
-        onClick={setCategoryVisible}
         title="카테고리 찾기"
+        visible={categoryVisibleState}
+        setVisible={setCategoryVisibleState}
+        onClick={setCategoryVisibleState}
         categoryRef={categoryRef}
         dataList={dataList}
       />
       <CountryModal
-        visible={countryVisible}
-        setVisible={setCountryVisible}
-        onClick={setCountryVisible}
         title="원산지 찾기"
+        visible={countryVisibleState}
+        setVisible={setCountryVisibleState}
+        onClick={setCountryVisibleState}
         countryRef={countryRef}
-        setConturySelect={setConturySelect}
-        setAdressSelect={setAdressSelect}
+        setConturySelect={setConturySelectState}
+        setAdressSelect={setAdressSelectState}
       />
       <ImageModal
-        visible={imageVisible}
-        setVisible={setImageVisible}
-        onClick={setImageVisible}
+        visible={imageVisibleState}
+        setVisible={setImageVisibleState}
+        onClick={setImageVisibleState}
         countryRef={countryRef}
       />
       <Container>
@@ -94,4 +88,4 @@ const Header = ({ dataList }) => {
   );
 };
 
-export default Header;
+export default Title;

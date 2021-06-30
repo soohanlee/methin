@@ -4,10 +4,10 @@ import { Route, Switch } from 'react-router-dom';
 import { ROUTE_PATH } from 'configs/config';
 
 import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
-import EditProduct from 'pages/Admin/Contents/product/EditProduct/EditProduct';
+import ProductSearch from 'pages/Admin/Contents/product/ProductSearch/ProductSearch';
 import DeliveryProduct from 'pages/Admin/Contents/product/DeliveryProduct/DeliveryProduct';
-import RegisterProductOnce from 'pages/Admin/Contents/product/RegisterProductOnce';
-import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/index';
+import RegisterProductAll from 'pages/Admin/Contents/product/RegisterProductAll/RegisterProductAll';
+import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/NoticeManage';
 import OrderSerach from 'pages/Admin/Contents/sale/OrderSerach';
 import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingPayment';
 import OrderConfirm from 'pages/Admin/Contents/sale/OrderConfirm';
@@ -17,7 +17,7 @@ import SaleDisturb from 'pages/Admin/Contents/sale/SaleDisturb';
 import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage';
 import QNAManager from 'pages/Admin/Contents/Review/ReviewManage/QNAManager';
 import ReviewManager from 'pages/Admin/Contents/Review/ReviewManage/ReviewManager';
-import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice/index';
+import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice/RegisterNotice';
 
 const Container = styled.div`
   width: 100%;
@@ -33,8 +33,8 @@ const Contents = () => {
       <Switch>
         <Route
           exact
-          path={`${prePath}${ROUTE_PATH.admin.editProduct}`}
-          component={EditProduct}
+          path={`${prePath}${ROUTE_PATH.admin.productSearch}`}
+          component={ProductSearch}
         />
         <Route
           exact
@@ -43,8 +43,8 @@ const Contents = () => {
         />
         <Route
           exact
-          path={`${prePath}${ROUTE_PATH.admin.registerAllProduct}`}
-          component={RegisterProductOnce}
+          path={`${prePath}${ROUTE_PATH.admin.registerProductAll}`}
+          component={RegisterProductAll}
         />
         <Route
           exact

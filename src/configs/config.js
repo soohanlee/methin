@@ -26,9 +26,9 @@ export const ROUTE_PATH = {
   admin: {
     main: '/admin',
     test: '/test',
-    editProduct: '/edit-product',
+    productSearch: '/product-Search',
     registerProduct: '/register-product',
-    registerAllProduct: '/register-all-product',
+    registerProductAll: '/register-product-all',
     deliveryProduct: '/delivery-product',
     noticeManage: '/notice-manage',
     manageSale: '/manage-sale',

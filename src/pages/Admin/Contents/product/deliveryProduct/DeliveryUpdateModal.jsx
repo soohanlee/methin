@@ -20,37 +20,46 @@ const ContentTitle = styled.div`
   margin-right: 3rem;
 `;
 
-const DeliveryUpdateModal = (property) => {
+const DeliveryUpdateModal = ({
+  visible,
+  setVisible,
+  onClick,
+  title = '배송비묶음그룹',
+  groupNamesRef,
+  setUseStatusState,
+  setCalculationWayState,
+  setAddPriceState,
+}) => {
   const okClick = () => {
-    property.setVisible(false);
-    property.onClick();
+    setVisible(false);
+    onClick();
   };
 
-  const onUseBtnClick = (e) => {
+  const handleUseBtn = (e) => {
     if (e.target.value == 'use') {
-      property.setUseStatusState(1);
+      setUseStatusState(1);
     } else {
-      property.setUseStatusState(0);
+      setUseStatusState(0);
     }
   };
 
-  const onCalculationWayBtnClick = (e) => {
-    property.setCalculationWayState(e.target.value);
+  const handleCalculationWayBtn = (e) => {
+    setCalculationWayState(e.target.value);
   };
 
-  const onAddPriceBtnClick = (e) => {
-    property.setAddPriceState(e.target.value);
+  const handleAddPriceBtn = (e) => {
+    setAddPriceState(e.target.value);
   };
 
   return (
     <>
       <Modal
-        title={property.title}
+        title={title}
         centered
-        visible={property.visible}
+        visible={visible}
         onOk={okClick}
         onCancel={() => {
-          property.setVisible(false);
+          setVisible(false);
         }}
         width={900}
         okText="저장"
@@ -59,12 +68,12 @@ const DeliveryUpdateModal = (property) => {
         <DeliveryModalBox>
           <DeliveryModalContent>
             <ContentTitle>묶음그룹명</ContentTitle>
-            <BasicTextInputBox ref={property.groupNamesRef}></BasicTextInputBox>
+            <BasicTextInputBox ref={groupNamesRef}></BasicTextInputBox>
           </DeliveryModalContent>
 
           <DeliveryModalContent>
             <ContentTitle>사용여부</ContentTitle>
-            <Radio.Group onChange={onUseBtnClick}>
+            <Radio.Group onChange={handleUseBtn}>
               <Radio value="use">사용</Radio>
               <Radio value="notuse">사용안함</Radio>
               <Radio value="default">기본 그룹으로 설정</Radio>
@@ -73,7 +82,7 @@ const DeliveryUpdateModal = (property) => {
 
           <DeliveryModalContent>
             <ContentTitle>계산방식</ContentTitle>
-            <Radio.Group onChange={onCalculationWayBtnClick}>
+            <Radio.Group onChange={handleCalculationWayBtn}>
               <Radio value="min">묶음 그룹에서 가장 작은 배송비로 부가</Radio>
               <Radio value="max">묶음 그룹에서 가장 큰 배송비로 부가</Radio>
             </Radio.Group>
@@ -81,7 +90,7 @@ const DeliveryUpdateModal = (property) => {
 
           <DeliveryModalContent>
             <ContentTitle>제주/도서산간 추가배송비</ContentTitle>
-            <Radio.Group onChange={onAddPriceBtnClick}>
+            <Radio.Group onChange={handleAddPriceBtn}>
               <Radio value="use">설정함</Radio>
               <Radio value="notuse">설정안함</Radio>
             </Radio.Group>

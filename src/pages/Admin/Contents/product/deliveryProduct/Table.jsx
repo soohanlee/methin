@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import Table from 'pages/Admin/components/Table/Table';
+import antTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
-import DeliveryUpdateModal from 'pages/Admin/Contents/product/DeliveryProduct/DeliveryUpdateModal';
+import DeliveryUpdateModal from './DeliveryUpdateModal';
 
-const EditDeliveryTitlesCss = css`
+const TitlesCss = css`
   width: 100%;
   height: 7rem;
   background-color: #ffffff;
@@ -16,12 +16,12 @@ const EditDeliveryTitlesCss = css`
   border-bottom: 0px;
 `;
 
-const EditDeliveryTitles = styled.div`
-  ${EditDeliveryTitlesCss};
+const Titles = styled.div`
+  ${TitlesCss};
 `;
 
-const EditDeliveryMenuBtn = styled.div`
-  ${EditDeliveryTitlesCss};
+const MenuBtn = styled.div`
+  ${TitlesCss};
   display: flex;
   align-items: center;
 `;
@@ -38,7 +38,7 @@ const TitleText = styled.div`
   font-size: 15px;
 `;
 
-const TableStyled = styled(Table)``;
+const TableStyled = styled(antTable)``;
 
 const BasicSelectBoxStyled = styled(BasicSelectBox)`
   width: ${(props) => props.width};
@@ -48,17 +48,17 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 5rem;
 `;
 
-const EditDeliveryProductTable = ({
+const Table = ({
   updateDeliveryDetailData,
   deleteDeliveryData,
   updateDeliveryData,
   result,
   count,
 }) => {
-  const [modifyVisible, setModifyVisible] = useState(false);
-  const [addVisible, setAddVisible] = useState(false);
-  const [data, setDatas] = useState([]);
-  const [index, setIndex] = useState([]);
+  const [modifyVisibleState, setModifyVisibleState] = useState(false);
+  const [addVisibleState, setAddVisibleState] = useState(false);
+  const [dataState, setDatasState] = useState([]);
+  const [indexState, setIndexState] = useState([]);
 
   //테이블데이터
   const groupNamesRef = useRef(null);
@@ -67,35 +67,35 @@ const EditDeliveryProductTable = ({
   const [addPriceState, setAddPriceState] = useState('');
 
   useEffect(() => {
-    setDatas(result);
+    setDatasState(result);
   }, [result]);
 
-  const setRegistConnectProduct = () => {
-    showAddModal();
+  const handleRegistConnectProductBtn = () => {
+    handleShowAddModalBtn();
   };
 
-  const showModifyModal = (_index) => {
-    setIndex(_index);
-    setModifyVisible(true);
+  const handleShowModifyModalBtn = (_index) => {
+    setIndexState(_index);
+    setModifyVisibleState(true);
   };
 
-  const showDeleteModal = (index) => {
+  const handelShowDeleteModalBtn = (index) => {
     deleteDeliveryData(index);
   };
 
-  const showAddModal = () => {
-    setAddVisible(true);
+  const handleShowAddModalBtn = () => {
+    setAddVisibleState(true);
   };
 
-  const modifyDataSave = () => {
+  const handleModifyDataSaveBtn = () => {
     const data = {
       body: groupNamesRef.current.state.value,
       status: useStatusState,
     };
-    updateDeliveryDetailData(index, data);
+    updateDeliveryDetailData(indexState, data);
   };
 
-  const addDataSave = () => {
+  const handleAddDataSaveBtn = () => {
     const data = {
       body: groupNamesRef.current.state.value,
       amount1: 1000,
@@ -111,7 +111,7 @@ const EditDeliveryProductTable = ({
       render: (id) => (
         <BasicButton
           onClick={() => {
-            showModifyModal(id);
+            handleShowModifyModalBtn(id);
           }}
           label="수정"
         ></BasicButton>
@@ -122,7 +122,7 @@ const EditDeliveryProductTable = ({
       dataIndex: 'id',
       render: (id) => (
         <BasicButton
-          onClick={() => showDeleteModal(id)}
+          onClick={() => handelShowDeleteModalBtn(id)}
           label="삭제"
         ></BasicButton>
       ),
@@ -157,23 +157,27 @@ const EditDeliveryProductTable = ({
       dataIndex: 'updated_at',
     },
   ];
-  for (var i = 0; i < data.length; i++) {
-    switch (data[i].status) {
-      case 0:
-        data[i].status = '미사용';
-        break;
-      case 1:
-        data[i].status = '사용';
-        break;
+
+  const NumDataToWord = () => {
+    for (var i = 0; i < dataState.length; i++) {
+      switch (dataState[i].status) {
+        case 0:
+          dataState[i].status = '미사용';
+          break;
+        case 1:
+          dataState[i].status = '사용';
+          break;
+      }
     }
-  }
+  };
+  NumDataToWord();
 
   return (
     <>
       <DeliveryUpdateModal
-        visible={modifyVisible}
-        setVisible={setModifyVisible}
-        onClick={modifyDataSave}
+        visible={modifyVisibleState}
+        setVisible={setModifyVisibleState}
+        onClick={handleModifyDataSaveBtn}
         title="배송비묶음그룹"
         groupNamesRef={groupNamesRef}
         setUseStatusState={setUseStatusState}
@@ -181,9 +185,9 @@ const EditDeliveryProductTable = ({
         setAddPriceState={setAddPriceState}
       />
       <DeliveryUpdateModal
-        visible={addVisible}
-        setVisible={setAddVisible}
-        onClick={addDataSave}
+        visible={addVisibleState}
+        setVisible={setAddVisibleState}
+        onClick={handleAddDataSaveBtn}
         title="배송비묶음그룹"
         groupNamesRef={groupNamesRef}
         setUseStatusState={setUseStatusState}
@@ -191,23 +195,23 @@ const EditDeliveryProductTable = ({
         setAddPriceState={setAddPriceState}
       />
 
-      <EditDeliveryTitles>
+      <Titles>
         <TitleTexts>
           <TitleText>조회 건수 (총 {count} 건) </TitleText>
           <BasicSelectBoxStyled width="12rem" list={list} />
         </TitleTexts>
-      </EditDeliveryTitles>
-      <EditDeliveryMenuBtn>
+      </Titles>
+      <MenuBtn>
         <BasicButton
-          onClick={setRegistConnectProduct}
+          onClick={handleRegistConnectProductBtn}
           label={'+ 묶음그룹 추가'}
         ></BasicButton>
-      </EditDeliveryMenuBtn>
+      </MenuBtn>
 
       <TableStyled
         scroll={{ x: '100vw', y: 500 }}
         columns={columns}
-        data={data}
+        data={dataState}
         selectionType={'checkbox'}
         onChange={() => {}}
       />
@@ -215,7 +219,7 @@ const EditDeliveryProductTable = ({
   );
 };
 
-export default EditDeliveryProductTable;
+export default Table;
 const list = [
   { value: 'ten', label: '10개씩' },
   { value: 'fifty', label: '50개씩' },

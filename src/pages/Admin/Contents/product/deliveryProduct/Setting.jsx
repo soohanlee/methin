@@ -5,7 +5,7 @@ import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 
-const EditDeliveryTitles = styled.div`
+const DeliveryTitles = styled.div`
   width: 100%;
   height: 23rem;
   background-color: #ffffff;
@@ -50,17 +50,19 @@ const BasicButtonStyled = styled(BasicButton)`
   margin-left: ${(props) => props.marginleft};
 `;
 
-const EditDeliveryProductSetting = ({
+const Setting = ({
   getSearchDeliveryData,
-  getAllDeliveryData,
+  getApiDeliveryData,
   initDeliveryData,
 }) => {
-  const [searchValue, setSearchValue] = useState('deliveryPriceNames');
-  const groupNameInputBox = useRef(null); //배송비 묶음그룹 명 인풋박스
-  const searchBtn = useRef(null); //검색
+  const [searchValueState, setSearchValueState] = useState(
+    'deliveryPriceNames',
+  );
+  const groupNameInputBoxRef = useRef(null); //배송비 묶음그룹 명 인풋박스
+  const searchBtnRef = useRef(null); //검색
 
   const handleSelectChange = (value) => {
-    setSearchValue(value);
+    setSearchValueState(value);
   };
 
   const RenderSetMenu = () => {
@@ -71,29 +73,29 @@ const EditDeliveryProductSetting = ({
           width="20rem"
           marginleft="20rem"
           onChange={handleSelectChange}
-          value={searchValue}
+          value={searchValueState}
           list={[
             { value: 'deliveryPriceNames', label: '배송비 묶음그룹명' },
             { value: 'deliveryPriceNumbers', label: '배송비 묶음그룹번호' },
           ]}
         />
-        <BasicTextInputBoxStyled label="" ref={groupNameInputBox} />
+        <BasicTextInputBoxStyled label="" ref={groupNameInputBoxRef} />
       </>
     );
   };
 
   const RenderSetSelect = () => {
-    const setSearchBtn = () => {
-      let value = groupNameInputBox.current.state.value;
+    const handleSearchBtn = () => {
+      let value = groupNameInputBoxRef.current.state.value;
       if (!value) {
-        getAllDeliveryData();
+        getApiDeliveryData();
       } else {
         getSearchDeliveryData(value);
       }
     };
 
-    const setResetBtn = () => {
-      initDeliveryData();
+    const handleResetBtn = () => {
+      getApiDeliveryData();
       handleSelectChange('deliveryPriceNames');
     };
 
@@ -104,22 +106,22 @@ const EditDeliveryProductSetting = ({
           width="13rem"
           height="5rem"
           type="primary"
-          ref={searchBtn}
-          onClick={setSearchBtn}
+          ref={searchBtnRef}
+          onClick={handleSearchBtn}
         />
         <BasicButtonStyled
           label="초기화"
           width="13rem"
           height="5rem"
           marginleft="2rem"
-          onClick={setResetBtn}
+          onClick={handleResetBtn}
         />
       </Line>
     );
   };
 
   return (
-    <EditDeliveryTitles>
+    <DeliveryTitles>
       <TitleTexts>
         <TitleText>배송비 묶음그룹 관리 </TitleText>
       </TitleTexts>
@@ -128,8 +130,8 @@ const EditDeliveryProductSetting = ({
         {RenderSetMenu()}
       </TitleTexts>
       {RenderSetSelect()}
-    </EditDeliveryTitles>
+    </DeliveryTitles>
   );
 };
 
-export default EditDeliveryProductSetting;
+export default Setting;

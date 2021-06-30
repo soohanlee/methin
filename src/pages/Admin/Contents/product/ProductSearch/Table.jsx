@@ -5,7 +5,6 @@ import { Button as OriginButton } from 'antd';
 import { deleteProduct } from 'apis/product';
 import { notification } from 'utils/notification';
 import { ROUTE_PATH } from 'configs/config';
-
 import BasicTable from 'pages/Admin/components/Table/Table';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
@@ -37,7 +36,7 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
 `;
 
 const Table = ({ getAllProductyData, result, count }) => {
-  const [data, setDatas] = useState([]);
+  const [dataState, setDataState] = useState([]);
 
   const [productSortSelectState, setProductSortSelectState] = React.useState(
     [],
@@ -53,22 +52,7 @@ const Table = ({ getAllProductyData, result, count }) => {
   );
   const [selectedProductState, setSelectedProductState] = React.useState('');
 
-  useEffect(() => {
-    setDatas(result);
-  }, [result]);
-
   const history = useHistory();
-
-  const setExcelDown = () => {
-    alert('엑셀다운');
-  };
-
-  const handleMoveEditPage = (id) => {
-    history.push({
-      pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerProduct}`,
-      state: id,
-    });
-  };
 
   const columns = [
     {
@@ -167,47 +151,66 @@ const Table = ({ getAllProductyData, result, count }) => {
       dataIndex: 'updated_at',
     },
   ];
-  //판매상태
-  for (var i = 0; i < data.length; i++) {
-    switch (data[i].status) {
-      case 0:
-        data[i].status = '판매준비';
-        break;
-      case 1:
-        data[i].status = '판매중';
-        break;
-      case 2:
-        data[i].status = '판매종료';
-        break;
+
+  useEffect(() => {
+    setDataState(result);
+  }, [result]);
+
+  //숫자데이터 문자로 변환
+  const NumDataToWord = () => {
+    //판매상태
+    for (var i = 0; i < dataState.length; i++) {
+      switch (dataState[i].status) {
+        case 0:
+          dataState[i].status = '판매준비';
+          break;
+        case 1:
+          dataState[i].status = '판매중';
+          break;
+        case 2:
+          dataState[i].status = '판매종료';
+          break;
+      }
+      //전시상태
+      switch (dataState[i].preview_status) {
+        case 0:
+          dataState[i].preview_status = 'NO';
+          break;
+        case 1:
+          dataState[i].preview_status = 'YES';
+          break;
+      }
+      //배송비유형
+      switch (dataState[i].ship_category) {
+        case 0:
+          dataState[i].ship_category = '무료';
+          break;
+        case 1:
+          dataState[i].ship_category = '유료';
+          break;
+      }
+      //배송비지불유형
+      switch (dataState[i].ship_pay_type) {
+        case 0:
+          dataState[i].ship_pay_type = '선불';
+          break;
+        case 1:
+          dataState[i].ship_pay_type = '착불';
+          break;
+      }
     }
-    //전시상태
-    switch (data[i].preview_status) {
-      case 0:
-        data[i].preview_status = 'NO';
-        break;
-      case 1:
-        data[i].preview_status = 'YES';
-        break;
-    }
-    //배송비유형
-    switch (data[i].ship_category) {
-      case 0:
-        data[i].ship_category = '무료';
-        break;
-      case 1:
-        data[i].ship_category = '유료';
-        break;
-    }
-    //배송비지불유형
-    switch (data[i].ship_pay_type) {
-      case 0:
-        data[i].ship_pay_type = '선불';
-        break;
-      case 1:
-        data[i].ship_pay_type = '착불';
-        break;
-    }
-  }
+  };
+
+  const handleExcelDown = () => {
+    alert('엑셀다운');
+  };
+
+  const handleMoveEditPage = (id) => {
+    history.push({
+      pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerProduct}`,
+      state: id,
+    });
+  };
 
   const handleChange = (selectedRowKeys, selectedRows) => {
     setSelectedTableKeysState(selectedRowKeys);
@@ -218,7 +221,7 @@ const Table = ({ getAllProductyData, result, count }) => {
     setisDeleteModalOpenState(true);
   };
 
-  const setSelectDelete = () => {
+  const handleSelectDelete = () => {
     alert('선택삭제 준비중');
   };
 
@@ -226,10 +229,10 @@ const Table = ({ getAllProductyData, result, count }) => {
     try {
       const result = await deleteProduct(selectedProductState);
       if (result.status === 200) {
-        const newTable = data.filter((item) => {
+        const newTable = dataState.filter((item) => {
           return item.id !== selectedProductState;
         });
-        setDatas(newTable);
+        setDataState(newTable);
       } else if (result.status === 404) {
         notification.error('이미 삭제되었습니다.');
       }
@@ -248,6 +251,8 @@ const Table = ({ getAllProductyData, result, count }) => {
     getAllProductyData();
   };
 
+  //숫자데이터 문자로 변환
+  NumDataToWord();
   return (
     <ContainerStyled>
       <HeaderContainerStyled>
@@ -265,12 +270,14 @@ const Table = ({ getAllProductyData, result, count }) => {
             }}
             list={CountList}
           ></BasicSelectBoxStyled>
-          <BasicButtonStyled onClick={setExcelDown}>엑셀다운</BasicButtonStyled>
+          <BasicButtonStyled onClick={handleExcelDown}>
+            엑셀다운
+          </BasicButtonStyled>
         </ButtonContainerStyled>
       </HeaderContainerStyled>
       <HeaderContainerStyled>
         <ButtonContainerStyled>
-          <BasicButtonStyled onClick={setSelectDelete}>
+          <BasicButtonStyled onClick={handleSelectDelete}>
             선택삭제
           </BasicButtonStyled>
         </ButtonContainerStyled>
@@ -278,7 +285,7 @@ const Table = ({ getAllProductyData, result, count }) => {
 
       <BasicTable
         scroll={{ x: '250vw', y: 500 }}
-        data={data}
+        data={dataState}
         columns={columns}
         selectionType="checkbox"
         onChange={handleChange}
