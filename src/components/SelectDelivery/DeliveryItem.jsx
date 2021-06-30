@@ -97,7 +97,7 @@ const DeliveryItem = (props) => {
     if (is_default) {
       setSelectedItem(id);
     }
-  }, []);
+  }, [is_default]);
 
   return (
     <ItemContainer>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
-import { getCartList, updateCartItemCount } from 'apis/cart';
+import { getCartList, updateCartItemCount, deleteCartItem } from 'apis/cart';
 import {
   UserContext,
   LOGGED_IN,
@@ -10,10 +10,11 @@ import {
 import { notification } from 'utils/notification';
 import { getCartCookies } from 'utils/tokenManager';
 
+import Receipt from 'pages/Order/Receipt';
+
 import { PaddingContainer } from 'components/styled/Container';
 import { PageTitle as OriginPageTitle } from 'components/styled/Form';
 import OriginBorderTitleContainer from 'components/container/BorderTitleContainer';
-import Receipt from 'pages/Order/Receipt';
 import { SubButton as OriginSubButton } from 'components/styled/Button';
 
 const PageTitle = styled(OriginPageTitle)`
@@ -94,13 +95,13 @@ const CountButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 5rem;
-  height: 5rem;
+  width: 3rem;
+  height: 3rem;
   border: 0.1rem solid ${(props) => props.theme.TEXT_DISABLE};
 `;
 
 const CountDiv = styled(CountButton)`
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   border-left: 0;
   border-right: 0;
 `;
@@ -131,9 +132,19 @@ const Cart = () => {
   const [cartList, setCartList] = useState([]);
   const [finalPrice, setFinalPrice] = useState(0);
   const login = useContext(UserContext);
+  const [checkList, setCheckList] = useState([]);
+
+  useEffect(() => {
+    const priceList = cartList.map(({ actual_price }) => actual_price);
+    const calcFinalPrice = priceList.reduce(function add(sum, currValue) {
+      return sum + currValue;
+    }, 0);
+
+    setFinalPrice(calcFinalPrice);
+  }, [cartList, finalPrice]);
+
   useEffect(() => {
     if (login.loginState === LOGGED_IN) {
-      console.log('여기지');
       setCart();
     } else if (login.loginState === NOT_LOGGED_IN) {
       setCookiesCart();
@@ -146,13 +157,6 @@ const Cart = () => {
       if (result && result.status === 200) {
         setCartList(result.data.data);
       }
-      const priceList = cartList.map(({ actual_price }) => actual_price);
-      console.log('priceList', priceList);
-      const calcFinalPrice = priceList.reduce(function add(sum, currValue) {
-        return sum + currValue;
-      }, 0);
-      setFinalPrice(calcFinalPrice);
-      console.log(result);
     } catch (e) {}
   };
 
@@ -164,14 +168,41 @@ const Cart = () => {
   };
 
   const handlePlus = async (id, count) => {
-    count = count + 1;
+    console.log('count', count);
+    const newCount = count + 1;
     try {
-      const result = await updateCartItemCount(id, { count });
+      const result = await updateCartItemCount(id, { count: newCount });
       console.log('result', result);
     } catch (e) {}
   };
 
   const handleMinus = () => {};
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    const numberValue = parseInt(value);
+    let list = checkList;
+    const isExist = list.indexOf(numberValue) === -1 ? false : true;
+    if (isExist) {
+      const result = list.filter((item) => item !== numberValue);
+      setCheckList(result);
+    } else {
+      const result = list.concat([numberValue]);
+      setCheckList(result);
+    }
+  };
+
+  const handleCheckListDelete = () => {
+    for (let i = 0; i < checkList.length; i++) {
+      console.log(checkList[i]);
+      try {
+        deleteCartItem(checkList[i]);
+      } catch (e) {
+        notification.error('새로고침 후 시도해주세요.');
+      }
+    }
+    // setCart();
+  };
 
   const renderCartList = () => {
     if (cartList?.length === 0) {
@@ -191,10 +222,16 @@ const Cart = () => {
           max_quantity,
           created_at,
         }) => {
+          const isChecked = checkList.indexOf(product_id) === -1 ? false : true;
+
           return (
-            <ProductItemLine id={id}>
+            <ProductItemLine id={product_id}>
               <ProductItemContainer>
-                <Checkbox />
+                <Checkbox
+                  checked={isChecked}
+                  value={product_id}
+                  onChange={handleChange}
+                />
                 <ProductItemImgContainer>
                   <Img src={main_image_url} />
                 </ProductItemImgContainer>
@@ -241,7 +278,7 @@ const Cart = () => {
           deliveryPrice={0}
         />
       </CartContainer>
-      <SubButton>선택 삭제</SubButton>
+      <SubButton onClick={handleCheckListDelete}>선택 삭제</SubButton>
     </PaddingContainer>
   );
 };

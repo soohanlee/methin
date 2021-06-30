@@ -173,10 +173,10 @@ const Navigation = () => {
               src={process.env.PUBLIC_URL + '/assets/images/logo-icon.svg'}
             />
           </Logo>
-          <SearchInput
+          {/* <SearchInput
             onClick={handleSearchClick}
             placeholder={'이 달의 베스트! 프로 다이어터를 위한 식품 대전'}
-          />
+          /> */}
           <UserContainer>
             {userState.loginState === LOGGED_IN ? (
               <UserContainer>

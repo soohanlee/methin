@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {
   addUserAddress,
@@ -70,6 +70,7 @@ const SelectDelivery = ({
   selectedItem,
   setSelectedItem,
   getAddressList,
+  setShowSelectedAddressItem,
 }) => {
   const [mode, setMode] = useState('selected'); // selected, search, other, edit
 
@@ -79,6 +80,12 @@ const SelectDelivery = ({
   const [zipCode, setZipCode] = useState('');
 
   const [selectedEditItem, setSelectedEditItem] = useState([]);
+
+  useEffect(() => {
+    if (selectedItem.length === 0 && list.length !== 0) {
+      setSelectedItem(list[0].id);
+    }
+  }, [selectedItem, list]);
 
   const handleClickChangeButton = (selectedItemId) => {
     const selectedItem = list.filter((item) => {
@@ -90,7 +97,10 @@ const SelectDelivery = ({
   };
 
   const handleApplyDelivery = () => {
-    console.log(selectedItem);
+    const selectedAddress = list.filter((item) => item.id == selectedItem);
+
+    setShowSelectedAddressItem(selectedAddress[0]);
+    onCancel();
   };
 
   const handleAddNewDelivery = () => {
@@ -198,7 +208,6 @@ const SelectDelivery = ({
   };
 
   const handleDeleteDelivery = async () => {
-    console.log('삭제');
     const isDelete = window.confirm('정말 삭제하시겠습니까?');
     if (isDelete) {
       await deleteUserAddress(selectedEditItem[0].id);

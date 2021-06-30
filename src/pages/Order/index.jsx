@@ -79,11 +79,6 @@ const Label = styled.div`
     `}
 `;
 
-const CountContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
 const CountButton = styled.div`
   display: flex;
   align-items: center;
@@ -172,6 +167,16 @@ const Order = () => {
 
   const [userAddressList, setUserAddressList] = useState([]);
   const [selectedAddressItem, setSelectedAddressItem] = useState([]);
+  const [showSelectedAddressItem, setShowSelectedAddressItem] = useState({
+    address_main: '',
+    address_sub: '',
+    created_at: '',
+    is_default: '',
+    id: '',
+    name: '',
+    user_id: '',
+    zip_code: '',
+  });
 
   const handleOpenDeliveryChangeModal = () => {
     setIsOpenChangeDevliveryModal(true);
@@ -195,20 +200,34 @@ const Order = () => {
   };
 
   useEffect(() => {
+    if (showSelectedAddressItem.id === '' && userAddressList.length > 0) {
+      setShowSelectedAddressItem(userAddressList[0]);
+    }
+  }, [showSelectedAddressItem, userAddressList]);
+
+  useEffect(() => {
     if (userAddressList.length === 0) {
       getAddressList();
     }
-  }, []);
+  }, [userAddressList]);
 
-  console.log('selectedAddressItem', selectedAddressItem);
   const userAddress = useRef('');
+  const {
+    address_main,
+    address_sub,
+    created_at,
+    is_default,
+    id,
+    name,
+    user_id,
+    zip_code,
+  } = showSelectedAddressItem;
   if (userAddress.current && selectedAddressItem) {
     userAddress.current = selectedAddressItem;
     console.log(userAddress.current);
   }
   return (
     <>
-      {' '}
       <SelectDelivery
         isOpen={isOpenChangeDevliveryModal}
         list={userAddressList}
@@ -218,43 +237,39 @@ const Order = () => {
         onCancel={() => setIsOpenChangeDevliveryModal(false)}
         setIsOpenChangeDevliveryModal={setIsOpenChangeDevliveryModal}
         getAddressList={getAddressList}
-      />{' '}
+        setShowSelectedAddressItem={setShowSelectedAddressItem}
+      />
       <PaddingContainer>
-        {' '}
         {/* 결제화면 */} <PageTitle> 주문 및 결제 </PageTitle>
         <OrderContainer>
           <Contents>
             <BorderTitleContainer title="주문 상품 정보">
               <ProductItemLine>
                 <ProductItemContainer>
-                  <ProductItemImgContainer></ProductItemImgContainer>{' '}
+                  <ProductItemImgContainer></ProductItemImgContainer>
                   <ProductItemTextContainer>
                     <Label bold>인기 샐러드 도시락</Label>
                     <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
                     <Label bold>39,800원</Label>
-                  </ProductItemTextContainer>{' '}
-                  <CountContainer>
-                    {' '}
-                    <CountButton>-</CountButton> <CountDiv> 1 </CountDiv>
-                    <CountButton>+</CountButton>{' '}
-                  </CountContainer>{' '}
+                  </ProductItemTextContainer>
+
                   <Price> 39, 800 원 </Price>
-                </ProductItemContainer>{' '}
-              </ProductItemLine>{' '}
+                </ProductItemContainer>
+              </ProductItemLine>
             </BorderTitleContainer>
             <BorderTitleContainer title="주문자 정보">
               <ProductItemLine>
                 <InfoContainer>
                   <ProductSubInfoContainer>
-                    <ProductSubTitle info>아이디</ProductSubTitle>{' '}
-                    <ProductSubTitle>김애용</ProductSubTitle>{' '}
+                    <ProductSubTitle info>아이디</ProductSubTitle>
+                    <ProductSubTitle>김애용</ProductSubTitle>
                   </ProductSubInfoContainer>
                   <ProductSubInfoContainer>
-                    <ProductSubTitle info>연락처</ProductSubTitle>{' '}
-                    <ProductSubTitle>010.1234.7854</ProductSubTitle>{' '}
+                    <ProductSubTitle info>연락처</ProductSubTitle>
+                    <ProductSubTitle>010.1234.7854</ProductSubTitle>
                   </ProductSubInfoContainer>
-                </InfoContainer>{' '}
-              </ProductItemLine>{' '}
+                </InfoContainer>
+              </ProductItemLine>
             </BorderTitleContainer>
             <BorderTitleContainer title="배송 정보">
               <ProductItemLine>
@@ -264,25 +279,31 @@ const Order = () => {
                     components={
                       <DeliveryWrap>
                         <DeliveryContainer>
-                          <Label bold highlight>
-                            기본배송지
-                          </Label>{' '}
-                          <Label bold>김애용 010 1234 7854</Label>{' '}
+                          {is_default ? (
+                            <Label bold highlight>
+                              기본배송지
+                            </Label>
+                          ) : null}
+
                           <Label bold>
-                            {' '}
-                            [12345]경기도 광주시 퇴촌면 도수길 11 - 2
-                            (레츠빌)101 동 11 호{' '}
+                            {name} {user_id}
                           </Label>
-                        </DeliveryContainer>{' '}
+                          <Label bold>
+                            [{zip_code}] {address_main}
+                            <br />
+                            <br />
+                            {address_sub}
+                          </Label>
+                        </DeliveryContainer>
                         <SubButton onClick={handleOpenDeliveryChangeModal}>
                           수정
-                        </SubButton>{' '}
+                        </SubButton>
                       </DeliveryWrap>
                     }
-                  />{' '}
-                </InfoContainer>{' '}
+                  />
+                </InfoContainer>
               </ProductItemLine>
-            </BorderTitleContainer>{' '}
+            </BorderTitleContainer>
             <BorderTitleContainer title="결제 수단">
               <ProductItemLine>
                 <PayButtonContainer>
@@ -297,10 +318,10 @@ const Order = () => {
                   <MainButton>휴대폰 결제</MainButton>
                 </PayButtonContainer>
               </ProductItemLine>
-            </BorderTitleContainer>{' '}
+            </BorderTitleContainer>
           </Contents>
-          <Receipt />{' '}
-        </OrderContainer>{' '}
+          <Receipt />
+        </OrderContainer>
       </PaddingContainer>
     </>
   );

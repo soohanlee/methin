@@ -107,7 +107,7 @@ function App() {
       cleanToken();
       changeUserState(NOT_LOGGED_IN);
     }
-  }, [getAccessToken]);
+  }, []);
 
   useEffect(() => {
     if (windowSize.width < BreakPoint.s) {

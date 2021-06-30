@@ -177,7 +177,7 @@ const ProductDetail = () => {
     if (login.loginState === LOGGED_IN) {
       try {
         const result = addCartItem(data);
-        if (result && result.message === 'success') {
+        if (result && result.data.message === 'success') {
           notification.success('장바구니에 상품을 담았습니다.');
         }
       } catch (e) {}
