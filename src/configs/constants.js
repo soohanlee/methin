@@ -10,9 +10,9 @@ export const leftNavigationMenu = [
   {
     title: leftNavigationMenuTitle.manageProduct,
     submenuList: [
-      { title: '상품 조회/수정', path: ROUTE_PATH.admin.editProduct },
+      { title: '상품 조회/수정', path: ROUTE_PATH.admin.productSearch },
       { title: '상품 등록', path: ROUTE_PATH.admin.registerProduct },
-      { title: '상품 일괄등록', path: ROUTE_PATH.admin.registerAllProduct },
+      { title: '상품 일괄등록', path: ROUTE_PATH.admin.registerProductAll },
       { title: '배송정보 관리', path: ROUTE_PATH.admin.deliveryProduct },
       { title: '공지사항 관리', path: ROUTE_PATH.admin.noticeManage },
     ],

@@ -32,29 +32,36 @@ const BasicButtonStyled = styled(BasicButton)`
   margin-bottom: 1rem;
 `;
 
-const CountryModal = (property) => {
-  const [categoryIndex, setCategoryIndex] = useState(0);
+const CountryModal = ({
+  title,
+  visible,
+  setVisible,
+  onClick,
+  countryRef,
+  setConturySelect,
+}) => {
+  const [categoryIndexState, setCategoryIndexState] = useState(0);
 
-  const onCountryBtnClick = (e) => {
-    property.setConturySelect(e.target.value);
+  const handleCountryCheck = (e) => {
+    setConturySelect(e.target.value);
   };
-  const onAdressBtnClick = (e) => {
-    property.setAdressSelect(e);
+  const handleAdressCheck = (e) => {
+    setCategoryIndexState(e);
   };
 
-  const okClick = () => {
-    property.setVisible(false);
-    property.onClick();
+  const handleOkBtn = () => {
+    setVisible(false);
+    onClick();
   };
   return (
     <>
       <Modal
-        title={property.title}
+        title={title}
         centered
-        visible={property.visible}
-        onOk={okClick}
+        visible={visible}
+        onOk={handleOkBtn}
         onCancel={() => {
-          property.setVisible(false);
+          setVisible(false);
         }}
         width={900}
         okText="확인"
@@ -62,14 +69,14 @@ const CountryModal = (property) => {
       >
         <BasicButtonStyled
           onClick={() => {
-            setCategoryIndex(0);
+            setCategoryIndexState(0);
           }}
           label="전체코드 다운로드"
         ></BasicButtonStyled>
         <ContainerStyled>
           <SubContainerStyled>
             <TitleTextStyled>원산지</TitleTextStyled>
-            <Radio.Group onChange={onCountryBtnClick}>
+            <Radio.Group onChange={handleCountryCheck}>
               <Radio value="korea">국산</Radio>
               <Radio value="oceanic">원양산</Radio>
               <Radio value="Income">수입산</Radio>
@@ -79,13 +86,13 @@ const CountryModal = (property) => {
 
           <SubContainerStyled>
             <TitleTextStyled>상세지역</TitleTextStyled>
-            <BasicSelectBox list={list} onChange={onAdressBtnClick} />
+            <BasicSelectBox list={list} onChange={handleAdressCheck} />
             <BasicSelectBox />
           </SubContainerStyled>
 
           <SubContainerStyled>
             <TitleTextStyled>원산지 코드</TitleTextStyled>
-            <BasicTextInputBoxStyled ref={property.countryRef} />
+            <BasicTextInputBoxStyled ref={countryRef} />
           </SubContainerStyled>
         </ContainerStyled>
       </Modal>

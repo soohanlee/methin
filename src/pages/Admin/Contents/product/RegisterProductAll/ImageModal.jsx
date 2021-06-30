@@ -1,7 +1,6 @@
 import 'antd/dist/antd.css';
 import { Modal, Upload } from 'antd';
 import { notification } from 'utils/notification';
-
 import styled from 'styled-components';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import 'antd/dist/antd.css';
@@ -35,7 +34,7 @@ const SubButtonStyled = styled.div`
   align-items: center;
 `;
 
-const ImageModal = (property) => {
+const ImageModal = ({ visible, setVisible, onClick, countryRef }) => {
   const imageUpload = {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -57,11 +56,10 @@ const ImageModal = (property) => {
   return (
     <>
       <ModalStyled
-        title={property.title}
         centered
-        visible={property.visible}
+        visible={visible}
         onCancel={() => {
-          property.setVisible(false);
+          setVisible(false);
         }}
         width={800}
         footer={[]}

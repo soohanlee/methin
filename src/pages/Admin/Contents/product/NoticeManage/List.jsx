@@ -32,10 +32,11 @@ const BodyContainer = styled.div`
 
 const ButtonStyled = styled(Button)``;
 
-const List = ({ tableData, updateTableData }) => {
+const List = ({ tableData, getApiNoticeData }) => {
   const [tableState, setTableState] = useState([]);
   const [selectTableKeyState, setSelectTableKeyState] = useState([]);
-  const [selectionType, setSelectionType] = useState('checkbox');
+  const [selectionTypeState, setSelectionTypeState] = useState('checkbox');
+  const history = useHistory();
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -48,11 +49,12 @@ const List = ({ tableData, updateTableData }) => {
     }),
   };
 
-  const deleteSelectTableData = () => {
+  //여러개 선택삭제
+  const handleSelectDeleteBtn = () => {
     async function fetchAndSetUser(num) {
       try {
         const result = await deleteNotice(selectTableKeyState[num]);
-        updateTableData();
+        getApiNoticeData();
       } catch (e) {
         notification.error('상품을 삭제하지 못했습니다.');
       }
@@ -66,8 +68,6 @@ const List = ({ tableData, updateTableData }) => {
       }
     }
   };
-
-  const history = useHistory();
 
   const handleModifyNotice = () => {
     history.push({
@@ -106,16 +106,19 @@ const List = ({ tableData, updateTableData }) => {
     },
   ];
 
-  for (var i = 0; i < tableData.length; i++) {
-    switch (tableData[i].preview_status) {
-      case 0:
-        tableData[i].preview_status = 'NO';
-        break;
-      case 1:
-        tableData[i].preview_status = 'YES';
-        break;
+  const NumDataToWord = () => {
+    for (var i = 0; i < tableData.length; i++) {
+      switch (tableData[i].preview_status) {
+        case 0:
+          tableData[i].preview_status = 'NO';
+          break;
+        case 1:
+          tableData[i].preview_status = 'YES';
+          break;
+      }
     }
-  }
+  };
+  NumDataToWord();
 
   return (
     <Container>
@@ -126,7 +129,7 @@ const List = ({ tableData, updateTableData }) => {
         <ButtonContainer>
           <Button
             onClick={() => {
-              deleteSelectTableData();
+              handleSelectDeleteBtn();
             }}
           >
             선택삭제
@@ -136,12 +139,9 @@ const List = ({ tableData, updateTableData }) => {
           scroll={{ x: '50vw', y: 500 }}
           columns={columns}
           data={tableData}
-          selectionType={'checkbox'}
-          onChange={() => {
-            console.log();
-          }}
+          onChange={() => {}}
           rowSelection={{
-            type: selectionType,
+            type: selectionTypeState,
             ...rowSelection,
           }}
         />
