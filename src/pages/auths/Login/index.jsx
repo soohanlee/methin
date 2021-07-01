@@ -95,7 +95,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const history = useHistory();
-  console.log(history);
+
   const login = useContext(UserContext);
 
   useEffect(() => {

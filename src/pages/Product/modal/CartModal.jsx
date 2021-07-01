@@ -69,10 +69,6 @@ const CartModal = ({
 }) => {
   const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    console.log('가져와 ', productId);
-  }, [productId]);
-
   const handleMinus = () => {
     if (count === 0 || count < 1) {
       return;
@@ -100,7 +96,9 @@ const CartModal = ({
       </Container>
       <ButtonContainer>
         <SubButton onClick={onCancel}>취소</SubButton>
-        <MainButton onClick={onClickCartButton}>장바구니 담기</MainButton>
+        <MainButton onClick={() => onClickCartButton(productId, count)}>
+          장바구니 담기
+        </MainButton>
       </ButtonContainer>
     </Modalbase>
   );

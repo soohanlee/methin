@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ROUTE_PATH } from 'configs/config';
 import { useHistory, useParams } from 'react-router';
-import { getUserProductDetail } from 'apis/product';
+
 import { addCartItem } from 'apis/cart';
-import { addCartList } from 'utils/common';
+import { addCartListToCookies } from 'utils/common';
 import { notification } from 'utils/notification';
-import { getCartCookies, removeCartCookies } from 'utils/tokenManager';
 
 import { UserContext, LOGGED_IN } from 'store/user-context';
 
@@ -182,8 +181,7 @@ const ProductDetail = () => {
         }
       } catch (e) {}
     } else {
-      const result = addCartList(data);
-      console.log(result, 'result');
+      const result = addCartListToCookies(data);
       if (result === 'isExist') {
         alert('이미 장바구니에 포함된 상품입니다');
       }

@@ -125,9 +125,10 @@ function App() {
 
   useEffect(async () => {
     const cookiesCartList = JSON.parse(getCartCookies());
-
+    console.log('되냐');
     if (isLogin === LOGGED_IN && cookiesCartList.length > 0) {
       const cartList = [];
+      console.log('되냐1222');
       try {
         for (let i = 0; i < cookiesCartList.length; i++) {
           cartList.push(addCartItem(cookiesCartList[i]));
@@ -137,7 +138,7 @@ function App() {
         });
       } catch (e) {}
     }
-  }, []);
+  }, [isLogin]);
 
   const changeUserState = (data) => {
     setIsLogin(data);

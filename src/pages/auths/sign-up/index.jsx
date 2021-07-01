@@ -142,7 +142,7 @@ const SignUp = () => {
   const onSubmit = async (data) => {
     try {
       const result = await signup(data);
-      console.log(result);
+
       setIsFirstVisit(true);
       history.push(ROUTE_PATH.login);
     } catch (e) {

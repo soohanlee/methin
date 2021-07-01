@@ -224,7 +224,6 @@ const Order = () => {
   } = showSelectedAddressItem;
   if (userAddress.current && selectedAddressItem) {
     userAddress.current = selectedAddressItem;
-    console.log(userAddress.current);
   }
   return (
     <>

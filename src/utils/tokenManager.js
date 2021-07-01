@@ -92,7 +92,6 @@ export async function getIsAvalidAccessToken() {
     try {
       const response = await jwtVerify();
       if (response.data.message === 'success') {
-        console.log('여기오지');
         return true;
       }
     } catch (e) {

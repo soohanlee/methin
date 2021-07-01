@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Row as OriginRow } from 'antd';
+import { useHistory } from 'react-router';
+
+import { ROUTE_PATH, BreakPoint } from 'configs/config';
+import { addCartItem } from 'apis/cart';
+import { addCartListToCookies } from 'utils/common';
+import { notification } from 'utils/notification';
+import { UserContext, LOGGED_IN } from 'store/user-context';
 
 import ProductItem from 'pages/Product/ProductItem';
+import Pagination from 'components/Pagination';
 import { PageTitle, Label } from 'components/styled/Form';
 import Selectbox from 'components/Form/Selectbox';
-
 import { PaddingContainer } from 'components/styled/Container';
-import { ROUTE_PATH, BreakPoint } from 'configs/config';
-import { useHistory } from 'react-router';
-import Pagination from 'components/Pagination';
+
 import CartModal from './modal/CartModal';
 
 const Container = styled(PaddingContainer)`
@@ -82,7 +87,9 @@ const selectList = [
 ];
 
 const Product = () => {
+  const login = useContext(UserContext);
   const history = useHistory();
+
   const [selectedItem, setSelectedItem] = useState(selectList[0]);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [productId, setProductId] = useState('');
@@ -103,7 +110,6 @@ const Product = () => {
   };
 
   const handleProductDetailClick = (id) => {
-    console.log('id', id);
     history.push(`${ROUTE_PATH.product}${id}`);
   };
 
@@ -117,8 +123,27 @@ const Product = () => {
     setIsCartModalOpen(false);
   };
 
-  const handleClickCartButton = () => {
-    setIsCartModalOpen(false);
+  const handleClickCartButton = async (productId, productCount) => {
+    const numberProductId = parseInt(productId);
+    const data = {
+      product_id: numberProductId,
+      count: productCount,
+    };
+    if (login.loginState === LOGGED_IN) {
+      try {
+        const result = await addCartItem(data);
+        if (result && result.data.message === 'success') {
+          notification.success('장바구니에 상품을 담았습니다.');
+        }
+      } catch (e) {}
+    } else {
+      const result = addCartListToCookies(data);
+
+      if (result === 'isExist') {
+        alert('이미 장바구니에 포함된 상품입니다. 상품 개수를 추가하였습니다.');
+      }
+    }
+    // setIsCartModalOpen(false);
   };
 
   const renderProductList = () => {

@@ -73,7 +73,6 @@ const Filter = () => {
   };
 
   const handleRegisterNotice = () => {
-    console.log(history);
     history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
   };
   return (

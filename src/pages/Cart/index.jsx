@@ -168,7 +168,6 @@ const Cart = () => {
   };
 
   const handlePlus = async (id, count) => {
-    console.log('count', count);
     const newCount = count + 1;
     try {
       const result = await updateCartItemCount(id, { count: newCount });
@@ -194,14 +193,13 @@ const Cart = () => {
 
   const handleCheckListDelete = () => {
     for (let i = 0; i < checkList.length; i++) {
-      console.log(checkList[i]);
       try {
         deleteCartItem(checkList[i]);
       } catch (e) {
         notification.error('새로고침 후 시도해주세요.');
       }
     }
-    // setCart();
+    setCart();
   };
 
   const renderCartList = () => {

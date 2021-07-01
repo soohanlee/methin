@@ -34,7 +34,6 @@ const List = ({ data }) => {
   const history = useHistory();
 
   const handleModifyNotice = () => {
-    console.log(history);
     history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
   };
 
