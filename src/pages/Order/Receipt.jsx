@@ -72,15 +72,12 @@ const Receipt = ({
   discountPrice,
   productPrice,
   deliveryPrice,
+  onClickPurchaseButton,
 }) => {
   const history = useHistory();
   const [isAgree, setIsAgree] = useState(false);
   const handleAgreeChange = (e) => {
     setIsAgree(e.target.checked);
-  };
-
-  const handleMovePage = (path) => {
-    history.push(`${path}`);
   };
 
   return (
@@ -135,9 +132,7 @@ const Receipt = ({
         </>
       )}
 
-      <MainButton onClick={() => handleMovePage(ROUTE_PATH.order)}>
-        구매하기
-      </MainButton>
+      <MainButton onClick={onClickPurchaseButton}>구매하기</MainButton>
     </Container>
   );
 };

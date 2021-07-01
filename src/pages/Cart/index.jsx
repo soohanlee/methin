@@ -16,6 +16,8 @@ import { PaddingContainer } from 'components/styled/Container';
 import { PageTitle as OriginPageTitle } from 'components/styled/Form';
 import OriginBorderTitleContainer from 'components/container/BorderTitleContainer';
 import { SubButton as OriginSubButton } from 'components/styled/Button';
+import { ROUTE_PATH } from 'configs/config';
+import { useHistory } from 'react-router';
 
 const PageTitle = styled(OriginPageTitle)`
   text-align: center;
@@ -129,6 +131,8 @@ const NoCart = styled.div`
 `;
 
 const Cart = () => {
+  const history = useHistory();
+
   const [cartList, setCartList] = useState([]);
   const [finalPrice, setFinalPrice] = useState(0);
   const login = useContext(UserContext);
@@ -200,6 +204,17 @@ const Cart = () => {
       }
     }
     setCart();
+  };
+
+  const handleClickPurchaseButton = () => {
+    if (cartList?.length === 0) {
+      return;
+    } else {
+      history.push({
+        pathname: ROUTE_PATH.order,
+        state: cartList,
+      });
+    }
   };
 
   const renderCartList = () => {
@@ -274,6 +289,7 @@ const Cart = () => {
           discountPrice={0}
           productPrice={0}
           deliveryPrice={0}
+          onClickPurchaseButton={handleClickPurchaseButton}
         />
       </CartContainer>
       <SubButton onClick={handleCheckListDelete}>선택 삭제</SubButton>

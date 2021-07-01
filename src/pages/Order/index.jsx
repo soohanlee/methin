@@ -158,9 +158,17 @@ const MainButton = styled(OriginMainButton)`
   margin-bottom: 1rem;
 `;
 
+const Img = styled.img`
+  width: 100%;
+  object-fit: cover;
+`;
+
 const Order = () => {
   const login = useContext(UserContext);
   const history = useHistory();
+
+  const [productList, setProductList] = useState([]);
+
   const [isOpenChangeDevliveryModal, setIsOpenChangeDevliveryModal] = useState(
     false,
   );
@@ -177,6 +185,25 @@ const Order = () => {
     user_id: '',
     zip_code: '',
   });
+
+  useEffect(() => {
+    console.log('history', history.location.state);
+    if (history.location.state) {
+      setProductList(history.location.state);
+    }
+  }, [history]);
+
+  useEffect(() => {
+    if (showSelectedAddressItem.id === '' && userAddressList.length > 0) {
+      setShowSelectedAddressItem(userAddressList[0]);
+    }
+  }, [showSelectedAddressItem, userAddressList]);
+
+  useEffect(() => {
+    if (userAddressList.length === 0) {
+      getAddressList();
+    }
+  }, [userAddressList]);
 
   const handleOpenDeliveryChangeModal = () => {
     setIsOpenChangeDevliveryModal(true);
@@ -199,17 +226,45 @@ const Order = () => {
     }
   };
 
-  useEffect(() => {
-    if (showSelectedAddressItem.id === '' && userAddressList.length > 0) {
-      setShowSelectedAddressItem(userAddressList[0]);
-    }
-  }, [showSelectedAddressItem, userAddressList]);
+  const renderProductList = () => {
+    if (productList?.length === 0) {
+      return '장바구니에 담긴 상품이 없습니다.';
+    } else {
+      return productList?.map(
+        ({
+          id,
+          product_id,
+          count,
+          name,
+          price,
+          discount_amount,
+          actual_price,
+          main_image_url,
+          min_quantity,
+          max_quantity,
+          created_at,
+        }) => {
+          return (
+            <ProductItemLine id={product_id}>
+              <ProductItemContainer>
+                <ProductItemImgContainer>
+                  <Img src={main_image_url} />
+                </ProductItemImgContainer>
 
-  useEffect(() => {
-    if (userAddressList.length === 0) {
-      getAddressList();
+                <ProductItemTextContainer>
+                  <Label bold>{name}</Label>
+                  <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
+                  <Label bold>{price}원</Label>
+                </ProductItemTextContainer>
+
+                <Price>{actual_price}원</Price>
+              </ProductItemContainer>
+            </ProductItemLine>
+          );
+        },
+      );
     }
-  }, [userAddressList]);
+  };
 
   const userAddress = useRef('');
   const {
@@ -243,18 +298,7 @@ const Order = () => {
         <OrderContainer>
           <Contents>
             <BorderTitleContainer title="주문 상품 정보">
-              <ProductItemLine>
-                <ProductItemContainer>
-                  <ProductItemImgContainer></ProductItemImgContainer>
-                  <ProductItemTextContainer>
-                    <Label bold>인기 샐러드 도시락</Label>
-                    <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
-                    <Label bold>39,800원</Label>
-                  </ProductItemTextContainer>
-
-                  <Price> 39, 800 원 </Price>
-                </ProductItemContainer>
-              </ProductItemLine>
+              {renderProductList()}
             </BorderTitleContainer>
             <BorderTitleContainer title="주문자 정보">
               <ProductItemLine>
