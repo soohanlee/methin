@@ -156,48 +156,18 @@ const Table = ({ getAllProductyData, result, count }) => {
     setDataState(result);
   }, [result]);
 
+  const statusWordData = ['판매준비', '판매중', '판매종료'];
+  const previewWordData = ['NO', 'Yes'];
+  const shipWordData = ['무료', '유료'];
+  const shipPayWordData = ['선불', '착불'];
   //숫자데이터 문자로 변환
   const NumDataToWord = () => {
     //판매상태
     for (var i = 0; i < dataState.length; i++) {
-      switch (dataState[i].status) {
-        case 0:
-          dataState[i].status = '판매준비';
-          break;
-        case 1:
-          dataState[i].status = '판매중';
-          break;
-        case 2:
-          dataState[i].status = '판매종료';
-          break;
-      }
-      //전시상태
-      switch (dataState[i].preview_status) {
-        case 0:
-          dataState[i].preview_status = 'NO';
-          break;
-        case 1:
-          dataState[i].preview_status = 'YES';
-          break;
-      }
-      //배송비유형
-      switch (dataState[i].ship_category) {
-        case 0:
-          dataState[i].ship_category = '무료';
-          break;
-        case 1:
-          dataState[i].ship_category = '유료';
-          break;
-      }
-      //배송비지불유형
-      switch (dataState[i].ship_pay_type) {
-        case 0:
-          dataState[i].ship_pay_type = '선불';
-          break;
-        case 1:
-          dataState[i].ship_pay_type = '착불';
-          break;
-      }
+      dataState[i].status = statusWordData[i];
+      dataState[i].preview_status = previewWordData[i];
+      dataState[i].ship_category = shipWordData[i];
+      dataState[i].ship_pay_type = shipPayWordData[i];
     }
   };
 

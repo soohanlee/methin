@@ -106,16 +106,11 @@ const List = ({ tableData, getApiNoticeData }) => {
     },
   ];
 
+  const wordData = ['NO', 'YES'];
+
   const NumDataToWord = () => {
     for (var i = 0; i < tableData.length; i++) {
-      switch (tableData[i].preview_status) {
-        case 0:
-          tableData[i].preview_status = 'NO';
-          break;
-        case 1:
-          tableData[i].preview_status = 'YES';
-          break;
-      }
+      tableData[i].preview_status = wordData[i];
     }
   };
   NumDataToWord();
