@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import Table from './Table';
-import Header from './Header';
+import Title from './Title';
 import { getProductList } from 'apis/product';
 import { notification } from 'utils/notification';
 
-const RegisterProductOnce = () => {
+const RegisterProductAll = () => {
+  const limite = 16;
   const [tableDataState, setTableDataState] = useState([]);
-  const [tableCountState, setTableCountState] = useState(0);
 
   useEffect(() => {
     async function fetchAndSetUser() {
       try {
-        const result = await getProductList();
-        const customList = result.data.data.list.map((item) => {
-          return { ...item, key: item.id };
-        });
+        const result = await getProductList(0);
+
+        const count = result.data.data.count;
+        const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+        let customList = [];
+        for (let i = 0; i < maxOffset; i++) {
+          const _result = await getProductList(i);
+          customList = customList.concat(_result.data.data.list);
+        }
         // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
 
         setTableDataState(customList);
-        setTableCountState(result.data.data.count);
       } catch (e) {
         notification.error('상품 정보를 가져오지 못했습니다.');
       }
@@ -28,13 +32,13 @@ const RegisterProductOnce = () => {
 
   return (
     <div>
-      <Header dataList={dataList} />
+      <Title dataList={dataList} />
       <Table data={tableDataState} />
     </div>
   );
 };
 
-export default RegisterProductOnce;
+export default RegisterProductAll;
 
 const dataList = {
   축산: [

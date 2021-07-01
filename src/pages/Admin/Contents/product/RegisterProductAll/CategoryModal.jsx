@@ -37,9 +37,13 @@ const Styled = styled.div`
 
 const ContainerStyled = styled.div`
   width: 100%;
-  display: flex;
   margin-bottom: 2rem;
   align-items: center;
+`;
+
+const _ContainerStyled = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
 `;
 
 const TitleTextStyled = styled.div`
@@ -51,7 +55,14 @@ const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
   margin-right: 3rem;
 `;
 
-const CategoryModal = (property) => {
+const CategoryModal = ({
+  title,
+  visible,
+  setVisible,
+  onClick,
+  categoryRef,
+  dataList,
+}) => {
   const [categoryTypeState, setCategoryTypeState] = useState(0);
   const [classificationdataState, setClassificationdataState] = useState({});
   const [selectedFirstItemState, setSelectedFirstItemState] = useState('축산');
@@ -59,7 +70,7 @@ const CategoryModal = (property) => {
   const dataKey = Object.keys(classificationdataState);
 
   useEffect(() => {
-    setClassificationdataState(property.dataList);
+    setClassificationdataState(dataList);
   }, []);
 
   const handleFristItemClick = (value) => {
@@ -70,12 +81,12 @@ const CategoryModal = (property) => {
     setSelectedSecondItemState(value);
   };
 
-  const okClick = () => {
-    property.setVisible(false);
-    property.onClick();
+  const handleOkBtn = () => {
+    setVisible(false);
+    onClick();
   };
 
-  const renderTap = () => {
+  const renderChangedTap = () => {
     switch (categoryTypeState) {
       case 0:
         return renderCategorySearch();
@@ -89,12 +100,10 @@ const CategoryModal = (property) => {
   const renderCategorySearch = () => {
     return (
       <>
-        <ContainerStyled>
+        <_ContainerStyled>
           <TitleTextStyled>카테고리명</TitleTextStyled>
-          <BasicTextInputBoxStyled
-            ref={property.catagoryRef}
-          ></BasicTextInputBoxStyled>
-        </ContainerStyled>
+          <BasicTextInputBoxStyled ref={categoryRef}></BasicTextInputBoxStyled>
+        </_ContainerStyled>
 
         <ContainerStyled>
           <TitleTextStyled>선택한 카테고리 :</TitleTextStyled>
@@ -148,12 +157,12 @@ const CategoryModal = (property) => {
   return (
     <>
       <Modal
-        title={property.title}
+        title={title}
         centered
-        visible={property.visible}
-        onOk={okClick}
+        visible={visible}
+        onOk={handleOkBtn}
         onCancel={() => {
-          property.setVisible(false);
+          setVisible(false);
         }}
         width={900}
         okText="저장"
@@ -174,7 +183,7 @@ const CategoryModal = (property) => {
               label="카테고리명 선택"
             ></BasicButton>
           </ContainerStyled>
-          {renderTap()}
+          {renderChangedTap()}
         </ContainerStyled>
       </Modal>
     </>

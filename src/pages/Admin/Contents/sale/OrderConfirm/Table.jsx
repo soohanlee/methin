@@ -6,9 +6,9 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTable from 'pages/Admin/components/Table/Table';
 
-import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/orderSheetModal';
-import AdressModifyModal from 'pages/Admin/Contents/sale/OrderConfirm/adressModifyModal';
-import SaleCancelModal from 'pages/Admin/Contents/sale/OrderConfirm/saleCancelModal';
+import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/OrderSheetModal';
+import AdressModifyModal from 'pages/Admin/Contents/sale/OrderConfirm/AdressModifyModal';
+import SaleCancelModal from 'pages/Admin/Contents/sale/OrderConfirm/SaleCancelModal';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 const Container = styled.div`
@@ -29,37 +29,71 @@ const SearchContainer = styled.div`
 `;
 
 const SelectBox = styled(BasicSelectBox)`
-  width: 300px;
+  width: 20rem;
 `;
 
 const PeirodSelectBox = styled(SelectBox)`
   margin-right: 1rem;
 `;
 
+const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
+  width: 40rem;
+`;
+
 const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({
-  data,
-  orderCountTableColumns,
-  orderCountTableData,
-  orderSheetList,
-  tableData,
-}) => {
+const Table = ({ orderSheetList, tableData, handleSearchOnClick }) => {
   const invoiceNumber = useRef(null);
 
   const [adressModifyVisible, setAdressModifyVisible] = useState(false);
   const [orderSheetVisible, setOrderSheetVisible] = useState(false);
   const [saleCancelVisible, setSaleCancelVisible] = useState(false);
 
-  const [orderFunction, setOrderFunction] = useState(false);
-
-  const [orderConfirmFunction, setOrderConfirmFunction] = useState(false);
-  const [orderAdressChangeFunction, setOrderAdressChangeFunction] = useState(
-    false,
-  );
-  const [saleCancelFunction, setOrderCancelFunction] = useState(false);
+  //주문상태
+  for (var i = 0; i < tableData.length; i++) {
+    switch (tableData[i].status) {
+      case 0:
+        tableData[i].status = '결제대기';
+        break;
+      case 1:
+        tableData[i].status = '결제완료';
+        break;
+      case 2:
+        tableData[i].status = '상품준비';
+        break;
+      case 3:
+        tableData[i].status = '배송중';
+        break;
+      case 4:
+        tableData[i].status = '배송완료';
+        break;
+      case 5:
+        tableData[i].status = '취소완료';
+        break;
+      case 6:
+        tableData[i].status = '반품완료';
+        break;
+    }
+    //배송비형태
+    switch (tableData[i].ship_pay_type) {
+      case 0:
+        tableData[i].ship_pay_type = '선불';
+        break;
+      case 1:
+        tableData[i].ship_pay_type = '착불';
+        break;
+    }
+    switch (tableData[i].ship_category) {
+      case 0:
+        tableData[i].ship_category = '무료';
+        break;
+      case 1:
+        tableData[i].ship_category = '유료';
+        break;
+    }
+  }
 
   const tableBtn = (id) => {
     switch (id) {
@@ -138,7 +172,8 @@ const Table = ({
         <LabelContents title="배송정보 한번에 입력하기">
           <PeirodSelectBox list={deliveryTypeList} />
           <PeirodSelectBox list={deliveryCompanyList} />
-          <Input ref={invoiceNumber} />
+          <BasicTextInputBoxStyled ref={invoiceNumber} />
+          <Button>검색</Button>
         </LabelContents>
       </SearchContainer>
 
@@ -148,6 +183,7 @@ const Table = ({
         data={tableData}
         columns={columns}
         selectionType="checkbox"
+        onChange={() => {}}
       />
 
       <ButtonContainer>
@@ -202,7 +238,6 @@ const columns = [
   {
     title: '배송방법',
     dataIndex: 'ship_type',
-
     render: () => <BasicSelectBox list={selctBoxList} />,
   },
   {

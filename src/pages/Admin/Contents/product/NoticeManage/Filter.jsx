@@ -46,11 +46,10 @@ const ItemWrap = styled.div`
   align-items: center;
 `;
 
-const Filter = () => {
+const Filter = ({ getApiNoticeData }) => {
   const titleRef = useRef(null);
+  const [dateRangeState, setDateRangeState] = useState('today');
   const history = useHistory();
-
-  const [dateRange, setDateRange] = useState('today');
 
   const handleSearchNameChange = (value) => {
     console.log('value', value);
@@ -76,6 +75,14 @@ const Filter = () => {
     console.log(history);
     history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
   };
+
+  const handleSearchOnClick = () => {
+    getApiNoticeData();
+  };
+  const handleResetOnClick = () => {
+    getApiNoticeData();
+  };
+
   return (
     <Container>
       <LabelContents title="상품 공지사항 조회">
@@ -99,8 +106,8 @@ const Filter = () => {
           </ItemWrap>
           <ItemWrap>
             <Radio.Group
-              value={dateRange}
-              onChange={(e) => setDateRange(e.target.value)}
+              value={dateRangeState}
+              onChange={(e) => setDateRangeState(e.target.value)}
             >
               <Radio.Button value="today">오늘</Radio.Button>
               <Radio.Button value="week">1주일</Radio.Button>
@@ -118,8 +125,8 @@ const Filter = () => {
         </ItemContainer>
       </LabelContents>
       <ButtonContainer>
-        <Button>검색</Button>
-        <Button>초기화</Button>
+        <Button onClick={handleSearchOnClick}>검색</Button>
+        <Button onClick={handleResetOnClick}>초기화</Button>
       </ButtonContainer>
     </Container>
   );

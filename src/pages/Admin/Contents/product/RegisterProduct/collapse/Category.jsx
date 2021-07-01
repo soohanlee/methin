@@ -79,7 +79,7 @@ const Category = () => {
     return <Empty />;
   } else {
     return (
-      <CustomCollapse header="카테고리" extra={'뭔가옴'}>
+      <CustomCollapse header="카테고리" extra={''}>
         <ButtonContainer>
           <ButtonLine>
             <Input

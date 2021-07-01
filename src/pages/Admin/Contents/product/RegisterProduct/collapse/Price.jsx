@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input as OriginInput, Radio, Select } from 'antd';
+import { InputNumber, Radio, Select } from 'antd';
 import styled from 'styled-components';
 
 import {} from 'utils/common';
@@ -18,7 +18,7 @@ const CheckContainer = styled.div`
   margin-top: 1rem;
 `;
 
-const Input = styled(OriginInput)`
+const Input = styled(InputNumber)`
   max-width: 300px;
 `;
 
@@ -103,15 +103,15 @@ const Price = ({
     }
   };
 
-  const handleSaleTypePriceChange = (e) => {
+  const handleSaleTypePriceChange = (value) => {
     if (saleType === 'percentage') {
       if (Number(saleTypePrice) <= 100) {
-        setSaleTypePrice(e.target.value);
+        setSaleTypePrice(value);
       } else {
         setSaleTypePrice('');
       }
     } else {
-      setSaleTypePrice(e.target.value);
+      setSaleTypePrice(value);
     }
   };
 
@@ -133,10 +133,10 @@ const Price = ({
   );
 
   return (
-    <CustomCollapse header="판매가" extra={'뭔가옴'}>
+    <CustomCollapse header="판매가" extra={''}>
       <LabelContents title="판매가">
-        <Input
-          onChange={(e) => setPrice(e.target.value)}
+        <InputNumber
+          onChange={setPrice}
           addonAfter={`원`}
           value={price}
           onBlur={handleBlur}
@@ -156,7 +156,7 @@ const Price = ({
       {sale === 'setting' && (
         <>
           <LabelContents title="할인">
-            <Input
+            <InputNumber
               onChange={handleSaleTypePriceChange}
               addonAfter={selectAfter}
               value={saleTypePrice}

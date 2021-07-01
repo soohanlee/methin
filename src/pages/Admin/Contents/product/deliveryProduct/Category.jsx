@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 
-const EditCategorys = styled.div`
+const Categorys = styled.div`
   width: 100%;
   height: 5rem;
   background-color: #ffffff;
@@ -31,11 +31,11 @@ const TitleText = styled.div`
   color: #66dd89;
 `;
 
-const EditDeliveryProductCategory = () => {
+const Category = () => {
   const categoryTextArray = ['배송비 묶음그룹 관리'];
 
   const renderSetCaterogy = () => {
-    const CategoryClick = (e) => {
+    const handleCategoryBtn = (e) => {
       alert(e.target.innerText);
     };
 
@@ -44,7 +44,7 @@ const EditDeliveryProductCategory = () => {
       result.push(
         <>
           <CategoryType key={i}>
-            <TitleText onClick={CategoryClick}>
+            <TitleText onClick={handleCategoryBtn}>
               {categoryTextArray[i]}
             </TitleText>
           </CategoryType>
@@ -56,9 +56,9 @@ const EditDeliveryProductCategory = () => {
 
   return (
     <>
-      <EditCategorys>{renderSetCaterogy()}</EditCategorys>
+      <Categorys>{renderSetCaterogy()}</Categorys>
     </>
   );
 };
 
-export default EditDeliveryProductCategory;
+export default Category;

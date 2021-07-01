@@ -30,6 +30,8 @@ const Editor = ({ editorState, onEditorStateChange, uploadImageCallBack }) => {
         inputAccept:
           'application/pdf,text/plain,application/vnd.openxmlformatsofficedocument.wordprocessingml.document,application/msword,application/vnd.ms-excel',
       }}
+      placeholder="내용"
+      value="테스트"
     />
   );
 };

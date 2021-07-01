@@ -9,7 +9,7 @@ import BasicBasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 
-const EditProductSettingsStyled = styled.div`
+const SettingsStyled = styled.div`
   width: 100%;
   height: 50rem;
   background-color: #ffffff;
@@ -101,7 +101,7 @@ const BasicDatePickerStyled = styled(BasicDatePicker)`
   height: 4rem;
 `;
 
-const EditProductSetting = () => {
+const Setting = ({ getApiProductData, getSearchProductData }) => {
   const productNumberRef = useRef(null); //상품 번호
   const productMultiSearchRef = useRef(null); //상품 복수 검색
   const productNameRef = useRef(null); //상품명
@@ -263,12 +263,17 @@ const EditProductSetting = () => {
 
   const searchBtn = useRef(null); //검색
   const renderSearchButton = () => {
-    const setSearchBtn = () => {
-      alert('검색 버튼 클릭');
+    //검색 값들어가야함
+    const setSearchBtn = (value) => {
+      if (value != undefined) {
+        getSearchProductData();
+      } else {
+        getApiProductData();
+      }
     };
 
     const setResetBtn = () => {
-      alert('초기화 버튼 클릭');
+      getApiProductData();
     };
 
     return (
@@ -300,18 +305,18 @@ const EditProductSetting = () => {
 
   return (
     <>
-      <EditProductSettingsStyled>
+      <SettingsStyled>
         {renderSearchInputBox()}
         {renderSalesStatus()}
         {renderCategory()}
         {renderDateTerm()}
         {renderSearchButton()}
-      </EditProductSettingsStyled>
+      </SettingsStyled>
     </>
   );
 };
 
-export default EditProductSetting;
+export default Setting;
 const largeCategory = [
   { value: '0', label: '대분류' },
   { value: '1', label: '뭐들어가지' },

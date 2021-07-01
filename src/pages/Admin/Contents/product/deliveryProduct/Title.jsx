@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import PageHeaderBtn from 'pages/Admin/components/Form/PageHeaderBtn';
 
-const EditDeliveryTitles = styled.div`
+const Titles = styled.div`
   width: 100%;
   height: 7rem;
   background-color: #ffffff;
@@ -25,15 +25,15 @@ const PageBtn = styled(PageHeaderBtn)`
   padding: 0px;
 `;
 
-const EditDeliveryProductTitle = () => {
+const Title = () => {
   return (
-    <EditDeliveryTitles>
+    <Titles>
       <TitleTexts>
         <PageBtn />
         <TitleText>배송정보 관리 </TitleText>
       </TitleTexts>
-    </EditDeliveryTitles>
+    </Titles>
   );
 };
 
-export default EditDeliveryProductTitle;
+export default Title;

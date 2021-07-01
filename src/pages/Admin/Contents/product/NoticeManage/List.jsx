@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import Table from 'pages/Admin/components/Table/Table';
 import { useHistory } from 'react-router';
 import { ROUTE_PATH } from 'configs/config';
+import { deleteNotice } from 'apis/notice';
+import { notification } from 'utils/notification';
 
 const Container = styled.div`
   background: #fff;
@@ -30,12 +32,48 @@ const BodyContainer = styled.div`
 
 const ButtonStyled = styled(Button)``;
 
-const List = ({ data }) => {
+const List = ({ tableData, getApiNoticeData }) => {
+  const [tableState, setTableState] = useState([]);
+  const [selectTableKeyState, setSelectTableKeyState] = useState([]);
+  const [selectionTypeState, setSelectionTypeState] = useState('checkbox');
   const history = useHistory();
 
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      setTableState(selectedRows);
+      setSelectTableKeyState(selectedRowKeys);
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
+
+  //여러개 선택삭제
+  const handleSelectDeleteBtn = () => {
+    async function fetchAndSetUser(num) {
+      try {
+        const result = await deleteNotice(selectTableKeyState[num]);
+        getApiNoticeData();
+      } catch (e) {
+        notification.error('상품을 삭제하지 못했습니다.');
+      }
+    }
+
+    for (var i = 0; i < selectTableKeyState.length; i++) {
+      if (i == selectTableKeyState.length - 1) {
+        fetchAndSetUser(i);
+      } else {
+        deleteNotice(selectTableKeyState[i]);
+      }
+    }
+  };
+
   const handleModifyNotice = () => {
-    console.log(history);
-    history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
+    history.push({
+      pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`,
+      state: { tableState: tableState },
+    });
   };
 
   const columns = [
@@ -48,44 +86,59 @@ const List = ({ data }) => {
     },
     {
       title: '번호',
-      dataIndex: 'number',
+      dataIndex: 'id',
     },
     {
-      title: '분류',
-      dataIndex: 'classification',
-    },
-    {
-      title: '상태',
-      dataIndex: 'status',
-    },
-    {
-      title: '제목',
+      title: '공지사항',
       dataIndex: 'title',
     },
     {
-      title: '등록일',
-      dataIndex: 'registerDate',
+      title: '카테고리',
+      dataIndex: 'category',
     },
     {
-      title: '삭제일',
-      dataIndex: 'deleteDate',
+      title: '전시상태',
+      dataIndex: 'preview_status',
+    },
+    {
+      title: '등록일',
+      dataIndex: 'created_at',
     },
   ];
+
+  const wordData = ['NO', 'YES'];
+
+  const NumDataToWord = () => {
+    for (var i = 0; i < tableData.length; i++) {
+      tableData[i].preview_status = wordData[i];
+    }
+  };
+  NumDataToWord();
 
   return (
     <Container>
       <TitleContainer>
-        <Title>상품 공지사항 목록 (총 {0}개)</Title>
+        <Title>상품 공지사항 목록 (총 {tableData.length}개)</Title>
       </TitleContainer>
       <BodyContainer>
         <ButtonContainer>
-          <Button>선택삭제</Button>
+          <Button
+            onClick={() => {
+              handleSelectDeleteBtn();
+            }}
+          >
+            선택삭제
+          </Button>
         </ButtonContainer>
         <Table
           scroll={{ x: '50vw', y: 500 }}
           columns={columns}
-          data={data}
-          selectionType={'checkbox'}
+          data={tableData}
+          onChange={() => {}}
+          rowSelection={{
+            type: selectionTypeState,
+            ...rowSelection,
+          }}
         />
       </BodyContainer>
     </Container>

@@ -4,7 +4,7 @@ import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import styled from 'styled-components';
 
-const adressModifyModal = (property) => {
+const AdressModifyModal = (property) => {
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
@@ -84,4 +84,4 @@ const adressModifyModal = (property) => {
     </>
   );
 };
-export default adressModifyModal;
+export default AdressModifyModal;

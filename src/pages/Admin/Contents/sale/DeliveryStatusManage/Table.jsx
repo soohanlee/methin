@@ -4,7 +4,6 @@ import { Button as OriginButton } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import OriginTable from 'pages/Admin/components/Table/Table';
-import ConfirmationRequestModal from 'pages/Admin/Contents/sale/DeliveryStatusManage/ConfirmationRequestModal';
 import DirectReturnModal from 'pages/Admin/Contents/sale/DeliveryStatusManage/DirectExchangeModal';
 import DirectExchangeModal from 'pages/Admin/Contents/sale/DeliveryStatusManage/DirectExchangeModal';
 import ModifyInvoiceModal from 'pages/Admin/Contents/sale/DeliveryStatusManage/ModifyInvoiceModal';
@@ -34,25 +33,57 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ data, count }) => {
-  const [confirmationRequestVisible, setConfirmationRequestVisible] = useState(
-    false,
-  );
-  const [
-    confirmationExtensionVisible,
-    setConfirmationExtensionVisible,
-  ] = useState(false);
+const Table = ({ tableData, count }) => {
   const [directReturnVisible, setDirectReturnVisible] = useState(false);
   const [directExchangeVisible, setDirectExchangeVisible] = useState(false);
   const [modifyInvoiceVisible, setModifyInvoiceVisible] = useState(false);
+
+//주문상태
+for (var i = 0; i < tableData.length; i++) {
+  switch (tableData[i].status) {
+    case 0:
+      tableData[i].status = '결제대기';
+      break;
+    case 1:
+      tableData[i].status = '결제완료';
+      break;
+    case 2:
+      tableData[i].status = '상품준비';
+      break;
+      case 3:
+      tableData[i].status = '배송중';
+      break;
+      case 4:
+      tableData[i].status = '배송완료';
+      break;
+      case 5:
+      tableData[i].status = '취소완료';
+      break;
+      case 6:
+      tableData[i].status = '반품완료';
+      break;
+  }
+  //배송비형태
+  switch (tableData[i].ship_pay_type) {
+    case 0:
+      tableData[i].ship_pay_type = '선불';
+      break;
+    case 1:
+      tableData[i].ship_pay_type = '착불';
+      break;
+  }
+  switch (tableData[i].ship_category) {
+    case 0:
+      tableData[i].ship_category = '무료';
+      break;
+    case 1:
+      tableData[i].ship_category = '유료';
+      break;
+  }
+}
+
   const ButtonClick = (type) => {
     switch (type) {
-      case 'confirmationRequest':
-        setConfirmationRequestVisible(true);
-        break;
-      case 'confirmationExtension':
-        setConfirmationExtensionVisible(true);
-        break;
       case 'directReturn':
         setDirectReturnVisible(true);
         break;
@@ -68,19 +99,6 @@ const Table = ({ data, count }) => {
   };
   return (
     <Container>
-      <ConfirmationRequestModal
-        centered
-        title="구매확정요청"
-        visible={confirmationRequestVisible}
-        onOk={() => {
-          setConfirmationRequestVisible(false);
-        }}
-        onCancel={() => {
-          setConfirmationRequestVisible(false);
-        }}
-        width={500}
-      ></ConfirmationRequestModal>
-
       <DirectReturnModal
         centered
         title="판매자 직접 반품접수"
@@ -129,29 +147,13 @@ const Table = ({ data, count }) => {
 
       <OriginTable
         scroll={{ x: '300vw', y: 500 }}
-        data={data}
+        data={tableData}
         columns={columns}
         selectionType="checkbox"
+        onChange={() => {}}
       />
 
       <ButtomContainer>
-        <LabelContents title="구매확정 관리">
-          <Button
-            onClick={() => {
-              ButtonClick('confirmationRequest');
-            }}
-          >
-            구매확정 요청
-          </Button>
-          <Button
-            onClick={() => {
-              ButtonClick('confirmationExtension');
-            }}
-          >
-            구매확정 연장
-          </Button>
-        </LabelContents>
-
         <LabelContents title="교환/반품">
           <Button
             onClick={() => {

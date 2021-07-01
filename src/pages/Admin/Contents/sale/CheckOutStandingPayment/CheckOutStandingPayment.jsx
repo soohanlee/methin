@@ -32,22 +32,24 @@ const Title = styled.div`
 `;
 
 const CheckOutStandingPayment = () => {
+  const limite = 16;
   const [QueryItemVisible, setQueryItemVisible] = useState(false);
-
   const [table, setTable] = useState([]);
   const [tableCount, setTableCount] = useState(0);
 
   useEffect(() => {
     async function fetchAndSetUser() {
       try {
-        const result = await getPaymentUnpaidList();
-        const customList = result.data.data.list.map((item) => {
-          return { ...item, key: item.id };
-        });
-        // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
-
+        const result = await getPaymentUnpaidList(0);
+        const count = result.data.data.count;
+        const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+        let customList = [];
+        for (let i = 0; i < maxOffset; i++) {
+          const _result = await getPaymentUnpaidList(i);
+          customList = customList.concat(_result.data.data.list);
+        }
         setTable(customList);
-        setTableCount(result.data.data.count);
+        setTableCount(customList.length);
       } catch (e) {
         notification.error('상품 정보를 가져오지 못했습니다.');
       }
@@ -81,7 +83,12 @@ const CheckOutStandingPayment = () => {
         </ButtonContainer>
       </TitleContainer>
 
-      <Table scroll={{ x: '130vw', y: 500 }} data={table} columns={columns} />
+      <Table
+        onChange={() => {}}
+        scroll={{ x: '130vw', y: 500 }}
+        data={table}
+        columns={columns}
+      />
     </Container>
   );
 };

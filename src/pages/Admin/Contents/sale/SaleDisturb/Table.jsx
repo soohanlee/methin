@@ -41,6 +41,7 @@ const Table = ({ data }) => {
         data={data}
         columns={columns}
         selectionType="checkbox"
+        onChange={() => {}}
       />
     </Container>
   );

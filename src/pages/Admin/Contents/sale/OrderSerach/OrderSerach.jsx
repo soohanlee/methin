@@ -6,6 +6,7 @@ import { getPaymentList } from 'apis/payment';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import Table from 'pages/Admin/components/Table/Table';
 import { notification } from 'utils/notification';
 
@@ -47,8 +48,8 @@ const ItemWrap = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+  justify-content: center;
+  margin-bottom: 5rem;
 `;
 
 const BodyHeaderContainer = styled.div`
@@ -59,23 +60,53 @@ const Title = styled.div`
   font-size: 2rem;
 `;
 
+const BasicButtonStyled = styled(BasicButton)`
+  width: 10rem;
+`;
 const OrderSerach = () => {
-  const [datePeriod, setDatePeriod] = useState('');
-  const [table, setTable] = useState([]);
-  const [tableCount, setTableCount] = useState(0);
+  const limite = 16;
+  const [datePeriodState, setDatePeriodStat] = useState('');
+  const [tableDataStat, setTableDataStat] = useState([]);
+  const [tableCountStat, setTableCountStat] = useState(0);
+  const periodRef = useRef(null);
+
+  const wordData = [
+    '결제대기',
+    '결제완료',
+    '상품준비',
+    '배송중',
+    '배송완료',
+    '취소완료',
+    '반품완료',
+  ];
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const result = await getPaymentList();
-        setTable(result.data.data.list);
-        setTableCount(result.data.data.count);
-      } catch (e) {
-        notification.error(e);
-      }
+      await getApiPaymentData();
     }
     fetchData();
   }, []);
+
+  const getApiPaymentData = async () => {
+    try {
+      const result = await getPaymentList(0);
+
+      const count = result.data.data.count;
+      const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+      let customList = [];
+      for (let i = 0; i < maxOffset; i++) {
+        const _result = await getPaymentList(i);
+        customList = customList.concat(_result.data.data.list);
+      }
+
+      setTableDataStat(customList);
+      setTableCountStat(customList.length);
+
+      notification.success('검색 성공');
+    } catch (e) {
+      notification.error(e);
+    }
+  };
 
   const handleStartDateChange = (value) => {
     console.log(value);
@@ -85,7 +116,17 @@ const OrderSerach = () => {
     console.log(value);
   };
 
-  const periodRef = useRef(null);
+  const handleSearchOnClick = () => {
+    getApiPaymentData();
+  };
+
+  const NumDataToWord = () => {
+    for (var i = 0; i < tableDataStat.length; i++) {
+      tableDataStat[i].status = wordData[i];
+    }
+  };
+
+  NumDataToWord();
 
   return (
     <Container>
@@ -98,8 +139,8 @@ const OrderSerach = () => {
             <ItemWrap>
               <ButtonContainer>
                 <Radio.Group
-                  value={datePeriod}
-                  onChange={(e) => setDatePeriod(e.target.value)}
+                  value={datePeriodState}
+                  onChange={(e) => setDatePeriodStat(e.target.value)}
                 >
                   <Radio.Button value="today">오늘</Radio.Button>
                   <Radio.Button value="1week">1주일</Radio.Button>
@@ -125,13 +166,21 @@ const OrderSerach = () => {
 
       <BodyContainer>
         <BodyHeaderContainer>
-          <Title>목록 (총{tableCount}개)</Title>
+          <ButtonContainer>
+            <BasicButtonStyled
+              onClick={handleSearchOnClick}
+              label="검색"
+            ></BasicButtonStyled>
+          </ButtonContainer>
+          <Title>목록 (총{tableCountStat}개)</Title>
         </BodyHeaderContainer>
+
         <Table
           scroll={{ x: '120vw', y: 500 }}
           selectionType="checkbox"
-          data={table}
+          data={tableDataStat}
           columns={columns}
+          onChange={() => {}}
         />
       </BodyContainer>
     </Container>

@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const productUrl = `/api/admin/product`;
 
-export const getProductList = async () => {
-  return await axios.get(`${productUrl}`);
+export const getProductList = async (offset) => {
+  return await axios.get(`${productUrl}?offset=${offset}`);
 };
 
 export const getProductDetail = async (id) => {
@@ -34,6 +34,8 @@ export const registerProduct = async (data) => {
   // - preview_status: number (default: 0. optional) ⇒ 상품 노출정보
   //     - 0: 미리보기
   //     - 1: 노출
+
+  console.log(data);
   return await axios.post(`${productUrl}`, data);
 };
 
@@ -55,12 +57,16 @@ export const updateProductDetail = async (id, data) => {
   // - preview_status: number ⇒ 상품 노출정보
   //     - 0: 미리보기
   //     - 1: 노출
+
   return await axios.patch(`${productUrl}/${id}`, data);
 };
 
 export const answerQNA = async (id, qna_id, data) => {
   //   - **answer_title**: string ⇒ 답변 제목
   // - **answer_body**: string ⇒ 답변 내용
+  console.log(id);
+  console.log(qna_id);
+  console.log(data);
   return await axios.patch(`${productUrl}/${id}/qna/${qna_id}/answer`, data);
 };
 

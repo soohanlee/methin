@@ -37,8 +37,8 @@ const RegisterProduct = ({ history }) => {
   const [productName, setProductName] = useState('');
 
   // 판매가
-  const [price, setPrice] = useState('');
-  const [salePrice, setSalePrice] = useState(''); //할인된 가격
+  const [price, setPrice] = useState(0);
+  const [salePrice, setSalePrice] = useState(0); //할인된 가격
   const [sale, setSale] = useState('setting'); //setting, noSetting
   const [saleType, setSaleType] = useState('won'); // won, percentage
   const [saleTypePrice, setSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
@@ -74,7 +74,6 @@ const RegisterProduct = ({ history }) => {
     setSaleType('won');
     setSaleTypePrice('');
     setVAT(0);
-
     setIsDelivery('yes');
     setDeliveryType(0);
     setDeliveryAttrs(0);
@@ -101,18 +100,11 @@ const RegisterProduct = ({ history }) => {
           const {
             actual_price,
             count,
-            created_at,
-            description,
             discount_amount,
-            jsondata,
-            id,
             max_quantity,
             min_quantity,
             name,
-            preview_status,
             price,
-            sales_end_date,
-            sales_start_date,
             ship_amount1,
             ship_amount2,
             ship_attr,
@@ -120,9 +112,7 @@ const RegisterProduct = ({ history }) => {
             ship_free_cond_amount,
             ship_pay_type,
             ship_type,
-            status,
             tax_type,
-            updated_at,
           } = result.data.data;
           setPrice(actual_price);
           setAvailableStock(count);
@@ -151,17 +141,17 @@ const RegisterProduct = ({ history }) => {
       notification.error('필수 입력사항을 입력해주세요.');
       return;
     }
-
     try {
       const data = {
         name: productName, //상품이름
-        description: 'df', //특이사항
         status: 0, // 0 미설정, 1: 판매중 , 2 판매종료 상품 판매상태
         count: availableStock, // 상품재고수량
         main_image_id: null, // 이미지 ID
-        ship_info_id: 123,
-        price: sale === 'setting' ? removeRest(salePrice) : removeRest(price), // 상품 가격
-        preview_status: 0, // 전시상태 0 : no, 1yes
+        // ship_info_id: 123,
+        price:
+          sale === 'setting'
+            ? removeRest(salePrice.toString())
+            : removeRest(price.toString()), // 상품 가격
         discount_amount: saleTypePrice, // 할인값,
         min_quantity: minPurchase, // 최소구매수량
         max_quantity: maxPurchase, // 최대구매수량
@@ -173,9 +163,11 @@ const RegisterProduct = ({ history }) => {
         ship_amount1: defaultFee, // 기본 배송비 default 0
         ship_amount2: sectionFeeComent, // 제주 /산간지역 배송비
         ship_free_cond_amount: deliveryFeeCondition, // 배송비 조건 n원이상 무료
+        preview_status: 0, //전시상태 0 : no, 1yes
         jsondata: null, //stringified json data
+        description: 'df', //특이사항
+        Option: null,
       };
-
       if (history.location.state) {
         const result = await updateProductDetail(history.location.state, data);
         if (result.status === 200) {

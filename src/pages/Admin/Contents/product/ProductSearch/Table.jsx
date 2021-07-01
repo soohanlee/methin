@@ -1,11 +1,10 @@
-import * as React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
 import { Button as OriginButton } from 'antd';
 import { deleteProduct } from 'apis/product';
 import { notification } from 'utils/notification';
 import { ROUTE_PATH } from 'configs/config';
-
 import BasicTable from 'pages/Admin/components/Table/Table';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
@@ -36,7 +35,9 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 0.5rem;
 `;
 
-const Table = ({ tableList, count, setTableList }) => {
+const Table = ({ getAllProductyData, result, count }) => {
+  const [dataState, setDataState] = useState([]);
+
   const [productSortSelectState, setProductSortSelectState] = React.useState(
     [],
   );
@@ -50,18 +51,8 @@ const Table = ({ tableList, count, setTableList }) => {
     false,
   );
   const [selectedProductState, setSelectedProductState] = React.useState('');
+
   const history = useHistory();
-
-  const setExcelDown = () => {
-    alert('엑셀다운');
-  };
-
-  const handleMoveEditPage = (id) => {
-    history.push({
-      pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerProduct}`,
-      state: id,
-    });
-  };
 
   const columns = [
     {
@@ -161,6 +152,36 @@ const Table = ({ tableList, count, setTableList }) => {
     },
   ];
 
+  useEffect(() => {
+    setDataState(result);
+  }, [result]);
+
+  const statusWordData = ['판매준비', '판매중', '판매종료'];
+  const previewWordData = ['NO', 'Yes'];
+  const shipWordData = ['무료', '유료'];
+  const shipPayWordData = ['선불', '착불'];
+  //숫자데이터 문자로 변환
+  const NumDataToWord = () => {
+    //판매상태
+    for (var i = 0; i < dataState.length; i++) {
+      dataState[i].status = statusWordData[i];
+      dataState[i].preview_status = previewWordData[i];
+      dataState[i].ship_category = shipWordData[i];
+      dataState[i].ship_pay_type = shipPayWordData[i];
+    }
+  };
+
+  const handleExcelDown = () => {
+    alert('엑셀다운');
+  };
+
+  const handleMoveEditPage = (id) => {
+    history.push({
+      pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerProduct}`,
+      state: id,
+    });
+  };
+
   const handleChange = (selectedRowKeys, selectedRows) => {
     setSelectedTableKeysState(selectedRowKeys);
   };
@@ -170,7 +191,7 @@ const Table = ({ tableList, count, setTableList }) => {
     setisDeleteModalOpenState(true);
   };
 
-  const setSelectDelete = () => {
+  const handleSelectDelete = () => {
     alert('선택삭제 준비중');
   };
 
@@ -178,10 +199,10 @@ const Table = ({ tableList, count, setTableList }) => {
     try {
       const result = await deleteProduct(selectedProductState);
       if (result.status === 200) {
-        const newTable = tableList.filter((item) => {
+        const newTable = dataState.filter((item) => {
           return item.id !== selectedProductState;
         });
-        setTableList(newTable);
+        setDataState(newTable);
       } else if (result.status === 404) {
         notification.error('이미 삭제되었습니다.');
       }
@@ -197,8 +218,11 @@ const Table = ({ tableList, count, setTableList }) => {
   const handleDeleteModalClose = () => {
     setisDeleteModalOpenState(false);
     setSelectedProductState('');
+    getAllProductyData();
   };
 
+  //숫자데이터 문자로 변환
+  NumDataToWord();
   return (
     <ContainerStyled>
       <HeaderContainerStyled>
@@ -216,12 +240,14 @@ const Table = ({ tableList, count, setTableList }) => {
             }}
             list={CountList}
           ></BasicSelectBoxStyled>
-          <BasicButtonStyled onClick={setExcelDown}>엑셀다운</BasicButtonStyled>
+          <BasicButtonStyled onClick={handleExcelDown}>
+            엑셀다운
+          </BasicButtonStyled>
         </ButtonContainerStyled>
       </HeaderContainerStyled>
       <HeaderContainerStyled>
         <ButtonContainerStyled>
-          <BasicButtonStyled onClick={setSelectDelete}>
+          <BasicButtonStyled onClick={handleSelectDelete}>
             선택삭제
           </BasicButtonStyled>
         </ButtonContainerStyled>
@@ -229,7 +255,7 @@ const Table = ({ tableList, count, setTableList }) => {
 
       <BasicTable
         scroll={{ x: '250vw', y: 500 }}
-        data={tableList}
+        data={dataState}
         columns={columns}
         selectionType="checkbox"
         onChange={handleChange}

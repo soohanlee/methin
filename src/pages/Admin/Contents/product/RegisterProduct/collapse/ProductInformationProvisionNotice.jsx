@@ -25,7 +25,7 @@ const ProductInformationProvisionNotice = () => {
   };
 
   return (
-    <CustomCollapse header="상품정보제공고시" extra={'뭔가옴'}>
+    <CustomCollapse header="상품정보제공고시" extra={''}>
       <LabelContents title="상품군">
         <SelectBox list={productList} onChange={handleProductListChange} />
       </LabelContents>
