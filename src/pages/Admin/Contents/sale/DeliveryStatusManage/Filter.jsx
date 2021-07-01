@@ -31,7 +31,7 @@ const Input = styled(OriginInput)`
   width: 200px;
 `;
 
-const Filter = () => {
+const Filter = ({ getApiDeliveryStatusData }) => {
   const [datePeriod, setDatePeriod] = useState('');
 
   const detailRef = useRef(null);
@@ -62,6 +62,10 @@ const Filter = () => {
 
   const handleEndDateChange = (value) => {
     console.log(value);
+  };
+
+  const handleSearchOnClick = () => {
+    getApiDeliveryStatusData();
   };
 
   return (
@@ -102,7 +106,7 @@ const Filter = () => {
       </LabelContents>
 
       <ButtonContainer>
-        <Button>검색</Button>
+        <Button onClick={handleSearchOnClick}>검색</Button>
       </ButtonContainer>
     </Container>
   );

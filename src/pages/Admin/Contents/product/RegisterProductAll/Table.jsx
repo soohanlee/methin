@@ -8,19 +8,16 @@ const CustomTable = styled(OriginTable)`
 `;
 
 const Table = ({ data }) => {
-  //판매상태
-  for (var i = 0; i < data.length; i++) {
-    switch (data[i].status) {
-      case 0:
-        data[i].status = '판매준비';
-        break;
-      case 1:
-        data[i].status = '판매중';
-      case 2:
-        data[i].status = '판매종료';
-        break;
+  const wordData = ['핀매준비', '판매중', '판매종료'];
+
+  const NumDataToWord = () => {
+    //판매상태
+    for (var i = 0; i < data.length; i++) {
+      data[i].status = wordData[i];
     }
-  }
+  };
+  NumDataToWord();
+
   return (
     <>
       <CustomTable

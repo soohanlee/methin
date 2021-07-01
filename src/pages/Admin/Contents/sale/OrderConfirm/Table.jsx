@@ -44,7 +44,7 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ orderSheetList, tableData }) => {
+const Table = ({ orderSheetList, tableData, handleSearchOnClick }) => {
   const invoiceNumber = useRef(null);
 
   const [adressModifyVisible, setAdressModifyVisible] = useState(false);
@@ -238,7 +238,6 @@ const columns = [
   {
     title: '배송방법',
     dataIndex: 'ship_type',
-
     render: () => <BasicSelectBox list={selctBoxList} />,
   },
   {

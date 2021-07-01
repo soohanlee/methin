@@ -9,7 +9,7 @@ import WarningTwoTone from '@ant-design/icons/WarningTwoTone';
 import CloseCircleTwoTone from '@ant-design/icons/CloseCircleTwoTone';
 import CheckCircleTwoTone from '@ant-design/icons/CheckCircleTwoTone';
 
-const EditCategorysSyled = styled.div`
+const CategorysSyled = styled.div`
   width: 100%;
   height: 12rem;
   background-color: #ffffff;
@@ -50,7 +50,7 @@ const CheckCircleTwoToneIconSyled = styled(CheckCircleTwoTone)`
   ${IconCss}
 `;
 
-const EditCategory = ({ tableList }) => {
+const Category = ({ tableList }) => {
   const categoryTextArray = [
     '전체',
     '판매준비',
@@ -67,29 +67,34 @@ const EditCategory = ({ tableList }) => {
   let stop = 0;
   let end = 0;
 
-  tableList.forEach((element) => {
-    switch (element.status) {
-      case '판매준비':
-        ready++;
-        break;
-      case '판매중':
-        onSale++;
-        break;
-      case '품절':
-        soldOut++;
-        break;
-      case '판매중지':
-        stop++;
-        break;
-      case '판매종료':
-        end++;
-        break;
-      default:
-        break;
-    }
-  });
-  const categoryCountArray = [all, ready, onSale, soldOut, stop, end];
-  console.log('====================');
+  //숫자데이터를 문자로변경
+  const NumDataToWord = () => {
+    tableList.forEach((element) => {
+      switch (element.status) {
+        case '판매준비':
+          ready++;
+          break;
+        case '판매중':
+          onSale++;
+          break;
+        case '품절':
+          soldOut++;
+          break;
+        case '판매중지':
+          stop++;
+          break;
+        case '판매종료':
+          end++;
+          break;
+        default:
+          break;
+      }
+    });
+  };
+
+  const handleCategoryType = (value) => {
+    alert(value);
+  };
 
   const renderSetCaterogy = () => {
     const result = [];
@@ -98,7 +103,7 @@ const EditCategory = ({ tableList }) => {
         <>
           <CategoryTypeSyled
             key={i}
-            onClick={() => categoryTypeClick(categoryTextArray[i])}
+            onClick={() => handleCategoryType(categoryTextArray[i])}
           >
             {categoryTypeArray[i]}
             <div>
@@ -112,17 +117,17 @@ const EditCategory = ({ tableList }) => {
     return result;
   };
 
-  const categoryTypeClick = (value) => {
-    alert(value);
-  };
+  NumDataToWord();
+  const categoryCountArray = [all, ready, onSale, soldOut, stop, end];
+
   return (
     <>
-      <EditCategorysSyled>{renderSetCaterogy()}</EditCategorysSyled>
+      <CategorysSyled>{renderSetCaterogy()}</CategorysSyled>
     </>
   );
 };
 
-export default EditCategory;
+export default Category;
 
 const categoryTypeArray = [
   <AppstoreTwoToneIconSyled />,

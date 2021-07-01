@@ -26,23 +26,27 @@ const DeliveryStatusManage = () => {
 
   useEffect(() => {
     async function fetchAndSetUser() {
-      try {
-        const result = await getShipConfirmedList(0);
-        const count = result.data.data.count;
+      await getApiDeliveryStatusData();
+    }
+    fetchAndSetUser();
+  }, []);
+
+  const getApiDeliveryStatusData = async () => {
+    try {
+      const result = await getShipConfirmedList(0);
+      const count = result.data.data.count;
       const maxOffset = Math.floor(result.data.data.count / limite) + 1;
       let customList = [];
       for (let i = 0; i < maxOffset; i++) {
         const _result = await getShipConfirmedList(i);
         customList = customList.concat(_result.data.data.list);
       }
-        setTableData(customList);
-        setTableCount(customList.length);
-      } catch (e) {
-        notification.error('상품 정보를 가져오지 못했습니다.');
-      }
+      setTableData(customList);
+      setTableCount(customList.length);
+    } catch (e) {
+      notification.error('배송현황 정보를 가져오지 못했습니다.');
     }
-    fetchAndSetUser();
-  }, []);
+  };
 
   const categoryBtn = (e) => {
     console.log(e);
@@ -52,7 +56,7 @@ const DeliveryStatusManage = () => {
   return (
     <Container>
       <BoardHeader onClick={categoryBtn} list={list} />
-      <Filter />
+      <Filter getApiDeliveryStatusData={getApiDeliveryStatusData} />
       <Table tableData={tableData} count={tableCount} />
     </Container>
   );
