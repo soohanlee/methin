@@ -65,9 +65,20 @@ const BasicButtonStyled = styled(BasicButton)`
 `;
 const OrderSerach = () => {
   const limite = 16;
-  const [datePeriod, setDatePeriod] = useState('');
-  const [table, setTable] = useState([]);
-  const [tableCount, setTableCount] = useState(0);
+  const [datePeriodState, setDatePeriodStat] = useState('');
+  const [tableDataStat, setTableDataStat] = useState([]);
+  const [tableCountStat, setTableCountStat] = useState(0);
+  const periodRef = useRef(null);
+
+  const wordData = [
+    '결제대기',
+    '결제완료',
+    '상품준비',
+    '배송중',
+    '배송완료',
+    '취소완료',
+    '반품완료',
+  ];
 
   useEffect(() => {
     async function fetchData() {
@@ -88,8 +99,8 @@ const OrderSerach = () => {
         customList = customList.concat(_result.data.data.list);
       }
 
-      setTable(customList);
-      setTableCount(customList.length);
+      setTableDataStat(customList);
+      setTableCountStat(customList.length);
 
       notification.success('검색 성공');
     } catch (e) {
@@ -109,33 +120,13 @@ const OrderSerach = () => {
     getApiPaymentData();
   };
 
-  const periodRef = useRef(null);
-
-  for (var i = 0; i < table.length; i++) {
-    switch (table[i].status) {
-      case 0:
-        table[i].status = '결제대기';
-        break;
-      case 1:
-        table[i].status = '결제완료';
-        break;
-      case 2:
-        table[i].status = '상품준비';
-        break;
-      case 3:
-        table[i].status = '배송중';
-        break;
-      case 4:
-        table[i].status = '배송완료';
-        break;
-      case 5:
-        table[i].status = '취소완료';
-        break;
-      case 6:
-        table[i].status = '반품완료';
-        break;
+  const NumDataToWord = () => {
+    for (var i = 0; i < tableDataStat.length; i++) {
+      tableDataStat[i].status = wordData[i];
     }
-  }
+  };
+
+  NumDataToWord();
 
   return (
     <Container>
@@ -148,8 +139,8 @@ const OrderSerach = () => {
             <ItemWrap>
               <ButtonContainer>
                 <Radio.Group
-                  value={datePeriod}
-                  onChange={(e) => setDatePeriod(e.target.value)}
+                  value={datePeriodState}
+                  onChange={(e) => setDatePeriodStat(e.target.value)}
                 >
                   <Radio.Button value="today">오늘</Radio.Button>
                   <Radio.Button value="1week">1주일</Radio.Button>
@@ -181,13 +172,13 @@ const OrderSerach = () => {
               label="검색"
             ></BasicButtonStyled>
           </ButtonContainer>
-          <Title>목록 (총{tableCount}개)</Title>
+          <Title>목록 (총{tableCountStat}개)</Title>
         </BodyHeaderContainer>
 
         <Table
           scroll={{ x: '120vw', y: 500 }}
           selectionType="checkbox"
-          data={table}
+          data={tableDataStat}
           columns={columns}
           onChange={() => {}}
         />

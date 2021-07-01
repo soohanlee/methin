@@ -8,8 +8,8 @@ import ProductSearch from 'pages/Admin/Contents/product/ProductSearch/ProductSea
 import DeliveryProduct from 'pages/Admin/Contents/product/DeliveryProduct/DeliveryProduct';
 import RegisterProductAll from 'pages/Admin/Contents/product/RegisterProductAll/RegisterProductAll';
 import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/NoticeManage';
-import OrderSerach from 'pages/Admin/Contents/sale/OrderSerach';
-import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingPayment';
+import OrderSerach from 'pages/Admin/Contents/sale/OrderSerach/OrderSerach';
+import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingPayment/CheckOutStandingPayment';
 import OrderConfirm from 'pages/Admin/Contents/sale/OrderConfirm';
 import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
 import OrderCancel from 'pages/Admin/Contents/sale/OrderCancel';
@@ -63,7 +63,7 @@ const Contents = () => {
         />
         <Route
           exact
-          path={`${prePath}${ROUTE_PATH.admin.manageSale}`}
+          path={`${prePath}${ROUTE_PATH.admin.orderSearch}`}
           component={OrderSerach}
         />
         <Route

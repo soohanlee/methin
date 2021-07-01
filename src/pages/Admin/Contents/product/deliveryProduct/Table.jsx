@@ -158,16 +158,11 @@ const Table = ({
     },
   ];
 
+  const wordData = ['미사용', '사용', '???'];
+
   const NumDataToWord = () => {
     for (var i = 0; i < dataState.length; i++) {
-      switch (dataState[i].status) {
-        case 0:
-          dataState[i].status = '미사용';
-          break;
-        case 1:
-          dataState[i].status = '사용';
-          break;
-      }
+      dataState[i].status = wordData[i];
     }
   };
   NumDataToWord();

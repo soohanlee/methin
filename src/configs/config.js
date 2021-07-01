@@ -11,7 +11,7 @@ export const ROUTE_PATH = {
     registerProductAll: '/register-product-all',
     deliveryProduct: '/delivery-product',
     noticeManage: '/notice-manage',
-    manageSale: '/manage-sale',
+    orderSearch: '/order-search',
     checkOutstanding: '/check-outstanding',
     orderConfirm: '/order-confirm',
     orderManage: '/order-manage',

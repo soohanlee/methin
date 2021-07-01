@@ -20,7 +20,7 @@ export const leftNavigationMenu = [
   {
     title: leftNavigationMenuTitle.manageSale,
     submenuList: [
-      { title: '주문조회', path: ROUTE_PATH.admin.manageSale },
+      { title: '주문조회', path: ROUTE_PATH.admin.orderSearch },
       { title: '미결제 확인', path: ROUTE_PATH.admin.checkOutstanding },
       { title: '발송(주문)확인', path: ROUTE_PATH.admin.orderConfirm },
       { title: '발송관리', path: ROUTE_PATH.admin.orderManage },
