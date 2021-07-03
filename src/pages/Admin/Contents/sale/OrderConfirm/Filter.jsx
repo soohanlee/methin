@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Button, Radio, Input as OriginInput } from 'antd';
-
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
@@ -32,7 +31,7 @@ const Input = styled(OriginInput)`
 `;
 
 const Filter = ({ getApiDeliveryData }) => {
-  const [datePeriod, setDatePeriod] = useState('');
+  const [datePeriodState, setdatePeriodState] = useState('');
 
   const detailRef = useRef(null);
 
@@ -81,8 +80,8 @@ const Filter = ({ getApiDeliveryData }) => {
         />
         <RadioGroupContainer>
           <Radio.Group
-            value={datePeriod}
-            onChange={(e) => setDatePeriod(e.target.value)}
+            value={datePeriodState}
+            onChange={(e) => setdatePeriodState(e.target.value)}
           >
             <Radio.Button value="today">오늘</Radio.Button>
             <Radio.Button value="1week">1주일</Radio.Button>

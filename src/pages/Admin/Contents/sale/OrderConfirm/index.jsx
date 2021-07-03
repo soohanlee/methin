@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-
 import Filter from './Filter';
 import Table from './Table';
 import BoardHeader from 'pages/Admin/components/BoardHeader';
@@ -19,8 +18,8 @@ const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
 // 발주 확인/발송관리
 const OrderConfirm = () => {
   const limite = 16;
-  const [table, setTable] = useState([]);
-  const [tableCount, setTableCount] = useState(0);
+  const [tableDataState, setTableDataState] = useState([]);
+  const [tableCountState, setTableCountState] = useState(0);
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -39,8 +38,8 @@ const OrderConfirm = () => {
         const _result = await getPaidWithPaymentConfirmedList(i);
         customList = customList.concat(_result.data.data.list);
       }
-      setTable(customList);
-      setTableCount(customList.length);
+      setTableDataState(customList);
+      setTableCountState(customList.length);
       notification.success('검색 성공');
     } catch (e) {
       notification.error('발송 정보를 가져오지 못했습니다.');
@@ -94,12 +93,7 @@ const OrderConfirm = () => {
     <div>
       <BoardHeader list={list} onClick={handleClick} data={data} />
       <Filter getApiDeliveryData={getApiDeliveryData} />
-      <Table
-        orderCountTableColumns={orderCountTableColumns}
-        orderCountTableData={orderCountTableData}
-        orderSheetList={orderSheetList}
-        tableData={table}
-      />
+      <Table sheetList={sheetList} tableData={tableDataState} />
     </div>
   );
 };
@@ -145,73 +139,7 @@ const list = [
   },
 ];
 
-const orderCountTableColumns = [
-  {
-    title: '출고지',
-    dataIndex: 'location',
-  },
-  {
-    title: '상품번호',
-    dataIndex: 'productNum',
-  },
-  {
-    title: '상품명',
-    dataIndex: 'productName',
-    sorter: {
-      compare: (a, b) => a.math - b.math,
-      multiple: 2,
-    },
-  },
-  {
-    title: '옵션값',
-    dataIndex: 'optionValue',
-  },
-  {
-    title: '수량',
-    dataIndex: 'count',
-  },
-];
-
-const orderCountTableData = [
-  {
-    key: '1',
-    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
-    productNum: '5359856047',
-    productName:
-      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
-    optionValue: '패키지: 돼지안심 4개',
-    count: 1,
-  },
-  {
-    key: '2',
-    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
-    productNum: '5359856047',
-    productName:
-      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
-    optionValue: '패키지: 돼지안심 4개',
-    count: 1,
-  },
-  {
-    key: '3',
-    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
-    productNum: '5359856047',
-    productName:
-      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
-    optionValue: '패키지: 돼지안심 4개',
-    count: 1,
-  },
-  {
-    key: '4',
-    location: '(21040) 인천광역시 계양구 주부토로 573-1 B동 1층',
-    productNum: '5359856047',
-    productName:
-      '자연산광호야X미띤 국내산 한돈1+ 돼지안심, 양념안심, 닭가슴살 냉장',
-    optionValue: '패키지: 돼지안심 4개',
-    count: 1,
-  },
-];
-
-const orderSheetList = [
+const sheetList = [
   {
     date: '2021.05.20 2021052098897071',
     productName:

@@ -4,10 +4,6 @@ import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import TextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
 
 const SaleCancelModal = (property) => {
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
-
   const okClick = () => {
     var resultValue = window.confirm(
       '총 1건 중 1개의 주문건을 상품품절 사유로 취소처리 하시겠습니까?\n상품품절 취소처리시 상품 품절처리도 동시 진행되며,\n구매자에게 추가배송비가 청구되지 않습니다.',
@@ -17,19 +13,6 @@ const SaleCancelModal = (property) => {
       alert('1건 중 1건의 취소 처리가 완료되었습니다.');
     }
   };
-
-  // const BasicButtonStyled = styled(BasicButton)`
-  //   margin-left: 1rem;
-  // `;
-
-  // const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
-  //   width: ${(props) => props.WidthSize};
-  //   margin-bottom: 1rem;
-  // `;
-
-  // const FlexStyled = styled.div`
-  //   display: flex;
-  // `;
 
   return (
     <>

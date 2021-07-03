@@ -6,10 +6,6 @@ import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 const PackingModal = (property) => {
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
-
   const SelectBoxContainer = styled.div`
     display: flex;
   `;

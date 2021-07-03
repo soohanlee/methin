@@ -2,15 +2,10 @@ import { Modal, Table } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
-import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicTextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
 
 const DirectExchangeModal = (property) => {
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
-
   const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
     margin-left: ${(props) => props.left};
 

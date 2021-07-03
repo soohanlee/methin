@@ -1,15 +1,15 @@
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Button as OriginButton, Modal, Input } from 'antd';
+import { Button as OriginButton } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTable from 'pages/Admin/components/Table/Table';
-
-import OrderSheetModal from 'pages/Admin/Contents/sale/OrderConfirm/OrderSheetModal';
-import AdressModifyModal from 'pages/Admin/Contents/sale/OrderConfirm/AdressModifyModal';
-import SaleCancelModal from 'pages/Admin/Contents/sale/OrderConfirm/SaleCancelModal';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
+
+import OrderSheetModal from './OrderSheetModal';
+import AdressModifyModal from './AdressModifyModal';
+import SaleCancelModal from './SaleCancelModal';
 
 const Container = styled.div`
   background: #fff;
@@ -44,58 +44,184 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ orderSheetList, tableData, handleSearchOnClick }) => {
+const Table = ({ sheetList, tableData }) => {
   const invoiceNumber = useRef(null);
 
   const [adressModifyVisible, setAdressModifyVisible] = useState(false);
-  const [orderSheetVisible, setOrderSheetVisible] = useState(false);
+  const [sheetVisible, setSheetVisible] = useState(false);
   const [saleCancelVisible, setSaleCancelVisible] = useState(false);
 
-  //주문상태
-  for (var i = 0; i < tableData.length; i++) {
-    switch (tableData[i].status) {
-      case 0:
-        tableData[i].status = '결제대기';
-        break;
-      case 1:
-        tableData[i].status = '결제완료';
-        break;
-      case 2:
-        tableData[i].status = '상품준비';
-        break;
-      case 3:
-        tableData[i].status = '배송중';
-        break;
-      case 4:
-        tableData[i].status = '배송완료';
-        break;
-      case 5:
-        tableData[i].status = '취소완료';
-        break;
-      case 6:
-        tableData[i].status = '반품완료';
-        break;
-    }
-    //배송비형태
-    switch (tableData[i].ship_pay_type) {
-      case 0:
-        tableData[i].ship_pay_type = '선불';
-        break;
-      case 1:
-        tableData[i].ship_pay_type = '착불';
-        break;
-    }
-    switch (tableData[i].ship_category) {
-      case 0:
-        tableData[i].ship_category = '무료';
-        break;
-      case 1:
-        tableData[i].ship_category = '유료';
-        break;
-    }
-  }
+  const columns = [
+    {
+      title: '주문번호',
+      dataIndex: 'id',
+    },
+    {
+      title: '배송방법',
+      dataIndex: 'ship_type',
+      render: () => <BasicSelectBox list={selctBoxList} />,
+    },
+    {
+      title: '택배사',
+      dataIndex: 'ship_company_name',
+      render: () => <BasicSelectBox list={selctBoxList} disabled />,
+    },
+    {
+      title: '송장번호',
+      dataIndex: 'ship_number',
+      render: () => <BasicTextInputBox list={selctBoxList} disabled />,
+    },
+    {
+      title: '구매자명',
+      dataIndex: 'buyer_name',
+    },
+    {
+      title: '구매자ID',
+      dataIndex: 'buyer_id',
+    },
+    {
+      title: '수취인명',
+      dataIndex: 'recipient_name',
+    },
+    {
+      title: '주문상태',
+      dataIndex: 'status',
+    },
+    {
+      title: '결제일',
+      dataIndex: 'paid_at',
+    },
+    {
+      title: '상품번호',
+      dataIndex: 'product_id',
+    },
+    {
+      title: '상품명',
+      dataIndex: 'product_name',
+    },
+    {
+      title: '옵션정보',
+      dataIndex: 'option_name',
+    },
+    {
+      title: '수량',
+      dataIndex: 'count',
+    },
+    {
+      title: '옵션가격',
+      dataIndex: 'option_add_price',
+    },
+    {
+      title: '상품가격',
+      dataIndex: 'price',
+    },
+    {
+      title: '총 주문금액',
+      dataIndex: 'total_price',
+    },
+    {
+      title: '발주확인일',
+      dataIndex: 'order_confirmed_at',
+    },
+    {
+      title: '배송비 형태',
+      dataIndex: 'ship_pay_type',
+    },
+    {
+      title: '배송비 유형',
+      dataIndex: 'ship_category',
+    },
+    {
+      title: '배송비 합계',
+      dataIndex: 'total_ship_amount',
+    },
+    {
+      title: '배송비 할인액',
+      dataIndex: 'ship_discount_amount',
+    },
+    {
+      title: '수취인 연락처',
+      dataIndex: 'recipient_phone',
+    },
+    {
+      title: '배송지',
+      dataIndex: 'ship_address_main',
+    },
+    {
+      title: '구매자 연락처',
+      dataIndex: 'buyer_phone',
+    },
+    {
+      title: '우편번호',
+      dataIndex: 'released_zip_code',
+    },
+    {
+      title: '배송메세지',
+      dataIndex: 'ship_message',
+    },
+    {
+      title: '출고지',
+      dataIndex: 'released_address_main',
+    },
+    {
+      title: '주문일시',
+      dataIndex: 'created_at',
+    },
+  ];
 
-  const tableBtn = (id) => {
+  const NumDataToData = () => {
+    //주문상태
+    for (var i = 0; i < tableData.length; i++) {
+      switch (tableData[i].status) {
+        case 0:
+          tableData[i].status = '결제대기';
+          break;
+        case 1:
+          tableData[i].status = '결제완료';
+          break;
+        case 2:
+          tableData[i].status = '상품준비';
+          break;
+        case 3:
+          tableData[i].status = '배송중';
+          break;
+        case 4:
+          tableData[i].status = '배송완료';
+          break;
+        case 5:
+          tableData[i].status = '취소완료';
+          break;
+        case 6:
+          tableData[i].status = '반품완료';
+          break;
+        default:
+          break;
+      }
+      //배송비형태
+      switch (tableData[i].ship_pay_type) {
+        case 0:
+          tableData[i].ship_pay_type = '선불';
+          break;
+        case 1:
+          tableData[i].ship_pay_type = '착불';
+          break;
+        default:
+          break;
+      }
+      switch (tableData[i].ship_category) {
+        case 0:
+          tableData[i].ship_category = '무료';
+          break;
+        case 1:
+          tableData[i].ship_category = '유료';
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
+  const handleTableBtn = (id) => {
     switch (id) {
       case 'OrderConfirmation': {
         var returnValue = window.confirm(
@@ -121,7 +247,7 @@ const Table = ({ orderSheetList, tableData, handleSearchOnClick }) => {
       }
     }
   };
-
+  NumDataToData();
   return (
     <Container>
       <AdressModifyModal
@@ -137,21 +263,21 @@ const Table = ({ orderSheetList, tableData, handleSearchOnClick }) => {
         width={500}
         okText="확인"
         cancelText="취소"
-        orderSheetList={orderSheetList}
+        sheetList={sheetList}
       ></AdressModifyModal>
       <OrderSheetModal
         centered
-        visible={orderSheetVisible}
+        visible={sheetVisible}
         onOk={() => {
-          setOrderSheetVisible(true);
+          setSheetVisible(true);
         }}
         onCancel={() => {
-          setOrderSheetVisible(false);
+          setSheetVisible(false);
         }}
         width={500}
         okText="확인"
         cancelText="취소"
-        orderSheetList={orderSheetList}
+        sheetList={sheetList}
       ></OrderSheetModal>
       <SaleCancelModal
         centered
@@ -166,7 +292,7 @@ const Table = ({ orderSheetList, tableData, handleSearchOnClick }) => {
         width={500}
         okText="확인"
         cancelText="취소"
-        orderSheetList={orderSheetList}
+        sheetList={sheetList}
       ></SaleCancelModal>
       <SearchContainer>
         <LabelContents title="배송정보 한번에 입력하기">
@@ -189,7 +315,7 @@ const Table = ({ orderSheetList, tableData, handleSearchOnClick }) => {
       <ButtonContainer>
         <Button
           onClick={() => {
-            setOrderSheetVisible(true);
+            setSheetVisible(true);
           }}
         >
           선택건 주문서 출력
@@ -200,14 +326,14 @@ const Table = ({ orderSheetList, tableData, handleSearchOnClick }) => {
         <LabelContents title="주문확인">
           <Button
             onClick={() => {
-              tableBtn('OrderConfirmation');
+              handleTableBtn('OrderConfirmation');
             }}
           >
             발주확인
           </Button>
           <Button
             onClick={() => {
-              tableBtn('orderAdressChange');
+              handleTableBtn('orderAdressChange');
             }}
           >
             고객 배송지 정보수정
@@ -217,7 +343,7 @@ const Table = ({ orderSheetList, tableData, handleSearchOnClick }) => {
         <LabelContents title="취소처리">
           <Button
             onClick={() => {
-              tableBtn('saleCancel');
+              handleTableBtn('saleCancel');
             }}
           >
             판매취소
@@ -229,124 +355,6 @@ const Table = ({ orderSheetList, tableData, handleSearchOnClick }) => {
 };
 
 export default Table;
-
-const columns = [
-  {
-    title: '주문번호',
-    dataIndex: 'id',
-  },
-  {
-    title: '배송방법',
-    dataIndex: 'ship_type',
-    render: () => <BasicSelectBox list={selctBoxList} />,
-  },
-  {
-    title: '택배사',
-    dataIndex: 'ship_company_name',
-    render: () => <BasicSelectBox list={selctBoxList} disabled />,
-  },
-  {
-    title: '송장번호',
-    dataIndex: 'ship_number',
-    render: () => <BasicTextInputBox list={selctBoxList} disabled />,
-  },
-  {
-    title: '구매자명',
-    dataIndex: 'buyer_name',
-  },
-  {
-    title: '구매자ID',
-    dataIndex: 'buyer_id',
-  },
-  {
-    title: '수취인명',
-    dataIndex: 'recipient_name',
-  },
-  {
-    title: '주문상태',
-    dataIndex: 'status',
-  },
-  {
-    title: '결제일',
-    dataIndex: 'paid_at',
-  },
-  {
-    title: '상품번호',
-    dataIndex: 'product_id',
-  },
-  {
-    title: '상품명',
-    dataIndex: 'product_name',
-  },
-  {
-    title: '옵션정보',
-    dataIndex: 'option_name',
-  },
-  {
-    title: '수량',
-    dataIndex: 'count',
-  },
-  {
-    title: '옵션가격',
-    dataIndex: 'option_add_price',
-  },
-  {
-    title: '상품가격',
-    dataIndex: 'price',
-  },
-  {
-    title: '총 주문금액',
-    dataIndex: 'total_price',
-  },
-  {
-    title: '발주확인일',
-    dataIndex: 'order_confirmed_at',
-  },
-  {
-    title: '배송비 형태',
-    dataIndex: 'ship_pay_type',
-  },
-  {
-    title: '배송비 유형',
-    dataIndex: 'ship_category',
-  },
-  {
-    title: '배송비 합계',
-    dataIndex: 'total_ship_amount',
-  },
-  {
-    title: '배송비 할인액',
-    dataIndex: 'ship_discount_amount',
-  },
-  {
-    title: '수취인 연락처',
-    dataIndex: 'recipient_phone',
-  },
-  {
-    title: '배송지',
-    dataIndex: 'ship_address_main',
-  },
-  {
-    title: '구매자 연락처',
-    dataIndex: 'buyer_phone',
-  },
-  {
-    title: '우편번호',
-    dataIndex: 'released_zip_code',
-  },
-  {
-    title: '배송메세지',
-    dataIndex: 'ship_message',
-  },
-  {
-    title: '출고지',
-    dataIndex: 'released_address_main',
-  },
-  {
-    title: '주문일시',
-    dataIndex: 'created_at',
-  },
-];
 
 const selctBoxList = [
   { value: '1', label: '선택' },
@@ -368,20 +376,3 @@ const deliveryCompanyList = [
   { label: '선택', value: 'select' },
   { label: 'CJ 대한통운', value: 'cj' },
 ];
-
-// <Modal
-//         title="주문서 출력"
-//         centered
-//         visible={orderVisible}
-//         onOk={() => {
-//           setOrderVisible(false);
-//         }}
-//         onCancel={() => {
-//           setOrderVisible(false);
-//         }}
-//         width={500}
-//         okText="확인"
-//         cancelText="취소"
-//       >
-//         {label}
-//       </Modal>

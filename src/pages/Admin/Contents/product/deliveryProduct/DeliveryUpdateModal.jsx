@@ -36,7 +36,7 @@ const DeliveryUpdateModal = ({
   };
 
   const handleUseBtn = (e) => {
-    if (e.target.value == 'use') {
+    if (e.target.value === 'use') {
       setUseStatusState(1);
     } else {
       setUseStatusState(0);

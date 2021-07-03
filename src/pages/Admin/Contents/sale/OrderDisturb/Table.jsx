@@ -24,7 +24,7 @@ const Button = styled(OriginButton)`
 `;
 
 const Table = ({ data }) => {
-  const setSelectRelease = () => {
+  const handleSelectReleaseBtn = () => {
     alert('선택건 해제하기');
   };
 
@@ -32,7 +32,7 @@ const Table = ({ data }) => {
     <Container>
       <HeaderContainer>
         <ButtonContainer>
-          <Button onClick={setSelectRelease}>선택건 해제하기</Button>
+          <Button onClick={handleSelectReleaseBtn}>선택건 해제하기</Button>
         </ButtonContainer>
       </HeaderContainer>
 
