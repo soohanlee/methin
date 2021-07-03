@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import BoardHeader from 'pages/Admin/components/BoardHeader';
 import Filter from './Filter';
 import Table from './Table';
+import BoardHeader from 'pages/Admin/components/BoardHeader';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
 import { notification } from 'utils/notification';
 import { getShipConfirmedList } from 'apis/payment';
@@ -21,8 +21,8 @@ const Container = styled.div``;
 // 배송 현황 관리
 const DeliveryStatusManage = () => {
   const limite = 16;
-  const [tableData, setTableData] = useState([]);
-  const [tableCount, setTableCount] = useState(0);
+  const [tableDataState, setTableDataState] = useState([]);
+  const [tableCountState, setTableCountState] = useState(0);
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -35,29 +35,28 @@ const DeliveryStatusManage = () => {
     try {
       const result = await getShipConfirmedList(0);
       const count = result.data.data.count;
-      const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+      const maxOffset = Math.floor(count / limite) + 1;
       let customList = [];
       for (let i = 0; i < maxOffset; i++) {
         const _result = await getShipConfirmedList(i);
         customList = customList.concat(_result.data.data.list);
       }
-      setTableData(customList);
-      setTableCount(customList.length);
+      setTableDataState(customList);
+      setTableCountState(customList.length);
     } catch (e) {
       notification.error('배송현황 정보를 가져오지 못했습니다.');
     }
   };
 
-  const categoryBtn = (e) => {
-    console.log(e);
+  const handleCategoryBtn = (e) => {
     alert(e);
   };
 
   return (
     <Container>
-      <BoardHeader onClick={categoryBtn} list={list} />
+      <BoardHeader onClick={handleCategoryBtn} list={list} />
       <Filter getApiDeliveryStatusData={getApiDeliveryStatusData} />
-      <Table tableData={tableData} count={tableCount} />
+      <Table tableData={tableDataState} count={tableCountState} />
     </Container>
   );
 };

@@ -1,14 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styled from 'styled-components';
-import {Table, Button } from 'antd';
-import { Rate } from 'antd';
-import ReviewModal from 'pages/Admin/Contents/Review/ReviewManage/ReviewModal';
+import React, { useState, useEffect } from 'react';
+import { Table, Rate } from 'antd';
+import ReviewModal from './ReviewModal';
 
 const ReviewManager = () => {
-  const [isReviewModal, setReviewModal] = useState();
+  const [isReviewModalState, setReviewModalState] = useState();
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const columns = [
     {
@@ -25,8 +22,8 @@ const ReviewManager = () => {
     },
     {
       title: '평점',
-      dataIndex: "grade",
-      render: (grade) =>  <Rate disabled defaultValue={grade} />,
+      dataIndex: 'grade',
+      render: (grade) => <Rate disabled defaultValue={grade} />,
     },
     {
       title: '리뷰제목',
@@ -35,7 +32,15 @@ const ReviewManager = () => {
     {
       title: '리뷰내용',
       dataIndex: 'body',
-      render: (body) =>  <div onClick = {()=>{setReviewModal(true)}} >{body}</div>,
+      render: (body) => (
+        <div
+          onClick={() => {
+            setReviewModalState(true);
+          }}
+        >
+          {body}
+        </div>
+      ),
     },
     {
       title: '리뷰날짜',
@@ -55,21 +60,25 @@ const ReviewManager = () => {
     },
   ];
 
-  return <><ReviewModal
-  title="리뷰 상세보기"
-  centered
-  visible={isReviewModal}
-  onOk={() => {
-    setReviewModal(false);
-  }}
-  onCancel={() => {
-    setReviewModal(false);
-  }}
-  width={1000}
-  okText="확인"
-  cancelText="취소"
-></ReviewModal><Table columns = {columns}></Table></>;
+  return (
+    <>
+      <ReviewModal
+        title="리뷰 상세보기"
+        centered
+        visible={isReviewModalState}
+        onOk={() => {
+          setReviewModalState(false);
+        }}
+        onCancel={() => {
+          setReviewModalState(false);
+        }}
+        width={1000}
+        okText="확인"
+        cancelText="취소"
+      ></ReviewModal>
+      <Table columns={columns}></Table>
+    </>
+  );
 };
 
 export default ReviewManager;
-

@@ -5,10 +5,6 @@ import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import styled from 'styled-components';
 
 const AdressModifyModal = (property) => {
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
-
   const okClick = () => {};
 
   const BasicButtonStyled = styled(BasicButton)`

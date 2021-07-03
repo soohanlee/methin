@@ -8,9 +8,6 @@ const { Option } = OriginSelectBox;
 const Select = styled(OriginSelectBox)`
   width: 15rem;
 `;
-const labeTextlStyled = styled.div`
-margin-top : 100px;
-`;
 const BasicSelectBox = ({
   value,
   className,

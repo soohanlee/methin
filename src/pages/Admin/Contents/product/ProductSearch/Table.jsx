@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
 import { Button as OriginButton } from 'antd';
@@ -221,8 +221,8 @@ const Table = ({ getAllProductyData, result, count }) => {
     getAllProductyData();
   };
 
-  //숫자데이터 문자로 변환
   NumDataToWord();
+
   return (
     <ContainerStyled>
       <HeaderContainerStyled>

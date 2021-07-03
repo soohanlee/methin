@@ -32,7 +32,7 @@ const Input = styled(OriginInput)`
 `;
 
 const Filter = ({ getApiDeliveryStatusData }) => {
-  const [datePeriod, setDatePeriod] = useState('');
+  const [datePeriodState, setDatePeriodState] = useState('');
 
   const detailRef = useRef(null);
 
@@ -49,10 +49,6 @@ const Filter = ({ getApiDeliveryStatusData }) => {
   };
 
   const handleWaitingForShipmentChange = (value) => {
-    console.log(value);
-  };
-
-  const handleAutoBuyChange = (value) => {
     console.log(value);
   };
 
@@ -77,8 +73,8 @@ const Filter = ({ getApiDeliveryStatusData }) => {
         />
         <RadioGroupContainer>
           <Radio.Group
-            value={datePeriod}
-            onChange={(e) => setDatePeriod(e.target.value)}
+            value={datePeriodState}
+            onChange={(e) => setDatePeriodState(e.target.value)}
           >
             <Radio.Button value="today">오늘</Radio.Button>
             <Radio.Button value="1week">1주일</Radio.Button>

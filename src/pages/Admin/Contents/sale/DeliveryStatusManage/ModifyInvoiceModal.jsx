@@ -12,10 +12,6 @@ const SelectBoxLabelContainer = styled.div`
 `;
 
 const ModifyInvoiceModal = (property) => {
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
-
   const okClick = () => {
     property.onOk();
   };

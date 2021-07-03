@@ -4,9 +4,9 @@ import { Button as OriginButton } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import OriginTable from 'pages/Admin/components/Table/Table';
-import DirectReturnModal from 'pages/Admin/Contents/sale/DeliveryStatusManage/DirectExchangeModal';
-import DirectExchangeModal from 'pages/Admin/Contents/sale/DeliveryStatusManage/DirectExchangeModal';
-import ModifyInvoiceModal from 'pages/Admin/Contents/sale/DeliveryStatusManage/ModifyInvoiceModal';
+import DirectReturnModal from './DirectExchangeModal';
+import DirectExchangeModal from './DirectExchangeModal';
+import ModifyInvoiceModal from './ModifyInvoiceModal';
 
 const Container = styled.div`
   background: #fff;
@@ -34,80 +34,66 @@ const ButtomContainer = styled.div`
 `;
 
 const Table = ({ tableData, count }) => {
-  const [directReturnVisible, setDirectReturnVisible] = useState(false);
-  const [directExchangeVisible, setDirectExchangeVisible] = useState(false);
-  const [modifyInvoiceVisible, setModifyInvoiceVisible] = useState(false);
+  const [directReturnVisibleState, setDirectReturnVisibleState] = useState(
+    false,
+  );
+  const [directExchangeVisibleState, setDirectExchangeVisibleState] = useState(
+    false,
+  );
+  const [modifyInvoiceVisibleState, setModifyInvoiceVisibleState] = useState(
+    false,
+  );
 
-//주문상태
-for (var i = 0; i < tableData.length; i++) {
-  switch (tableData[i].status) {
-    case 0:
-      tableData[i].status = '결제대기';
-      break;
-    case 1:
-      tableData[i].status = '결제완료';
-      break;
-    case 2:
-      tableData[i].status = '상품준비';
-      break;
-      case 3:
-      tableData[i].status = '배송중';
-      break;
-      case 4:
-      tableData[i].status = '배송완료';
-      break;
-      case 5:
-      tableData[i].status = '취소완료';
-      break;
-      case 6:
-      tableData[i].status = '반품완료';
-      break;
-  }
-  //배송비형태
-  switch (tableData[i].ship_pay_type) {
-    case 0:
-      tableData[i].ship_pay_type = '선불';
-      break;
-    case 1:
-      tableData[i].ship_pay_type = '착불';
-      break;
-  }
-  switch (tableData[i].ship_category) {
-    case 0:
-      tableData[i].ship_category = '무료';
-      break;
-    case 1:
-      tableData[i].ship_category = '유료';
-      break;
-  }
-}
+  const statusWord = [
+    '결제대기',
+    '결제완료',
+    '상품준비',
+    '배송중',
+    '배송완료',
+    '취소완료',
+    '반품완료',
+  ];
 
-  const ButtonClick = (type) => {
+  const shipPayTypeWord = ['선불', '착불'];
+
+  const shipCategoryWord = ['무료', '유료'];
+  const NumDataToWord = () => {
+    for (var i = 0; i < tableData.length; i++) {
+      tableData[i].status[i] = statusWord[tableData[i].status[i]];
+      tableData[i].ship_pay_type = shipPayTypeWord[tableData[i].ship_pay_type];
+      tableData[i].ship_ship_category =
+        shipCategoryWord[tableData[i].ship_ship_category];
+    }
+  };
+
+  const handleButtonClick = (type) => {
     switch (type) {
       case 'directReturn':
-        setDirectReturnVisible(true);
+        setDirectReturnVisibleState(true);
         break;
       case 'directExchange':
-        setDirectExchangeVisible(true);
+        setDirectExchangeVisibleState(true);
         break;
       case 'modifyInvoice':
-        setModifyInvoiceVisible(true);
+        setModifyInvoiceVisibleState(true);
         break;
       default:
         break;
     }
   };
+
+  NumDataToWord();
   return (
     <Container>
       <DirectReturnModal
         centered
         title="판매자 직접 반품접수"
-        visible={directReturnVisible}
+        visible={directReturnVisibleState}
         onOk={() => {
-          setDirectReturnVisible(false);
+          setDirectReturnVisibleState(false);
         }}
         onCancel={() => {
-          setDirectReturnVisible(false);
+          setDirectReturnVisibleState(false);
         }}
         width={500}
       ></DirectReturnModal>
@@ -115,12 +101,12 @@ for (var i = 0; i < tableData.length; i++) {
       <DirectExchangeModal
         centered
         title="판매자 직접 교환접수"
-        visible={directExchangeVisible}
+        visible={directExchangeVisibleState}
         onOk={() => {
-          setDirectExchangeVisible(false);
+          setDirectExchangeVisibleState(false);
         }}
         onCancel={() => {
-          setDirectExchangeVisible(false);
+          setDirectExchangeVisibleState(false);
         }}
         width={500}
       ></DirectExchangeModal>
@@ -128,12 +114,12 @@ for (var i = 0; i < tableData.length; i++) {
       <ModifyInvoiceModal
         centered
         title="송장수정 처리"
-        visible={modifyInvoiceVisible}
+        visible={modifyInvoiceVisibleState}
         onOk={() => {
-          setModifyInvoiceVisible(false);
+          setModifyInvoiceVisibleState(false);
         }}
         onCancel={() => {
-          setModifyInvoiceVisible(false);
+          setModifyInvoiceVisibleState(false);
         }}
         width={500}
       ></ModifyInvoiceModal>
@@ -157,14 +143,14 @@ for (var i = 0; i < tableData.length; i++) {
         <LabelContents title="교환/반품">
           <Button
             onClick={() => {
-              ButtonClick('directReturn');
+              handleButtonClick('directReturn');
             }}
           >
             판매자 직접 반품
           </Button>
           <Button
             onClick={() => {
-              ButtonClick('directExchange');
+              handleButtonClick('directExchange');
             }}
           >
             판매자 직접 교환
@@ -174,7 +160,7 @@ for (var i = 0; i < tableData.length; i++) {
         <LabelContents title="정보 수정">
           <Button
             onClick={() => {
-              ButtonClick('modifyInvoice');
+              handleButtonClick('modifyInvoice');
             }}
           >
             송장수정
