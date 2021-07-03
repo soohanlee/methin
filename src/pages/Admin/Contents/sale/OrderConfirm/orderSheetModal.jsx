@@ -36,11 +36,11 @@ const ContentProperty = styled.div`
   padding: 10px;
 `;
 
-const OrderSheetModal = (property) => {
+const OrderSheetModal = ({ sheetList, title, visible, onCancel }) => {
   const okClick = () => {};
 
   const renderList = () => {
-    return property.orderSheetList.map(
+    return sheetList.map(
       ({ date, productName, price, process, name, adress, phoneNum }, num) => {
         return (
           <ContentList>
@@ -81,11 +81,11 @@ const OrderSheetModal = (property) => {
   return (
     <>
       <Modal
-        title={property.title}
+        title={title}
         centered
-        visible={property.visible}
+        visible={visible}
         onOk={okClick}
-        onCancel={property.onCancel}
+        onCancel={onCancel}
         width={900}
         okText="인쇄하기"
         cancelText="닫기"

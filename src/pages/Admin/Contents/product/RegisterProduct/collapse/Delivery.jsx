@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Radio,
   Select as OriginSelect,
@@ -12,25 +12,12 @@ import { changeNumberDigits, removeRest } from 'utils/common';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import CustomCollapse from 'pages/Admin/components/Collapse';
 
-import DeliveryPriceGroupModal from 'pages/Admin/Contents/product/RegisterProduct/collapse/deliveryPriceGroupModal';
-
 const Select = styled(OriginSelect)`
   width: 200px;
 `;
-
-const InputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-`;
-
 const Input = styled(OriginInput)`
   display: flex;
   max-width: 300px;
-`;
-
-const ItemContainer = styled.div`
-  width: 100%;
 `;
 
 const { Option } = Select;
@@ -65,9 +52,6 @@ const Delivery = ({
   setSectionExtraFee,
   setShipment,
 }) => {
-  const [deriveryPriceGroupVisible, setDeriveryPriceGroupVisible] = useState(
-    false,
-  );
   const handleDefaultFeeChange = (e) => {
     setDefaultFee(e.target.value);
   };
@@ -94,26 +78,6 @@ const Delivery = ({
   const handleDeliveryFeeConditionFocus = () => {
     const changeValue = removeRest(deliveryFeeCondition);
     setDeliveryFeeCondition(changeValue);
-  };
-
-  const handleAddFeeBlur = () => {
-    const changeValue = changeNumberDigits(addFee);
-    setAddFee(changeValue);
-  };
-
-  const handleAddFeeFocus = () => {
-    const changeValue = removeRest(addFee);
-    setAddFee(changeValue);
-  };
-
-  const handleSectionExtraFeeBlur = () => {
-    const changeValue = changeNumberDigits(sectionExtraFee);
-    setSectionExtraFee(changeValue);
-  };
-
-  const handleSectionExtraFeeFocus = () => {
-    const changeValue = removeRest(sectionExtraFee);
-    setSectionExtraFee(changeValue);
   };
 
   const renderDefaultFee = () => {
@@ -246,31 +210,3 @@ const Delivery = ({
 };
 
 export default Delivery;
-
-const deliveryTableColumns = [
-  {
-    title: '묶음그룹번호',
-    dataIndex: 'GroupNum',
-  },
-  {
-    title: '그룹명',
-    dataIndex: 'GroupName',
-  },
-  {
-    title: '배송비 계산방식',
-    dataIndex: 'PriceCalculator',
-  },
-  {
-    title: '선택',
-    dataIndex: 'Select',
-  },
-];
-
-const deliveryData = [
-  {
-    GroupNum: '52691388',
-    GroupName: '기본 배송비 묶음그룹',
-    PriceCalculator: '최소부과',
-    Select: '선택',
-  },
-];

@@ -4,20 +4,20 @@ import { Route, Switch } from 'react-router-dom';
 import { ROUTE_PATH } from 'configs/config';
 
 import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
-import ProductSearch from 'pages/Admin/Contents/product/ProductSearch/ProductSearch';
-import DeliveryProduct from 'pages/Admin/Contents/product/DeliveryProduct/DeliveryProduct';
-import RegisterProductAll from 'pages/Admin/Contents/product/RegisterProductAll/RegisterProductAll';
-import NoticeManage from 'pages/Admin/Contents/product/NoticeManage/NoticeManage';
-import OrderSerach from 'pages/Admin/Contents/sale/OrderSerach/OrderSerach';
-import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingPayment/CheckOutStandingPayment';
+import ProductSearch from 'pages/Admin/Contents/product/ProductSearch';
+import DeliveryProduct from 'pages/Admin/Contents/product/DeliveryProduct';
+import RegisterProductAll from 'pages/Admin/Contents/product/RegisterProductAll';
+import NoticeManage from 'pages/Admin/Contents/product/NoticeManage';
+import OrderSerach from 'pages/Admin/Contents/sale/OrderSerach';
+import CheckOutStandingPayment from 'pages/Admin/Contents/sale/CheckOutStandingPayment';
 import OrderConfirm from 'pages/Admin/Contents/sale/OrderConfirm';
 import OrderManage from 'pages/Admin/Contents/sale/OrderManage';
 import OrderCancel from 'pages/Admin/Contents/sale/OrderCancel';
-import SaleDisturb from 'pages/Admin/Contents/sale/SaleDisturb';
+import OrderDisturb from 'pages/Admin/Contents/sale/OrderDisturb';
 import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage';
 import QNAManager from 'pages/Admin/Contents/Review/ReviewManage/QNAManager';
 import ReviewManager from 'pages/Admin/Contents/Review/ReviewManage/ReviewManager';
-import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice/RegisterNotice';
+import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice';
 
 const Container = styled.div`
   width: 100%;
@@ -89,7 +89,7 @@ const Contents = () => {
         <Route
           exact
           path={`${prePath}${ROUTE_PATH.admin.orderDisturb}`}
-          component={SaleDisturb}
+          component={OrderDisturb}
         />
         <Route
           exact

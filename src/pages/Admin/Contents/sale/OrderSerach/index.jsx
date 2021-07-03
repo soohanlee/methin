@@ -92,7 +92,7 @@ const OrderSerach = () => {
       const result = await getPaymentList(0);
 
       const count = result.data.data.count;
-      const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+      const maxOffset = Math.floor(count / limite) + 1;
       let customList = [];
       for (let i = 0; i < maxOffset; i++) {
         const _result = await getPaymentList(i);

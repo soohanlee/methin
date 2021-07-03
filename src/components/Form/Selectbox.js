@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { SelectableLabel } from 'components/styled/Form';
 import { ListContainer } from 'components/styled/Container';

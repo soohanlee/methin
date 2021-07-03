@@ -29,12 +29,6 @@ const ItemTitleStyled = styled.div`
   border-bottom: 0.1rem solid black;
 `;
 
-const Styled = styled.div`
-  padding: 2rem;
-  padding-bottom: 0px;
-  border: 1px solid #f0f0f0;
-`;
-
 const ContainerStyled = styled.div`
   width: 100%;
   margin-bottom: 2rem;

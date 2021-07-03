@@ -14,14 +14,6 @@ const ItemContainer = styled.div`
   flex-direction: column;
 `;
 
-const CheckContainer = styled.div`
-  margin-top: 1rem;
-`;
-
-const Input = styled(InputNumber)`
-  max-width: 300px;
-`;
-
 const Price = ({
   price,
   setPrice,
@@ -36,10 +28,6 @@ const Price = ({
   setSaleType,
   setVAT,
 }) => {
-  const [isAllSale, setIsAllSale] = useState(false);
-  const [isPCSale, setIsPCSale] = useState(false);
-  const [isMobileSale, setIsMobileSale] = useState(false);
-
   const [mobileSaleType, setMobileSaleType] = useState('won'); // won, percentage
   const [mobileSaleTypePrice, setMobileSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
   const [mobileSalePrice, setMobileSalePrice] = useState(''); //할인된 가격
@@ -117,16 +105,6 @@ const Price = ({
 
   const selectAfter = (
     <Select value={saleType} onChange={(value) => setSaleType(value)}>
-      <Option value="won">원</Option>
-      <Option value="percentage">%</Option>
-    </Select>
-  );
-
-  const mobileSelectAfter = (
-    <Select
-      value={mobileSaleType}
-      onChange={(value) => setMobileSaleType(value)}
-    >
       <Option value="won">원</Option>
       <Option value="percentage">%</Option>
     </Select>

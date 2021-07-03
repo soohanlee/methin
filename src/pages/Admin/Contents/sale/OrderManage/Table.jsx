@@ -1,16 +1,16 @@
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Button as OriginButton, Input } from 'antd';
+import { Button as OriginButton } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTable from 'pages/Admin/components/Table/Table';
-
-import OrderSheetModal from 'pages/Admin/Contents/sale/OrderManage/OrderSheetModal';
-import ExcelModal from 'pages/Admin/Contents/sale/OrderManage/ExcelModal';
-import PackingModal from 'pages/Admin/Contents/sale/OrderManage/PackingModal';
-import SaleCancelModal from 'pages/Admin/Contents/sale/OrderManage/SaleCancelModal';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
+
+import OrderSheetModal from './OrderSheetModal';
+import ExcelModal from './ExcelModal';
+import PackingModal from './PackingModal';
+import SaleCancelModal from './SaleCancelModal';
 
 const Container = styled.div`
   background: #fff;
@@ -44,77 +44,82 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({
-  orderSheetList,
-  tableData,
-}) => {
+const Table = ({ sheetList, tableData }) => {
   const invoiceNumber = useRef(null);
 
-  const [orderSheetVisible, setOrderSheetVisible] = useState(false);
-  const [excelVisible, setExcelVisible] = useState(false);
-  const [packingVisible, setPackingVisible] = useState(false);
-  const [saleCancelVisible, setSaleCancelVisible] = useState(false);
+  const [sheetVisibleState, setSheetVisibleState] = useState(false);
+  const [excelVisibleState, setExcelVisibleState] = useState(false);
+  const [packingVisibleState, setPackingVisibleState] = useState(false);
+  const [saleCancelVisibleState, setSaleCancelVisibleState] = useState(false);
 
-//주문상태
-for (var i = 0; i < tableData.length; i++) {
-  switch (tableData[i].status) {
-    case 0:
-      tableData[i].status = '결제대기';
-      break;
-    case 1:
-      tableData[i].status = '결제완료';
-      break;
-    case 2:
-      tableData[i].status = '상품준비';
-      break;
-      case 3:
-      tableData[i].status = '배송중';
-      break;
-      case 4:
-      tableData[i].status = '배송완료';
-      break;
-      case 5:
-      tableData[i].status = '취소완료';
-      break;
-      case 6:
-      tableData[i].status = '반품완료';
-      break;
-  }
-  //배송비형태
-  switch (tableData[i].ship_pay_type) {
-    case 0:
-      tableData[i].ship_pay_type = '선불';
-      break;
-    case 1:
-      tableData[i].ship_pay_type = '착불';
-      break;
-  }
-  switch (tableData[i].ship_category) {
-    case 0:
-      tableData[i].ship_category = '무료';
-      break;
-    case 1:
-      tableData[i].ship_category = '유료';
-      break;
-  }
-}
+  const NumDataToWord = () => {
+    //주문상태
+    for (var i = 0; i < tableData.length; i++) {
+      switch (tableData[i].status) {
+        case 0:
+          tableData[i].status = '결제대기';
+          break;
+        case 1:
+          tableData[i].status = '결제완료';
+          break;
+        case 2:
+          tableData[i].status = '상품준비';
+          break;
+        case 3:
+          tableData[i].status = '배송중';
+          break;
+        case 4:
+          tableData[i].status = '배송완료';
+          break;
+        case 5:
+          tableData[i].status = '취소완료';
+          break;
+        case 6:
+          tableData[i].status = '반품완료';
+          break;
+        default:
+          break;
+      }
+      //배송비형태
+      switch (tableData[i].ship_pay_type) {
+        case 0:
+          tableData[i].ship_pay_type = '선불';
+          break;
+        case 1:
+          tableData[i].ship_pay_type = '착불';
+          break;
+        default:
+          break;
+      }
+      switch (tableData[i].ship_category) {
+        case 0:
+          tableData[i].ship_category = '무료';
+          break;
+        case 1:
+          tableData[i].ship_category = '유료';
+          break;
+        default:
+          break;
+      }
+    }
+  };
 
-  const tableBtn = (id) => {
+  const handleTableBtn = (id) => {
     switch (id) {
       case 'order': {
         alert('선택하신 1개의 주문 건 중 1개를 발송처리했습니다.');
         break;
       }
       case 'orderExcel': {
-        setExcelVisible(true);
+        setExcelVisibleState(true);
         break;
       }
       case 'orderCombinedPacking': {
-        setPackingVisible(true);
+        setPackingVisibleState(true);
         break;
       }
       case 'saleCancel': {
-        setSaleCancelVisible(true);
+        setSaleCancelVisibleState(true);
         break;
       }
       case 'pickup': {
@@ -132,18 +137,18 @@ for (var i = 0; i < tableData.length; i++) {
       }
     }
   };
-
+  NumDataToWord();
   return (
     <Container>
       <ExcelModal
         title="송장번호 일괄등록"
         centered
-        visible={excelVisible}
+        visible={excelVisibleState}
         onOk={() => {
-          setExcelVisible(false);
+          setExcelVisibleState(false);
         }}
         onCancel={() => {
-          setExcelVisible(false);
+          setExcelVisibleState(false);
         }}
         width={500}
         okText="확인"
@@ -153,12 +158,12 @@ for (var i = 0; i < tableData.length; i++) {
       <PackingModal
         title="묶음그룹 일괄 발송처리"
         centered
-        visible={packingVisible}
+        visible={packingVisibleState}
         onOk={() => {
-          setPackingVisible(false);
+          setPackingVisibleState(false);
         }}
         onCancel={() => {
-          setPackingVisible(false);
+          setPackingVisibleState(false);
         }}
         width={500}
         okText="확인"
@@ -167,33 +172,33 @@ for (var i = 0; i < tableData.length; i++) {
 
       <OrderSheetModal
         centered
-        visible={orderSheetVisible}
+        visible={sheetVisibleState}
         onOk={() => {
-          setOrderSheetVisible(true);
+          setSheetVisibleState(true);
         }}
         onCancel={() => {
-          setOrderSheetVisible(false);
+          setSheetVisibleState(false);
         }}
         width={500}
         okText="확인"
         cancelText="취소"
-        orderSheetList={orderSheetList}
+        sheetList={sheetList}
       ></OrderSheetModal>
 
       <SaleCancelModal
         centered
         title="선택건 판매취소"
-        visible={saleCancelVisible}
+        visible={saleCancelVisibleState}
         onOk={() => {
-          setSaleCancelVisible(false);
+          setSaleCancelVisibleState(false);
         }}
         onCancel={() => {
-          setSaleCancelVisible(false);
+          setSaleCancelVisibleState(false);
         }}
         width={500}
         okText="확인"
         cancelText="취소"
-        orderSheetList={orderSheetList}
+        sheetList={sheetList}
       ></SaleCancelModal>
 
       <SearchContainer>
@@ -216,7 +221,7 @@ for (var i = 0; i < tableData.length; i++) {
       <ButtonContainer>
         <Button
           onClick={() => {
-            setOrderSheetVisible(true);
+            setSheetVisibleState(true);
           }}
         >
           선택건 주문서 출력
@@ -227,21 +232,21 @@ for (var i = 0; i < tableData.length; i++) {
         <LabelContents title="발송처리">
           <Button
             onClick={() => {
-              tableBtn('order');
+              handleTableBtn('order');
             }}
           >
             발송처리
           </Button>
           <Button
             onClick={() => {
-              tableBtn('orderExcel');
+              handleTableBtn('orderExcel');
             }}
           >
             엑셀 일괄 발송처리
           </Button>
           <Button
             onClick={() => {
-              tableBtn('orderCombinedPacking');
+              handleTableBtn('orderCombinedPacking');
             }}
           >
             합포장 일괄 발송처리
@@ -251,14 +256,14 @@ for (var i = 0; i < tableData.length; i++) {
         <LabelContents title="취소처리">
           <Button
             onClick={() => {
-              tableBtn('saleCancel');
+              handleTableBtn('saleCancel');
             }}
           >
             판매취소
           </Button>
           <Button
             onClick={() => {
-              tableBtn('pickup');
+              handleTableBtn('pickup');
             }}
           >
             집하취소

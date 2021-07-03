@@ -265,7 +265,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
   const renderSearchButton = () => {
     //검색 값들어가야함
     const setSearchBtn = (value) => {
-      if (value != undefined) {
+      if (value !== undefined) {
         getSearchProductData();
       } else {
         getApiProductData();

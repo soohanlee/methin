@@ -40,7 +40,7 @@ const ProductSearch = () => {
     try {
       const result = await getProductDetail(id);
       const resultArray = [result.data.data];
-      setTableData(resultArray);
+      setTableDataState(resultArray);
       notification.success('검색 성공');
     } catch (e) {
       notification.error('검색 정보를 가져오지 못했습니다.');

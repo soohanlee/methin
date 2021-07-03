@@ -53,7 +53,7 @@ const List = ({ tableData, getApiNoticeData }) => {
   const handleSelectDeleteBtn = () => {
     async function fetchAndSetUser(num) {
       try {
-        const result = await deleteNotice(selectTableKeyState[num]);
+        await deleteNotice(selectTableKeyState[num]);
         getApiNoticeData();
       } catch (e) {
         notification.error('상품을 삭제하지 못했습니다.');
@@ -61,7 +61,7 @@ const List = ({ tableData, getApiNoticeData }) => {
     }
 
     for (var i = 0; i < selectTableKeyState.length; i++) {
-      if (i == selectTableKeyState.length - 1) {
+      if (i === selectTableKeyState.length - 1) {
         fetchAndSetUser(i);
       } else {
         deleteNotice(selectTableKeyState[i]);

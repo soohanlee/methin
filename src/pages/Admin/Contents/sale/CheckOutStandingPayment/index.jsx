@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Table from 'pages/Admin/components/Table/Table';
 import { Button } from 'antd';
-import QueryItemModal from 'pages/Admin/Contents/sale/CheckOutStandingPayment/QueryItemModal';
+import QueryItemModal from './QueryItemModal';
 import { getPaymentUnpaidList } from 'apis/payment';
 import { notification } from 'utils/notification';
 
@@ -42,7 +42,7 @@ const CheckOutStandingPayment = () => {
       try {
         const result = await getPaymentUnpaidList(0);
         const count = result.data.data.count;
-        const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+        const maxOffset = Math.floor(count / limite) + 1;
         let customList = [];
         for (let i = 0; i < maxOffset; i++) {
           const _result = await getPaymentUnpaidList(i);

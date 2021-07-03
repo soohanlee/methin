@@ -5,10 +5,6 @@ import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 const ReturnRefusalModal = (property) => {
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
-
   const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
     margin-left: ${(props) => props.left};
     width: 20rem;

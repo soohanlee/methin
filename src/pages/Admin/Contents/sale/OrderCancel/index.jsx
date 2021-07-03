@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import BoardHeader from 'pages/Admin/components/BoardHeader';
 import Filter from './Filter';
 import Table from './Table';
+import BoardHeader from 'pages/Admin/components/BoardHeader';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
 import { notification } from 'utils/notification';
 import { getCanceledPaymentList } from 'apis/payment';
@@ -25,8 +25,8 @@ const categoryTypeClick = (value) => {
 // 배송 현황 관리
 const OrderCancel = () => {
   const limite = 16;
-  const [tableData, setTableData] = useState([]);
-  const [tableCount, setTableCount] = useState(0);
+  const [tableDataState, setTableDataState] = useState([]);
+  const [tableCountState, setTableCountState] = useState(0);
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -39,15 +39,17 @@ const OrderCancel = () => {
     try {
       const result = await getCanceledPaymentList(0);
       const count = result.data.data.count;
-      const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+      const maxOffset = Math.floor(count / limite) + 1;
       let customList = [];
       for (let i = 0; i < maxOffset; i++) {
         const _result = await getCanceledPaymentList(i);
         customList = customList.concat(_result.data.data.list);
       }
 
-      setTableData(customList);
-      setTableCount(customList.length);
+      setTableDataState(customList);
+      setTableCountState(customList.length);
+
+      notification.success('검색성공');
     } catch (e) {
       notification.error('배송취소 정보를 가져오지 못했습니다.');
     }
@@ -57,7 +59,11 @@ const OrderCancel = () => {
     <Container>
       <BoardHeader onClick={categoryTypeClick} list={list} />
       <Filter getApiDeliveryData={getApiDeliveryData} />
-      <Table tableData={tableData} count={tableCount} />
+      <Table
+        columns={columns}
+        tableData={tableDataState}
+        count={tableCountState}
+      />
     </Container>
   );
 };
@@ -79,5 +85,32 @@ const list = [
         img: <AppstoreTwoToneIcon />,
       },
     ],
+  },
+];
+
+const columns = [
+  {
+    title: '주문번호',
+    dataIndex: 'id',
+  },
+  {
+    title: '주문상태',
+    dataIndex: 'status',
+  },
+  {
+    title: '취소 처리상태',
+    dataIndex: 'cancel_status',
+  },
+  {
+    title: '결제일',
+    dataIndex: 'paid_at',
+  },
+  {
+    title: '취소요청일',
+    dataIndex: 'canceled_at',
+  },
+  {
+    title: '취소사유',
+    dataIndex: 'cancel_reason',
   },
 ];

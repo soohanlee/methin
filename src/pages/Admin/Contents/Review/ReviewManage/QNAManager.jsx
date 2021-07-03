@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 import BasicTextArea from 'pages/Admin/components/Form/BasicTextArea';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
-import { getProductQNA } from 'apis/product';
-import { answerQNA } from 'apis/product';
+import { getProductQNA, answerQNA } from 'apis/product';
 import { notification } from 'utils/notification';
 
 const Container = styled.div`
@@ -70,7 +69,7 @@ const MyAnswerContainer = styled.div`
 `;
 
 const QNAManager = () => {
-  const [tableList, setTableList] = useState([]);
+  const [tableListState, setTableListState] = useState([]);
 
   useEffect(() => {
     GetData();
@@ -85,13 +84,14 @@ const QNAManager = () => {
       try {
         const result = await getProductQNA(0);
         const count = result.data.data.count;
-        const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+        const maxOffset = Math.floor(count / limite) + 1;
         let customList = [];
         for (let i = 0; i < maxOffset; i++) {
           const _result = await getProductQNA(i);
           customList = customList.concat(_result.data.data.list);
+          notification.success('검색성공');
         }
-        setTableList(customList);
+        setTableListState(customList);
       } catch (e) {
         notification.error('리뷰 정보를 가져오지 못했습니다.');
       }
@@ -172,7 +172,7 @@ const QNAManager = () => {
   };
 
   const renderList = () => {
-    return tableList.map((item, index) => {
+    return tableListState.map((item, index) => {
       return renderItem(item, index);
     });
   };
