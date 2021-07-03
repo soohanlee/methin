@@ -3,6 +3,26 @@ export const ROUTE_PATH = {
   login: '/login',
   signup: '/signup',
   findId: '/findId',
+  product: '/product',
+  mypage: {
+    main: '/mypage',
+    destination: '/destination',
+    cancel: '/cancel',
+    review: '/review',
+    myInformation: '/my-information',
+    ask: '/ask',
+    qna: '/qna',
+    faq: '/faq',
+  },
+  serviceCenter: {
+    main: '/service-center',
+    notice: '/notice',
+    faq: '/faq',
+  },
+  cart: '/cart',
+  order: '/order',
+  subscribe: '/subscribe',
+  category: '/category',
   admin: {
     main: '/admin',
     test: '/test',
@@ -31,8 +51,20 @@ export const LOCAL_STORAGE_KEYS = {
 export const COOKIE_KEYS = {
   UserRefreshToken: '__user_refresh_token__',
   UserAccessToken: '__user_access_token__',
+  cart: 'CART',
 };
 
 export const DateFormat = {
   Default: 'YYYY-MM-DD',
 };
+
+export const BreakPoint = {
+  xl: 1200,
+  l: 1024,
+  m: 768,
+  s: 640,
+};
+
+export const SEPCIAL_CONTAINER_ID_LIST = Object.freeze({
+  MODAL: 'modal-container',
+});

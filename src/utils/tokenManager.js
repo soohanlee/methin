@@ -86,14 +86,16 @@ export async function getNewAccessToken() {
 }
 
 export async function getIsAvalidAccessToken() {
-  const accessToken = await getAccessToken();
+  const accessToken = getAccessToken();
 
   if (accessToken) {
-    const response = await jwtVerify();
-    console.log('response', response.message === 'success');
-
-    if (response.message === 'success') {
-      return true;
+    try {
+      const response = await jwtVerify();
+      if (response.data.message === 'success') {
+        return true;
+      }
+    } catch (e) {
+      return false;
     }
   } else {
     return false;
@@ -113,3 +115,15 @@ export async function getIsAvalidAccessRefreshToken() {
 
   return false;
 }
+
+export const getCartCookies = () => {
+  return get(COOKIE_KEYS.cart);
+};
+
+export const setCartCookies = (data) => {
+  set(COOKIE_KEYS.cart, data);
+};
+
+export const removeCartCookies = () => {
+  remove(COOKIE_KEYS.cart);
+};

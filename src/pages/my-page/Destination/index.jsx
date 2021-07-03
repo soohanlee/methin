@@ -1,9 +1,10 @@
+import MyPageOrderListContainer from 'components/MyPageOrderListContainer';
 import React from 'react';
 
 const Destination = () => {
   return (
     <div>
-      destination
+      <MyPageOrderListContainer />
     </div>
   );
 };

@@ -25,7 +25,7 @@ const Selectbox = ({ list, selectedItem, onSelectedItem }) => {
     return list.map(({ value, key }) => {
       return (
         <SelectableLabel
-          seleted={key === selectedItem.key}
+          selected={key === selectedItem.key}
           onClick={() => handleClickItem(key, value)}
           key={key}
         >
