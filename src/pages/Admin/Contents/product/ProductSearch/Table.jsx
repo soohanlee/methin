@@ -221,8 +221,8 @@ const Table = ({ getAllProductyData, result, count }) => {
     getAllProductyData();
   };
 
-  //숫자데이터 문자로 변환
   NumDataToWord();
+
   return (
     <ContainerStyled>
       <HeaderContainerStyled>

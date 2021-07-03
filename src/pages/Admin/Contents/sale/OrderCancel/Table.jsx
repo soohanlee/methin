@@ -33,42 +33,24 @@ const Table = ({ columns, tableData, count }) => {
   const [returnRefusalVisibleState, setReturnRefusalVisibleState] = useState(
     false,
   );
+
+  const StatusWord = [
+    '결제대기',
+    '결제완료',
+    '상품준비',
+    '배송중',
+    '배송완료',
+    '취소완료',
+    '반품완료',
+  ];
+
+  const CancelStatusWord = ['취소'];
+
   const NumDataToWord = () => {
     //주문상태
     for (var i = 0; i < tableData.length; i++) {
-      switch (tableData[i].status) {
-        case 0:
-          tableData[i].status = '결제대기';
-          break;
-        case 1:
-          tableData[i].status = '결제완료';
-          break;
-        case 2:
-          tableData[i].status = '상품준비';
-          break;
-        case 3:
-          tableData[i].status = '배송중';
-          break;
-        case 4:
-          tableData[i].status = '배송완료';
-          break;
-        case 5:
-          tableData[i].status = '취소완료';
-          break;
-        case 6:
-          tableData[i].status = '반품완료';
-          break;
-        default:
-          break;
-      }
-
-      switch (tableData[i].cancel_status) {
-        case 0:
-          tableData[i].cancel_status = '취소';
-          break;
-        default:
-          break;
-      }
+      tableData[i].status = StatusWord[tableData[i].status];
+      tableData[i].cancel_status = CancelStatusWord[tableData[i].cancel_status];
     }
   };
 
