@@ -187,7 +187,6 @@ const Order = () => {
   });
 
   useEffect(() => {
-    console.log('history', history.location.state);
     if (history.location.state) {
       setProductList(history.location.state);
     }
@@ -219,7 +218,7 @@ const Order = () => {
       if (e.response && e.response.status === 401) {
         cleanToken();
         login.changeUserState(NOT_LOGGED_IN);
-        history.push(ROUTE_PATH.login);
+        // history.push(ROUTE_PATH.login);
       } else if (e.response && e.response.status === 400) {
         notification.error('새로고침 후 다시 이용해주세요.');
       }
