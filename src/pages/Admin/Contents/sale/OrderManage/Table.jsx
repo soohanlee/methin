@@ -52,55 +52,25 @@ const Table = ({ sheetList, tableData }) => {
   const [packingVisibleState, setPackingVisibleState] = useState(false);
   const [saleCancelVisibleState, setSaleCancelVisibleState] = useState(false);
 
+  const statusWord = [
+    '결제대기',
+    '결제완료',
+    '상품준비',
+    '배송중',
+    '배송완료',
+    '취소완료',
+    '반품완료',
+  ];
+
+  const shipPayTypeWord = ['선불', '착불'];
+
+  const shipCategoryWord = ['무료', '유료'];
   const NumDataToWord = () => {
-    //주문상태
     for (var i = 0; i < tableData.length; i++) {
-      switch (tableData[i].status) {
-        case 0:
-          tableData[i].status = '결제대기';
-          break;
-        case 1:
-          tableData[i].status = '결제완료';
-          break;
-        case 2:
-          tableData[i].status = '상품준비';
-          break;
-        case 3:
-          tableData[i].status = '배송중';
-          break;
-        case 4:
-          tableData[i].status = '배송완료';
-          break;
-        case 5:
-          tableData[i].status = '취소완료';
-          break;
-        case 6:
-          tableData[i].status = '반품완료';
-          break;
-        default:
-          break;
-      }
-      //배송비형태
-      switch (tableData[i].ship_pay_type) {
-        case 0:
-          tableData[i].ship_pay_type = '선불';
-          break;
-        case 1:
-          tableData[i].ship_pay_type = '착불';
-          break;
-        default:
-          break;
-      }
-      switch (tableData[i].ship_category) {
-        case 0:
-          tableData[i].ship_category = '무료';
-          break;
-        case 1:
-          tableData[i].ship_category = '유료';
-          break;
-        default:
-          break;
-      }
+      tableData[i].status[i] = statusWord[tableData[i].status[i]];
+      tableData[i].ship_pay_type = shipPayTypeWord[tableData[i].ship_pay_type];
+      tableData[i].ship_ship_category =
+        shipCategoryWord[tableData[i].ship_ship_category];
     }
   };
 
