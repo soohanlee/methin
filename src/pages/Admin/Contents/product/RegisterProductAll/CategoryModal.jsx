@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const ItemContainerStyled = styled.div`
   display: flex;
@@ -49,14 +49,8 @@ const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
   margin-right: 3rem;
 `;
 
-const CategoryModal = ({
-  title,
-  visible,
-  setVisible,
-  onClick,
-  categoryRef,
-  dataList,
-}) => {
+const CategoryModal = ({ title, visible, setVisible, dataList }) => {
+  const categoryRef = useRef();
   const [categoryTypeState, setCategoryTypeState] = useState(0);
   const [classificationdataState, setClassificationdataState] = useState({});
   const [selectedFirstItemState, setSelectedFirstItemState] = useState('축산');
@@ -76,8 +70,19 @@ const CategoryModal = ({
   };
 
   const handleOkBtn = () => {
+    switch (categoryTypeState) {
+      case 0:
+        console.log(categoryRef.current.state.value);
+        break;
+      case 1:
+        console.log(selectedFirstItemState);
+        console.log(selectdSecondItemState);
+        break;
+      default:
+        break;
+    }
+
     setVisible(false);
-    onClick();
   };
 
   const renderChangedTap = () => {

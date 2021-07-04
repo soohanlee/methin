@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import CategoryModal from './CategoryModal';
@@ -22,13 +22,9 @@ const ButtonContainer = styled.div`
 `;
 
 const Title = ({ dataList }) => {
-  const categoryRef = useRef(null);
-  const countryRef = useRef(null);
   const [categoryVisibleState, setCategoryVisibleState] = useState(false);
   const [countryVisibleState, setCountryVisibleState] = useState(false);
   const [imageVisibleState, setImageVisibleState] = useState(false);
-  const [conturySelectState, setConturySelectState] = useState('korea');
-  const [adressSelectState, setAdressSelectState] = useState('korea');
 
   const handleCategoryClick = () => {
     setCategoryVisibleState(true);
@@ -53,24 +49,18 @@ const Title = ({ dataList }) => {
         title="카테고리 찾기"
         visible={categoryVisibleState}
         setVisible={setCategoryVisibleState}
-        onClick={setCategoryVisibleState}
-        categoryRef={categoryRef}
         dataList={dataList}
       />
       <CountryModal
         title="원산지 찾기"
         visible={countryVisibleState}
         setVisible={setCountryVisibleState}
-        onClick={setCountryVisibleState}
-        countryRef={countryRef}
-        setConturySelect={setConturySelectState}
-        setAdressSelect={setAdressSelectState}
       />
       <ImageModal
         visible={imageVisibleState}
         setVisible={setImageVisibleState}
         onClick={setImageVisibleState}
-        countryRef={countryRef}
+        // countryRef={countryRef}
       />
       <Container>
         <ButtonContainer>

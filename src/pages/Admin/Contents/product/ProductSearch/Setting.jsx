@@ -263,8 +263,26 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
 
   const searchBtn = useRef(null); //검색
   const renderSearchButton = () => {
-    //검색 값들어가야함
-    const setSearchBtn = (value) => {
+    const handleSearchBtn = (value) => {
+      //검색 값들어가야함
+
+      console.log('------ProductSearch--------');
+      console.log(productNumberRef.current.state.checked); //상품번호체크박스
+      console.log(productMultiSearchRef.current.resizableTextArea.props.value); //TextArea
+      console.log(productNameRef.current.state.value); //상품명
+      console.log(allCheckRef.current.state.checked); //판매상태
+      console.log(saleNowCheckRef.current.state.checked); //판매상태
+      console.log(soldOutCheckRef.current.state.checked); //판매상태
+      console.log(stopSaleCheckRef.current.state.checked); //판매상태
+      console.log(endSaleCheckRef.current.state.checked); //판매상태
+      console.log(largeGroupState); //카테고리 드랍박스
+      console.log(middleGroupState); //카테고리 드랍박스
+      console.log(periodCategorySelectState); //기간 드랍박스
+      console.log(periodBtnState); //기간버튼
+      console.log(startDateState._d); //
+      console.log(endDateState._d);
+      console.log('------ProductSearch--------');
+
       if (value !== undefined) {
         getSearchProductData();
       } else {
@@ -272,7 +290,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
       }
     };
 
-    const setResetBtn = () => {
+    const handleResetBtn = () => {
       getApiProductData();
     };
 
@@ -287,7 +305,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
               type="primary"
               ref={searchBtn}
               margintop="5rem"
-              onClick={setSearchBtn}
+              onClick={handleSearchBtn}
             />
             <BasicButtonStyled
               label="초기화"
@@ -295,7 +313,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
               height="5rem"
               marginleft="2rem"
               margintop="5rem"
-              onClick={setResetBtn}
+              onClick={handleResetBtn}
             />
           </LineStyled>
         </SubContainerStyled>
