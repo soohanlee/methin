@@ -56,3 +56,5 @@ export const PageTitle = styled.div`
   font-weight: 400;
   margin-bottom: 5rem;
 `;
+
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })``;
