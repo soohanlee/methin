@@ -8,7 +8,7 @@ import BasicTable from 'pages/Admin/components/Table/Table';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 import OrderSheetModal from './OrderSheetModal';
-import AdressModifyModal from './AdressModifyModal';
+import AdressModifyModal from './AddressModifyModal';
 import SaleCancelModal from './SaleCancelModal';
 
 const Container = styled.div`
