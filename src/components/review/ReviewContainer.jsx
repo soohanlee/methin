@@ -94,7 +94,7 @@ const UserID = styled.div`
   margin-left: 3rem;
 `;
 
-const ReviewContainer = ({ reviewCount }) => {
+const ReviewContainer = ({ reviewCount, list }) => {
   return (
     <Container>
       <BorderTitleContainer
@@ -105,28 +105,33 @@ const ReviewContainer = ({ reviewCount }) => {
           <Label>상품을 구매한 다른 사람들의 평가를 확인하세요.</Label>
           <SubButton>리뷰쓰기</SubButton>
         </Header>
-        <ItemContainer>
-          <ItemBorderContainer>
-            <ProductInfoContainer>
-              <StarContainer>
-                <Star />
-                <UserID>CADSA*****</UserID>
-              </StarContainer>
-              <DateContainer>
-                <Label>2021.12.17</Label>
-                <Label>구매옵션: 리코타 치즈 샐러드</Label>
-              </DateContainer>
-              <ReviewCommentContainer>
-                너무 맛있게 잘 먹고 있어요. 운동하려고 먹는건데 이렇게 맛있게
-                먹어도 되나 싶을 정도로 정말 맛있습니다.
-              </ReviewCommentContainer>
-            </ProductInfoContainer>
+        {list.length === 0 ? (
+          '리뷰를 남겨주세요.'
+        ) : (
+          <ItemContainer>
+            <ItemBorderContainer>
+              <ProductInfoContainer>
+                <StarContainer>
+                  <Star />
+                  <UserID>CADSA*****</UserID>
+                </StarContainer>
+                <DateContainer>
+                  <Label>2021.12.17</Label>
+                  <Label>구매옵션: 리코타 치즈 샐러드</Label>
+                </DateContainer>
+                <ReviewCommentContainer>
+                  너무 맛있게 잘 먹고 있어요. 운동하려고 먹는건데 이렇게 맛있게
+                  먹어도 되나 싶을 정도로 정말 맛있습니다.
+                </ReviewCommentContainer>
+              </ProductInfoContainer>
 
-            <ImgContainer>
-              <Img src="/assets/images/60-px-review-img.png" />
-            </ImgContainer>
-          </ItemBorderContainer>
-        </ItemContainer>
+              <ImgContainer>
+                <Img src="/assets/images/60-px-review-img.png" />
+              </ImgContainer>
+            </ItemBorderContainer>
+          </ItemContainer>
+        )}
+
         <PaginationContainer>
           <Pagination />
         </PaginationContainer>

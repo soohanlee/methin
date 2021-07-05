@@ -128,8 +128,11 @@ const Navigation = () => {
     history.push(`${ROUTE_PATH.main}`);
   };
 
-  const handleMovePage = (path) => {
-    history.push(`${path}`);
+  const handleMovePage = (path, menuId) => {
+    history.push({
+      pathname: `${path}`,
+      state: menuId,
+    });
   };
 
   const handleLogout = async () => {
@@ -244,7 +247,7 @@ const Navigation = () => {
         </Container>
         <MenuContainer>
           <MenuItem>전체보기</MenuItem>
-          <MenuItem onClick={() => handleMovePage(ROUTE_PATH.product)}>
+          <MenuItem onClick={() => handleMovePage(ROUTE_PATH.product, 1)}>
             신상품
           </MenuItem>
           <MenuItem>베스트</MenuItem>

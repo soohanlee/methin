@@ -81,6 +81,7 @@ const Main = () => {
             salePercentage={salePercentage}
             span={4}
             onClick={() => handleProductDetailClick(id)}
+            won
           />
         );
       },
