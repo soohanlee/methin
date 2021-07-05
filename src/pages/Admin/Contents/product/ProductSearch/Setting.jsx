@@ -182,7 +182,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
   const [startDateState, setStartDateState] = useState(''); //상품 등록 시작일
   const [endDateState, setEndDateState] = useState(''); //상품 등록 정지일
   const renderDateTerm = () => {
-    const periodBtnClick = (value) => {
+    const handlePeriodBtnClick = (value) => {
       setPeriodBtnState(value);
     };
 
@@ -202,7 +202,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
             width="8rem"
             height="4rem"
             onClick={() => {
-              periodBtnClick('day');
+              handlePeriodBtnClick('day');
             }}
           />
           <BasicButtonStyled
@@ -210,7 +210,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
             width="8rem"
             height="4rem"
             onClick={() => {
-              periodBtnClick('week');
+              handlePeriodBtnClick('week');
             }}
           />
           <BasicButtonStyled
@@ -218,7 +218,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
             width="8rem"
             height="4rem"
             onClick={() => {
-              periodBtnClick('month');
+              handlePeriodBtnClick('month');
             }}
           />
           <BasicButtonStyled
@@ -226,7 +226,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
             width="8rem"
             height="4rem"
             onClick={() => {
-              periodBtnClick('threeMonth');
+              handlePeriodBtnClick('threeMonth');
             }}
           />
           <BasicButtonStyled
@@ -234,7 +234,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
             width="8rem"
             height="4rem"
             onClick={() => {
-              periodBtnClick('sixMonth');
+              handlePeriodBtnClick('sixMonth');
             }}
           />
           <BasicButtonStyled
@@ -242,7 +242,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
             width="8rem"
             height="4rem"
             onClick={() => {
-              periodBtnClick('year');
+              handlePeriodBtnClick('year');
             }}
           />
           <BasicDatePickerStyled
