@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getUserProductDetail } from 'apis/product';
+
 import Modalbase from 'components/ModalBase';
 import { MainButton, SubButton } from 'components/styled/Button';
 
@@ -67,7 +69,22 @@ const CartModal = ({
   onClickCartButton,
   productId,
 }) => {
-  const [count, setCount] = useState(0);
+  const [product, setProduct] = useState();
+  const [count, setCount] = useState(1);
+
+  const getProduct = useCallback(async () => {
+    const result = await getUserProductDetail(productId);
+    if (result.status === 200) {
+      setProduct(result.data.data);
+    }
+    console.log('reslut', result);
+  }, [productId]);
+
+  useEffect(() => {
+    if (productId) {
+      getProduct();
+    }
+  }, [productId, getProduct]);
 
   const handleMinus = () => {
     if (count === 0 || count < 1) {
@@ -77,31 +94,40 @@ const CartModal = ({
     }
   };
 
-  return (
-    <Modalbase isOpen={isOpen} onCancel={onCancel}>
-      <Container>
-        <Name>[양포어장] 당일손질 생물 오징어</Name>
-        <PriceContainer>
-          <Price>{price}</Price>
-          <CountContainer>
-            <Box onClick={handleMinus}>-</Box>
-            <Box>{count}</Box>
-            <Box onClick={() => setCount((prev) => prev + 1)}>+</Box>
-          </CountContainer>
-        </PriceContainer>
-        <SumContainer>
-          <Sum>{price * count}</Sum>
-          <Won>원</Won>
-        </SumContainer>
-      </Container>
-      <ButtonContainer>
-        <SubButton onClick={onCancel}>취소</SubButton>
-        <MainButton onClick={() => onClickCartButton(productId, count)}>
-          장바구니 담기
-        </MainButton>
-      </ButtonContainer>
-    </Modalbase>
-  );
+  const handleCancel = () => {
+    setProduct();
+    onCancel();
+  };
+
+  if (!product) {
+    return '로딩중';
+  } else {
+    return (
+      <Modalbase isOpen={isOpen} onCancel={handleCancel}>
+        <Container>
+          <Name>{product.name}</Name>
+          <PriceContainer>
+            <Price>{product.actual_price}</Price>
+            <CountContainer>
+              <Box onClick={handleMinus}>-</Box>
+              <Box>{count}</Box>
+              <Box onClick={() => setCount((prev) => prev + 1)}>+</Box>
+            </CountContainer>
+          </PriceContainer>
+          <SumContainer>
+            <Sum>{parseInt(product.actual_price) * count}</Sum>
+            <Won>원</Won>
+          </SumContainer>
+        </Container>
+        <ButtonContainer>
+          <SubButton onClick={onCancel}>취소</SubButton>
+          <MainButton onClick={() => onClickCartButton(productId, count)}>
+            장바구니 담기
+          </MainButton>
+        </ButtonContainer>
+      </Modalbase>
+    );
+  }
 };
 
 export default CartModal;

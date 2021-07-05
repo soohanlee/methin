@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { Row as OriginRow } from 'antd';
 import { useHistory } from 'react-router';
@@ -16,6 +16,7 @@ import Selectbox from 'components/Form/Selectbox';
 import { PaddingContainer } from 'components/styled/Container';
 
 import CartModal from './modal/CartModal';
+import { getUserProductList } from 'apis/product';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -90,15 +91,34 @@ const Product = () => {
   const login = useContext(UserContext);
   const history = useHistory();
 
+  const menuId = history.location?.state;
+  const [productList, setProductList] = useState([]);
   const [selectedItem, setSelectedItem] = useState(selectList[0]);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [productId, setProductId] = useState('');
 
+  const getList = useCallback(async () => {
+    try {
+      const result = await getUserProductList(menuId);
+      setProductList(result.data.data.list);
+    } catch (e) {
+      if (e.response && e.response.status === 404) {
+        console.log('통신 실패');
+      }
+    }
+  }, [menuId]);
+
+  useEffect(() => {
+    if (menuId) {
+      getList();
+    }
+  }, [menuId, getList]);
+
   const renderFilterList = () => {
     return filterList.map(({ key, value, length }) => {
       return (
-        <FilterItemContainer>
-          <FilterLabel key={key}>{value}</FilterLabel>
+        <FilterItemContainer key={key}>
+          <FilterLabel>{value}</FilterLabel>
           <FilterLength>{length}</FilterLength>
         </FilterItemContainer>
       );
@@ -147,10 +167,10 @@ const Product = () => {
   };
 
   const renderProductList = () => {
-    if (productList.length === 0) {
+    if (mocuupProductList.length === 0) {
       return '상품이 없습니다.';
     } else {
-      return productList.map(
+      return mocuupProductList.map(
         ({
           id,
           img,
@@ -162,6 +182,7 @@ const Product = () => {
         }) => {
           return (
             <ProductItem
+              key={id}
               id={id}
               img={img}
               catergory={catergory}
@@ -173,6 +194,7 @@ const Product = () => {
               onCartClick={handleCartClick}
               onClick={() => handleProductDetailClick(id)}
               isShowImg
+              won={false}
             />
           );
         },
@@ -225,7 +247,7 @@ const filterList = [
   { key: 'test6', value: '저염수비드 무항생제', length: 21 },
 ];
 
-const productList = [
+const mocuupProductList = [
   {
     id: 13,
     img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',

@@ -82,7 +82,7 @@ export const getUserProductList = async (menu_id, data) => {
   //   - **menu_id: number ⇒ 메뉴ID**
   // - offset: number (default: 0, optional) ⇒ 페이지 번호
   // - limit: number (default: 16, optional) ⇒ 페이지별 개수
-  return await axios.get(`${userProductUrl}/menu_id=${menu_id}`, data);
+  return await axios.get(`${userProductUrl}?menu_id=${menu_id}`, data);
 };
 
 export const getUserProductDetail = async (id) => {

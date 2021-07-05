@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { ROUTE_PATH } from 'configs/config';
 import { useHistory, useParams } from 'react-router';
 
 import { addCartItem } from 'apis/cart';
+import { getUserProductDetail, getProductReviewDetail } from 'apis/product';
 import { addCartListToCookies } from 'utils/common';
 import { notification } from 'utils/notification';
 
@@ -12,7 +13,7 @@ import { UserContext, LOGGED_IN } from 'store/user-context';
 import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import { PaddingContainer } from 'components/styled/Container';
 import { MainButton } from 'components/styled/Button';
-import RelatedProducts from 'pages/product-detail/RelatedProducts';
+// import RelatedProducts from 'pages/product-detail/RelatedProducts';
 import OriginDescriptions from 'components/Descriptions';
 import ReviewContainer from 'components/review/ReviewContainer';
 import MobileProductDetail from './mobile';
@@ -34,6 +35,7 @@ const ProductInfoContainer = styled.div`
 
 const MainImgContainer = styled.div`
   max-width: 42rem;
+  min-width: 42rem;
   margin-right: 5rem;
 `;
 
@@ -152,7 +154,40 @@ const ProductDetail = () => {
   const history = useHistory();
   const login = useContext(UserContext);
   const params = useParams();
+  const numberProductId = parseInt(params?.id);
   const [productCount, setProductCount] = useState(1);
+  const [productDetail, setProdcutDetail] = useState({});
+  const [productReviewList, setProductReviewList] = useState([]);
+
+  const getProductDetatil = useCallback(async () => {
+    const result = await getUserProductDetail(numberProductId);
+    console.log(result);
+    if (result && result.data && result.status === 200) {
+      setProdcutDetail(result.data.data);
+    } else {
+      notification.error('통신 성공');
+    }
+  }, [numberProductId]);
+
+  const getProductReview = useCallback(async () => {
+    const result = await getProductReviewDetail(numberProductId);
+    console.log(result);
+    if (result.message === 'success') {
+      setProductReviewList(result.data.list);
+    }
+  }, [numberProductId]);
+
+  useEffect(() => {
+    if (numberProductId) {
+      getProductDetatil();
+    }
+  }, [getProductDetatil, numberProductId]);
+
+  useEffect(() => {
+    if (numberProductId) {
+      getProductReview();
+    }
+  }, [getProductReview, numberProductId]);
 
   const handleMovePage = (path) => {
     if (path === ROUTE_PATH.order) {
@@ -168,7 +203,6 @@ const ProductDetail = () => {
   };
 
   const handleAddCartList = async () => {
-    const numberProductId = parseInt(params.id);
     const data = {
       product_id: numberProductId,
       count: productCount,
@@ -188,82 +222,93 @@ const ProductDetail = () => {
     }
   };
 
-  return (
-    <ResponsiveTemplate NonPCContents={<MobileProductDetail />}>
-      <Container>
-        <ProductInfoContainer>
-          <MainImgContainer>
-            <MainImg
-              src={process.env.PUBLIC_URL + '/assets/images/detailspage.jpg'}
-            />
-          </MainImgContainer>
+  console.log(productDetail);
 
-          <TextInfoContainer>
-            <ProductCategory>샐러드-채식</ProductCategory>
-            <ProductName>
-              인기 샐러드 간편식 도시락 모음전 [닭가슴살 / 그릭미스]
-            </ProductName>
-            <PriceContainer>
-              <SalePercentage>15%</SalePercentage>
-              <AfterPrice>12,800원</AfterPrice>
-              <BeforePrice>19,000</BeforePrice>
-            </PriceContainer>
-            <Border />
-            <ProductInfoTitle>상품 정보</ProductInfoTitle>
-            <ProductSubInfoContainer>
-              <ProductSubTitle info>중량/용량</ProductSubTitle>
-              <ProductSubTitle>200g</ProductSubTitle>
-            </ProductSubInfoContainer>
+  if (!productDetail && !productDetail.id) {
+    return '로딩중';
+  } else {
+    return (
+      <ResponsiveTemplate NonPCContents={<MobileProductDetail />}>
+        <Container key={productDetail.id}>
+          <ProductInfoContainer>
+            <MainImgContainer>
+              <MainImg src={productDetail.main_image_url} />
+            </MainImgContainer>
 
-            <ProductSubInfoContainer>
-              <ProductSubTitle info>알레르기 정보</ProductSubTitle>
-              <ProductSubTitle>달고기 토마토 난류 대두 잣 함유</ProductSubTitle>
-            </ProductSubInfoContainer>
-            <ProductSubInfoContainer>
-              <ProductSubTitle info>유통기한</ProductSubTitle>
-              <ProductSubTitle>수령일 포함 최소 3일</ProductSubTitle>
-            </ProductSubInfoContainer>
-            <Border />
-            <ProductInfoTitle>배송 정보</ProductInfoTitle>
+            <TextInfoContainer>
+              <ProductCategory>샐러드-채식</ProductCategory>
+              <ProductName>{productDetail.name}</ProductName>
+              <PriceContainer>
+                {productDetail.discount_amount && (
+                  <SalePercentage>
+                    {productDetail.discount_amount}%
+                  </SalePercentage>
+                )}
 
-            <ProductSubInfoContainer>
-              <ProductSubTitle info>배송구분</ProductSubTitle>
-              <ProductSubTitle>일반배송</ProductSubTitle>
-            </ProductSubInfoContainer>
-            <ProductSubInfoContainer>
-              <ProductSubTitle info>포장타입</ProductSubTitle>
-              <ProductSubTitle>냉장 종이포장</ProductSubTitle>
-            </ProductSubInfoContainer>
-            <Border />
-            <ProductSubInfoContainer>
-              <ProductSubTitle info>상품선택</ProductSubTitle>
-              상품선택 옵션 필요
-            </ProductSubInfoContainer>
-            <CountContainer>
-              <CountButton>-</CountButton>
-              <CountDiv>1</CountDiv>
-              <CountButton>+</CountButton>
-            </CountContainer>
-            <ButtonContainer>
-              <MainButton reverse onClick={handleAddCartList}>
-                장바구니
-              </MainButton>
-              <MainButton onClick={() => handleMovePage(ROUTE_PATH.order)}>
-                구매하기
-              </MainButton>
-            </ButtonContainer>
-          </TextInfoContainer>
-        </ProductInfoContainer>
-        <Border />
+                <AfterPrice>{productDetail.actual_price}원</AfterPrice>
+                <BeforePrice>{productDetail.price}</BeforePrice>
+              </PriceContainer>
+              <Border />
+              <ProductInfoTitle>상품 정보</ProductInfoTitle>
+              <ProductSubInfoContainer>
+                <ProductSubTitle info>중량/용량</ProductSubTitle>
+                <ProductSubTitle>200g</ProductSubTitle>
+              </ProductSubInfoContainer>
 
-        <RelatedProducts list={[{}, {}]} />
-        <Descriptions />
+              <ProductSubInfoContainer>
+                <ProductSubTitle info>알레르기 정보</ProductSubTitle>
+                <ProductSubTitle>
+                  달고기 토마토 난류 대두 잣 함유
+                </ProductSubTitle>
+              </ProductSubInfoContainer>
+              <ProductSubInfoContainer>
+                <ProductSubTitle info>유통기한</ProductSubTitle>
+                <ProductSubTitle>수령일 포함 최소 3일</ProductSubTitle>
+              </ProductSubInfoContainer>
+              <Border />
+              <ProductInfoTitle>배송 정보</ProductInfoTitle>
 
-        <ReviewContainer count={224} />
-        <QNAContainer />
-      </Container>
-    </ResponsiveTemplate>
-  );
+              <ProductSubInfoContainer>
+                <ProductSubTitle info>배송구분</ProductSubTitle>
+                <ProductSubTitle>
+                  {productDetail.ship_attr === 0 ? '일반배송' : '오늘출발'}
+                </ProductSubTitle>
+              </ProductSubInfoContainer>
+              <ProductSubInfoContainer>
+                <ProductSubTitle info>포장타입</ProductSubTitle>
+                <ProductSubTitle>냉장 종이포장</ProductSubTitle>
+              </ProductSubInfoContainer>
+              <Border />
+              <ProductSubInfoContainer>
+                <ProductSubTitle info>상품선택</ProductSubTitle>
+                상품선택 옵션 필요
+              </ProductSubInfoContainer>
+              <CountContainer>
+                <CountButton>-</CountButton>
+                <CountDiv>1</CountDiv>
+                <CountButton>+</CountButton>
+              </CountContainer>
+              <ButtonContainer>
+                <MainButton reverse onClick={handleAddCartList}>
+                  장바구니
+                </MainButton>
+                <MainButton onClick={() => handleMovePage(ROUTE_PATH.order)}>
+                  구매하기
+                </MainButton>
+              </ButtonContainer>
+            </TextInfoContainer>
+          </ProductInfoContainer>
+          <Border />
+
+          {/* <RelatedProducts list={[{}, {}]} /> */}
+          <Descriptions />
+
+          <ReviewContainer count={224} list={productReviewList} />
+          <QNAContainer />
+        </Container>
+      </ResponsiveTemplate>
+    );
+  }
 };
 
 export default ProductDetail;

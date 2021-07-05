@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Label } from 'components/styled/Form';
 import { BreakPoint } from 'configs/config';
+import { changeNumberDigits } from 'utils/common';
 
 const Container = styled.div`
   display: flex;
@@ -142,6 +143,7 @@ const ProductItem = ({
   onCartClick,
   onClick,
   isShowImg,
+  won,
 }) => {
   return (
     <Container className={className} key={id} onClick={onClick}>
@@ -160,10 +162,13 @@ const ProductItem = ({
         <DescripitonLabel>{description}</DescripitonLabel>
         <PriceContainer>
           <PriceWrap>
-            <AfterPrice>{afterPrice}</AfterPrice>
-            <BeforePrice>{beforePrice}</BeforePrice>
+            <AfterPrice>{changeNumberDigits(afterPrice)}</AfterPrice>
+            <BeforePrice>{changeNumberDigits(beforePrice)}</BeforePrice>
           </PriceWrap>
-          <SalePercentage>{salePercentage}</SalePercentage>
+          <SalePercentage>
+            {changeNumberDigits(salePercentage)}
+            {won ? '원' : '%'}
+          </SalePercentage>
         </PriceContainer>
         <TagContainer>
           <Tag>무료배송</Tag>
