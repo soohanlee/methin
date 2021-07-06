@@ -36,6 +36,7 @@ export const LightTheme = Object.freeze({
   // TRIGGER_OFF: '#b5b6be',
 
   LINE: '#efefef',
+  BOLDLINE: '#d9d9d9',
   BORDER: '#c8c8c8',
   SCROLL: '#8b8d99',
 

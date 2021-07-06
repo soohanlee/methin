@@ -4,7 +4,11 @@ import { ROUTE_PATH } from 'configs/config';
 import { useHistory, useParams } from 'react-router';
 
 import { addCartItem } from 'apis/cart';
-import { getUserProductDetail, getProductReviewDetail } from 'apis/product';
+import {
+  getUserProductDetail,
+  getProductReviewDetail,
+  getProductDetailQNA,
+} from 'apis/product';
 import { addCartListToCookies } from 'utils/common';
 import { notification } from 'utils/notification';
 
@@ -18,6 +22,7 @@ import OriginDescriptions from 'components/Descriptions';
 import ReviewContainer from 'components/review/ReviewContainer';
 import MobileProductDetail from './mobile';
 import QNAContainer from 'components/QNA/QNAContainer';
+import QnaModal from './Modal/QnaModal';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -153,17 +158,22 @@ const Descriptions = styled(OriginDescriptions)`
 const ProductDetail = () => {
   const history = useHistory();
   const login = useContext(UserContext);
+  console.log('history', history);
   const params = useParams();
   const numberProductId = parseInt(params?.id);
   const [productCount, setProductCount] = useState(1);
   const [productDetail, setProdcutDetail] = useState({});
-  const [productReviewList, setProductReviewList] = useState([]);
+  const [productReview, setProductReview] = useState({ list: [], count: 0 });
+  const [productQna, setProductQna] = useState({ list: [], count: 0 });
+
+  const [isOpenQnaModal, setIsOpenQnaModal] = useState(false);
 
   const getProductDetatil = useCallback(async () => {
     const result = await getUserProductDetail(numberProductId);
-    console.log(result);
+
     if (result && result.data && result.status === 200) {
       setProdcutDetail(result.data.data);
+      setProductCount(result.data.count);
     } else {
       notification.error('통신 성공');
     }
@@ -173,7 +183,15 @@ const ProductDetail = () => {
     const result = await getProductReviewDetail(numberProductId);
     console.log(result);
     if (result.message === 'success') {
-      setProductReviewList(result.data.list);
+      setProductReview(result.data.data);
+    }
+  }, [numberProductId]);
+
+  const getProductQna = useCallback(async () => {
+    const result = await getProductDetailQNA(numberProductId);
+    console.log(result);
+    if (result.status === 200) {
+      setProductQna(result.data.data);
     }
   }, [numberProductId]);
 
@@ -188,6 +206,12 @@ const ProductDetail = () => {
       getProductReview();
     }
   }, [getProductReview, numberProductId]);
+
+  useEffect(() => {
+    if (numberProductId) {
+      getProductQna();
+    }
+  }, [getProductQna, numberProductId]);
 
   const handleMovePage = (path) => {
     if (path === ROUTE_PATH.order) {
@@ -222,8 +246,27 @@ const ProductDetail = () => {
     }
   };
 
-  console.log(productDetail);
+  const handleClickQnaButtonClick = () => {
+    if (login.loginState !== LOGGED_IN) {
+      if (!alert('로그인 후 이용가능합니다.')) {
+        history.push({
+          pathname: ROUTE_PATH.login,
+          state: {
+            from: history.location.pathname,
+          },
+        });
+      }
+    } else {
+      setIsOpenQnaModal(true);
+    }
+  };
 
+  const handleCancelQnaButton = () => {
+    setIsOpenQnaModal(false);
+  };
+
+  console.log(productDetail);
+  console.log(productQna, 'productQna');
   if (!productDetail && !productDetail.id) {
     return '로딩중';
   } else {
@@ -303,8 +346,22 @@ const ProductDetail = () => {
           {/* <RelatedProducts list={[{}, {}]} /> */}
           <Descriptions />
 
-          <ReviewContainer count={224} list={productReviewList} />
-          <QNAContainer />
+          <ReviewContainer
+            count={productReview.count}
+            list={productReview.list}
+          />
+          <QNAContainer
+            onClickQnaButtonClick={handleClickQnaButtonClick}
+            count={productQna.count}
+            list={productQna.list}
+          />
+          <QnaModal
+            productId={productDetail.id}
+            categoryTitle={productDetail.name}
+            isOpen={isOpenQnaModal}
+            onCancel={handleCancelQnaButton}
+            isSecret
+          />
         </Container>
       </ResponsiveTemplate>
     );

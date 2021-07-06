@@ -33,16 +33,24 @@ const InputContainer = styled.div`
   display: flex;
 `;
 
-const EditorForm = ({ categoryTitle, title, description, isSecret }) => {
+const EditorForm = ({
+  categoryTitle,
+  title,
+  description,
+  isSecret,
+  setTitle,
+  setDesc,
+}) => {
   return (
     <Container>
       <Title>{categoryTitle}</Title>
       <InputContainer>
         <subTitle>제목</subTitle>
         <Input
+          name="title"
           placeholder="제목을 입력해주세요."
           value={title}
-          onChange={handleChange}
+          onChange={(e) => setTitle(e.target.value)}
           type="text"
         />
       </InputContainer>
@@ -50,9 +58,10 @@ const EditorForm = ({ categoryTitle, title, description, isSecret }) => {
       <InputContainer>
         <subTitle>내용</subTitle>
         <TextArea
+          name="desc"
           placeholder="내용을 작성해주세요."
           value={description}
-          onChange={handleChange}
+          onChange={(e) => setDesc(e.target.value)}
         />
       </InputContainer>
       {isSecret && (

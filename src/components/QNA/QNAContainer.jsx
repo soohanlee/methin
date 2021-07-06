@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Pagination from 'components/Pagination';
+import QnaCollapse from './QnaCollapse';
+
 import { Label as OriginLabel } from 'components/styled/Form';
 import { SubButton as OriginSubButton } from 'components/styled/Button';
 import BorderTitleContainer from 'components/container/BorderTitleContainer';
@@ -20,22 +22,18 @@ const Count = styled.div`
 `;
 
 const Header = styled.div`
+  padding-top: 2rem;
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
   margin-top: 1rem;
-  margin-bottom: 1rem;
-  font-size: 1.4rem;
+  padding-bottom: 3rem;
+  border-bottom: 0.1rem solid ${(props) => props.theme.BOLDLINE};
 `;
 
 const Label = styled(OriginLabel)`
   font-size: 1.5rem;
-`;
-
-const RightBorder = styled.div`
-  border-right: 0.1rem solid ${(props) => props.theme.LINE};
-  margin: 0 1rem;
-  height: 1.5rem;
+  color: ${(props) => props.theme.TEXT_INFORMATION};
 `;
 
 const SubButton = styled(OriginSubButton)`
@@ -49,70 +47,76 @@ const ItemContainer = styled.div`
   flex-direction: column;
 `;
 
-const ItemBorderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  > div {
-    padding: 4rem 0;
-  }
-  &:first-child {
-    border-top: 0.1rem solid ${(props) => props.theme.LINE};
-  }
-  border-bottom: 0.1rem solid ${(props) => props.theme.LINE};
-`;
+const mockUpList = [
+  {
+    id: 7, // 문의ID
+    user_id: 19, // 유저ID
+    question_title: '상품질문', // 질문 제목
+    question_body: '123123', // 질문 내용
+    created_at: '2021-06-19T14:00:16.000Z', // 질문 생성일
+    answer_title: null, // 답변 제목
+    answer_body: null, // 답변 내용
+    answer_registed: null, // 답변 등록일
+    nickname: '이우섭', // 유저 닉네임
+  },
+  {
+    id: 8,
+    user_id: 19,
+    question_title: '상품질문',
+    question_body: '123123',
+    created_at: '2021-06-19T14:01:16.000Z',
+    answer_title: '123123',
+    answer_body: '2435345',
+    answer_registed: '2021-06-19T14:02:43.000Z',
+    nickname: '이우섭',
+  },
+];
 
-const CategoryLabel = styled.div`
-  min-width: 10rem;
-`;
+const QNAContainer = ({ qnaCount, list, onClickQnaButtonClick }) => {
+  const renderQnaList = () => {
+    if (!list && list.length === 0) {
+      return '질문이 없습니다.';
+    } else {
+      return list.map(
+        ({
+          id,
+          question_title,
+          question_body,
+          created_at,
+          answer_title,
+          answer_body,
+          answer_registed,
+          nickname,
+        }) => {
+          return (
+            <ItemContainer key={id}>
+              <QnaCollapse
+                question_title={question_title}
+                question_body={question_body}
+                created_at={created_at}
+                answer_title={answer_title}
+                answer_body={answer_body}
+                answer_registed={answer_registed}
+                nickname={nickname}
+              />
+            </ItemContainer>
+          );
+        },
+      );
+    }
+  };
 
-const DescriptionLabel = styled.div`
-  min-width: 50rem;
-  width: 100%;
-`;
-
-const AnswerLabel = styled.div`
-  min-width: 10rem;
-  text-align: center;
-`;
-
-const UserIDLabel = styled.div`
-  min-width: 10rem;
-  text-align: center;
-`;
-
-const DateLabel = styled.div`
-  min-width: 10rem;
-  text-align: center;
-`;
-
-const QNAContainer = ({ reviewCount }) => {
   return (
     <Container>
       <BorderTitleContainer
         title={'상품 Q&A'}
-        titleDesc={<Count>{reviewCount}</Count>}
+        titleDesc={<Count>{qnaCount}</Count>}
       >
         <Header>
-          <Label hightlight>전체</Label>
-          <RightBorder />
-          <Label grey>상품문의</Label>
-          <RightBorder />
-          <Label grey>재입고 문의</Label>
-          <RightBorder />
-          <Label grey>배송 문의</Label>
-          <RightBorder />
-          <Label grey>기타</Label>
+          <Label>궁금한게 있으면 언제든지 물어보세요.</Label>
+          <SubButton onClick={onClickQnaButtonClick}>문의하기</SubButton>
         </Header>
-        <ItemContainer>
-          <ItemBorderContainer>
-            <CategoryLabel>상품 문의</CategoryLabel>
-            <DescriptionLabel>새우 펜네 파스타 샐러드 문의</DescriptionLabel>
-            <AnswerLabel>답변완료</AnswerLabel>
-            <UserIDLabel>userid</UserIDLabel>
-            <DateLabel>21021.12.17</DateLabel>
-          </ItemBorderContainer>
-        </ItemContainer>
+        {renderQnaList()}
         <PaginationContainer>
           <Pagination />
         </PaginationContainer>
