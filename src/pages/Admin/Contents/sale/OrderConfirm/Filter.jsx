@@ -36,7 +36,7 @@ const Filter = ({ getApiDeliveryData }) => {
   const [startDateState, setStartDateState] = useState(''); //시작날짜
   const [endDateState, setEndDateState] = useState(''); //종료날짜
   const [detailTypeState, setDetailTypeState] = useState(''); //상세조건 타입
-  const detailInputState = useRef(); //상세조건 인풋
+  const detailInputRef = useRef(); //상세조건 인풋
   const [orderState, setOrderState] = useState(''); //주문상태타입
   const [order2State, setOrder2State] = useState(''); //주문상태타입2
   const [deliveryTypeState, setDeliveryTypeState] = useState(''); //배송방법타입
@@ -87,6 +87,8 @@ const Filter = ({ getApiDeliveryData }) => {
     console.log(order2State);
     console.log(deliveryTypeState);
     console.log(paymentLocalState);
+    console.log(detailTypeState);
+    console.log(detailInputRef.current.state.value);
     getApiDeliveryData();
   };
 
@@ -112,7 +114,7 @@ const Filter = ({ getApiDeliveryData }) => {
       </LabelContents>
       <LabelContents title="상세조건">
         <SelectBox list={detailList} onChange={handledetailChange} />
-        <Input ref={detailInputState} />
+        <Input ref={detailInputRef} />
       </LabelContents>
 
       <LabelContents title="주문상태">

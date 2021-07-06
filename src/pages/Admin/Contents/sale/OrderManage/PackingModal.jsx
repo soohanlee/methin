@@ -1,21 +1,38 @@
+import { useRef, useState } from 'react';
 import { Modal, Table } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
+const SelectBoxContainer = styled.div`
+  display: flex;
+`;
 
+const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
+  width: 20rem;
+`;
 const PackingModal = (property) => {
-  const SelectBoxContainer = styled.div`
-    display: flex;
-  `;
+  const [packingType, setPackingType] = useState();
+  const [deliveryType, setDeliveryType] = useState();
+  const inputRef = useRef();
 
-  const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
-    width: 20rem;
-  `;
+  const handlePackingType = (value) => {
+    setPackingType(value);
+  };
 
-  const okClick = () => {
+  const handleDeliveryType = (value) => {
+    setDeliveryType(value);
+  };
+
+  const handleOkClick = () => {
     property.onOk();
+  };
+
+  const handleApplyClick = () => {
+    console.log(packingType);
+    console.log(deliveryType);
+    console.log(inputRef.current.state.value);
   };
 
   const columns = [
@@ -50,17 +67,27 @@ const PackingModal = (property) => {
         title={property.title}
         centered
         visible={property.visible}
-        onOk={okClick}
+        onOk={handleOkClick}
         onCancel={property.onCancel}
         width={1200}
         okText="일괄 발송처리"
         cancelText="취소"
       >
         <SelectBoxContainer>
-          <BasicSelectBox list={Category} />
-          <BasicSelectBox list={deliveryCategory} />
-          <BasicTextInputBoxStyled disabled />
-          <BasicButton label="선택건적용" />
+          <BasicSelectBox
+            list={Category}
+            onChange={(value) => {
+              handlePackingType(value);
+            }}
+          />
+          <BasicSelectBox
+            list={deliveryCategory}
+            onChange={(value) => {
+              handleDeliveryType(value);
+            }}
+          />
+          <BasicTextInputBoxStyled disabled ref={inputRef} />
+          <BasicButton onClick={handleApplyClick} label="선택건적용" />
         </SelectBoxContainer>
         <Table columns={columns} />
       </Modal>
