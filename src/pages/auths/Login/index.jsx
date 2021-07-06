@@ -100,7 +100,11 @@ const Login = () => {
 
   useEffect(() => {
     if (login.loginState === LOGGED_IN) {
-      history.push(`/main`);
+      if (history.location.state?.from) {
+        history.push(`${history.location.state.from}`);
+      } else {
+        history.push(ROUTE_PATH.main);
+      }
     }
   });
 

@@ -35,11 +35,6 @@ const Label = styled(OriginLabel)`
   color: ${(props) => props.theme.TEXT_INFORMATION};
 `;
 
-const Title = styled(Label)`
-  font-size: 2.3rem;
-  color: ${(props) => props.theme.TEXT_MAIN};
-`;
-
 const SubButton = styled(OriginSubButton)`
   width: 15rem;
   line-height: 3.5rem;
@@ -95,6 +90,40 @@ const UserID = styled.div`
 `;
 
 const ReviewContainer = ({ reviewCount, list }) => {
+  const renderReviewList = () => {
+    if (!list || list.length === 0) {
+      return '리뷰를 작성해주세요.';
+    } else {
+      return (
+        list &&
+        list.map((item) => {
+          return (
+            <ItemContainer key={item.id}>
+              <ItemBorderContainer>
+                <ProductInfoContainer>
+                  <StarContainer>
+                    <Star />
+                    {item.grade}
+                    <UserID>{item.product_id}</UserID>
+                  </StarContainer>
+                  <DateContainer>
+                    <Label>{item.created_at}</Label>
+                    <Label>구매옵션: 리코타 치즈 샐러드</Label>
+                  </DateContainer>
+                  <ReviewCommentContainer>{item.body}</ReviewCommentContainer>
+                </ProductInfoContainer>
+
+                <ImgContainer>
+                  <Img src="/assets/images/60-px-review-img.png" />
+                </ImgContainer>
+              </ItemBorderContainer>
+            </ItemContainer>
+          );
+        })
+      );
+    }
+  };
+
   return (
     <Container>
       <BorderTitleContainer
@@ -105,32 +134,7 @@ const ReviewContainer = ({ reviewCount, list }) => {
           <Label>상품을 구매한 다른 사람들의 평가를 확인하세요.</Label>
           <SubButton>리뷰쓰기</SubButton>
         </Header>
-        {list.length === 0 ? (
-          '리뷰를 남겨주세요.'
-        ) : (
-          <ItemContainer>
-            <ItemBorderContainer>
-              <ProductInfoContainer>
-                <StarContainer>
-                  <Star />
-                  <UserID>CADSA*****</UserID>
-                </StarContainer>
-                <DateContainer>
-                  <Label>2021.12.17</Label>
-                  <Label>구매옵션: 리코타 치즈 샐러드</Label>
-                </DateContainer>
-                <ReviewCommentContainer>
-                  너무 맛있게 잘 먹고 있어요. 운동하려고 먹는건데 이렇게 맛있게
-                  먹어도 되나 싶을 정도로 정말 맛있습니다.
-                </ReviewCommentContainer>
-              </ProductInfoContainer>
-
-              <ImgContainer>
-                <Img src="/assets/images/60-px-review-img.png" />
-              </ImgContainer>
-            </ItemBorderContainer>
-          </ItemContainer>
-        )}
+        {list.length === 0 ? '리뷰를 남겨주세요.' : renderReviewList()}
 
         <PaginationContainer>
           <Pagination />

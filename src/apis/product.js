@@ -96,3 +96,7 @@ export const getProductReviewDetail = async (id, data) => {
 export const getProductDetailQNA = async (id, data) => {
   return await axios.get(`${userProductUrl}/${id}/qna`, data);
 };
+
+export const registerUserProductQna = async (id, data) => {
+  return await axios.post(`${userProductUrl}/${id}/qna`, data);
+};
