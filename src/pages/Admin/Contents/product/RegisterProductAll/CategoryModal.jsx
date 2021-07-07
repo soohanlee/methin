@@ -46,7 +46,7 @@ const TitleTextStyled = styled.div`
 
 const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
   width: 58rem;
-  margin-right: 3rem;
+  margin-bottom : 1rem;
 `;
 
 const CategoryModal = ({ title, visible, setVisible, dataList }) => {
@@ -56,6 +56,9 @@ const CategoryModal = ({ title, visible, setVisible, dataList }) => {
   const [selectedFirstItemState, setSelectedFirstItemState] = useState('축산');
   const [selectdSecondItemState, setSelectedSecondItemState] = useState('축산');
   const dataKey = Object.keys(classificationdataState);
+
+  const [selectCategoryState,setSelectCategoryState] = useState();
+  const [selectCategoryCodeState,setSelectCategoryCodeState] = useState();
 
   useEffect(() => {
     setClassificationdataState(dataList);
@@ -85,6 +88,11 @@ const CategoryModal = ({ title, visible, setVisible, dataList }) => {
     setVisible(false);
   };
 
+  const handleSearchBtn = () =>{
+    setSelectCategoryState(categoryRef.current.state.value);
+    setSelectCategoryCodeState("Code??");
+  }
+
   const renderChangedTap = () => {
     switch (categoryTypeState) {
       case 0:
@@ -100,16 +108,16 @@ const CategoryModal = ({ title, visible, setVisible, dataList }) => {
     return (
       <>
         <_ContainerStyled>
-          <TitleTextStyled>카테고리명</TitleTextStyled>
-          <BasicTextInputBoxStyled ref={categoryRef}></BasicTextInputBoxStyled>
+          <BasicTextInputBoxStyled placeholder = "카테고리명 입력" ref={categoryRef}></BasicTextInputBoxStyled>
+          <BasicButton onClick = {handleSearchBtn} label = "검색"></BasicButton>
         </_ContainerStyled>
 
         <ContainerStyled>
-          <TitleTextStyled>선택한 카테고리 :</TitleTextStyled>
+          <TitleTextStyled>선택한 카테고리 : {selectCategoryState}</TitleTextStyled>
         </ContainerStyled>
 
         <ContainerStyled>
-          <TitleTextStyled>선택한 카테고리 코드 : </TitleTextStyled>
+          <TitleTextStyled>선택한 카테고리 코드 : {selectCategoryCodeState}</TitleTextStyled>
         </ContainerStyled>
       </>
     );
