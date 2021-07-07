@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { Modal, Table } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
@@ -5,8 +6,7 @@ import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicTextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
 
-const DirectExchangeModal = (property) => {
-  const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
+const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
     margin-left: ${(props) => props.left};
 
     width: 90rem;
@@ -28,7 +28,32 @@ const DirectExchangeModal = (property) => {
     margin-top: 1rem;
   `;
 
-  const okClick = () => {
+const DirectExchangeModal = (property) => {
+
+  const [tradeReasonTypeState,setTradeReasonTypeState] = useState();
+  const tradeReasonInputRef= useRef();
+  const [tradecollectionTypeState,setTradecollectionTypeState] = useState();
+  const [tradePostTypeState,setTradePostTypeState] = useState();
+  const tradePostcodeInputRef= useRef();
+
+  const handleTradeReasonType=(value)=>{
+    setTradeReasonTypeState(value);
+  }
+
+  const handleTradecollectionType=(value)=>{
+    setTradecollectionTypeState(value);
+  }
+
+  const handleTradePostType=(value)=>{
+    setTradePostTypeState(value);
+  }
+
+  const handleOkClick = () => {
+    console.log(tradeReasonTypeState);
+    console.log(tradeReasonInputRef.current.resizableTextArea.props.value);
+    console.log(tradecollectionTypeState);
+    console.log(tradePostTypeState);
+    console.log(tradePostcodeInputRef.current.state.value);
     property.onOk();
   };
 
@@ -53,7 +78,7 @@ const DirectExchangeModal = (property) => {
         title={property.title}
         centered
         visible={property.visible}
-        onOk={okClick}
+        onOk={handleOkClick}
         onCancel={property.onCancel}
         width={1200}
         okText="교환접수"
@@ -62,26 +87,26 @@ const DirectExchangeModal = (property) => {
         <Table columns={columns} />
         <SelectBoxLabelContainer>
           <div>교환 요청사유</div>
-          <BasicSelectBoxStyled left="8rem" list={ReasonSelect} />
+          <BasicSelectBoxStyled onChange = {(value)=>{handleTradeReasonType(value)}} left="8rem" list={ReasonSelect} />
         </SelectBoxLabelContainer>
 
         <SelectBoxLabelContainer>
           <div>교환 요청상세사유</div>
-          <BasicTextAreaBoxStyled />
+          <BasicTextAreaBoxStyled ref = {tradeReasonInputRef} />
         </SelectBoxLabelContainer>
 
         <SelectBoxLabelContainer>
           <div>교환 수거방법</div>
-          <BasicSelectBoxStyled left="8rem" list={companySelect} />
+          <BasicSelectBoxStyled onChange = {(value)=>{handleTradecollectionType(value)}} left="8rem" list={companySelect} />
         </SelectBoxLabelContainer>
 
         <SelectBoxLabelContainer>
           <div>교환 택배사</div>
-          <BasicSelectBoxStyled left="9.4rem" list={pickupWaySelect} />
+          <BasicSelectBoxStyled onChange = {(value)=>{handleTradePostType(value)}} left="9.4rem" list={pickupWaySelect} />
         </SelectBoxLabelContainer>
         <SelectBoxLabelContainer>
           <div>교환 송장번호</div>
-          <BasicTextInputBoxStyled left="7rem" />
+          <BasicTextInputBoxStyled ref = {tradePostcodeInputRef} left="7rem" />
         </SelectBoxLabelContainer>
       </Modal>
     </>
