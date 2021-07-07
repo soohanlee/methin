@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
+import { Radio} from 'antd';
 import { css } from 'styled-components';
 import BasicCheckBox from 'pages/Admin/components/Form/BasicCheckBox';
 import BasicTextArea from 'pages/Admin/components/Form/BasicTextArea';
@@ -127,22 +128,24 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
     );
   };
 
-  const allCheckRef = useRef(null); //전체체크
-  const saleNowCheckRef = useRef(null); //판매중 체크
-  const soldOutCheckRef = useRef(null); //품절 체크
-  const stopSaleCheckRef = useRef(null); //판매중지 체크
-  const endSaleCheckRef = useRef(null); //판매종료 체크
+  const [saleTypeCheckState,setSaleTypeCheckState] = useState();
+
+  const handleSaleStatus = (e)=>{
+    setSaleTypeCheckState(e.target.value);
+  }
 
   const renderSalesStatus = () => {
     return (
       <SalesStatusTapContainerStyled>
         <TitleTextStyled>판매상태</TitleTextStyled>
         <SubContainerStyled>
-          <BasicCheckBoxStyled label="전체" ref={allCheckRef} />
-          <BasicCheckBoxStyled label="판매중" ref={saleNowCheckRef} />
-          <BasicCheckBoxStyled label="품절" ref={soldOutCheckRef} />
-          <BasicCheckBoxStyled label="판매중지" ref={stopSaleCheckRef} />
-          <BasicCheckBoxStyled label="판매종료" ref={endSaleCheckRef} />
+        <Radio.Group onChange={handleSaleStatus} value={saleTypeCheckState}>
+          <Radio value={1}>전체</Radio>
+          <Radio value={2}>판매중</Radio>
+          <Radio value={3}>품절</Radio>
+          <Radio value={4}>판매중지</Radio>
+          <Radio value={5}>판매종료</Radio>
+        </Radio.Group>
         </SubContainerStyled>
       </SalesStatusTapContainerStyled>
     );
@@ -182,7 +185,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
   const [startDateState, setStartDateState] = useState(''); //상품 등록 시작일
   const [endDateState, setEndDateState] = useState(''); //상품 등록 정지일
   const renderDateTerm = () => {
-    const periodBtnClick = (value) => {
+    const handlePeriodBtnClick = (value) => {
       setPeriodBtnState(value);
     };
 
@@ -197,54 +200,18 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
               setPeriodCategorySelectState(e);
             }}
           />
-          <BasicButtonStyled
-            label="오늘"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('day');
-            }}
-          />
-          <BasicButtonStyled
-            label="1주일"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('week');
-            }}
-          />
-          <BasicButtonStyled
-            label="1개월"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('month');
-            }}
-          />
-          <BasicButtonStyled
-            label="3개월"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('threeMonth');
-            }}
-          />
-          <BasicButtonStyled
-            label="6개월"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('sixMonth');
-            }}
-          />
-          <BasicButtonStyled
-            label="1년"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('year');
-            }}
-          />
+
+            <Radio.Group
+              value={periodBtnState}
+              onChange={(e) => setPeriodBtnState(e.target.value)}
+            >
+              <Radio.Button value="today">오늘</Radio.Button>
+              <Radio.Button value="week">1주일</Radio.Button>
+              <Radio.Button value="month">1개월</Radio.Button>
+              <Radio.Button value="3month">3개월</Radio.Button>
+              <Radio.Button value="6month">6개월</Radio.Button>
+              <Radio.Button value="year">1년</Radio.Button>
+            </Radio.Group>
           <BasicDatePickerStyled
             onChange={(value) => {
               setStartDateState(value);
@@ -263,8 +230,22 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
 
   const searchBtn = useRef(null); //검색
   const renderSearchButton = () => {
-    //검색 값들어가야함
-    const setSearchBtn = (value) => {
+    const handleSearchBtn = (value) => {
+      //검색 값들어가야함
+
+      console.log('------ProductSearch--------');
+      console.log(productNumberRef.current.state.checked); //상품번호체크박스
+      console.log(productMultiSearchRef.current.resizableTextArea.props.value); //TextArea
+      console.log(productNameRef.current.state.value); //상품명
+      console.log(saleTypeCheckState); //판매상태
+      console.log(largeGroupState); //카테고리 드랍박스
+      console.log(middleGroupState); //카테고리 드랍박스
+      console.log(periodCategorySelectState); //기간 드랍박스
+      console.log(periodBtnState); //기간버튼
+      console.log(startDateState._d); //
+      console.log(endDateState._d);
+      console.log('------ProductSearch--------');
+
       if (value !== undefined) {
         getSearchProductData();
       } else {
@@ -272,7 +253,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
       }
     };
 
-    const setResetBtn = () => {
+    const handleResetBtn = () => {
       getApiProductData();
     };
 
@@ -287,7 +268,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
               type="primary"
               ref={searchBtn}
               margintop="5rem"
-              onClick={setSearchBtn}
+              onClick={handleSearchBtn}
             />
             <BasicButtonStyled
               label="초기화"
@@ -295,7 +276,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
               height="5rem"
               marginleft="2rem"
               margintop="5rem"
-              onClick={setResetBtn}
+              onClick={handleResetBtn}
             />
           </LineStyled>
         </SubContainerStyled>

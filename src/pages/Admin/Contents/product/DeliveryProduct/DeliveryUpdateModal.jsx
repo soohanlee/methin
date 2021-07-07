@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import 'antd/dist/antd.css';
 import { Modal, Radio } from 'antd';
 import styled from 'styled-components';
@@ -20,19 +21,39 @@ const ContentTitle = styled.div`
   margin-right: 3rem;
 `;
 
-const DeliveryUpdateModal = ({
-  visible,
-  setVisible,
-  onClick,
-  title = '배송비묶음그룹',
-  groupNamesRef,
-  setUseStatusState,
-  setCalculationWayState,
-  setAddPriceState,
-}) => {
-  const okClick = () => {
+const DeliveryUpdateModal = ({ visible, setVisible, title, onClick, type }) => {
+  //테이블데이터
+  const groupNamesRef = useRef(null);
+  const [useStatusState, setUseStatusState] = useState('');
+  const [calculationWayState, setCalculationWayState] = useState('');
+  const [addPriceState, setAddPriceState] = useState('');
+  let data;
+
+  const handleOkClick = () => {
     setVisible(false);
-    onClick();
+
+    switch (type) {
+      case 'modify':
+        data = {
+          body: groupNamesRef.current.state.value,
+          status: useStatusState,
+        };
+        break;
+      case 'add':
+        data = {
+          body: groupNamesRef.current.state.value,
+          amount1: 1000,
+          amount2: 2000,
+        };
+        break;
+      default:
+        break;
+    }
+    console.log(groupNamesRef.current.state.value); //묶음그룹명
+    console.log(useStatusState); //사용여부
+    console.log(calculationWayState); //계산방식
+    console.log(addPriceState); //제주 도서산간 비용
+    onClick(data);
   };
 
   const handleUseBtn = (e) => {
@@ -57,7 +78,7 @@ const DeliveryUpdateModal = ({
         title={title}
         centered
         visible={visible}
-        onOk={okClick}
+        onOk={handleOkClick}
         onCancel={() => {
           setVisible(false);
         }}

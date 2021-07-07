@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 import styled from 'styled-components';
 
@@ -93,12 +93,29 @@ const InquiryConditions = styled.div`
 
 // 발주 확인/발송관리
 const OrderDisturb = () => {
-  const registrationConditionsRef = useRef(null);
-  const disturbSalesRef = useRef(null);
+  const [registTypeState, setRegistTypeState] = useState(); //등록조건
+  const registTypeInputRef = useRef(); //등록조건인풋박스
+  const restrictionInputRef = useRef(); //제한사유인풋박스
+  const repeatedCheckBoxRef = useRef(); //반복구매
+  const violenceCheckBoxRef = useRef(); //언어폭력
+  const obstructionCheckBoxRef = useRef(); //영업방해
+  const etcCheckBoxRef = useRef(); //기타
+  const [searchTypeState, setSearchTypeState] = useState(); //조회조건 타입
+  const searchTypeInputRef = useRef(); //조회조건인풋
 
   const renderRegistertionConditions = () => {
+    const handleRegistType = (value) => {
+      setRegistTypeState(value);
+    };
+
     const handleRegistBtn = () => {
-      alert('등록');
+      console.log(registTypeState);
+      console.log(registTypeInputRef.current.state.value);
+      console.log(restrictionInputRef.current.state.value);
+      console.log(violenceCheckBoxRef.current.state.checked);
+      console.log(obstructionCheckBoxRef.current.state.checked);
+      console.log(repeatedCheckBoxRef.current.state.checked);
+      console.log(etcCheckBoxRef.current.state.checked);
     };
 
     return (
@@ -112,9 +129,12 @@ const OrderDisturb = () => {
                 list={ResisterTypeList}
                 width="15rem"
                 marginbottom="1rem"
+                onChange={(value) => {
+                  handleRegistType(value);
+                }}
               />
               <InputBox
-                ref={registrationConditionsRef}
+                ref={registTypeInputRef}
                 height="10rem"
                 marginbottom="1rem"
               />
@@ -125,13 +145,16 @@ const OrderDisturb = () => {
             <Title>제한사유</Title>
             <Content>
               <SelectCheckBox>
-                <BasicCheckBox label="구매의사 없는 반복구매" />
-                <BasicCheckBox label="언어폭력" />
-                <BasicCheckBox label="영업방해" />
-                <BasicCheckBox label="기타" />
+                <BasicCheckBox
+                  ref={repeatedCheckBoxRef}
+                  label="구매의사 없는 반복구매"
+                />
+                <BasicCheckBox ref={violenceCheckBoxRef} label="언어폭력" />
+                <BasicCheckBox ref={obstructionCheckBoxRef} label="영업방해" />
+                <BasicCheckBox ref={etcCheckBoxRef} label="기타" />
               </SelectCheckBox>
               <InputBox
-                ref={registrationConditionsRef}
+                ref={restrictionInputRef}
                 height="10rem"
                 marginbottom="1rem"
               />
@@ -152,17 +175,27 @@ const OrderDisturb = () => {
   };
 
   const handleSearchBtn = () => {
-    alert('조회하기');
+    console.log(searchTypeState);
+    console.log(searchTypeInputRef.current.state.value);
   };
   const renderDisturbSales = () => {
+    const handleSearchType = (value) => {
+      setSearchTypeState(value);
+    };
     return (
       <DisturbSalesBox>
         <div>판매방해 고객 리스트 [총 0건]</div>
         <InquiryConditionsBox>
           <InquiryConditions>
             <div>조회조건</div>
-            <SelectBox width="10rem" list={InquiryConditionsTypeList} />
-            <InputBox ref={disturbSalesRef} width="30rem" />
+            <SelectBox
+              onChange={(e) => {
+                handleSearchType(e);
+              }}
+              width="10rem"
+              list={InquiryConditionsTypeList}
+            />
+            <InputBox ref={searchTypeInputRef} width="30rem" />
             <BasicButtonStyled
               onClick={handleSearchBtn}
               label="조회하기"

@@ -47,28 +47,33 @@ const ItemWrap = styled.div`
 `;
 
 const Filter = ({ getApiNoticeData }) => {
-  const titleRef = useRef(null);
-  const [dateRangeState, setDateRangeState] = useState('today');
+  const [searchTypeState, setSearchTypeState] = useState(''); //검색어 드랍박스
+  const searchRef = useRef(''); //검색어 인풋
+  const [classificationState, setClassificationState] = useState(''); //분류 드랍박스
+  const [classification2State, setClassification2State] = useState(''); //전시상태 드랍박스
+  const [startDateState, setStarttDateState] = useState(''); //시작날짜
+  const [endDateState, setEndDateState] = useState(''); //끝날짜
+  const [dateRangeState, setDateRangeState] = useState('today'); //기간버튼
   const history = useHistory();
 
   const handleSearchNameChange = (value) => {
-    console.log('value', value);
+    setSearchTypeState(value);
   };
 
   const handleTypeListChange = (value) => {
-    console.log('value', value);
+    setClassificationState(value);
   };
 
   const handleDisplayChange = (value) => {
-    console.log('value', value);
+    setClassification2State(value);
   };
 
   const handleStartDateChange = (value) => {
-    console.log(value);
+    setStarttDateState(value);
   };
 
   const handleEndDateChange = (value) => {
-    console.log(value);
+    setEndDateState(value);
   };
 
   const handleRegisterNotice = () => {
@@ -76,6 +81,13 @@ const Filter = ({ getApiNoticeData }) => {
   };
 
   const handleSearchOnClick = () => {
+    console.log(searchTypeState);
+    console.log(searchRef.current.state.value);
+    console.log(classificationState);
+    console.log(classification2State);
+    console.log(dateRangeState);
+    console.log(startDateState._d);
+    console.log(endDateState._d);
     getApiNoticeData();
   };
   const handleResetOnClick = () => {
@@ -92,7 +104,7 @@ const Filter = ({ getApiNoticeData }) => {
           list={searchNameList}
           onChange={handleSearchNameChange}
         />
-        <Input ref={titleRef} placeholder={'제목을 입력하세요'} />
+        <Input ref={searchRef} placeholder={'제목을 입력하세요'} />
       </LabelContents>
       <LabelContents title="상세검색">
         <ItemContainer>
@@ -117,9 +129,17 @@ const Filter = ({ getApiNoticeData }) => {
             </Radio.Group>
           </ItemWrap>
           <ItemWrap>
-            <BasicDatePicker onChange={handleStartDateChange} />
+            <BasicDatePicker
+              onChange={(value) => {
+                handleStartDateChange(value);
+              }}
+            />
             {`　~　`}
-            <BasicDatePicker onChange={handleEndDateChange} />
+            <BasicDatePicker
+              onChange={(value) => {
+                handleEndDateChange(value);
+              }}
+            />
           </ItemWrap>
         </ItemContainer>
       </LabelContents>

@@ -31,14 +31,16 @@ const DeliveryProduct = () => {
     try {
       const result = await allDeliveryProduct(0);
       const count = result.data.data.count;
-      const maxOffset = Math.floor(result.data.data.count / limite) + 1;
+      const maxOffset = Math.floor(count / limite) + 1;
       let customList = [];
       for (let i = 0; i < maxOffset; i++) {
-        const _result = await getProductList(i);
+        const _result = await allDeliveryProduct(i);
         customList = customList.concat(_result.data.data.list);
       }
       setTableDataState(customList);
       setTableCountState(customList.length);
+      notification.success('검색성공');
+      console.log(customList);
     } catch (e) {
       notification.error('배송 정보를 가져오지 못했습니다.');
     }
@@ -49,7 +51,7 @@ const DeliveryProduct = () => {
       const result = await searchDeliveryProduct(id);
       const resultArray = [result.data.data];
       setTableDataState(resultArray);
-      notification.success('검색 성공');
+      notification.success('id검색 성공');
     } catch (e) {
       notification.error('배송 정보를 가져오지 못했습니다.');
     }
@@ -67,6 +69,7 @@ const DeliveryProduct = () => {
 
   const deleteDeliveryData = async (id) => {
     try {
+      console.log(id);
       await deleteDeliveryDetail(id);
       notification.success('삭제 성공');
       getApiDeliveryData();

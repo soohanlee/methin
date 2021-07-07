@@ -27,6 +27,7 @@ const NoticeManage = () => {
         customList = customList.concat(_result.data.data.list);
       }
       setTableDataState(customList);
+      console.log(customList)
     } catch (e) {
       notification.error('공지 정보를 가져오지 못했습니다.');
     }

@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { Modal, Table } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
@@ -12,7 +13,22 @@ const SelectBoxLabelContainer = styled.div`
 `;
 
 const ModifyInvoiceModal = (property) => {
-  const okClick = () => {
+
+  const [deliveryTypeState,setDeliveryTypeState] = useState();
+  const [deliveryType2State,setDeliveryType2State] = useState();
+  const deliveryTypeRef = useRef();
+
+  const handleDeliveryType=(value)=>{
+    setDeliveryTypeState(value)
+  }
+  const handleDeliveryType2=(value)=>{
+    setDeliveryType2State(value)
+  }
+
+  const handleOkClick = () => {
+    console.log(deliveryTypeState)
+    console.log(deliveryType2State)
+    console.log(deliveryTypeRef.current.state.value)
     property.onOk();
   };
 
@@ -37,16 +53,16 @@ const ModifyInvoiceModal = (property) => {
         title={property.title}
         centered
         visible={property.visible}
-        onOk={okClick}
+        onOk={handleOkClick}
         onCancel={property.onCancel}
         width={1200}
         okText="송장수정"
         cancelText="닫기"
       >
         <SelectBoxLabelContainer>
-          <BasicSelectBox list={waySelect} />
-          <BasicSelectBox list={companySelect} />
-          <BasicTextInputBox />
+          <BasicSelectBox onChange = {handleDeliveryType} list={waySelect} />
+          <BasicSelectBox onChange = {handleDeliveryType2} list={companySelect} />
+          <BasicTextInputBox ref = {deliveryTypeRef} />
         </SelectBoxLabelContainer>
         <Table columns={columns} />
       </Modal>

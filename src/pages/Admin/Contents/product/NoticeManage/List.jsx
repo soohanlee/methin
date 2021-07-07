@@ -51,9 +51,11 @@ const List = ({ tableData, getApiNoticeData }) => {
 
   //여러개 선택삭제
   const handleSelectDeleteBtn = () => {
+
     async function fetchAndSetUser(num) {
       try {
-        await deleteNotice(selectTableKeyState[num]);
+        await deleteNotice(num);
+        notification.success('상품삭제');
         getApiNoticeData();
       } catch (e) {
         notification.error('상품을 삭제하지 못했습니다.');
@@ -62,9 +64,11 @@ const List = ({ tableData, getApiNoticeData }) => {
 
     for (var i = 0; i < selectTableKeyState.length; i++) {
       if (i === selectTableKeyState.length - 1) {
-        fetchAndSetUser(i);
+        console.log(tableData[i].id)
+        fetchAndSetUser(tableData[i].id);
       } else {
-        deleteNotice(selectTableKeyState[i]);
+        console.log(tableData[i].id)
+        deleteNotice(tableData[i].id);
       }
     }
   };

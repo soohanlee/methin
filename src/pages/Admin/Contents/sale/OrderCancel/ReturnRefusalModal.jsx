@@ -1,27 +1,43 @@
+import { useRef, useState } from 'react';
 import { Modal } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
+    const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
+      margin-left: ${(props) => props.left};
+      width: 20rem;
+    `;
+    const BasicSelectBoxStyled = styled(BasicSelectBox)`
+      margin-left: ${(props) => props.left};
+      width: 20rem;
+    `;
 
+    const SelectBoxLabelContainer = styled.div`
+      display: flex;
+      align-items: center;
+      margin-left: ${(props) => props.left};
+      margin-top: 1rem;
+    `;
 const ReturnRefusalModal = (property) => {
-  const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
-    margin-left: ${(props) => props.left};
-    width: 20rem;
-  `;
-  const BasicSelectBoxStyled = styled(BasicSelectBox)`
-    margin-left: ${(props) => props.left};
-    width: 20rem;
-  `;
 
-  const SelectBoxLabelContainer = styled.div`
-    display: flex;
-    align-items: center;
-    margin-left: ${(props) => props.left};
-    margin-top: 1rem;
-  `;
 
-  const okClick = () => {
+const productShipDateInputRef = useRef();
+const [deliveryTypeState,setDeliveryTypeState] = useState();
+const [productShipInfoState,setproductInfoDateState] = useState();
+const productShipInfoInputRef = useRef();
+
+  const handleDeliveryType=(value)=>{
+    setDeliveryTypeState(value);
+  }
+const handleProductShipInfo=(value)=>{
+  setproductInfoDateState(value)
+  }
+  const handleOkClick = () => {
+    console.log(productShipDateInputRef.current.state.value)
+    console.log(deliveryTypeState)
+    console.log(productShipInfoState)
+    console.log(productShipInfoInputRef.current.state.value)
     property.onOk();
   };
 
@@ -31,7 +47,7 @@ const ReturnRefusalModal = (property) => {
         title={property.title}
         centered
         visible={property.visible}
-        onOk={okClick}
+        onOk={handleOkClick}
         onCancel={property.onCancel}
         width={700}
         okText="발송처리"
@@ -39,18 +55,18 @@ const ReturnRefusalModal = (property) => {
       >
         <SelectBoxLabelContainer>
           <div>상품 발송일</div>
-          <BasicTextInputBoxStyled left="8.5rem" />
+          <BasicTextInputBoxStyled ref = {productShipDateInputRef} left="8.5rem" />
         </SelectBoxLabelContainer>
 
         <SelectBoxLabelContainer>
           <div>배송방법 선택</div>
-          <BasicSelectBoxStyled left="8rem" list={WaySelect} />
+          <BasicSelectBoxStyled onChange = {handleDeliveryType} left="8rem" list={WaySelect} />
         </SelectBoxLabelContainer>
 
         <SelectBoxLabelContainer>
           <div>배송정보 입력</div>
-          <BasicSelectBoxStyled left="8rem" list={companySelect} />
-          <BasicTextInputBoxStyled />
+          <BasicSelectBoxStyled onChange = {handleProductShipInfo} left="8rem" list={companySelect} />
+          <BasicTextInputBoxStyled ref = {productShipInfoInputRef}/>
         </SelectBoxLabelContainer>
       </Modal>
     </>
