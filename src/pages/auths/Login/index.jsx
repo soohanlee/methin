@@ -100,6 +100,15 @@ const Login = () => {
 
   useEffect(() => {
     if (login.loginState === LOGGED_IN) {
+      if (history.location.state.purchase && history.location.state.productId) {
+        history.push({
+          pathname: history.location.state.to,
+          state: {
+            productId: history.location.state.productId,
+          },
+        });
+        return;
+      }
       if (history.location.state?.from) {
         history.push(`${history.location.state.from}`);
       } else {
@@ -143,12 +152,19 @@ const Login = () => {
   };
 
   const handleClickNoMember = () => {
-    history.push(ROUTE_PATH.order);
+    history.push({
+      pathname: ROUTE_PATH.order,
+      state: {
+        productId: history.location.state.productId,
+      },
+    });
   };
 
   const handleSearchProduct = () => {
     history.push(ROUTE_PATH.order);
   };
+
+  console.log(history);
 
   return (
     <ResponsiveTemplate NonPCContents={<MobileLogin />}>

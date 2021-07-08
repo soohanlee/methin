@@ -165,9 +165,10 @@ const Cart = () => {
   };
 
   const setCookiesCart = () => {
-    const cartList = getCartCookies();
+    const cartList = JSON.parse(getCartCookies());
+
     if (cartList) {
-      setCartList([]);
+      setCartList(cartList);
     }
   };
 
