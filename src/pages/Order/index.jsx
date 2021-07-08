@@ -1,11 +1,20 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useCallback,
+} from 'react';
 import styled, { css } from 'styled-components';
 import { useHistory } from 'react-router';
 
 import { ROUTE_PATH } from 'configs/config';
 import { notification } from 'utils/notification';
 import { getUserAddressList } from 'apis/delivery';
-import { NOT_LOGGED_IN, UserContext } from 'store/user-context';
+import { getUserProductDetail } from 'apis/product';
+import { getCartList } from 'apis/cart';
+import { NOT_LOGGED_IN, UserContext, LOGGED_IN } from 'store/user-context';
+import { getCartCookies } from 'utils/tokenManager';
 
 import OriginBorderTitleContainer from 'components/container/BorderTitleContainer';
 import { PaddingContainer } from 'components/styled/Container';
@@ -186,17 +195,72 @@ const Order = () => {
     zip_code: '',
   });
 
-  useEffect(() => {
-    if (history.location.state) {
-      setProductList(history.location.state);
+  const { state } = history.location;
+
+  const [productDetail] = useState({});
+
+  console.log(history);
+
+  const getProductDetatil = useCallback(async () => {
+    const result = await getUserProductDetail(state.productId);
+
+    if (result && result.data && result.status === 200) {
+      setProductList([result.data.data]);
+    } else {
+      notification.error('통신 성공');
     }
-  }, [history]);
+  }, [state.productId]);
+
+  useEffect(() => {
+    if (state.productId) {
+      getProductDetatil();
+    }
+    return (state.productId = null);
+  }, [getProductDetatil, state.productId, state.purchase]);
+
+  const setCartList = useCallback(async () => {
+    console.log('asdf');
+    const result = await getCartList();
+    console.log(result, 'asdf');
+  }, [getCartList]);
+
+  useEffect(() => {
+    if (!state.productId) {
+      setCartList();
+      setProductList([]);
+    }
+  }, [state.productId, setCartList]);
 
   useEffect(() => {
     if (showSelectedAddressItem.id === '' && userAddressList.length > 0) {
       setShowSelectedAddressItem(userAddressList[0]);
     }
   }, [showSelectedAddressItem, userAddressList]);
+
+  useEffect(() => {
+    if (login.loginState === LOGGED_IN) {
+      setCart();
+    } else if (login.loginState === NOT_LOGGED_IN) {
+      setCookiesCart();
+    }
+  }, [login.loginState]);
+
+  const setCart = async () => {
+    try {
+      const result = await getCartList();
+      if (result && result.status === 200) {
+        setProductList(result.data.data);
+      }
+    } catch (e) {}
+  };
+
+  const setCookiesCart = () => {
+    const cartList = JSON.parse(getCartCookies());
+
+    if (cartList) {
+      setProductList(cartList);
+    }
+  };
 
   useEffect(() => {
     if (userAddressList.length === 0) {

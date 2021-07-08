@@ -173,7 +173,6 @@ const ProductDetail = () => {
 
     if (result && result.data && result.status === 200) {
       setProdcutDetail(result.data.data);
-      setProductCount(result.data.count);
     } else {
       notification.error('통신 성공');
     }
@@ -216,11 +215,24 @@ const ProductDetail = () => {
   const handleMovePage = (path) => {
     if (path === ROUTE_PATH.order) {
       if (login.loginState === LOGGED_IN) {
-        history.push(`${path}`);
+        history.push({
+          pathname: path,
+          state: {
+            purchase: true,
+            productId: numberProductId,
+            from: history.location.pathname,
+            to: ROUTE_PATH.order,
+          },
+        });
       } else {
         history.push({
           pathname: ROUTE_PATH.login,
-          state: { purchase: true },
+          state: {
+            purchase: true,
+            productId: numberProductId,
+            from: history.location.pathname,
+            to: ROUTE_PATH.order,
+          },
         });
       }
     }
@@ -265,8 +277,19 @@ const ProductDetail = () => {
     setIsOpenQnaModal(false);
   };
 
-  console.log(productDetail);
-  console.log(productQna, 'productQna');
+  const handleMinus = () => {
+    if (productCount === 0 || productCount < 1) {
+      return;
+    } else {
+      setProductCount((prev) => prev - 1);
+    }
+  };
+
+  const handleButtonPurchaseButtonClick = () => {
+    console.log('구매하기');
+    handleMovePage(ROUTE_PATH.order);
+  };
+
   if (!productDetail && !productDetail.id) {
     return '로딩중';
   } else {
@@ -327,15 +350,19 @@ const ProductDetail = () => {
                 상품선택 옵션 필요
               </ProductSubInfoContainer>
               <CountContainer>
-                <CountButton>-</CountButton>
-                <CountDiv>1</CountDiv>
-                <CountButton>+</CountButton>
+                <CountButton onClick={handleMinus}>-</CountButton>
+                <CountDiv>{productCount}</CountDiv>
+                <CountButton
+                  onClick={() => setProductCount((prev) => prev + 1)}
+                >
+                  +
+                </CountButton>
               </CountContainer>
               <ButtonContainer>
                 <MainButton reverse onClick={handleAddCartList}>
                   장바구니
                 </MainButton>
-                <MainButton onClick={() => handleMovePage(ROUTE_PATH.order)}>
+                <MainButton onClick={handleButtonPurchaseButtonClick}>
                   구매하기
                 </MainButton>
               </ButtonContainer>
