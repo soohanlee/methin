@@ -255,7 +255,7 @@ const Order = () => {
   };
 
   const setCookiesCart = () => {
-    const cartList = JSON.parse(getCartCookies());
+    const cartList = getCartCookies();
 
     if (cartList) {
       setProductList(cartList);

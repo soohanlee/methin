@@ -160,10 +160,14 @@ const Product = () => {
       const result = addCartListToCookies(data);
 
       if (result === 'isExist') {
-        alert('이미 장바구니에 포함된 상품입니다. 상품 개수를 추가하였습니다.');
+        notification.success(
+          '이미 장바구니에 포함된 상품입니다. 상품 개수를 추가하였습니다.',
+        );
+      } else {
+        notification.success('장바구니에 담았습니다.');
       }
     }
-    // setIsCartModalOpen(false);
+    setIsCartModalOpen(false);
   };
 
   const renderProductList = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { getCartList, updateCartItemCount, deleteCartItem } from 'apis/cart';
 import {
@@ -8,7 +8,13 @@ import {
   NOT_LOGGED_IN,
 } from 'store/user-context';
 import { notification } from 'utils/notification';
-import { getCartCookies } from 'utils/tokenManager';
+import {
+  getCartCookies,
+  removeCartCookie,
+  setCartCookies,
+  removeCartCookies,
+} from 'utils/tokenManager';
+import { getUserProductDetail } from 'apis/product';
 
 import Receipt from 'pages/Order/Receipt';
 
@@ -147,13 +153,10 @@ const Cart = () => {
     setFinalPrice(calcFinalPrice);
   }, [cartList, finalPrice]);
 
-  useEffect(() => {
-    if (login.loginState === LOGGED_IN) {
-      setCart();
-    } else if (login.loginState === NOT_LOGGED_IN) {
-      setCookiesCart();
-    }
-  }, [login.loginState]);
+  const setCartDetail = async (id) => {
+    const result = await getUserProductDetail(id);
+    return result.data.data;
+  };
 
   const setCart = async () => {
     try {
@@ -164,47 +167,120 @@ const Cart = () => {
     } catch (e) {}
   };
 
-  const setCookiesCart = () => {
-    const cartList = JSON.parse(getCartCookies());
-
+  const setCookiesCart = useCallback(async () => {
+    const cartList = getCartCookies();
+    console.log('cartList', cartList);
+    const list = [];
     if (cartList) {
-      setCartList(cartList);
+      for (let i = 0; i < cartList.length; i++) {
+        const result = await setCartDetail(cartList[i].product_id);
+        result.count = cartList[i].count;
+        list.push(result);
+      }
+      console.log('list', list);
+      setCartList(list);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (login.loginState === LOGGED_IN) {
+      setCart();
+    } else if (login.loginState === NOT_LOGGED_IN) {
+      setCookiesCart();
+    }
+  }, [login.loginState, setCookiesCart]);
+
+  const handlePlus = async (product_id, count) => {
+    if (login.loginState === LOGGED_IN) {
+      const newCount = count + 1;
+      try {
+        await updateCartItemCount(product_id, { count: newCount });
+      } catch (e) {}
+    } else if (login.loginState === NOT_LOGGED_IN) {
+      const newCartList = cartList.map((item) => {
+        if (item.id === product_id) {
+          return { ...item, count: count + 1 };
+        } else {
+          return item;
+        }
+      });
+
+      const newCookiesList = newCartList.map(({ id, count }) => {
+        let cartData = {};
+        cartData.product_id = id;
+        cartData.count = count;
+        return cartData;
+      });
+
+      setCartCookies(newCookiesList);
+      setCookiesCart();
     }
   };
 
-  const handlePlus = async (id, count) => {
-    const newCount = count + 1;
-    try {
-      const result = await updateCartItemCount(id, { count: newCount });
-      console.log('result', result);
-    } catch (e) {}
-  };
+  const handleMinus = async (product_id, count) => {
+    if (count === 0) {
+      return;
+    }
+    if (login.loginState === LOGGED_IN) {
+      const newCount = count - 1;
 
-  const handleMinus = () => {};
+      try {
+        await updateCartItemCount(product_id, { count: newCount });
+      } catch (e) {}
+    } else if (login.loginState === NOT_LOGGED_IN) {
+      const newCartList = cartList.map((item) => {
+        if (item.id === product_id) {
+          return { ...item, count: count - 1 };
+        } else {
+          return item;
+        }
+      });
+
+      const newCookiesList = newCartList.map(({ id, count }) => {
+        let cartData = {};
+        cartData.product_id = id;
+        cartData.count = count;
+        return cartData;
+      });
+
+      setCartCookies(newCookiesList);
+      setCookiesCart();
+    }
+  };
 
   const handleChange = (e) => {
     const { value } = e.target;
-    const numberValue = parseInt(value);
-    let list = checkList;
-    const isExist = list.indexOf(numberValue) === -1 ? false : true;
+    let list = checkList.slice();
+    const isExist = list.find((item) => item === value);
+
     if (isExist) {
-      const result = list.filter((item) => item !== numberValue);
+      const result = list.filter((item) => item !== value);
       setCheckList(result);
     } else {
-      const result = list.concat([numberValue]);
+      const result = list.concat([value]);
+
       setCheckList(result);
     }
   };
 
   const handleCheckListDelete = () => {
-    for (let i = 0; i < checkList.length; i++) {
+    if (login.loginState === LOGGED_IN) {
+      for (let i = 0; i < checkList.length; i++) {
+        try {
+          deleteCartItem(checkList[i]);
+          setCart();
+        } catch (e) {
+          notification.error('새로고침 후 시도해주세요.');
+        }
+      }
+    } else if (login.loginState === NOT_LOGGED_IN) {
       try {
-        deleteCartItem(checkList[i]);
+        removeCartCookie(checkList);
+        setCookiesCart();
       } catch (e) {
         notification.error('새로고침 후 시도해주세요.');
       }
     }
-    setCart();
   };
 
   const handleClickPurchaseButton = () => {
@@ -219,6 +295,7 @@ const Cart = () => {
   };
 
   const renderCartList = () => {
+    console.log('cartList', cartList);
     if (cartList?.length === 0) {
       return <NoCart>장바구니에 담긴 상품이 없습니다.</NoCart>;
     } else {
@@ -236,14 +313,16 @@ const Cart = () => {
           max_quantity,
           created_at,
         }) => {
-          const isChecked = checkList.indexOf(product_id) === -1 ? false : true;
+          const isChecked = checkList.find(
+            (item) => item === `${product_id ? product_id : id}`,
+          );
 
           return (
-            <ProductItemLine id={product_id}>
+            <ProductItemLine key={id}>
               <ProductItemContainer>
                 <Checkbox
                   checked={isChecked}
-                  value={product_id}
+                  value={product_id ? product_id : id}
                   onChange={handleChange}
                 />
                 <ProductItemImgContainer>
@@ -257,11 +336,19 @@ const Cart = () => {
                 </ProductItemTextContainer>
 
                 <CountContainer>
-                  <CountButton onClick={() => handleMinus(product_id, count)}>
+                  <CountButton
+                    onClick={() =>
+                      handleMinus(product_id ? product_id : id, count)
+                    }
+                  >
                     -
                   </CountButton>
                   <CountDiv>{count}</CountDiv>
-                  <CountButton onClick={() => handlePlus(product_id, count)}>
+                  <CountButton
+                    onClick={() =>
+                      handlePlus(product_id ? product_id : id, count)
+                    }
+                  >
                     +
                   </CountButton>
                 </CountContainer>
