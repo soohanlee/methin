@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { Layout } from 'antd';
@@ -92,6 +92,14 @@ function App() {
   //     await cleanAllToken();
   //   }
   // }, []);
+
+  useEffect(() => {
+    console.log('getCartCookies', getCartCookies());
+    if (!getCartCookies()) {
+      setCartCookies([]);
+    }
+  }, []);
+
   useEffect(() => {
     const layoutDom = document.getElementById('UserContainer');
 
@@ -117,14 +125,8 @@ function App() {
     }
   }, [windowSize]);
 
-  useEffect(() => {
-    if (!getCartCookies()) {
-      setCartCookies([]);
-    }
-  }, []);
-
-  useEffect(async () => {
-    const cookiesCartList = JSON.parse(getCartCookies());
+  const addCartWhenLogin = useCallback(async () => {
+    const cookiesCartList = getCartCookies();
     if (isLogin === LOGGED_IN && cookiesCartList.length > 0) {
       const cartList = [];
       try {
@@ -137,6 +139,13 @@ function App() {
       } catch (e) {}
     }
   }, [isLogin]);
+
+  useEffect(() => {
+    const cookiesCartList = getCartCookies();
+    if (isLogin === LOGGED_IN && cookiesCartList.length > 0) {
+      addCartWhenLogin();
+    }
+  }, [isLogin, addCartWhenLogin]);
 
   const changeUserState = (data) => {
     setIsLogin(data);

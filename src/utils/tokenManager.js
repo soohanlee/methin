@@ -117,7 +117,11 @@ export async function getIsAvalidAccessRefreshToken() {
 }
 
 export const getCartCookies = () => {
-  return get(COOKIE_KEYS.cart);
+  if (get(COOKIE_KEYS.cart)) {
+    return JSON.parse(get(COOKIE_KEYS.cart));
+  } else {
+    return false;
+  }
 };
 
 export const setCartCookies = (data) => {
@@ -126,4 +130,20 @@ export const setCartCookies = (data) => {
 
 export const removeCartCookies = () => {
   remove(COOKIE_KEYS.cart);
+};
+
+export const removeCartCookie = (idList) => {
+  // idList: array;
+  let newList;
+  const cookies = getCartCookies();
+  for (let i = 0; i < idList.length; i++) {
+    const newCookies = cookies.filter(
+      ({ product_id }) => `${product_id}` !== idList[i],
+    );
+    if (i === idList.length - 1) {
+      newList = newCookies;
+    }
+  }
+
+  setCartCookies(newList);
 };

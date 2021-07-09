@@ -77,7 +77,6 @@ const CartModal = ({
     if (result.status === 200) {
       setProduct(result.data.data);
     }
-    console.log('reslut', result);
   }, [productId]);
 
   useEffect(() => {
@@ -97,6 +96,7 @@ const CartModal = ({
   const handleCancel = () => {
     setProduct();
     onCancel();
+    setCount(1);
   };
 
   if (!product) {
