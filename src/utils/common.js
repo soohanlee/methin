@@ -40,14 +40,14 @@ export const addCartListToCookies = (data) => {
         return item;
       }
     });
-    console.log(newProductList, newProductList);
+
     setCartCookies(newProductList);
 
     return 'isExist';
   } else {
     const cartInfo = [{ product_id: data.product_id, count: data.count }];
     const addResult = result.concat(cartInfo);
-    console.log('addResult', addResult);
+
     setCartCookies(addResult);
     return 'added';
   }

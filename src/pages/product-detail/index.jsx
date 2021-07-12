@@ -158,7 +158,7 @@ const Descriptions = styled(OriginDescriptions)`
 const ProductDetail = () => {
   const history = useHistory();
   const login = useContext(UserContext);
-  console.log('history', history);
+
   const params = useParams();
   const numberProductId = parseInt(params?.id);
   const [productCount, setProductCount] = useState(1);
@@ -180,7 +180,7 @@ const ProductDetail = () => {
 
   const getProductReview = useCallback(async () => {
     const result = await getProductReviewDetail(numberProductId);
-    console.log(result);
+
     if (result.message === 'success') {
       setProductReview(result.data.data);
     }
@@ -188,7 +188,7 @@ const ProductDetail = () => {
 
   const getProductQna = useCallback(async () => {
     const result = await getProductDetailQNA(numberProductId);
-    console.log(result);
+
     if (result.status === 200) {
       setProductQna(result.data.data);
     }

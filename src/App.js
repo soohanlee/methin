@@ -94,7 +94,6 @@ function App() {
   // }, []);
 
   useEffect(() => {
-    console.log('getCartCookies', getCartCookies());
     if (!getCartCookies()) {
       setCartCookies([]);
     }

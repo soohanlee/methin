@@ -35,3 +35,13 @@ export const patchFaq = async (id, data) => {
 export const deleteFaq = async (id) => {
   return await axios.delete(`api/admin/faq/${id}`);
 };
+
+export const getClientPageNotice = async (offset, limit, category) => {
+  return await axios.get(
+    `api/notice?offset=${offset}?limit=${limit}?category=${category}`,
+  );
+};
+
+export const getClientPageFaq = async (offset, limit) => {
+  return await axios.get(`api/faq?offset=${offset}?limit=${limit}`);
+};
