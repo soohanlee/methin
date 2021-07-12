@@ -171,10 +171,10 @@ const Product = () => {
   };
 
   const renderProductList = () => {
-    if (mocuupProductList.length === 0) {
+    if (productList.length === 0) {
       return '상품이 없습니다.';
     } else {
-      return mocuupProductList.map(
+      return productList.map(
         ({
           id,
           img,

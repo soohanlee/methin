@@ -100,7 +100,11 @@ const Login = () => {
 
   useEffect(() => {
     if (login.loginState === LOGGED_IN) {
-      if (history.location.state.purchase && history.location.state.productId) {
+      if (
+        history.location.state &&
+        history.location.state.purchase &&
+        history.location.state.productId
+      ) {
         history.push({
           pathname: history.location.state.to,
           state: {
@@ -163,8 +167,6 @@ const Login = () => {
   const handleSearchProduct = () => {
     history.push(ROUTE_PATH.order);
   };
-
-  console.log(history);
 
   return (
     <ResponsiveTemplate NonPCContents={<MobileLogin />}>

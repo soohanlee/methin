@@ -169,7 +169,7 @@ const Cart = () => {
 
   const setCookiesCart = useCallback(async () => {
     const cartList = getCartCookies();
-    console.log('cartList', cartList);
+
     const list = [];
     if (cartList) {
       for (let i = 0; i < cartList.length; i++) {
@@ -177,7 +177,7 @@ const Cart = () => {
         result.count = cartList[i].count;
         list.push(result);
       }
-      console.log('list', list);
+
       setCartList(list);
     }
   }, []);
@@ -295,7 +295,6 @@ const Cart = () => {
   };
 
   const renderCartList = () => {
-    console.log('cartList', cartList);
     if (cartList?.length === 0) {
       return <NoCart>장바구니에 담긴 상품이 없습니다.</NoCart>;
     } else {

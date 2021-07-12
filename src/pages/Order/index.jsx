@@ -199,8 +199,6 @@ const Order = () => {
 
   const [productDetail] = useState({});
 
-  console.log(history);
-
   const getProductDetatil = useCallback(async () => {
     const result = await getUserProductDetail(state.productId);
 
@@ -219,9 +217,7 @@ const Order = () => {
   }, [getProductDetatil, state.productId, state.purchase]);
 
   const setCartList = useCallback(async () => {
-    console.log('asdf');
     const result = await getCartList();
-    console.log(result, 'asdf');
   }, [getCartList]);
 
   useEffect(() => {

@@ -53,7 +53,7 @@ const CollapseList = ({ list, description }) => {
       <CustomCollapse expandIconPosition="right">
         {list &&
           list.map((item, index) => {
-            const { question, created_at, answer, category, id } = item;
+            const { title, created_at, answer, category, id } = item;
             return (
               <Panel
                 key={id}
@@ -61,13 +61,13 @@ const CollapseList = ({ list, description }) => {
                   <CollapseHeader>
                     <Index>{index + 1}</Index>
                     {category && <Category>{category}</Category>}
-                    <ProductName>{question}</ProductName>
+                    <ProductName>{title}</ProductName>
                     <Date>{moment(created_at).format(DateFormat.Default)}</Date>
                   </CollapseHeader>
                 }
                 key={index}
               >
-                {answer}
+                {/* {answer} */}
               </Panel>
             );
           })}
