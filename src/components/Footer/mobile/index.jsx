@@ -8,7 +8,7 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   border-top: 0.1rem solid ${(props) => props.theme.LINE};
-  position: absolute;
+  position: fixed;
   bottom: 0;
   background: ${(props) => props.theme.BACKGROUND};
 `;

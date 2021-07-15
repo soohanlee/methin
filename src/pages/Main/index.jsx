@@ -10,6 +10,7 @@ import { ROUTE_PATH } from 'configs/config';
 import { PaddingContainer } from 'components/styled/Container';
 import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import MobileMain from 'pages/Main/mobile';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 
 const Container = styled.div``;
 
