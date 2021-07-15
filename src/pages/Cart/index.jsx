@@ -175,7 +175,7 @@ const Cart = () => {
     return result.data.data;
   };
 
-  const setCart = async () => {
+  const setCart = useCallback(async () => {
     try {
       const result = await getCartList();
       if (result && result.status === 200) {
@@ -188,16 +188,15 @@ const Cart = () => {
         notification.error('새로 고침 후 이용해주세요.');
       }
     }
-  };
+  }, [login]);
 
   const setCookiesCart = useCallback(async () => {
-    const cartList = getCartCookies();
-
+    const cookiesCartList = getCartCookies();
     const list = [];
-    if (cartList) {
-      for (let i = 0; i < cartList.length; i++) {
-        const result = await setCartDetail(cartList[i].product_id);
-        result.count = cartList[i].count;
+    if (cookiesCartList) {
+      for (let i = 0; i < cookiesCartList.length; i++) {
+        const result = await setCartDetail(cookiesCartList[i].id);
+        result.count = cookiesCartList[i].count;
         list.push(result);
       }
 
@@ -211,65 +210,73 @@ const Cart = () => {
     } else if (login.loginState === NOT_LOGGED_IN) {
       setCookiesCart();
     }
-  }, [login.loginState, setCookiesCart]);
+  }, [login.loginState, setCookiesCart, setCart]);
 
-  const handlePlus = async (product_id, count) => {
-    if (login.loginState === LOGGED_IN) {
-      const newCount = count + 1;
-      try {
-        await updateCartItemCount(product_id, { count: newCount });
-      } catch (e) {}
-    } else if (login.loginState === NOT_LOGGED_IN) {
-      const newCartList = cartList.map((item) => {
-        if (item.id === product_id) {
-          return { ...item, count: count + 1 };
-        } else {
-          return item;
-        }
-      });
+  const handlePlus = useCallback(
+    async (id, count) => {
+      if (login.loginState === LOGGED_IN) {
+        const newCount = count + 1;
+        try {
+          await updateCartItemCount(id, { count: newCount });
+          await setCart();
+        } catch (e) {}
+      } else if (login.loginState === NOT_LOGGED_IN) {
+        const newCartList = cartList.map((item) => {
+          if (item.id === id) {
+            return { ...item, count: count + 1 };
+          } else {
+            return item;
+          }
+        });
 
-      const newCookiesList = newCartList.map(({ id, count }) => {
-        let cartData = {};
-        cartData.product_id = id;
-        cartData.count = count;
-        return cartData;
-      });
+        const newCookiesList = newCartList.map(({ id, count }) => {
+          let cartData = {};
+          cartData.id = id;
+          cartData.count = count;
+          return cartData;
+        });
 
-      setCartCookies(newCookiesList);
-      setCookiesCart();
-    }
-  };
+        setCartCookies(newCookiesList);
+        setCookiesCart();
+      }
+    },
+    [cartList, login, setCookiesCart, setCart],
+  );
 
-  const handleMinus = async (product_id, count) => {
-    if (count === 0) {
-      return;
-    }
-    if (login.loginState === LOGGED_IN) {
-      const newCount = count - 1;
+  const handleMinus = useCallback(
+    async (id, count) => {
+      if (count === 0) {
+        return;
+      }
+      if (login.loginState === LOGGED_IN) {
+        const newCount = count - 1;
 
-      try {
-        await updateCartItemCount(product_id, { count: newCount });
-      } catch (e) {}
-    } else if (login.loginState === NOT_LOGGED_IN) {
-      const newCartList = cartList.map((item) => {
-        if (item.id === product_id) {
-          return { ...item, count: count - 1 };
-        } else {
-          return item;
-        }
-      });
+        try {
+          await updateCartItemCount(id, { count: newCount });
+          await setCart();
+        } catch (e) {}
+      } else if (login.loginState === NOT_LOGGED_IN) {
+        const newCartList = cartList.map((item) => {
+          if (item.id === id) {
+            return { ...item, count: count - 1 };
+          } else {
+            return item;
+          }
+        });
 
-      const newCookiesList = newCartList.map(({ id, count }) => {
-        let cartData = {};
-        cartData.product_id = id;
-        cartData.count = count;
-        return cartData;
-      });
+        const newCookiesList = newCartList.map(({ id, count }) => {
+          let cartData = {};
+          cartData.id = id;
+          cartData.count = count;
+          return cartData;
+        });
 
-      setCartCookies(newCookiesList);
-      setCookiesCart();
-    }
-  };
+        setCartCookies(newCookiesList);
+        setCookiesCart();
+      }
+    },
+    [cartList, login.loginState, setCart, setCookiesCart],
+  );
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -340,16 +347,14 @@ const Cart = () => {
           max_quantity,
           created_at,
         }) => {
-          const isChecked = checkList.find(
-            (item) => item === `${product_id ? product_id : id}`,
-          );
+          const isChecked = checkList.find((item) => item === `${id}`);
 
           return (
             <ProductItemLine key={id}>
               <ProductItemContainer>
                 <Checkbox
                   checked={isChecked}
-                  value={product_id ? product_id : id}
+                  value={id}
                   onChange={handleChange}
                 />
                 <ProductItemImgContainer>
@@ -362,19 +367,11 @@ const Cart = () => {
                 </ProductItemTextContainer>
 
                 <CountContainer>
-                  <CountButton
-                    onClick={() =>
-                      handleMinus(product_id ? product_id : id, count)
-                    }
-                  >
+                  <CountButton onClick={() => handleMinus(id, count)}>
                     -
                   </CountButton>
                   <CountDiv>{count}</CountDiv>
-                  <CountButton
-                    onClick={() =>
-                      handlePlus(product_id ? product_id : id, count)
-                    }
-                  >
+                  <CountButton onClick={() => handlePlus(id, count)}>
                     +
                   </CountButton>
                 </CountContainer>
