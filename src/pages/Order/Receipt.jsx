@@ -73,6 +73,7 @@ const Receipt = ({
   productPrice,
   deliveryPrice,
   onClickPurchaseButton,
+  isDisabled,
 }) => {
   const history = useHistory();
   const [isAgree, setIsAgree] = useState(false);
@@ -132,7 +133,9 @@ const Receipt = ({
         </>
       )}
 
-      <MainButton onClick={onClickPurchaseButton}>구매하기</MainButton>
+      <MainButton isDisabled={isDisabled} onClick={onClickPurchaseButton}>
+        구매하기
+      </MainButton>
     </Container>
   );
 };

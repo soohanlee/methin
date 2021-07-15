@@ -9,6 +9,7 @@ import { LightTheme } from 'configs/theme';
 import { ROUTE_PATH, BreakPoint } from 'configs/config';
 import GlobalStyle from 'configs/globalStyle';
 import { reissueJwt } from 'apis/auth';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 
 import {
   getIsAvalidAccessToken,
@@ -77,6 +78,7 @@ function App() {
   // 처음 페이지 들어왔을때 로딩 const [isLoading, setIs Loading] = React.useState(true); 테마
   // 같은 경우 다크테마 라이트테마 변경이 가능하게 확장하기 위해 아래같이 설정.
   const windowSize = useWindowSize();
+  const accessToken = getAccessToken();
 
   const [viewType, setViewType] = useState('PC');
 
@@ -106,7 +108,6 @@ function App() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const accessToken = getAccessToken();
     if (accessToken) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       changeUserState(LOGGED_IN);
@@ -114,7 +115,7 @@ function App() {
       cleanToken();
       changeUserState(NOT_LOGGED_IN);
     }
-  }, []);
+  }, [accessToken]);
 
   useEffect(() => {
     if (windowSize.width < BreakPoint.s) {
@@ -190,34 +191,40 @@ function App() {
                 <Navigation />
 
                 <CustomContent>
-                  <Switch>
-                    {/* 라우트 예시 */}
-                    <Route exact path={'/'} component={Main} />
-                    <Route exact path={ROUTE_PATH.main} component={Main} />
-                    <Route exact path={ROUTE_PATH.login} component={Login} />
-                    <Route exact path={ROUTE_PATH.signup} component={SignUp} />
-                    <Route
-                      exact
-                      path={ROUTE_PATH.product}
-                      component={Product}
-                    />
-                    <Route
-                      path={`${ROUTE_PATH.product}:id`}
-                      component={ProductDetail}
-                    />
+                  <Scrollbars autoHide style={{ heigth: '100%' }}>
+                    <Switch>
+                      {/* 라우트 예시 */}
+                      <Route exact path={'/'} component={Main} />
+                      <Route exact path={ROUTE_PATH.main} component={Main} />
+                      <Route exact path={ROUTE_PATH.login} component={Login} />
+                      <Route
+                        exact
+                        path={ROUTE_PATH.signup}
+                        component={SignUp}
+                      />
+                      <Route
+                        exact
+                        path={ROUTE_PATH.product}
+                        component={Product}
+                      />
+                      <Route
+                        path={`${ROUTE_PATH.product}:id`}
+                        component={ProductDetail}
+                      />
 
-                    <Route
-                      path={`${ROUTE_PATH.mypage.main}`}
-                      component={MyPage}
-                    />
-                    <Route
-                      path={`${ROUTE_PATH.serviceCenter.main}`}
-                      component={ServiceCenter}
-                    />
-                    <Route path={`${ROUTE_PATH.order}`} component={Order} />
-                    <Route path={`${ROUTE_PATH.cart}`} component={Cart} />
-                  </Switch>
-                  <MainFooter />
+                      <Route
+                        path={`${ROUTE_PATH.mypage.main}`}
+                        component={MyPage}
+                      />
+                      <Route
+                        path={`${ROUTE_PATH.serviceCenter.main}`}
+                        component={ServiceCenter}
+                      />
+                      <Route path={`${ROUTE_PATH.order}`} component={Order} />
+                      <Route path={`${ROUTE_PATH.cart}`} component={Cart} />
+                    </Switch>
+                    <MainFooter />
+                  </Scrollbars>
                 </CustomContent>
               </UserContainer>
             </ResponsiveTemplateForRoot>

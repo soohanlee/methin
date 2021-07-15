@@ -196,12 +196,10 @@ const Order = () => {
   });
 
   const { state } = history.location;
-
-  const [productDetail] = useState({});
-
+  console.log('state', state);
   const getProductDetatil = useCallback(async () => {
     const result = await getUserProductDetail(state.productId);
-
+    console.log('result', result);
     if (result && result.data && result.status === 200) {
       setProductList([result.data.data]);
     } else {
@@ -214,18 +212,7 @@ const Order = () => {
       getProductDetatil();
     }
     return (state.productId = null);
-  }, [getProductDetatil, state.productId, state.purchase]);
-
-  const setCartList = useCallback(async () => {
-    const result = await getCartList();
-  }, [getCartList]);
-
-  useEffect(() => {
-    if (!state.productId) {
-      setCartList();
-      setProductList([]);
-    }
-  }, [state.productId, setCartList]);
+  }, [getProductDetatil, state.productId, state.purchase, state]);
 
   useEffect(() => {
     if (showSelectedAddressItem.id === '' && userAddressList.length > 0) {
@@ -234,41 +221,33 @@ const Order = () => {
   }, [showSelectedAddressItem, userAddressList]);
 
   useEffect(() => {
-    if (login.loginState === LOGGED_IN) {
-      setCart();
-    } else if (login.loginState === NOT_LOGGED_IN) {
-      setCookiesCart();
+    if (state.cartList) {
+      setProductList(state.cartList);
     }
-  }, [login.loginState]);
+  }, [state.cartList]);
 
-  const setCart = async () => {
-    try {
-      const result = await getCartList();
-      if (result && result.status === 200) {
-        setProductList(result.data.data);
-      }
-    } catch (e) {}
-  };
+  // const setCart = async () => {
+  //   try {
+  //     const result = await getCartList();
+  //     if (result && result.status === 200) {
+  //       setProductList(result.data.data);
+  //     }
+  //   } catch (e) {}
+  // };
 
-  const setCookiesCart = () => {
-    const cartList = getCartCookies();
+  // const setCookiesCart = () => {
+  //   const cartList = getCartCookies();
 
-    if (cartList) {
-      setProductList(cartList);
-    }
-  };
-
-  useEffect(() => {
-    if (userAddressList.length === 0) {
-      getAddressList();
-    }
-  }, [userAddressList]);
+  //   if (cartList) {
+  //     setProductList(cartList);
+  //   }
+  // };
 
   const handleOpenDeliveryChangeModal = () => {
     setIsOpenChangeDevliveryModal(true);
   };
 
-  const getAddressList = async () => {
+  const getAddressList = useCallback(async () => {
     try {
       const result = await getUserAddressList();
       if (result && result.data && result.data.message === 'success') {
@@ -283,7 +262,13 @@ const Order = () => {
         notification.error('새로고침 후 다시 이용해주세요.');
       }
     }
-  };
+  }, [login]);
+
+  useEffect(() => {
+    if (userAddressList.length === 0) {
+      getAddressList();
+    }
+  }, [userAddressList, getAddressList]);
 
   const renderProductList = () => {
     if (productList?.length === 0) {
@@ -312,11 +297,10 @@ const Order = () => {
 
                 <ProductItemTextContainer>
                   <Label bold>{name}</Label>
-                  <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
-                  <Label bold>{price}원</Label>
+                  <Label grey>{count}개</Label>
                 </ProductItemTextContainer>
 
-                <Price>{actual_price}원</Price>
+                <Price>{actual_price * count}원</Price>
               </ProductItemContainer>
             </ProductItemLine>
           );
@@ -422,7 +406,12 @@ const Order = () => {
               </ProductItemLine>
             </BorderTitleContainer>
           </Contents>
-          <Receipt />
+          <Receipt
+            finalPrice={state ? state.finalPrice : '0'}
+            discountPrice={state ? state.finalDiscountPrice : '0'}
+            productPrice={0}
+            deliveryPrice={state ? state.deliveryPrice : '0'}
+          />
         </OrderContainer>
       </PaddingContainer>
     </>

@@ -13,6 +13,7 @@ import {
   removeCartCookie,
   setCartCookies,
   removeCartCookies,
+  cleanToken,
 } from 'utils/tokenManager';
 import { getUserProductDetail } from 'apis/product';
 
@@ -141,16 +142,32 @@ const Cart = () => {
 
   const [cartList, setCartList] = useState([]);
   const [finalPrice, setFinalPrice] = useState(0);
+  const [finalDiscountPrice, setFinalDiscountPrice] = useState(0);
+  const [deliveryPrice, setDeliveryPrice] = useState(0);
+
   const login = useContext(UserContext);
   const [checkList, setCheckList] = useState([]);
 
-  useEffect(() => {
-    const priceList = cartList.map(({ actual_price }) => actual_price);
-    const calcFinalPrice = priceList.reduce(function add(sum, currValue) {
+  const sum = (list) => {
+    return list.reduce(function add(sum, currValue) {
       return sum + currValue;
     }, 0);
+  };
 
+  useEffect(() => {
+    const priceList = cartList.map(({ actual_price, count }) => {
+      return actual_price * count;
+    });
+    const discountList = cartList.map(
+      ({ discount_amount, count }) => discount_amount * count,
+    );
+
+    const calcFinalPrice = sum(priceList);
+    const calcFinalDiscountPrice = sum(discountList);
+    console.log('calcFinalDiscountPrice', calcFinalDiscountPrice);
+    console.log('cartList', cartList);
     setFinalPrice(calcFinalPrice);
+    setFinalDiscountPrice(calcFinalDiscountPrice);
   }, [cartList, finalPrice]);
 
   const setCartDetail = async (id) => {
@@ -164,7 +181,13 @@ const Cart = () => {
       if (result && result.status === 200) {
         setCartList(result.data.data);
       }
-    } catch (e) {}
+    } catch (e) {
+      if (e.response.status === 401) {
+        cleanToken();
+        login.changeUserState(NOT_LOGGED_IN);
+        notification.error('새로 고침 후 이용해주세요.');
+      }
+    }
   };
 
   const setCookiesCart = useCallback(async () => {
@@ -289,7 +312,12 @@ const Cart = () => {
     } else {
       history.push({
         pathname: ROUTE_PATH.order,
-        state: cartList,
+        state: {
+          cartList,
+          finalPrice,
+          finalDiscountPrice,
+          deliveryPrice,
+        },
       });
     }
   };
@@ -331,7 +359,6 @@ const Cart = () => {
                 <ProductItemTextContainer>
                   <Label bold>{name}</Label>
                   <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
-                  <Label bold>{price}원</Label>
                 </ProductItemTextContainer>
 
                 <CountContainer>
@@ -351,7 +378,7 @@ const Cart = () => {
                     +
                   </CountButton>
                 </CountContainer>
-                <Price>{actual_price}원</Price>
+                <Price>{actual_price * count}원</Price>
               </ProductItemContainer>
             </ProductItemLine>
           );
@@ -371,11 +398,12 @@ const Cart = () => {
           </BorderTitleContainer>
         </Contents>
         <Receipt
+          isDisabled={cartList.length === 0}
           isCart
           finalPrice={finalPrice}
-          discountPrice={0}
+          discountPrice={finalDiscountPrice}
           productPrice={0}
-          deliveryPrice={0}
+          deliveryPrice={deliveryPrice}
           onClickPurchaseButton={handleClickPurchaseButton}
         />
       </CartContainer>

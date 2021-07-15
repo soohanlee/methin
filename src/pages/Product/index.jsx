@@ -214,7 +214,7 @@ const Product = () => {
       </FilterHeader>
       <ContentsContainer>
         <ContentsHeader>
-          <Label>총 41개</Label>
+          <Label>총 {productList.length}개</Label>
           <Selectbox
             list={selectList}
             selectedItem={selectedItem}
