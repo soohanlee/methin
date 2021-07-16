@@ -8,11 +8,14 @@ const Container = styled.div`
 
 const Title = styled.div`
   font-size: 1.6rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
   border-bottom: 0.1rem solid ${(props) => props.theme.LINE};
 `;
 
-const subTitle = styled.div``;
+const SubTitle = styled.div`
+  min-width: 6rem;
+`;
 
 const Input = styled.input`
   border: 0.1rem solid ${(props) => props.theme.LINE};
@@ -31,6 +34,7 @@ const TextArea = styled.textarea`
 
 const InputContainer = styled.div`
   display: flex;
+  margin-bottom: 1rem;
 `;
 
 const EditorForm = ({
@@ -45,7 +49,7 @@ const EditorForm = ({
     <Container>
       <Title>{categoryTitle}</Title>
       <InputContainer>
-        <subTitle>제목</subTitle>
+        <SubTitle>제목</SubTitle>
         <Input
           name="title"
           placeholder="제목을 입력해주세요."
@@ -56,7 +60,7 @@ const EditorForm = ({
       </InputContainer>
 
       <InputContainer>
-        <subTitle>내용</subTitle>
+        <SubTitle>내용</SubTitle>
         <TextArea
           name="desc"
           placeholder="내용을 작성해주세요."

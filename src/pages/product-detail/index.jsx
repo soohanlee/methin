@@ -384,7 +384,7 @@ const ProductDetail = () => {
           />
           <QnaModal
             productId={productDetail.id}
-            categoryTitle={productDetail.name}
+            categoryTitle={productDetail.name | '제목입니다.'}
             isOpen={isOpenQnaModal}
             onCancel={handleCancelQnaButton}
             isSecret
