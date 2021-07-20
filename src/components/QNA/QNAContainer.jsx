@@ -72,7 +72,7 @@ const mockUpList = [
   },
 ];
 
-const QNAContainer = ({ qnaCount, list, onClickQnaButtonClick }) => {
+const QNAContainer = ({ count, list, onClickQnaButtonClick, onQnaChange }) => {
   const renderQnaList = () => {
     if (!list && list.length === 0) {
       return '질문이 없습니다.';
@@ -110,7 +110,7 @@ const QNAContainer = ({ qnaCount, list, onClickQnaButtonClick }) => {
     <Container>
       <BorderTitleContainer
         title={'상품 Q&A'}
-        titleDesc={<Count>{qnaCount}</Count>}
+        titleDesc={<Count>{count}</Count>}
       >
         <Header>
           <Label>궁금한게 있으면 언제든지 물어보세요.</Label>
@@ -118,7 +118,7 @@ const QNAContainer = ({ qnaCount, list, onClickQnaButtonClick }) => {
         </Header>
         {renderQnaList()}
         <PaginationContainer>
-          <Pagination />
+          <Pagination total={count} onChange={onQnaChange} />
         </PaginationContainer>
       </BorderTitleContainer>
     </Container>

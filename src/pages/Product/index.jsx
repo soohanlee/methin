@@ -227,7 +227,7 @@ const Product = () => {
           </Row>
         </ContentsBody>
       </ContentsContainer>
-      <Pagination />
+      <Pagination total={productList.length} />
       <CartModal
         isOpen={isCartModalOpen}
         onCancel={handleCancel}

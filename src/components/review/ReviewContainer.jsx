@@ -89,7 +89,7 @@ const UserID = styled.div`
   margin-left: 3rem;
 `;
 
-const ReviewContainer = ({ reviewCount, list }) => {
+const ReviewContainer = ({ count, list, onReviewChange }) => {
   const renderReviewList = () => {
     if (!list || list.length === 0) {
       return '리뷰를 작성해주세요.';
@@ -128,7 +128,7 @@ const ReviewContainer = ({ reviewCount, list }) => {
     <Container>
       <BorderTitleContainer
         title={'상품후기'}
-        titleDesc={<Count>{reviewCount}</Count>}
+        titleDesc={<Count>{count}</Count>}
       >
         <Header>
           <Label>상품을 구매한 다른 사람들의 평가를 확인하세요.</Label>
@@ -137,7 +137,7 @@ const ReviewContainer = ({ reviewCount, list }) => {
         {list.length === 0 ? '리뷰를 남겨주세요.' : renderReviewList()}
 
         <PaginationContainer>
-          <Pagination />
+          <Pagination total={count} onChange={onReviewChange} />
         </PaginationContainer>
       </BorderTitleContainer>
     </Container>

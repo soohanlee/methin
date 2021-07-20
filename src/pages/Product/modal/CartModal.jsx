@@ -100,7 +100,7 @@ const CartModal = ({
   };
 
   if (!product) {
-    return '로딩중';
+    return null;
   } else {
     return (
       <Modalbase isOpen={isOpen} onCancel={handleCancel}>
