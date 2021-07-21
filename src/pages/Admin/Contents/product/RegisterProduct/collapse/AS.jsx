@@ -11,31 +11,9 @@ const Input = styled(OriginInput)`
 
 const { TextArea } = Input;
 
-const AS = () => {
-  const [phoneNumber, setPhoneNmuber] = useState('');
-  const [info, setInfo] = useState(
-    '전화 보다는 메일 혹은 채널톡을 통해 문의하시는게 빠른 답변이 가능합니다!',
-  );
-  const [specialMatters, setSpecialMatters] = useState();
+const AS = ({ specialMatters, setSpecialMatters }) => {
   return (
-    <CustomCollapse header="AS, 특이사항">
-      <LabelContents title="A/S전화번호">
-        <Input
-          onChange={(e) => setPhoneNmuber(e.target.value)}
-          value={phoneNumber}
-          placeholder="전화번호 입력 - 제외"
-        />
-      </LabelContents>
-
-      <LabelContents title="A/S안내">
-        <TextArea
-          value={info}
-          onChange={(e) => setInfo(e.target.value)}
-          placeholder="입력해주세요"
-          autoSize={{ minRows: 3, maxRows: 5 }}
-        />
-      </LabelContents>
-
+    <CustomCollapse header="특이사항">
       <LabelContents title="판매자 특이사항">
         <TextArea
           value={specialMatters}

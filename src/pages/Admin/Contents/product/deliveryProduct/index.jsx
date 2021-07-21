@@ -18,7 +18,7 @@ import { notification } from 'utils/notification';
 const DeliveryProduct = () => {
   const limite = 16;
   const [tableDataState, setTableDataState] = useState([]);
-  const [tableCountState, setTableCountState] = useState([]);
+  const [tableCountState, setTableCountState] = useState(0);
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -32,15 +32,14 @@ const DeliveryProduct = () => {
       const result = await allDeliveryProduct(0);
       const count = result.data.data.count;
       const maxOffset = Math.floor(count / limite) + 1;
-      let customList = [];
-      for (let i = 0; i < maxOffset; i++) {
-        const _result = await allDeliveryProduct(i);
-        customList = customList.concat(_result.data.data.list);
-      }
-      setTableDataState(customList);
-      setTableCountState(customList.length);
+      const list = result.data.data.list;
+
+      const newResult = list.map((item) => {
+        return { ...item, status: item.status === 1 ? '사용' : '미사용' };
+      });
+      setTableDataState(newResult);
+      setTableCountState(newResult.length);
       notification.success('검색성공');
-      console.log(customList);
     } catch (e) {
       notification.error('배송 정보를 가져오지 못했습니다.');
     }
@@ -88,6 +87,8 @@ const DeliveryProduct = () => {
     }
   };
 
+  console.log('tableDataState', tableDataState);
+
   return (
     <>
       <Title />
@@ -100,6 +101,7 @@ const DeliveryProduct = () => {
         updateDeliveryData={updateDeliveryData}
         updateDeliveryDetailData={updateDeliveryDetailData}
         deleteDeliveryData={deleteDeliveryData}
+        setTableDataState={setTableDataState}
         result={tableDataState}
         count={tableCountState}
       />

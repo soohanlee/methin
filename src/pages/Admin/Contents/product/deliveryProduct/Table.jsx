@@ -6,6 +6,7 @@ import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
 import DeliveryUpdateModal from './DeliveryUpdateModal';
+import _ from 'lodash';
 
 const TitlesCss = css`
   width: 100%;
@@ -54,25 +55,12 @@ const Table = ({
   updateDeliveryData,
   result,
   count,
+  setTableDataState,
 }) => {
-  const [tableState, setTableState] = useState([]);
-  const [selectTableKeyState, setSelectTableKeyState] = useState([]);
-
   const [modifyVisibleState, setModifyVisibleState] = useState(false);
   const [addVisibleState, setAddVisibleState] = useState(false);
   const [indexState, setIndexState] = useState([]);
   const [maxSearchCoutState, setMaxSearchCoutState] = useState([]);
-
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      setTableState(selectedRows);
-      setSelectTableKeyState(selectedRowKeys);
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
-      name: record.name,
-    }),
-  };
 
   const handleRegistConnectProductBtn = () => {
     handleShowAddModalBtn();
@@ -156,15 +144,6 @@ const Table = ({
       dataIndex: 'updated_at',
     },
   ];
-
-  const wordData = ['미사용', '사용', '???'];
-
-  const NumDataToWord = () => {
-    for (var i = 0; i < result.length; i++) {
-      result[i].status = wordData[i];
-    }
-  };
-  NumDataToWord();
 
   return (
     <>
