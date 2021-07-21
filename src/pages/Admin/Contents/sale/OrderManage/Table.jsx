@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
 
@@ -107,7 +107,10 @@ const Table = ({ sheetList, tableData }) => {
       }
     }
   };
-  NumDataToWord();
+  useEffect(() => {
+    NumDataToWord();
+  }, []);
+
   return (
     <Container>
       <ExcelModal

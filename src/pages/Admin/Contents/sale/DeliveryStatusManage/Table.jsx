@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
 
@@ -82,7 +82,10 @@ const Table = ({ tableData, count }) => {
     }
   };
 
-  NumDataToWord();
+  useEffect(() => {
+    NumDataToWord();
+  }, []);
+
   return (
     <Container>
       <DirectReturnModal
