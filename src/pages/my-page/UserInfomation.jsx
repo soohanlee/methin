@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import styled from 'styled-components';
+
+import { getUserInformation } from 'apis/user';
 
 const Header = styled.div`
   margin-bottom: 7rem;
@@ -48,6 +50,21 @@ const NumberText = styled(HightlightText)`
 `;
 
 const UserInfomation = () => {
+  const [userData, setUserData] = useState();
+
+  const getUserData = useCallback(async () => {
+    try {
+      const result = await getUserInformation();
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
     <Header>
       <HeaderItem>

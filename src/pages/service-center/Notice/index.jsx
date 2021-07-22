@@ -19,10 +19,7 @@ const ServiceCenter = () => {
 
   return (
     <Container>
-      <BorderTitleContainer
-        title="공지사항"
-        titleComponent={<div>전체 필터</div>}
-      >
+      <BorderTitleContainer title="공지사항">
         <CollapseList description={'공지사항이 없습니다.'} list={noticeList} />
       </BorderTitleContainer>
     </Container>
