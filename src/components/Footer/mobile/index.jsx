@@ -60,7 +60,7 @@ const MobileFooter = () => {
       </IconConatiner>
       <IconConatiner
         selected={pathname === category}
-        onClick={() => handleMovePage(ROUTE_PATH.category)}
+        onClick={() => handleMovePage(category)}
       >
         <Img src={'/assets/images/mobile/product-off-icon.svg'} />
         <Label>카테고리</Label>

@@ -45,6 +45,7 @@ import MyPage from 'pages/my-page';
 import ServiceCenter from 'pages/service-center';
 import Order from 'pages/Order';
 import Cart from 'pages/Cart';
+import Category from 'pages/Category';
 
 import ResponsiveTemplateForRoot from 'template/ResponsiveTemplateForRoot';
 import { useWindowSize } from 'hooks/useWindowSize';
@@ -222,6 +223,10 @@ function App() {
                       />
                       <Route path={`${ROUTE_PATH.order}`} component={Order} />
                       <Route path={`${ROUTE_PATH.cart}`} component={Cart} />
+                      <Route
+                        path={`${ROUTE_PATH.category}`}
+                        component={Category}
+                      />
                     </Switch>
                     <MainFooter />
                   </Scrollbars>
