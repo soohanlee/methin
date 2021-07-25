@@ -32,35 +32,51 @@ const Input = styled(OriginInput)`
 `;
 
 const Filter = ({ getApiDeliveryStatusData }) => {
-  const [datePeriodState, setDatePeriodState] = useState('');
-
-  const detailRef = useRef(null);
+  const [searchTypeState, setSearchTypeState] = useState(''); //조회기간 타입
+  const [datePeriodState, setdatePeriodState] = useState(''); //조회기간 기간
+  const [startDateState, setStartDateState] = useState(''); //시작날짜
+  const [endDateState, setEndDateState] = useState(''); //종료날짜
+  const [orderState, setOrderState] = useState(''); //주문상태타입
+  const [order2State, setOrder2State] = useState(''); //주문상태타입2
+  const [detailTypeState, setDetailTypeState] = useState(''); //상세조건 타입
+  const detailInputState = useRef(); //상세조건 인풋
 
   const handleSearchPeriodChange = (value) => {
-    console.log(value);
+    setSearchTypeState(value);
+  };
+
+  const handleDatePeriodBtn = (e) => {
+    setdatePeriodState(e.target.value);
   };
 
   const handledetailChange = (value) => {
-    console.log(value);
+    setDetailTypeState(value);
   };
 
-  const handleOrderStateChange = (value) => {
-    console.log(value);
+  const handleOrderStateChange = (e) => {
+    setOrderState(e);
   };
 
-  const handleWaitingForShipmentChange = (value) => {
-    console.log(value);
+  const handleWaitingForShipmentChange = (e) => {
+    setOrder2State(e);
   };
 
   const handleStartDateChange = (value) => {
-    console.log(value);
+    setStartDateState(value);
   };
 
   const handleEndDateChange = (value) => {
-    console.log(value);
+    setEndDateState(value);
   };
 
   const handleSearchOnClick = () => {
+    console.log(searchTypeState);
+    console.log(datePeriodState);
+    console.log(startDateState._d);
+    console.log(endDateState._d);
+    console.log(orderState);
+    console.log(order2State);
+    console.log(detailInputState.current.state.value);
     getApiDeliveryStatusData();
   };
 
@@ -72,10 +88,7 @@ const Filter = ({ getApiDeliveryStatusData }) => {
           onChange={handleSearchPeriodChange}
         />
         <RadioGroupContainer>
-          <Radio.Group
-            value={datePeriodState}
-            onChange={(e) => setDatePeriodState(e.target.value)}
-          >
+          <Radio.Group value={datePeriodState} onChange={handleDatePeriodBtn}>
             <Radio.Button value="today">오늘</Radio.Button>
             <Radio.Button value="1week">1주일</Radio.Button>
             <Radio.Button value="1month">1개월</Radio.Button>
@@ -90,7 +103,7 @@ const Filter = ({ getApiDeliveryStatusData }) => {
 
       <LabelContents title="상세조건">
         <SelectBox list={detailList} onChange={handledetailChange} />
-        <Input ref={detailRef} />
+        <Input ref={detailInputState} />
       </LabelContents>
 
       <LabelContents title="주문상태">

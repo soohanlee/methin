@@ -86,6 +86,9 @@ const Setting = ({
 
   const RenderSetSelect = () => {
     const handleSearchBtn = () => {
+      console.log(searchValueState); //배송비 드랍박스
+      console.log(groupNameInputBoxRef.current.state.value); //배송비 인풋
+
       let value = groupNameInputBoxRef.current.state.value;
       if (!value) {
         getApiDeliveryData();

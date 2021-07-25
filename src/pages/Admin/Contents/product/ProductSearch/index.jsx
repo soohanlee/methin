@@ -10,14 +10,8 @@ import { getProductList, getProductDetail } from 'apis/product';
 const ProductSearch = () => {
   const limite = 16;
   const [tableDataState, setTableDataState] = useState([]);
-  const [tableCountState, setTableCountState] = useState([]);
+  const [tableCountState, setTableCountState] = useState(0);
   const [categoryCountArrayState, setCategoryCountArrayState] = useState([]);
-  let all = 0;
-  let ready = 0;
-  let onSale = 0;
-  let soldOut = 0;
-  let stop = 0;
-  let end = 0;
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -28,20 +22,36 @@ const ProductSearch = () => {
 
   const getApiProductData = async () => {
     try {
-      const result = await getProductList(0);
+      const result = await getProductList();
+      console.log('result', result);
+      const list = result.data.data.list;
       const count = result.data.data.count;
       const maxOffset = Math.floor(result.data.data.count / limite) + 1;
-      let customList = [];
-      for (let i = 0; i < maxOffset; i++) {
-        const _result = await getProductList(i);
-        customList = customList.concat(_result.data.data.list);
-      }
       notification.success('검색성공');
 
-      setTableDataState(customList);
-      setTableCountState(customList.length);
-      CategoryCount(customList);
+      const newResult = list.map((item) => {
+        let { ship_category, ship_pay_type, status, preview_status } = item;
+        if (status === 0) {
+          status = '판매준비';
+        } else if (status === 1) {
+          status = '판매중';
+        } else {
+          status = '판매종료';
+        }
+        return {
+          ...item,
+          ship_category: ship_category === 0 ? '무료' : '유료',
+          ship_pay_type: ship_pay_type === 0 ? '선불' : '착불',
+          status: status,
+          preview_status: preview_status === 0 ? 'NO' : 'YES',
+        };
+      });
+
+      setTableDataState(newResult);
+      setTableCountState(count);
+      CategoryCount(newResult);
     } catch (e) {
+      console.log('e', e);
       notification.error('상품 정보를 가져오지 못했습니다.');
     }
   };
@@ -58,6 +68,13 @@ const ProductSearch = () => {
   };
 
   const CategoryCount = (tableList) => {
+    let all = 0;
+    let ready = 0;
+    let onSale = 0;
+    let soldOut = 0;
+    let stop = 0;
+    let end = 0;
+
     tableList.forEach((element) => {
       switch (element.status) {
         case '판매준비':
@@ -96,9 +113,9 @@ const ProductSearch = () => {
       />
 
       <Table
-        getApiProductData={getApiProductData}
+        setTableDataState={setTableDataState}
         count={tableCountState}
-        result={tableDataState}
+        tableList={tableDataState}
       />
     </>
   );

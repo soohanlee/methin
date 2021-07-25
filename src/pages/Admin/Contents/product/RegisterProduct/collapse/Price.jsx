@@ -27,6 +27,8 @@ const Price = ({
   setSaleTypePrice,
   setSaleType,
   setVAT,
+  stauts,
+  setStatus,
 }) => {
   const [mobileSaleType, setMobileSaleType] = useState('won'); // won, percentage
   const [mobileSaleTypePrice, setMobileSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
@@ -112,6 +114,19 @@ const Price = ({
 
   return (
     <CustomCollapse header="판매가" extra={''}>
+      <LabelContents title="판매상태">
+        <ItemContainer>
+          <Radio.Group
+            value={stauts}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <Radio.Button value={0}>미설정</Radio.Button>
+            <Radio.Button value={1}>판매중</Radio.Button>
+            <Radio.Button value={2}>판매종료</Radio.Button>
+          </Radio.Group>
+        </ItemContainer>
+      </LabelContents>
+
       <LabelContents title="판매가">
         <InputNumber
           onChange={setPrice}

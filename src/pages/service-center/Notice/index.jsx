@@ -19,10 +19,7 @@ const ServiceCenter = () => {
 
   return (
     <Container>
-      <BorderTitleContainer
-        title="공지사항"
-        titleComponent={<div>전체 필터</div>}
-      >
+      <BorderTitleContainer title="공지사항">
         <CollapseList description={'공지사항이 없습니다.'} list={noticeList} />
       </BorderTitleContainer>
     </Container>
@@ -30,11 +27,3 @@ const ServiceCenter = () => {
 };
 
 export default ServiceCenter;
-
-const list = [
-  {
-    productName: '맛있는 상품',
-    date: '2029.20.20',
-    desc: '존나 맛잇은 상품',
-  },
-];

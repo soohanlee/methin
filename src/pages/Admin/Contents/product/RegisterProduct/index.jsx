@@ -43,6 +43,7 @@ const RegisterProduct = ({ history }) => {
   const [saleType, setSaleType] = useState('won'); // won, percentage
   const [saleTypePrice, setSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
   const [VAT, setVAT] = useState(0); //0과세 1 면세 2 영세
+  const [stauts, setStatus] = useState(0); //0 미설정 1판매중 2 판매종료
 
   // 배송
   const [isDelivery, setIsDelivery] = useState('yes');
@@ -66,6 +67,12 @@ const RegisterProduct = ({ history }) => {
   // 구매혜택조건
   const [minPurchase, setMinPurchase] = useState(0);
   const [maxPurchase, setMaxPurchase] = useState(0);
+
+  //특이사항
+  const [specialMatters, setSpecialMatters] = useState();
+
+  // 옵션
+  const [option, setOption] = useState();
 
   const initState = () => {
     setPrice('');
@@ -144,7 +151,7 @@ const RegisterProduct = ({ history }) => {
     try {
       const data = {
         name: productName, //상품이름
-        status: 0, // 0 미설정, 1: 판매중 , 2 판매종료 상품 판매상태
+        status: stauts, // 0 미설정, 1: 판매중 , 2 판매종료 상품 판매상태
         count: availableStock, // 상품재고수량
         main_image_id: null, // 이미지 ID
         // ship_info_id: 123,
@@ -165,8 +172,8 @@ const RegisterProduct = ({ history }) => {
         ship_free_cond_amount: deliveryFeeCondition, // 배송비 조건 n원이상 무료
         preview_status: 0, //전시상태 0 : no, 1yes
         jsondata: null, //stringified json data
-        description: 'df', //특이사항
-        Option: null,
+        description: specialMatters, //특이사항
+        option: option,
       };
       if (history.location.state) {
         const result = await updateProductDetail(history.location.state, data);
@@ -208,9 +215,11 @@ const RegisterProduct = ({ history }) => {
         saleTypePrice={saleTypePrice}
         saleType={saleType}
         VAT={VAT}
+        stauts={stauts}
         setSaleTypePrice={setSaleTypePrice}
         setSaleType={setSaleType}
         setVAT={setVAT}
+        setStatus={setStatus}
       />
       <AvailableStock
         setAvailableStock={setAvailableStock}
@@ -252,7 +261,10 @@ const RegisterProduct = ({ history }) => {
         setShipment={setShipment}
       />
       <ReturnExchange />
-      <AS />
+      <AS
+        specialMatters={specialMatters}
+        setSpecialMatters={setSpecialMatters}
+      />
       <PruchaseBenefitConditions
         minPurchase={minPurchase}
         maxPurchase={maxPurchase}

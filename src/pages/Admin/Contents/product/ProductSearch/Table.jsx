@@ -35,9 +35,7 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 0.5rem;
 `;
 
-const Table = ({ getAllProductyData, result, count }) => {
-  const [dataState, setDataState] = useState([]);
-
+const Table = ({ setTableDataState, tableList, count }) => {
   const [productSortSelectState, setProductSortSelectState] = React.useState(
     [],
   );
@@ -152,24 +150,10 @@ const Table = ({ getAllProductyData, result, count }) => {
     },
   ];
 
-  useEffect(() => {
-    setDataState(result);
-  }, [result]);
-
   const statusWordData = ['판매준비', '판매중', '판매종료'];
   const previewWordData = ['NO', 'Yes'];
   const shipWordData = ['무료', '유료'];
   const shipPayWordData = ['선불', '착불'];
-  //숫자데이터 문자로 변환
-  const NumDataToWord = () => {
-    //판매상태
-    for (var i = 0; i < dataState.length; i++) {
-      dataState[i].status = statusWordData[i];
-      dataState[i].preview_status = previewWordData[i];
-      dataState[i].ship_category = shipWordData[i];
-      dataState[i].ship_pay_type = shipPayWordData[i];
-    }
-  };
 
   const handleExcelDown = () => {
     alert('엑셀다운');
@@ -183,10 +167,12 @@ const Table = ({ getAllProductyData, result, count }) => {
   };
 
   const handleChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRowKeys', selectedRowKeys);
     setSelectedTableKeysState(selectedRowKeys);
   };
 
   const handleDeleteModalOpen = (id) => {
+    console.log('id', id);
     setSelectedProductState(id);
     setisDeleteModalOpenState(true);
   };
@@ -199,10 +185,11 @@ const Table = ({ getAllProductyData, result, count }) => {
     try {
       const result = await deleteProduct(selectedProductState);
       if (result.status === 200) {
-        const newTable = dataState.filter((item) => {
+        const newTable = tableList.filter((item) => {
           return item.id !== selectedProductState;
         });
-        setDataState(newTable);
+
+        setTableDataState(newTable);
       } else if (result.status === 404) {
         notification.error('이미 삭제되었습니다.');
       }
@@ -218,10 +205,7 @@ const Table = ({ getAllProductyData, result, count }) => {
   const handleDeleteModalClose = () => {
     setisDeleteModalOpenState(false);
     setSelectedProductState('');
-    getAllProductyData();
   };
-
-  NumDataToWord();
 
   return (
     <ContainerStyled>
@@ -255,7 +239,7 @@ const Table = ({ getAllProductyData, result, count }) => {
 
       <BasicTable
         scroll={{ x: '250vw', y: 500 }}
-        data={dataState}
+        data={tableList}
         columns={columns}
         selectionType="checkbox"
         onChange={handleChange}

@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { requestConfig } from 'apis/config';
-import { getAccessToken, getRefreshToken } from 'utils/tokenManager';
 
 const baseUrl = '/api/auth';
 

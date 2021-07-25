@@ -17,6 +17,7 @@ export const patchNotice = async (id, data) => {
 };
 
 export const deleteNotice = async (id) => {
+  console.log("api/admin/notice/"+id)
   return await axios.delete(`api/admin/notice/${id}`);
 };
 ///////////////////////////////////////////////////////////////////

@@ -65,10 +65,14 @@ const BasicButtonStyled = styled(BasicButton)`
 `;
 const OrderSerach = () => {
   const limite = 16;
-  const [datePeriodState, setDatePeriodStat] = useState('');
+  const [searchTypeState, setSearchTypeState] = useState(''); //조회기간 드랍박스
+  const [datePeriodState, setDatePeriodState] = useState(''); //조회기간 기간버튼
+  const [startDateState, setStartDateState] = useState(''); //시작날짜
+  const [endDateState, setEndDateState] = useState(''); //종료날짜
+  const [searchDateTypeState, setSearchDateTypeState] = useState(''); //조회타입
+  const searchInputRef = useRef(null); //조회타입인풋
   const [tableDataStat, setTableDataStat] = useState([]);
   const [tableCountStat, setTableCountStat] = useState(0);
-  const periodRef = useRef(null);
 
   const wordData = [
     '결제대기',
@@ -108,15 +112,28 @@ const OrderSerach = () => {
     }
   };
 
+  const handleSearchType = (value) => {
+    setSearchTypeState(value);
+  };
   const handleStartDateChange = (value) => {
-    console.log(value);
+    setStartDateState(value);
   };
 
   const handleEndDateChange = (value) => {
-    console.log(value);
+    setEndDateState(value);
+  };
+
+  const handleSearchInput = (e) => {
+    setSearchDateTypeState(e);
   };
 
   const handleSearchOnClick = () => {
+    console.log(searchTypeState);
+    console.log(datePeriodState);
+    console.log(startDateState._d);
+    console.log(endDateState._d);
+    console.log(searchDateTypeState);
+    console.log(searchInputRef.current.state.value);
     getApiPaymentData();
   };
 
@@ -134,13 +151,13 @@ const OrderSerach = () => {
         <LabelContents title="조회기간">
           <ItemContainer>
             <ItemWrap>
-              <PeirodSelectBox list={peirodList} />
+              <PeirodSelectBox onChange={handleSearchType} list={peirodList} />
             </ItemWrap>
             <ItemWrap>
               <ButtonContainer>
                 <Radio.Group
                   value={datePeriodState}
-                  onChange={(e) => setDatePeriodStat(e.target.value)}
+                  onChange={(e) => setDatePeriodState(e.target.value)}
                 >
                   <Radio.Button value="today">오늘</Radio.Button>
                   <Radio.Button value="1week">1주일</Radio.Button>
@@ -158,8 +175,8 @@ const OrderSerach = () => {
         </LabelContents>
         <LabelContents title="조회기간">
           <ItemWrap>
-            <SearhSelectBox list={detailList} />
-            <Input ref={periodRef} />
+            <SearhSelectBox list={detailList} onChange={handleSearchInput} />
+            <Input ref={searchInputRef} />
           </ItemWrap>
         </LabelContents>
       </HeaderContainer>

@@ -21,23 +21,25 @@ const CustomPagination = styled(OriginPagination)`
     margin-bottom: 3rem;
   }
 `;
-const Pagination = () => {
-  const onChange = (e) => {
-    console.log(e);
-  };
+const Pagination = ({ total, onChange }) => {
+  console.log('total', total);
 
-  return (
-    <CustomPagination
-      onChange={onChange}
-      total={100}
-      showTotal={false}
-      showSizeChanger={false}
-      showQuickJumper={false}
-      defaultPageSize={5}
-      showLessItems={false}
-      showTitle={false}
-    />
-  );
+  if (total === 0) {
+    return null;
+  } else {
+    return (
+      <CustomPagination
+        onChange={onChange}
+        total={total}
+        showTotal={false}
+        showSizeChanger={false}
+        showQuickJumper={false}
+        defaultPageSize={5}
+        showLessItems={false}
+        showTitle={false}
+      />
+    );
+  }
 };
 
 export default Pagination;

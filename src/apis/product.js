@@ -78,6 +78,14 @@ export const deleteRelatedProduct = async (id, related_product_id) => {
   );
 };
 
+export const uploadImg = async (data) => {
+  return await axios.post(`/api/admin/image`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
 export const getUserProductList = async (menu_id, data) => {
   //   - **menu_id: number ⇒ 메뉴ID**
   // - offset: number (default: 0, optional) ⇒ 페이지 번호

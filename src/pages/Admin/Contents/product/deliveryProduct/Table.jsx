@@ -55,20 +55,24 @@ const Table = ({
   result,
   count,
 }) => {
+  const [tableState, setTableState] = useState([]);
+  const [selectTableKeyState, setSelectTableKeyState] = useState([]);
+
   const [modifyVisibleState, setModifyVisibleState] = useState(false);
   const [addVisibleState, setAddVisibleState] = useState(false);
-  const [dataState, setDatasState] = useState([]);
   const [indexState, setIndexState] = useState([]);
+  const [maxSearchCoutState, setMaxSearchCoutState] = useState([]);
 
-  //테이블데이터
-  const groupNamesRef = useRef(null);
-  const [useStatusState, setUseStatusState] = useState('');
-  const [calculationWayState, setCalculationWayState] = useState('');
-  const [addPriceState, setAddPriceState] = useState('');
-
-  useEffect(() => {
-    setDatasState(result);
-  }, [result]);
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      setTableState(selectedRows);
+      setSelectTableKeyState(selectedRowKeys);
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
 
   const handleRegistConnectProductBtn = () => {
     handleShowAddModalBtn();
@@ -87,23 +91,18 @@ const Table = ({
     setAddVisibleState(true);
   };
 
-  const handleModifyDataSaveBtn = () => {
-    const data = {
-      body: groupNamesRef.current.state.value,
-      status: useStatusState,
-    };
+  const handleModifyDataSaveBtn = (data) => {
     updateDeliveryDetailData(indexState, data);
   };
 
-  const handleAddDataSaveBtn = () => {
-    const data = {
-      body: groupNamesRef.current.state.value,
-      amount1: 1000,
-      amount2: 2000,
-    };
+  const handleAddDataSaveBtn = (data) => {
     updateDeliveryData(data);
   };
 
+  const handleChangeMaxSearchCount = (e) => {
+    setMaxSearchCoutState(e);
+    console.log(e);
+  };
   const columns = [
     {
       title: '수정',
@@ -161,8 +160,8 @@ const Table = ({
   const wordData = ['미사용', '사용', '???'];
 
   const NumDataToWord = () => {
-    for (var i = 0; i < dataState.length; i++) {
-      dataState[i].status = wordData[i];
+    for (var i = 0; i < result.length; i++) {
+      result[i].status = wordData[i];
     }
   };
   NumDataToWord();
@@ -173,27 +172,27 @@ const Table = ({
         visible={modifyVisibleState}
         setVisible={setModifyVisibleState}
         onClick={handleModifyDataSaveBtn}
-        title="배송비묶음그룹"
-        groupNamesRef={groupNamesRef}
-        setUseStatusState={setUseStatusState}
-        setCalculationWayState={setCalculationWayState}
-        setAddPriceState={setAddPriceState}
+        title="배송비묶음그룹수정"
+        type="modify"
       />
       <DeliveryUpdateModal
         visible={addVisibleState}
         setVisible={setAddVisibleState}
         onClick={handleAddDataSaveBtn}
-        title="배송비묶음그룹"
-        groupNamesRef={groupNamesRef}
-        setUseStatusState={setUseStatusState}
-        setCalculationWayState={setCalculationWayState}
-        setAddPriceState={setAddPriceState}
+        title="배송비묶음그룹추가"
+        type="add"
       />
 
       <Titles>
         <TitleTexts>
           <TitleText>조회 건수 (총 {count} 건) </TitleText>
-          <BasicSelectBoxStyled width="12rem" list={list} />
+          <BasicSelectBoxStyled
+            width="12rem"
+            list={list}
+            onChange={(e) => {
+              handleChangeMaxSearchCount(e);
+            }}
+          />
         </TitleTexts>
       </Titles>
       <MenuBtn>
@@ -206,7 +205,7 @@ const Table = ({
       <TableStyled
         scroll={{ x: '100vw', y: 500 }}
         columns={columns}
-        data={dataState}
+        data={result}
         selectionType={'checkbox'}
         onChange={() => {}}
       />

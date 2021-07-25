@@ -18,7 +18,7 @@ const FAQ = () => {
   }, []);
   return (
     <Container>
-      <BorderTitleContainer title="FAQ" titleComponent={<div>전체 필터</div>}>
+      <BorderTitleContainer title="FAQ">
         <CollapseList description={'FAQ가 없습니다.'} list={faqList} />
       </BorderTitleContainer>
     </Container>
