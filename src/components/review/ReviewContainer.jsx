@@ -89,11 +89,7 @@ const UserID = styled.div`
   margin-left: 3rem;
 `;
 
-<<<<<<< HEAD
-const ReviewContainer = ({ reviewCount, list }) => {
-=======
 const ReviewContainer = ({ count, list, onReviewChange }) => {
->>>>>>> 9cc17462d26afafdd7371c6a57fc4d0c7141f91a
   const renderReviewList = () => {
     if (!list || list.length === 0) {
       return '리뷰를 작성해주세요.';
