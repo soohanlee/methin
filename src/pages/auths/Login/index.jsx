@@ -31,6 +31,7 @@ import {
 } from 'components/styled/Button';
 import { AuthContainer } from 'pages/auths/styled';
 
+import { BreakPoint } from 'configs/config';
 import MobileLogin from './mobile';
 
 const Container = styled(AuthContainer)`
@@ -41,6 +42,9 @@ const Container = styled(AuthContainer)`
   width: 100%;
   max-width: 44rem;
   margin: auto;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    padding: 4rem;
+  }
 `;
 
 const Form = styled(OriginForm)`
@@ -51,6 +55,9 @@ const Label = styled(OriginLabel)`
   font-size: 4rem;
   margin-bottom: 7rem;
   line-height: 1.5;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    font-size: 2.6rem;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -169,44 +176,44 @@ const Login = () => {
   };
 
   return (
-    <ResponsiveTemplate NonPCContents={<MobileLogin />}>
-      <Container>
-        <Label>로그인</Label>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <InputContainer>
-            <Input
-              {...register('id', { required: true })}
-              type="text"
-              placeholder="아이디를 입력해주세요"
-            />
-            {errors.id && <span>아이디를 입력해주세요.</span>}
-          </InputContainer>
+    // <ResponsiveTemplate NonPCContents={<MobileLogin />}>
+    <Container>
+      <Label>로그인</Label>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <InputContainer>
+          <Input
+            {...register('id', { required: true })}
+            type="text"
+            placeholder="아이디를 입력해주세요"
+          />
+          {errors.id && <span>아이디를 입력해주세요.</span>}
+        </InputContainer>
 
-          <InputContainer>
-            <Input
-              {...register('password', { required: true })}
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-            />
-            {errors.password && <span>비밀번호를 입력해주세요</span>}
-          </InputContainer>
+        <InputContainer>
+          <Input
+            {...register('password', { required: true })}
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+          />
+          {errors.password && <span>비밀번호를 입력해주세요</span>}
+        </InputContainer>
 
-          <MainButton type="submit">로그인</MainButton>
-          <SubButton onClick={handleMoveSignupPage}>회원가입</SubButton>
-          {history.location.state?.purchase ? (
-            <NoticeJoinContainer>
-              <NoticeJoin onClick={handleClickNoMember}>비회원 구매</NoticeJoin>
-            </NoticeJoinContainer>
-          ) : (
-            <NoticeJoinContainer>
-              <NoticeJoin onClick={handleSearchProduct}>비회원 조회</NoticeJoin>
-            </NoticeJoinContainer>
-          )}
+        <MainButton type="submit">로그인</MainButton>
+        <SubButton onClick={handleMoveSignupPage}>회원가입</SubButton>
+        {history.location.state?.purchase ? (
+          <NoticeJoinContainer>
+            <NoticeJoin onClick={handleClickNoMember}>비회원 구매</NoticeJoin>
+          </NoticeJoinContainer>
+        ) : (
+          <NoticeJoinContainer>
+            <NoticeJoin onClick={handleSearchProduct}>비회원 조회</NoticeJoin>
+          </NoticeJoinContainer>
+        )}
 
-          {login.loginState === LOGGING_IN && <div>로그인중</div>}
-        </Form>
-      </Container>
-    </ResponsiveTemplate>
+        {login.loginState === LOGGING_IN && <div>로그인중</div>}
+      </Form>
+    </Container>
+    // </ResponsiveTemplate>
   );
 };
 

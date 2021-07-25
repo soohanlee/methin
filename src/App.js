@@ -48,6 +48,7 @@ import Cart from 'pages/Cart';
 
 import ResponsiveTemplateForRoot from 'template/ResponsiveTemplateForRoot';
 import { useWindowSize } from 'hooks/useWindowSize';
+import MobileMenu from 'pages/my-page/MobileMenu';
 
 const { Content } = Layout;
 
@@ -215,6 +216,10 @@ function App() {
                       <Route
                         path={`${ROUTE_PATH.mypage.main}`}
                         component={MyPage}
+                      />
+                      <Route
+                        path={`${ROUTE_PATH.mypage.mobileMenu}`}
+                        component={MobileMenu}
                       />
                       <Route
                         path={`${ROUTE_PATH.serviceCenter.main}`}

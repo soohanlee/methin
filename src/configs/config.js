@@ -13,6 +13,7 @@ export const ROUTE_PATH = {
     ask: '/ask',
     qna: '/qna',
     faq: '/faq',
+    mobileMenu: '/menu',
   },
   serviceCenter: {
     main: '/service-center',

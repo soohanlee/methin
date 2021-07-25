@@ -177,10 +177,10 @@ const Product = () => {
   };
 
   const renderProductList = () => {
-    if (productList.length === 0) {
+    if (mocuupProductList.length === 0) {
       return <EmptyContainer />;
     } else {
-      return productList.map(
+      return mocuupProductList.map(
         ({
           id,
           img,

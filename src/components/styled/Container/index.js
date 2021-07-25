@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { BreakPoint } from 'configs/config';
-import { SEPCIAL_CONTAINER_ID_LIST } from "configs/config";
+import { SEPCIAL_CONTAINER_ID_LIST } from 'configs/config';
 
 export const ListContainer = styled.div`
   display: flex;
@@ -40,8 +40,6 @@ export const FrontInnerContainer = styled.div`
 `;
 
 export const MobileHeaderContainer = styled.div`
-  position: absolute;
-  top: 0;
   width: 100vw;
   background: ${(props) => props.theme.BACKGROUND};
   height: 5rem;
@@ -52,8 +50,6 @@ export const MobileHeaderContainer = styled.div`
 `;
 
 export const MobileFooterContainer = styled.div`
-  position: absolute;
-  bottom: 0;
   width: 100vw;
   background: ${(props) => props.theme.SIGNITURE_MAIN};
   height: 5rem;

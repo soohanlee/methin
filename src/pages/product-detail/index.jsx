@@ -294,7 +294,18 @@ const ProductDetail = () => {
     return '로딩중';
   } else {
     return (
-      <ResponsiveTemplate NonPCContents={<MobileProductDetail />}>
+      <ResponsiveTemplate
+        NonPCContents={
+          <MobileProductDetail
+            productReview={productReview}
+            productDetail={productDetail}
+            productQna={productQna}
+            onClickQnaButtonClick={handleClickQnaButtonClick}
+            isOpenQnaModal={isOpenQnaModal}
+            onCancelQnaButton={handleCancelQnaButton}
+          />
+        }
+      >
         <Container key={productDetail.id}>
           <ProductInfoContainer>
             <MainImgContainer>
