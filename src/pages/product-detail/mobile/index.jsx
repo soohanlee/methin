@@ -4,16 +4,16 @@ import { useHistory } from 'react-router';
 import { ROUTE_PATH } from 'configs/config';
 
 import {
-  FrontContainer,
   MobileHeaderContainer,
-  FrontInnerContainer,
   MobileFooterContainer,
-  ContentsContainer,
 } from 'components/styled/Container';
-import {
-  Label as OriginLabel,
-  SelectableLabel as OriginSelectableLabel,
-} from 'components/styled/Form';
+import { Label as OriginLabel } from 'components/styled/Form';
+import MobilePageTemplate from 'components/MobilePageTemplate';
+import ReviewContainer from 'components/review/ReviewContainer';
+import QNAContainer from 'components/QNA/QNAContainer';
+import MobileModal from 'components/MobileModal';
+
+import QnaModal from '../Modal/QnaModal';
 
 const BackIcon = styled.img.attrs({
   src: '/assets/images/mobile/black-back-icon.svg',
@@ -107,7 +107,14 @@ const CartLabel = styled.div`
   color: ${(props) => props.theme.BACKGROUND};
 `;
 
-const MobileProductDetail = () => {
+const MobileProductDetail = ({
+  productReview,
+  productQna,
+  productDetail,
+  onClickQnaButtonClick,
+  isOpenQnaModal,
+  onCancelQnaButton,
+}) => {
   const history = useHistory();
   const [isOpenPurchaseModal, setIsOpenPruchaseModal] = useState(false);
 
@@ -119,76 +126,104 @@ const MobileProductDetail = () => {
     history.push(ROUTE_PATH.cart);
   };
 
-  const handleOpenOptionModal = () => {};
+  const handleOpenOptionModal = () => {
+    setIsOpenPruchaseModal(true);
+    console.log('클릭');
+  };
 
   return (
-    <FrontContainer>
-      <FrontInnerContainer>
-        <MobileHeaderContainer>
+    <MobilePageTemplate
+      header={
+        <>
           <BackIcon onClick={handleBackHistoryClick} />
           <CartIcon onClick={handleCartClick} />
-        </MobileHeaderContainer>
-        <ContentsContainer>
-          <MainImgContainer>
-            <MainImg
-              src={process.env.PUBLIC_URL + '/assets/images/detailspage.jpg'}
-            />
-          </MainImgContainer>
-          <PaddingContainer>
-            <ProductNameLabel>샐러드 간편식</ProductNameLabel>
-            <Label>인기 샐러드 간편식 도시락 모음전[닭가슴살]</Label>
-            <PriceContainer>
-              <MainLabel>15%</MainLabel>
-              <SaledPrice>19800</SaledPrice>
-              <OriginPrice>12000</OriginPrice>
-            </PriceContainer>
-          </PaddingContainer>
-
-          <PaddingContainer>
-            <BoldText>상품 정보</BoldText>
-
-            <ProductSubInfoContainer>
-              <Label grey>중량-용량</Label>
-              <Label>1개</Label>
-            </ProductSubInfoContainer>
-            <ProductSubInfoContainer>
-              <Label grey>알레르기 정보</Label>
-              <Label>1개</Label>
-            </ProductSubInfoContainer>
-            <ProductSubInfoContainer>
-              <Label grey>유통기한</Label>
-              <Label>1개</Label>
-            </ProductSubInfoContainer>
-
-            <ProductSubInfoContainer>
-              <Label grey>포장타입</Label>
-              <Label>1개</Label>
-            </ProductSubInfoContainer>
-          </PaddingContainer>
-          <PaddingContainer>
-            <BoldText>배송 정보</BoldText>
-            <ProductSubInfoContainer>
-              <Label grey>배송구분</Label>
-              <Label>1개</Label>
-            </ProductSubInfoContainer>
-            <ProductSubInfoContainer>
-              <Label grey>포장 타입</Label>
-              <Label>1개</Label>
-            </ProductSubInfoContainer>
-            <ProductSubInfoContainer>
-              <Label grey>상품선택</Label>
-              <Label>1개</Label>
-            </ProductSubInfoContainer>
-          </PaddingContainer>
-        </ContentsContainer>
-        <MobileFooterContainer>
+        </>
+      }
+      footer={
+        <>
           <WhiteHeartIcon />
           <CartContainer onClick={handleOpenOptionModal}>
             <CartLabel>장바구니</CartLabel>
           </CartContainer>
-        </MobileFooterContainer>
-      </FrontInnerContainer>
-    </FrontContainer>
+        </>
+      }
+    >
+      <MainImgContainer>
+        <MainImg
+          src={process.env.PUBLIC_URL + '/assets/images/detailspage.jpg'}
+        />
+      </MainImgContainer>
+      <PaddingContainer>
+        <ProductNameLabel>샐러드 간편식</ProductNameLabel>
+        <Label>인기 샐러드 간편식 도시락 모음전[닭가슴살]</Label>
+        <PriceContainer>
+          <MainLabel>15%</MainLabel>
+          <SaledPrice>19800</SaledPrice>
+          <OriginPrice>12000</OriginPrice>
+        </PriceContainer>
+      </PaddingContainer>
+
+      <PaddingContainer>
+        <BoldText>상품 정보</BoldText>
+
+        <ProductSubInfoContainer>
+          <Label grey>중량-용량</Label>
+          <Label>1개</Label>
+        </ProductSubInfoContainer>
+        <ProductSubInfoContainer>
+          <Label grey>알레르기 정보</Label>
+          <Label>1개</Label>
+        </ProductSubInfoContainer>
+        <ProductSubInfoContainer>
+          <Label grey>유통기한</Label>
+          <Label>1개</Label>
+        </ProductSubInfoContainer>
+
+        <ProductSubInfoContainer>
+          <Label grey>포장타입</Label>
+          <Label>1개</Label>
+        </ProductSubInfoContainer>
+      </PaddingContainer>
+      <PaddingContainer>
+        <BoldText>배송 정보</BoldText>
+        <ProductSubInfoContainer>
+          <Label grey>배송구분</Label>
+          <Label>1개</Label>
+        </ProductSubInfoContainer>
+        <ProductSubInfoContainer>
+          <Label grey>포장 타입</Label>
+          <Label>1개</Label>
+        </ProductSubInfoContainer>
+        <ProductSubInfoContainer>
+          <Label grey>상품선택</Label>
+          <Label>1개</Label>
+        </ProductSubInfoContainer>
+      </PaddingContainer>
+      <PaddingContainer>
+        <ReviewContainer
+          count={productReview.count}
+          list={productReview.list}
+        />
+        <QNAContainer
+          onClickQnaButtonClick={onClickQnaButtonClick}
+          count={productQna.count}
+          list={productQna.list}
+        />
+        <QnaModal
+          productId={productDetail.id}
+          categoryTitle={productDetail.name | '제목입니다.'}
+          isOpen={isOpenQnaModal}
+          onCancel={onCancelQnaButton}
+          isSecret
+        />
+        <MobileModal
+          isOpen={isOpenPurchaseModal}
+          setIsOpen={setIsOpenPruchaseModal}
+        >
+          asdfsadf
+        </MobileModal>
+      </PaddingContainer>
+    </MobilePageTemplate>
   );
 };
 

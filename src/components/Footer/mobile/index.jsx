@@ -74,7 +74,7 @@ const MobileFooter = () => {
       </IconConatiner>
       <IconConatiner
         selected={pathname === ROUTE_PATH.mypage.main}
-        onClick={() => handleMovePage(ROUTE_PATH.mypage.main)}
+        onClick={() => handleMovePage(ROUTE_PATH.mypage.mobileMenu)}
       >
         <Img src={'/assets/images/mobile/service-off-icon.svg'} />
         <Label>마이페이지</Label>

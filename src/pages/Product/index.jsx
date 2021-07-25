@@ -17,6 +17,7 @@ import { PaddingContainer } from 'components/styled/Container';
 
 import CartModal from './modal/CartModal';
 import { getUserProductList } from 'apis/product';
+import EmptyContainer from 'components/EmptyContainer';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -25,6 +26,7 @@ const Container = styled(PaddingContainer)`
   justify-content: center;
   @media screen and (max-width: ${BreakPoint.s}px) {
     padding: 0;
+    height: 100%;
   }
 `;
 
@@ -62,6 +64,7 @@ const ContentsContainer = styled.div`
   margin-bottom: 8rem;
   @media screen and (max-width: ${BreakPoint.s}px) {
     margin-bottom: 3rem;
+    height: 100%;
   }
 `;
 
@@ -75,10 +78,13 @@ const ContentsHeader = styled.div`
   }
 `;
 
-const ContentsBody = styled.div``;
+const ContentsBody = styled.div`
+  height: 100%;
+`;
 
 const Row = styled(OriginRow)`
   row-gap: 1rem;
+  height: 100%;
 `;
 
 const selectList = [
@@ -171,10 +177,10 @@ const Product = () => {
   };
 
   const renderProductList = () => {
-    if (productList.length === 0) {
-      return '상품이 없습니다.';
+    if (mocuupProductList.length === 0) {
+      return <EmptyContainer />;
     } else {
-      return productList.map(
+      return mocuupProductList.map(
         ({
           id,
           img,

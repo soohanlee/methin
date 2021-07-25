@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BreakPoint } from 'configs/config';
 
 const Container = styled.div``;
 
@@ -9,8 +10,13 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.div`
+  display: flex;
+  align-items: center;
   font-size: 2.3rem;
   margin-bottom: 3rem;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const OptionLabel = styled.div`

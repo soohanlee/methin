@@ -16,7 +16,7 @@ import {
   Form as OriginForm,
   Label as OriginLabel,
 } from 'components/styled/Form';
-import { ROUTE_PATH } from 'configs/config';
+import { ROUTE_PATH, BreakPoint } from 'configs/config';
 import { useHistory } from 'react-router';
 import Postcode from 'components/PostcodeModal';
 
@@ -28,6 +28,9 @@ const Container = styled(AuthContainer)`
   width: 100%;
   max-width: 44rem;
   margin: auto;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    padding: 4rem;
+  }
 `;
 
 const Form = styled(OriginForm)`
@@ -38,6 +41,9 @@ const Title = styled(OriginLabel)`
   font-size: 4rem;
   margin-bottom: 7rem;
   line-height: 1.5;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    font-size: 2.6rem;
+  }
 `;
 
 const Label = styled(OriginLabel)`

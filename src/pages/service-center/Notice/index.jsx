@@ -27,11 +27,3 @@ const ServiceCenter = () => {
 };
 
 export default ServiceCenter;
-
-const list = [
-  {
-    productName: '맛있는 상품',
-    date: '2029.20.20',
-    desc: '존나 맛잇은 상품',
-  },
-];

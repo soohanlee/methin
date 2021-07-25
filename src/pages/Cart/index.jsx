@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react';
 import styled, { css } from 'styled-components';
+import { useHistory } from 'react-router';
+
 import { getCartList, updateCartItemCount, deleteCartItem } from 'apis/cart';
 import {
   UserContext,
@@ -24,7 +26,9 @@ import { PageTitle as OriginPageTitle } from 'components/styled/Form';
 import OriginBorderTitleContainer from 'components/container/BorderTitleContainer';
 import { SubButton as OriginSubButton } from 'components/styled/Button';
 import { ROUTE_PATH } from 'configs/config';
-import { useHistory } from 'react-router';
+
+import ResponsiveTemplate from 'template/ResponsiveTemplate';
+import MobileCart from './mobile';
 
 const PageTitle = styled(OriginPageTitle)`
   text-align: center;
@@ -194,8 +198,9 @@ const Cart = () => {
     const cookiesCartList = getCartCookies();
     const list = [];
     if (cookiesCartList) {
+      console.log('AcookiesCartList', cookiesCartList);
       for (let i = 0; i < cookiesCartList.length; i++) {
-        const result = await setCartDetail(cookiesCartList[i].id);
+        const result = await setCartDetail(cookiesCartList[i].product_id);
         result.count = cookiesCartList[i].count;
         list.push(result);
       }
@@ -231,7 +236,7 @@ const Cart = () => {
 
         const newCookiesList = newCartList.map(({ id, count }) => {
           let cartData = {};
-          cartData.id = id;
+          cartData.product_id = id;
           cartData.count = count;
           return cartData;
         });
@@ -266,7 +271,7 @@ const Cart = () => {
 
         const newCookiesList = newCartList.map(({ id, count }) => {
           let cartData = {};
-          cartData.id = id;
+          cartData.product_id = id;
           cartData.count = count;
           return cartData;
         });
@@ -385,27 +390,29 @@ const Cart = () => {
   };
 
   return (
-    <PaddingContainer>
-      {/* 장바구니 */}
-      <PageTitle>장바구니</PageTitle>
-      <CartContainer>
-        <Contents>
-          <BorderTitleContainer title="상품 목록">
-            {renderCartList()}
-          </BorderTitleContainer>
-        </Contents>
-        <Receipt
-          isDisabled={cartList.length === 0}
-          isCart
-          finalPrice={finalPrice}
-          discountPrice={finalDiscountPrice}
-          productPrice={0}
-          deliveryPrice={deliveryPrice}
-          onClickPurchaseButton={handleClickPurchaseButton}
-        />
-      </CartContainer>
-      <SubButton onClick={handleCheckListDelete}>선택 삭제</SubButton>
-    </PaddingContainer>
+    <ResponsiveTemplate NonPCContents={<MobileCart cartList={cartList} />}>
+      <PaddingContainer>
+        {/* 장바구니 */}
+        <PageTitle>장바구니</PageTitle>
+        <CartContainer>
+          <Contents>
+            <BorderTitleContainer title="상품 목록">
+              {renderCartList()}
+            </BorderTitleContainer>
+          </Contents>
+          <Receipt
+            isDisabled={cartList.length === 0}
+            isCart
+            finalPrice={finalPrice}
+            discountPrice={finalDiscountPrice}
+            productPrice={0}
+            deliveryPrice={deliveryPrice}
+            onClickPurchaseButton={handleClickPurchaseButton}
+          />
+        </CartContainer>
+        <SubButton onClick={handleCheckListDelete}>선택 삭제</SubButton>
+      </PaddingContainer>
+    </ResponsiveTemplate>
   );
 };
 

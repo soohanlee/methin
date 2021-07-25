@@ -39,47 +39,7 @@ const LogoWithIconContainer = styled.div`
   background: ${(props) => props.theme.SIGNITURE_MAIN};
 `;
 
-const MenuContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background: ${(props) => props.theme.BACKGROUND};
-`;
-
-const MenuItem = styled.div`
-  color: ${(props) => props.theme.TEXT_INFORMATION};
-  font-size: 1.55rem;
-  border-bottom: 0.2rem transparent;
-  font-weight: 500;
-  width: 100%;
-  text-align: center;
-  position: relative;
-  line-height: 4.6rem;
-  padding: 0 0.5rem;
-  ${(props) =>
-    props.selected &&
-    css`
-      color: ${(props) => props.theme.SIGNITURE_MAIN};
-    `}
-`;
-
-const Border = styled.div`
-  border-bottom: 0.2rem transparent;
-  width: 100%;
-  ${(props) =>
-    props.selected &&
-    css`
-      border-bottom: 0.2rem solid ${(props) => props.theme.SIGNITURE_MAIN};
-    `}
-`;
-
-const MobileNavigation = ({
-  onCartClick,
-  onSearchClick,
-  onLogoClick,
-  onClickMovePage,
-}) => {
-  const { pathname } = useLocation();
-  const product = ROUTE_PATH.product;
+const MobileNavigation = ({ onCartClick, onSearchClick, onLogoClick }) => {
   return (
     <Container>
       <LogoWithIconContainer>
@@ -89,18 +49,6 @@ const MobileNavigation = ({
           <CartIcon onClick={onCartClick} />
         </IconContainer>
       </LogoWithIconContainer>
-
-      <MenuContainer>
-        <MenuItem
-          selected={pathname === product}
-          onClick={() => onClickMovePage(product)}
-        >
-          신상품
-          <Border selected={pathname === product} />
-        </MenuItem>
-        <MenuItem>베스트</MenuItem>
-        <MenuItem>알뜰쇼핑</MenuItem>
-      </MenuContainer>
     </Container>
   );
 };

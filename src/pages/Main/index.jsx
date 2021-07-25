@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { useHistory } from 'react-router-dom';
 import Selectbox from 'components/Form/Selectbox';
@@ -11,6 +11,7 @@ import { PaddingContainer } from 'components/styled/Container';
 import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import MobileMain from 'pages/Main/mobile';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.div``;
 
@@ -37,6 +38,39 @@ const ViewMoreButton = styled.div`
   align-items: center;
 `;
 
+const MenuContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background: ${(props) => props.theme.BACKGROUND};
+`;
+
+const MenuItem = styled.div`
+  color: ${(props) => props.theme.TEXT_INFORMATION};
+  font-size: 1.55rem;
+  border-bottom: 0.2rem transparent;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  line-height: 4.6rem;
+  padding: 0 0.5rem;
+  ${(props) =>
+    props.selected &&
+    css`
+      color: ${(props) => props.theme.SIGNITURE_MAIN};
+    `}
+`;
+
+const Border = styled.div`
+  border-bottom: 0.2rem transparent;
+  width: 100%;
+  ${(props) =>
+    props.selected &&
+    css`
+      border-bottom: 0.2rem solid ${(props) => props.theme.SIGNITURE_MAIN};
+    `}
+`;
+
 const ViewMoreImg = styled.img.attrs({
   src: '/assets/images/black-view-more-icon-1.svg',
 })`
@@ -45,6 +79,8 @@ const ViewMoreImg = styled.img.attrs({
 `;
 
 const Main = () => {
+  const { pathname } = useLocation();
+  const product = ROUTE_PATH.product;
   const [selectedItem, setSelectedItem] = useState({
     key: 1,
     value: '신상품순',
@@ -93,6 +129,17 @@ const Main = () => {
     <ResponsiveTemplate
       NonPCContents={
         <Container>
+          <MenuContainer>
+            <MenuItem
+              selected={pathname === product}
+              onClick={() => handleMovePage(product)}
+            >
+              신상품
+              <Border selected={pathname === product} />
+            </MenuItem>
+            <MenuItem>베스트</MenuItem>
+            <MenuItem>알뜰쇼핑</MenuItem>
+          </MenuContainer>
           <MainCarousel />
           <MobileMain onProductDetailClick={handleProductDetailClick} />
         </Container>
