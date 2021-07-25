@@ -17,7 +17,8 @@ const MobileModal = ({ isOpen, setIsOpen, children }) => {
     left: 0;
     width: 100vw;
     padding: 1rem;
-    background: white;
+    background: ${(props) => props.theme.BACKGROUND};
+    z-index: 999;
   `;
 
   const handleClose = () => {
