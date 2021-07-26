@@ -27,7 +27,9 @@ import {
 import { removeRest } from 'utils/common';
 import { notification } from 'utils/notification';
 
-const Container = styled.div``;
+const Container = styled.div`
+width:70vw
+`;
 
 const RegisterProduct = ({ history }) => {
   // 재고 수량
@@ -35,6 +37,8 @@ const RegisterProduct = ({ history }) => {
 
   // 상품명
   const [productName, setProductName] = useState('');
+  // 카테고리
+  const [category, setCategory] = useState({});
 
   // 판매가
   const [price, setPrice] = useState(0);
@@ -44,7 +48,7 @@ const RegisterProduct = ({ history }) => {
   const [saleTypePrice, setSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
   const [VAT, setVAT] = useState(0); //0과세 1 면세 2 영세
   const [stauts, setStatus] = useState(0); //0 미설정 1판매중 2 판매종료
-
+  
   // 배송
   const [isDelivery, setIsDelivery] = useState('yes');
   const [deliveryType, setDeliveryType] = useState(0); //package, directly
@@ -142,7 +146,24 @@ const RegisterProduct = ({ history }) => {
 
     fetchData();
   }, []);
-
+  const addCategory = (primary, secondary) => { 
+    if(!primary) return;
+    if(!secondary) //set only primary category
+    {
+      var newData = {...category};
+      newData[primary] = []
+      setCategory(newData); 
+    }    
+    else
+    {
+      let newData = {...category};
+      if(newData[primary])
+      {
+        newData[primary] = newData[primary].concat(secondary);
+        setCategory(newData);
+      }
+    }
+  }
   const handleRegisterProductButtonClick = async () => {
     if (productName === '' || price === '') {
       notification.error('필수 입력사항을 입력해주세요.');
@@ -203,7 +224,7 @@ const RegisterProduct = ({ history }) => {
 
   return (
     <Container>
-      <Category />
+      <Category category={category} addCategory={addCategory}/>
       <ProductName value={productName} setValue={setProductName} />
       <Price
         price={price}

@@ -35,7 +35,7 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 0.5rem;
 `;
 
-const Table = ({ setTableDataState, tableList, count }) => {
+const Table = ({ setTableDataState, tableList, count , limit, handleTableChange,loading }) => {
   const [productSortSelectState, setProductSortSelectState] = React.useState(
     [],
   );
@@ -238,11 +238,15 @@ const Table = ({ setTableDataState, tableList, count }) => {
       </HeaderContainerStyled>
 
       <BasicTable
-        scroll={{ x: '250vw', y: 500 }}
+        scroll={{ x: '250vw', y: 800 }}
         data={tableList}
         columns={columns}
         selectionType="checkbox"
         onChange={handleChange}
+        onTableChange={handleTableChange}
+        loading={loading}
+        total = {count}
+        pageSize = {limit}
       />
       <BasicModal
         visible={isDeleteModalOpenState}

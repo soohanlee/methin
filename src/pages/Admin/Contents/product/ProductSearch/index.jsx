@@ -8,10 +8,16 @@ import { notification } from 'utils/notification';
 import { getProductList, getProductDetail } from 'apis/product';
 
 const ProductSearch = () => {
-  const limite = 16;
+  const limit = 16;
   const [tableDataState, setTableDataState] = useState([]);
   const [tableCountState, setTableCountState] = useState(0);
   const [categoryCountArrayState, setCategoryCountArrayState] = useState([]);
+  const [productOffset,setProductOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(()=>{
+    getApiProductData(productOffset);
+  },[productOffset]);
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -20,14 +26,13 @@ const ProductSearch = () => {
     fetchAndSetUser();
   }, []);
 
-  const getApiProductData = async () => {
+  const getApiProductData = async (offset=0) => {
     try {
-      const result = await getProductList();
+      setLoading(true);
+      const result = await getProductList(offset);
       console.log('result', result);
       const list = result.data.data.list;
       const count = result.data.data.count;
-      const maxOffset = Math.floor(result.data.data.count / limite) + 1;
-      notification.success('검색성공');
 
       const newResult = list.map((item) => {
         let { ship_category, ship_pay_type, status, preview_status } = item;
@@ -54,6 +59,7 @@ const ProductSearch = () => {
       console.log('e', e);
       notification.error('상품 정보를 가져오지 못했습니다.');
     }
+    setLoading(false);
   };
 
   const getSearchProductData = async (id) => {
@@ -100,6 +106,9 @@ const ProductSearch = () => {
     setCategoryCountArrayState([all, ready, onSale, soldOut, stop, end]);
   };
 
+  const handleTableChange = (pagination, filter, sort) => {
+    setProductOffset(pagination.current - 1);
+  }
   return (
     <>
       <Title />
@@ -116,6 +125,9 @@ const ProductSearch = () => {
         setTableDataState={setTableDataState}
         count={tableCountState}
         tableList={tableDataState}
+        limit={limit}
+        loading ={loading}
+        handleTableChange={handleTableChange}
       />
     </>
   );

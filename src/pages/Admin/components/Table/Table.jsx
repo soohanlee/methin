@@ -61,6 +61,10 @@ const Table = ({
   data,
   scroll,
   x,
+  total,
+  pageSize,
+  onTableChange,
+  loading,
   ...props
 }) => {
   // selectionType = 'checkbox' | 'radio' 타입은 둘중 하나로 들어와야합니다.
@@ -95,7 +99,10 @@ const Table = ({
       }
       columns={customColumns}
       dataSource={data}
+      loading={loading}
       bordered
+      onChange={onTableChange}
+      pagination={{total,pageSize}}
       scroll={scroll}
       {...props}
     />
