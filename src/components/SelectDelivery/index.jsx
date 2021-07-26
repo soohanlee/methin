@@ -15,6 +15,7 @@ import {
 } from 'components/styled/Button';
 import { Input } from 'components/styled/Form';
 import { notification } from 'utils/notification';
+import { BreakPoint } from 'configs/config';
 
 const postCodeStyle = {
   width: '100%',
@@ -24,6 +25,11 @@ const postCodeStyle = {
 const Modal = styled(ModalBase)`
   .ant-modal-body {
     padding: 4rem 3rem;
+  }
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    .ant-modal-body {
+      padding: 2rem 1rem;
+    }
   }
 `;
 

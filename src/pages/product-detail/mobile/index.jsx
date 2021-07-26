@@ -131,6 +131,10 @@ const MobileProductDetail = ({
     console.log('클릭');
   };
 
+  const handleClickReviewButtonClick = () => {
+    console.log('Asdf');
+  };
+
   return (
     <MobilePageTemplate
       header={
@@ -201,6 +205,7 @@ const MobileProductDetail = ({
       </PaddingContainer>
       <PaddingContainer>
         <ReviewContainer
+          onClickReviewButtonClick={handleClickReviewButtonClick}
           count={productReview.count}
           list={productReview.list}
         />

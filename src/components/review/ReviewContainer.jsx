@@ -89,7 +89,7 @@ const UserID = styled.div`
   margin-left: 3rem;
 `;
 
-const ReviewContainer = ({ count, list, onReviewChange }) => {
+const ReviewContainer = ({ count, list, onReviewChange, onClickReviewButtonClick }) => {
   const renderReviewList = () => {
     if (!list || list.length === 0) {
       return '리뷰를 작성해주세요.';
@@ -132,7 +132,7 @@ const ReviewContainer = ({ count, list, onReviewChange }) => {
       >
         <Header>
           <Label>상품을 구매한 다른 사람들의 평가를 확인하세요.</Label>
-          <SubButton>리뷰쓰기</SubButton>
+          <SubButton onClick={onClickReviewButtonClick}>리뷰쓰기</SubButton>
         </Header>
         {list.length === 0 ? '리뷰를 남겨주세요.' : renderReviewList()}
 

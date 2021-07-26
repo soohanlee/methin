@@ -290,6 +290,10 @@ const ProductDetail = () => {
     handleMovePage(ROUTE_PATH.order);
   };
 
+  const handleClickReviewButtonClick = () => {
+    console.log('Asdf');
+  };
+
   if (!productDetail && !productDetail.id) {
     return '로딩중';
   } else {
@@ -385,6 +389,7 @@ const ProductDetail = () => {
           <Descriptions />
 
           <ReviewContainer
+            onClickReviewButtonClick={handleClickReviewButtonClick}
             count={productReview.count}
             list={productReview.list}
           />

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import EditorForm from 'components/EditorForm';
 import ModalBase from 'components/ModalBase';
 import { registerUserProductQna } from 'apis/product';
+import { BreakPoint } from 'configs/config';
 
 import { MainButton as OriginMainButton } from 'components/styled/Button';
 
@@ -22,6 +23,11 @@ const MainButton = styled(OriginMainButton)`
 const Modal = styled(ModalBase)`
   .ant-modal-body {
     padding: 4rem 3rem;
+  }
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    .ant-modal-body {
+      padding: 2rem 1rem;
+    }
   }
 `;
 
