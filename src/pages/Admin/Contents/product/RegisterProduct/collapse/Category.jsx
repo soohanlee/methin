@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CustomCollapse from 'pages/Admin/components/Collapse';
 import styled from 'styled-components';
 import { Input as OriginInput, Empty } from 'antd';
@@ -44,18 +44,16 @@ const Input = styled(OriginInput)`
 
 const AddButton = styled.div``;
 
-const Category = () => {
-  const [data, setData] = useState({});
+const Category = (props) => {
+  let primary_input = useRef();
+  let secondary_input = useRef();
+  
+  const [category, setCategory] = useState(props.category);
+  useEffect(()=>{setCategory(props.category)}, [props.category]);
+
   const [selectedFirstItem, setSelectedFirstItem] = useState('축산');
   const [selectedSecondItem, setSelectedSecondItem] = useState('축산');
 
-  const [inputFirstItem, setInputFirstItem] = useState('');
-  const [inputSecondItem, setInputSecondItem] = useState('');
-  const dataKey = Object.keys(data);
-
-  useEffect(() => {
-    setData(dataList);
-  }, []);
 
   const handleFristItemClick = (value) => {
     setSelectedFirstItem(value);
@@ -66,16 +64,16 @@ const Category = () => {
   };
 
   const handleAddFirstItemClick = () => {
-    const newData = data;
-    newData[inputFirstItem] = [];
-    setData(newData);
+    props.addCategory(primary_input.current.state.value);
   };
 
   const handleAddSecondItemClick = () => {
-    data[selectedFirstItem].concat([inputSecondItem]);
-    setData(data);
+    if(category[selectedFirstItem])
+    {
+      props.addCategory(selectedFirstItem, secondary_input.current.state.value);
+    }
   };
-  if (!data) {
+  if (!category) {
     return <Empty />;
   } else {
     return (
@@ -83,24 +81,26 @@ const Category = () => {
         <ButtonContainer>
           <ButtonLine>
             <Input
-              onChange={(e) => setInputFirstItem(e.target.value)}
+              ref={primary_input}
+              // onChange={(e) => setInputFirstItem(e.target.value)}
               addonAfter={
                 <AddButton onClick={handleAddFirstItemClick}>
                   1차 분류 추가하기
                 </AddButton>
               }
-              value={inputFirstItem}
+              // value={inputFirstItem}
             />
           </ButtonLine>
           <ButtonLine>
             <Input
-              onChange={(e) => setInputSecondItem(e.target.value)}
+              ref={secondary_input}
+              // onChange={(e) => setInputSecondItem(e.target.value)}
               addonAfter={
                 <AddButton onClick={handleAddSecondItemClick}>
                   2차 분류 추가하기
                 </AddButton>
               }
-              value={inputSecondItem}
+              // value={inputSecondItem}
             />
           </ButtonLine>
         </ButtonContainer>
@@ -109,8 +109,8 @@ const Category = () => {
           <ItemBox>
             <ItemHeader>1차 분류</ItemHeader>
             <ItemBody>
-              {dataKey &&
-                dataKey.map((item) => (
+              {category &&
+                Object.keys(category).map((item) => (
                   <Item
                     key={item}
                     isClicked={item === selectedFirstItem}
@@ -124,8 +124,8 @@ const Category = () => {
           <ItemBox>
             <ItemHeader>2차 분류</ItemHeader>
             <ItemBody>
-              {data[selectedFirstItem] &&
-                data[selectedFirstItem].map((item) => (
+              {category[selectedFirstItem] &&
+                category[selectedFirstItem].map((item) => (
                   <Item
                     key={item}
                     isClicked={item === selectedSecondItem}
