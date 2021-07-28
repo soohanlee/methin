@@ -4,6 +4,7 @@ export const ROUTE_PATH = {
   signup: '/signup',
   findId: '/findId',
   product: '/product',
+  deliveryTracking: '/delivery-tracking',
   mypage: {
     main: '/mypage',
     destination: '/destination',

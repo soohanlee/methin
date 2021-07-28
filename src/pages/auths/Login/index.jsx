@@ -32,7 +32,7 @@ import {
 import { AuthContainer } from 'pages/auths/styled';
 
 import { BreakPoint } from 'configs/config';
-import MobileLogin from './mobile';
+// import MobileLogin from './mobile';
 
 const Container = styled(AuthContainer)`
   display: flex;
@@ -172,7 +172,9 @@ const Login = () => {
   };
 
   const handleSearchProduct = () => {
-    history.push(ROUTE_PATH.order);
+    history.push({
+      pathname: ROUTE_PATH.deliveryTracking,
+    });
   };
 
   return (

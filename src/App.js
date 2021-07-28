@@ -50,6 +50,7 @@ import Category from 'pages/Category';
 import ResponsiveTemplateForRoot from 'template/ResponsiveTemplateForRoot';
 import { useWindowSize } from 'hooks/useWindowSize';
 import MobileMenu from 'pages/my-page/MobileMenu';
+import DeliveryTrackingPage from 'pages/DeliveryTracking/DeliveryTrackingPage';
 
 const { Content } = Layout;
 
@@ -231,6 +232,10 @@ function App() {
                       <Route
                         path={`${ROUTE_PATH.category}`}
                         component={Category}
+                      />
+                      <Route
+                        path={`${ROUTE_PATH.deliveryTracking}`}
+                        component={DeliveryTrackingPage}
                       />
                     </Switch>
                     <MainFooter />

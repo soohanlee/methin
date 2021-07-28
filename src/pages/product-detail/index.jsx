@@ -23,6 +23,7 @@ import ReviewContainer from 'components/review/ReviewContainer';
 import MobileProductDetail from './mobile';
 import QNAContainer from 'components/QNA/QNAContainer';
 import QnaModal from './Modal/QnaModal';
+import ReviewModal from 'pages/product-detail/Modal/ReviewModal';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -167,6 +168,7 @@ const ProductDetail = () => {
   const [productQna, setProductQna] = useState({ list: [], count: 0 });
 
   const [isOpenQnaModal, setIsOpenQnaModal] = useState(false);
+  const [isOpenReviewModal, setIsOpenReviewModal] = useState(false);
 
   const getProductDetatil = useCallback(async () => {
     const result = await getUserProductDetail(numberProductId);
@@ -277,6 +279,10 @@ const ProductDetail = () => {
     setIsOpenQnaModal(false);
   };
 
+  const handleCancelReviewButton = () => {
+    setIsOpenReviewModal(false);
+  };
+
   const handleMinus = () => {
     if (productCount === 0 || productCount < 1) {
       return;
@@ -291,7 +297,18 @@ const ProductDetail = () => {
   };
 
   const handleClickReviewButtonClick = () => {
-    console.log('Asdf');
+    if (login.loginState !== LOGGED_IN) {
+      if (!alert('로그인 후 이용가능합니다.')) {
+        history.push({
+          pathname: ROUTE_PATH.login,
+          state: {
+            from: history.location.pathname,
+          },
+        });
+      }
+    } else {
+      setIsOpenReviewModal(true);
+    }
   };
 
   if (!productDetail && !productDetail.id) {
@@ -304,9 +321,11 @@ const ProductDetail = () => {
             productReview={productReview}
             productDetail={productDetail}
             productQna={productQna}
-            onClickQnaButtonClick={handleClickQnaButtonClick}
             isOpenQnaModal={isOpenQnaModal}
+            onClickQnaButtonClick={handleClickQnaButtonClick}
+            onClickReviewButtonClick={handleClickReviewButtonClick}
             onCancelQnaButton={handleCancelQnaButton}
+            onCancelReviewButton={handleCancelReviewButton}
           />
         }
       >
@@ -403,7 +422,12 @@ const ProductDetail = () => {
             categoryTitle={productDetail.name | '제목입니다.'}
             isOpen={isOpenQnaModal}
             onCancel={handleCancelQnaButton}
-            isSecret
+          />
+          <ReviewModal
+            productId={productDetail.id}
+            categoryTitle={productDetail.name | '제목입니다.'}
+            isOpen={isOpenReviewModal}
+            onCancel={handleCancelReviewButton}
           />
         </Container>
       </ResponsiveTemplate>

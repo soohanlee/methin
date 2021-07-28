@@ -14,6 +14,8 @@ import QNAContainer from 'components/QNA/QNAContainer';
 import MobileModal from 'components/MobileModal';
 
 import QnaModal from '../Modal/QnaModal';
+import ReviewPage from 'pages/product-detail/mobile/ReviewPage';
+import QnaPage from 'pages/product-detail/mobile/QnaPage';
 
 const BackIcon = styled.img.attrs({
   src: '/assets/images/mobile/black-back-icon.svg',
@@ -107,16 +109,35 @@ const CartLabel = styled.div`
   color: ${(props) => props.theme.BACKGROUND};
 `;
 
+const MenuContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const MenuLabel = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${(props) =>
+    props.clicked ? props.theme.SIGNITURE_MAIN : props.theme.TEXT_INFORMATION};
+`;
+
 const MobileProductDetail = ({
   productReview,
   productQna,
   productDetail,
   onClickQnaButtonClick,
+  onClickReviewButtonClick,
   isOpenQnaModal,
+  isOpenReviewModal,
   onCancelQnaButton,
+  onCancelReviewButton,
 }) => {
   const history = useHistory();
   const [isOpenPurchaseModal, setIsOpenPruchaseModal] = useState(false);
+
+  const [menu, setMenu] = useState('1');
 
   const handleBackHistoryClick = () => {
     history.go(-1);
@@ -134,6 +155,24 @@ const MobileProductDetail = ({
   const handleClickReviewButtonClick = () => {
     console.log('Asdf');
   };
+
+  const handleClickMenu = (id) => {
+    setMenu(id);
+  };
+
+  const renderMenuContents = () => {
+    if (menu === '1') {
+      return <div>상품 설명</div>;
+    } else if (menu === '2') {
+      return <div>상세 정보</div>;
+    } else if (menu === '3') {
+      return <ReviewPage reviewList={productReview.list} />;
+    } else if (menu === '4') {
+      return <QnaPage qnaList={productQna.list} />;
+    }
+  };
+
+  <QnaPage qnaList={productQna.list} />;
 
   return (
     <MobilePageTemplate
@@ -204,29 +243,33 @@ const MobileProductDetail = ({
         </ProductSubInfoContainer>
       </PaddingContainer>
       <PaddingContainer>
-        <ReviewContainer
-          onClickReviewButtonClick={handleClickReviewButtonClick}
-          count={productReview.count}
-          list={productReview.list}
-        />
-        <QNAContainer
-          onClickQnaButtonClick={onClickQnaButtonClick}
-          count={productQna.count}
-          list={productQna.list}
-        />
-        <QnaModal
-          productId={productDetail.id}
-          categoryTitle={productDetail.name | '제목입니다.'}
-          isOpen={isOpenQnaModal}
-          onCancel={onCancelQnaButton}
-          isSecret
-        />
-        <MobileModal
-          isOpen={isOpenPurchaseModal}
-          setIsOpen={setIsOpenPruchaseModal}
-        >
-          asdfsadf
-        </MobileModal>
+        <MenuContainer>
+          <MenuLabel
+            onClick={() => handleClickMenu('1')}
+            clicked={menu === '1'}
+          >
+            상품설명
+          </MenuLabel>
+          <MenuLabel
+            onClick={() => handleClickMenu('2')}
+            clicked={menu === '2'}
+          >
+            상세정보
+          </MenuLabel>
+          <MenuLabel
+            onClick={() => handleClickMenu('3')}
+            clicked={menu === '3'}
+          >
+            후기
+          </MenuLabel>
+          <MenuLabel
+            onClick={() => handleClickMenu('4')}
+            clicked={menu === '4'}
+          >
+            문의
+          </MenuLabel>
+        </MenuContainer>
+        {renderMenuContents()}
       </PaddingContainer>
     </MobilePageTemplate>
   );
