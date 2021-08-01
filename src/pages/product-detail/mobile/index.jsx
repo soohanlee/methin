@@ -7,7 +7,7 @@ import {
   MobileHeaderContainer,
   MobileFooterContainer,
 } from 'components/styled/Container';
-import { Label as OriginLabel } from 'components/styled/Form';
+import { Label as OriginLabel, Select } from 'components/styled/Form';
 import MobilePageTemplate from 'components/MobilePageTemplate';
 import ReviewContainer from 'components/review/ReviewContainer';
 import QNAContainer from 'components/QNA/QNAContainer';
@@ -56,7 +56,7 @@ const Label = styled(OriginLabel)`
 
 const MainLabel = styled(OriginLabel)`
   display: flex;
-  color: ${(props) => props.theme.SIGNITURE_MAIN};
+  color: ${(props) => props.theme.MAIN};
   font-size: 2.4rem;
 `;
 
@@ -120,7 +120,7 @@ const MenuLabel = styled.div`
   align-items: center;
   justify-content: center;
   color: ${(props) =>
-    props.clicked ? props.theme.SIGNITURE_MAIN : props.theme.TEXT_INFORMATION};
+    props.clicked ? props.theme.MAIN : props.theme.TEXT_INFORMATION};
 `;
 
 const MobileProductDetail = ({
@@ -134,6 +134,7 @@ const MobileProductDetail = ({
   onCancelQnaButton,
   onCancelReviewButton,
 }) => {
+  console.log('productDetail', productDetail);
   const history = useHistory();
   const [isOpenPurchaseModal, setIsOpenPruchaseModal] = useState(false);
 
@@ -172,7 +173,9 @@ const MobileProductDetail = ({
     }
   };
 
-  <QnaPage qnaList={productQna.list} />;
+  const handleSelectChange = (value) => {
+    console.log(value);
+  };
 
   return (
     <MobilePageTemplate
@@ -271,6 +274,13 @@ const MobileProductDetail = ({
         </MenuContainer>
         {renderMenuContents()}
       </PaddingContainer>
+      <MobileModal
+        isOpen={isOpenPurchaseModal}
+        setIsOpen={setIsOpenPruchaseModal}
+      >
+        df
+        {/* <Select onChange={handleSelectChange} options={options} /> */}
+      </MobileModal>
     </MobilePageTemplate>
   );
 };

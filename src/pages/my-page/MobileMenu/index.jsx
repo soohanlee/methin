@@ -62,11 +62,15 @@ const MobileMenu = () => {
           <Label>주문조회</Label>
         </IconWithLabelContainer>
 
-        <IconWithLabelContainer>
+        <IconWithLabelContainer
+          onClick={() => handleMovePage(ROUTE_PATH.mobile.mypage)}
+        >
           <Img src="/assets/images/mobile/mypage-icon.svg" />
           <Label>마이페이지</Label>
         </IconWithLabelContainer>
-        <IconWithLabelContainer>
+        <IconWithLabelContainer
+          onClick={() => handleMovePage(ROUTE_PATH.serviceCenter.main)}
+        >
           <Img src="/assets/images/mobile/service-center-icon.svg" />
           <Label>고객센터</Label>
         </IconWithLabelContainer>

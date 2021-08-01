@@ -18,7 +18,7 @@ const PaginationContainer = styled.div`
 `;
 
 const Count = styled.div`
-  color: ${(props) => props.theme.SIGNITURE_MAIN};
+  color: ${(props) => props.theme.MAIN};
 `;
 
 const Header = styled.div`

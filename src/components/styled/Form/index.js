@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { BreakPoint } from 'configs/config';
+import ReactSelect from 'react-select';
 
 export const Input = styled.input`
   display: flex;
@@ -20,7 +21,7 @@ export const Label = styled.label`
   ${(props) =>
     props.hightlight &&
     css`
-      color: ${props.theme.SIGNITURE_MAIN};
+      color: ${props.theme.MAIN};
     `}
   @media screen and (max-width: ${BreakPoint.xl}px) {
     font-size: 1.4rem;
@@ -38,12 +39,12 @@ export const SelectableLabel = styled.div`
   margin-bottom: 1rem;
   border-bottom: 0.1rem solid transparent;
   color: ${(props) =>
-    props.selected ? props.theme.SIGNITURE_MAIN : props.theme.TEXT_MAIN};
+    props.selected ? props.theme.MAIN : props.theme.TEXT_MAIN};
 
   ${(props) =>
     props.selected &&
     css`
-      border-bottom: 0.1rem solid ${props.theme.SIGNITURE_MAIN};
+      border-bottom: 0.1rem solid ${props.theme.MAIN};
     `}
 
   &:last-child {
@@ -58,3 +59,7 @@ export const PageTitle = styled.div`
 `;
 
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })``;
+
+export const Select = styled(ReactSelect)`
+  width: 100%;
+`;

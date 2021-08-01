@@ -65,7 +65,7 @@ const Label = styled.div`
   ${(props) =>
     props.highlight &&
     css`
-      color: ${props.theme.SIGNITURE_MAIN};
+      color: ${props.theme.MAIN};
     `}
 `;
 

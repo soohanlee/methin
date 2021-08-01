@@ -2,7 +2,7 @@ const CommonTheme = Object.freeze({
   WARNING: '#FFCC00',
   ERROR: '#FF0078',
   COMPLETE: '#15da90',
-  SIGNITURE_MAIN: '#f84a49',
+  MAIN: '#f84a49',
   SIGNITURE_SUB: '#8f93e1',
   SIGNITURE_SECONDARY: '#e2e2f4',
   TRANSITION: '0.2s',

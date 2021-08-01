@@ -47,7 +47,7 @@ const CartContainer = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
-  background: ${(props) => props.theme.SIGNITURE_MAIN};
+  background: ${(props) => props.theme.MAIN};
   align-items: center;
   justify-content: center;
   display: none;
@@ -104,7 +104,7 @@ const AfterPrice = styled.div`
 
 const SalePercentage = styled.div`
   font-size: 3.1rem;
-  color: ${(props) => props.theme.SIGNITURE_MAIN};
+  color: ${(props) => props.theme.MAIN};
   @media screen and (max-width: ${BreakPoint.s}px) {
     font-size: 2rem;
   }

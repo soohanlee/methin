@@ -19,7 +19,7 @@ const Container = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  background: ${(props) => props.theme.SIGNITURE_MAIN};
+  background: ${(props) => props.theme.MAIN};
   padding: 2rem 6rem;
 `;
 
@@ -72,8 +72,8 @@ const ItemLabel = styled(Label)`
   }
 
   &:hover {
-    color: ${(props) => props.theme.SIGNITURE_MAIN};
-    border-bottom: 0.1rem solid ${(props) => props.theme.SIGNITURE_MAIN};
+    color: ${(props) => props.theme.MAIN};
+    border-bottom: 0.1rem solid ${(props) => props.theme.MAIN};
   }
 `;
 
@@ -135,6 +135,10 @@ const Navigation = () => {
     });
   };
 
+  const handleMoveCartPage = () => {
+    history.push(ROUTE_PATH.cart);
+  };
+
   const handleLogout = async () => {
     try {
       cleanToken();
@@ -154,21 +158,8 @@ const Navigation = () => {
     );
   };
 
-  const handleMoveCartPage = () => {
-    history.push(`${ROUTE_PATH.cart}`);
-  };
-
   return (
-    <ResponsiveTemplate
-      NonPCContents={
-        <MobileNavigation
-          onClickMovePage={handleMovePage}
-          onSearchClick={handleSearchClick}
-          onLogoClick={handleMoveMainPage}
-          onCartClick={handleMoveCartPage}
-        />
-      }
-    >
+    <ResponsiveTemplate NonPCContents={<MobileNavigation isLogo />}>
       <>
         <Container>
           <Logo onClick={handleMoveMainPage}>

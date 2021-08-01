@@ -57,7 +57,7 @@ const MenuItem = styled.div`
   ${(props) =>
     props.selected &&
     css`
-      color: ${(props) => props.theme.SIGNITURE_MAIN};
+      color: ${(props) => props.theme.MAIN};
     `}
 `;
 
@@ -67,7 +67,7 @@ const Border = styled.div`
   ${(props) =>
     props.selected &&
     css`
-      border-bottom: 0.2rem solid ${(props) => props.theme.SIGNITURE_MAIN};
+      border-bottom: 0.2rem solid ${(props) => props.theme.MAIN};
     `}
 `;
 

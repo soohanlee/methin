@@ -23,7 +23,7 @@ const Label = styled.div`
   ${(props) =>
     props.highlight &&
     css`
-      color: ${props.theme.SIGNITURE_MAIN};
+      color: ${props.theme.MAIN};
     `}
 `;
 
@@ -60,7 +60,7 @@ const Radiobox = styled.input.attrs({ type: 'radio' })``;
 
 const DefaultDelivery = styled.div`
   font-size: 1.55rem;
-  color: ${(props) => props.theme.SIGNITURE_MAIN};
+  color: ${(props) => props.theme.MAIN};
   margin-left: 3rem;
   margin-bottom: 2rem;
 `;

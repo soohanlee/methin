@@ -44,6 +44,10 @@ export const ROUTE_PATH = {
     reviewManage: '/review-manage',
     registerNotice: '/register-notice',
   },
+
+  mobile: {
+    mypage: '/mobile/mypage',
+  },
 };
 
 export const LOCAL_STORAGE_KEYS = {

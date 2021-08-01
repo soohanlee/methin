@@ -24,6 +24,7 @@ import MobileProductDetail from './mobile';
 import QNAContainer from 'components/QNA/QNAContainer';
 import QnaModal from './Modal/QnaModal';
 import ReviewModal from 'pages/product-detail/Modal/ReviewModal';
+import { Select } from 'components/styled/Form';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -75,7 +76,7 @@ const PriceContainer = styled.div`
 `;
 
 const SalePercentage = styled.div`
-  color: ${(props) => props.theme.SIGNITURE_MAIN};
+  color: ${(props) => props.theme.MAIN};
   font-size: 2.5rem;
 `;
 
@@ -116,6 +117,12 @@ const ProductSubTitle = styled.div`
 `;
 
 const CountContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 3rem;
+`;
+
+const AllProductPriceContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 3rem;
@@ -167,6 +174,9 @@ const ProductDetail = () => {
   const [productReview, setProductReview] = useState({ list: [], count: 0 });
   const [productQna, setProductQna] = useState({ list: [], count: 0 });
 
+  const [selectedCartList, setSelectedCartList] = useState([]);
+  const [allProductPrice, setAllProductPrice] = useState(0);
+
   const [isOpenQnaModal, setIsOpenQnaModal] = useState(false);
   const [isOpenReviewModal, setIsOpenReviewModal] = useState(false);
 
@@ -213,6 +223,8 @@ const ProductDetail = () => {
       getProductQna();
     }
   }, [getProductQna, numberProductId]);
+
+  useEffect(() => {}, []);
 
   const handleMovePage = (path) => {
     if (path === ROUTE_PATH.order) {
@@ -311,6 +323,10 @@ const ProductDetail = () => {
     }
   };
 
+  const handleSelectChange = (value) => {
+    console.log(value);
+  };
+
   if (!productDetail && !productDetail.id) {
     return '로딩중';
   } else {
@@ -381,7 +397,7 @@ const ProductDetail = () => {
               <Border />
               <ProductSubInfoContainer>
                 <ProductSubTitle info>상품선택</ProductSubTitle>
-                상품선택 옵션 필요
+                <Select onChange={handleSelectChange} options={options} />
               </ProductSubInfoContainer>
               <CountContainer>
                 <CountButton onClick={handleMinus}>-</CountButton>
@@ -392,6 +408,9 @@ const ProductDetail = () => {
                   +
                 </CountButton>
               </CountContainer>
+              <AllProductPriceContainer>
+                총 상품 금액:{allProductPrice} 원
+              </AllProductPriceContainer>
               <ButtonContainer>
                 <MainButton reverse onClick={handleAddCartList}>
                   장바구니
@@ -436,3 +455,9 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+];

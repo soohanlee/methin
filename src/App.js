@@ -51,6 +51,7 @@ import ResponsiveTemplateForRoot from 'template/ResponsiveTemplateForRoot';
 import { useWindowSize } from 'hooks/useWindowSize';
 import MobileMenu from 'pages/my-page/MobileMenu';
 import DeliveryTrackingPage from 'pages/DeliveryTracking/DeliveryTrackingPage';
+import MobileMyPageMain from 'pages/my-page/MobileMyPageMain/MobileMyPageMain';
 
 const { Content } = Layout;
 
@@ -87,7 +88,6 @@ function App() {
 
   const THEME = LightTheme;
   const location = useLocation();
-  // const history = useHistory();
 
   const [isLogin, setIsLogin] = useState(userState.loginState);
 
@@ -194,7 +194,10 @@ function App() {
                 <Navigation />
 
                 <CustomContent>
-                  <Scrollbars autoHide style={{ heigth: '100%' }}>
+                  <Scrollbars
+                    autoHide
+                    style={{ width: '100%', heigth: '100%' }}
+                  >
                     <Switch>
                       {/* 라우트 예시 */}
                       <Route exact path={'/'} component={Main} />
@@ -236,6 +239,12 @@ function App() {
                       <Route
                         path={`${ROUTE_PATH.deliveryTracking}`}
                         component={DeliveryTrackingPage}
+                      />
+
+                      {/* 모바일 */}
+                      <Route
+                        path={`${ROUTE_PATH.mobile.mypage}`}
+                        component={MobileMyPageMain}
                       />
                     </Switch>
                     <MainFooter />

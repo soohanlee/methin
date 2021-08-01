@@ -38,7 +38,7 @@ const NoMarginMyLevelText = styled(MyLevelText)`
 `;
 
 const HightlightText = styled.span`
-  color: ${(props) => props.theme.SIGNITURE_MAIN};
+  color: ${(props) => props.theme.MAIN};
 `;
 
 const MyLevelHightlightText = styled(HightlightText)`

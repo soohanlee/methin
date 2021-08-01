@@ -51,7 +51,7 @@ const IsAnswer = styled(CommonLabel)`
   ${(props) =>
     props.isActive &&
     css`
-      color: ${props.theme.SIGNITURE_MAIN};
+      color: ${props.theme.MAIN};
     `};
 `;
 

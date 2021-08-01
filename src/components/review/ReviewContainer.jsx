@@ -18,7 +18,7 @@ const PaginationContainer = styled.div`
 `;
 
 const Count = styled.div`
-  color: ${(props) => props.theme.SIGNITURE_MAIN};
+  color: ${(props) => props.theme.MAIN};
 `;
 
 const Header = styled.div`
@@ -89,7 +89,12 @@ const UserID = styled.div`
   margin-left: 3rem;
 `;
 
-const ReviewContainer = ({ count, list, onReviewChange, onClickReviewButtonClick }) => {
+const ReviewContainer = ({
+  count,
+  list,
+  onReviewChange,
+  onClickReviewButtonClick,
+}) => {
   const renderReviewList = () => {
     if (!list || list.length === 0) {
       return '리뷰를 작성해주세요.';

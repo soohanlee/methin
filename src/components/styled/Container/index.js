@@ -51,7 +51,7 @@ export const MobileHeaderContainer = styled.div`
 
 export const MobileFooterContainer = styled.div`
   width: 100vw;
-  background: ${(props) => props.theme.SIGNITURE_MAIN};
+  background: ${(props) => props.theme.MAIN};
   height: 5rem;
   display: flex;
   justify-content: space-between;

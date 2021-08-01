@@ -42,7 +42,7 @@ const InfoTitle = styled.div`
     props.highlight &&
     css`
       font-size: 2.3rem;
-      color: ${(props) => props.theme.SIGNITURE_MAIN};
+      color: ${(props) => props.theme.MAIN};
     `}
 
   ${(props) =>

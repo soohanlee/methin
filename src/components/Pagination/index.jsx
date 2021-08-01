@@ -13,7 +13,7 @@ const CustomPagination = styled(OriginPagination)`
     }
   }
   .ant-pagination-item-active a {
-    color: ${(props) => props.theme.SIGNITURE_MAIN};
+    color: ${(props) => props.theme.MAIN};
     font-weight: 500;
     text-decoration: underline;
   }
