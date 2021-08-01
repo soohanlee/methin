@@ -40,6 +40,11 @@ const LogoWithIconContainer = styled.div`
   justify-content: space-between;
   background: ${(props) =>
     props.background ? props.theme.BACKGROUND : props.theme.MAIN};
+  ${(props) =>
+    props.background &&
+    css`
+      border-bottom: 1px solid ${props.theme.LINE};
+    `}
 `;
 
 const Title = styled.div`
@@ -53,7 +58,7 @@ const BackIcon = styled.img.attrs({
   height: 2.5rem;
 `;
 
-const MobileNavigation = ({ title, isLogo, isShowBackButton, white }) => {
+const MobileNavigation = () => {
   const [pageData, setPageData] = useState({
     title: '',
     isLogo: false,
@@ -80,7 +85,7 @@ const MobileNavigation = ({ title, isLogo, isShowBackButton, white }) => {
 
   const setPageNavigationState = useCallback(() => {
     const { pathname } = history.location;
-    if (pathname.includes('mypage')) {
+    if (pathname === '/mypage') {
       setPageData({
         title: '',
         isLogo: false,
@@ -93,6 +98,13 @@ const MobileNavigation = ({ title, isLogo, isShowBackButton, white }) => {
         isLogo: true,
         isShowBackButton: false,
         white: false,
+      });
+    } else if (pathname === '/mypage/my-information') {
+      setPageData({
+        title: '회원정보 수정',
+        isLogo: false,
+        isShowBackButton: true,
+        white: true,
       });
     } else {
       setPageData({
@@ -110,7 +122,7 @@ const MobileNavigation = ({ title, isLogo, isShowBackButton, white }) => {
         {pageData.isShowBackButton && (
           <BackIcon onClick={handleBackButtonClick} />
         )}
-        {pageData.title && <Title>pageData.title</Title>}
+        {pageData.title && <Title>{pageData.title}</Title>}
         {pageData.isLogo && <Logo onClick={handleMoveMainPage} />}
 
         <IconContainer>

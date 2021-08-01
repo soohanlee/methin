@@ -4,10 +4,15 @@ import BorderTitleContainer from 'components/container/BorderTitleContainer';
 import LabelWithChildren from 'components/Form/LabelWithChildren';
 import { Input as OriginInput } from 'components/styled/Form';
 import { MainButton as OriginMainButton } from 'components/styled/Button';
+import { BreakPoint } from 'configs/config';
 
 const Container = styled.div`
   padding: 4rem 2rem;
   width: 44rem;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    padding: 2rem 1rem;
+    width: 100%;
+  }
 `;
 
 const Label = styled.div`
@@ -51,7 +56,7 @@ const Myinfo = () => {
   return (
     <div>
       {/* 개인 정보 수정 */}
-      <BorderTitleContainer title="회원 정보 수정">
+      <BorderTitleContainer>
         <Container>
           <LabelWithChildren label="이름">
             <Label>김애용</Label>

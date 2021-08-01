@@ -83,7 +83,7 @@ const MobileMyPageMain = (props) => {
           <Label
             onClick={() =>
               handleMovePage(
-                `${ROUTE_PATH.mypage.main}/${ROUTE_PATH.mypage.myInformation}`,
+                `${ROUTE_PATH.mypage.main}${ROUTE_PATH.mypage.myInformation}`,
               )
             }
           >

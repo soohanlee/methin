@@ -40,14 +40,17 @@ const BorderTitleContainer = ({
   return (
     <Container className={className}>
       <TitleContainer>
-        <Title>
-          {title}
-          {titleDesc && <OptionLabel>{titleDesc}</OptionLabel>}
-        </Title>
+        {title && (
+          <Title>
+            {title}
+            {titleDesc && <OptionLabel>{titleDesc}</OptionLabel>}
+          </Title>
+        )}
+
         {titleComponent && titleComponent}
       </TitleContainer>
 
-      <Border />
+      {title && <Border />}
       {children}
     </Container>
   );
