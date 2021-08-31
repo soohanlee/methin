@@ -8,7 +8,7 @@ const CustomTable = styled(OriginTable)`
 `;
 
 const Table = ({ data }) => {
-  const wordData = ['핀매준비', '판매중', '판매종료'];
+  const wordData = ['판매준비', '판매중', '판매종료'];
 
   const NumDataToWord = () => {
     //판매상태
@@ -16,6 +16,7 @@ const Table = ({ data }) => {
       data[i].status = wordData[i];
     }
   };
+  
   NumDataToWord();
 
   return (

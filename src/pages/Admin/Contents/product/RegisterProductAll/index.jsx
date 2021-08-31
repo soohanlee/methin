@@ -21,7 +21,7 @@ const RegisterProductAll = () => {
           customList = customList.concat(_result.data.data.list);
         }
         // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
-
+        console.log(customList)
         setTableDataState(customList);
       } catch (e) {
         notification.error('상품 정보를 가져오지 못했습니다.');
@@ -32,7 +32,7 @@ const RegisterProductAll = () => {
 
   return (
     <div>
-      <Title dataList={dataList} />
+      <Title categoryList={dataList} dataList={tableDataState}/>
       <Table data={tableDataState} />
     </div>
   );
@@ -42,21 +42,6 @@ export default RegisterProductAll;
 
 const dataList = {
   축산: [
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
-    '닭가슴살',
-    '돼지안심',
-    '한우안심',
     '닭가슴살',
     '돼지안심',
     '한우안심',

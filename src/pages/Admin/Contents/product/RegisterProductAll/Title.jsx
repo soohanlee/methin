@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import CategoryModal from './CategoryModal';
 import CountryModal from './CountryModal';
 import ImageModal from './ImageModal';
-
+import { CSVLink }  from 'react-csv'
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -13,7 +13,7 @@ const Container = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  > button {
+  > * {
     margin-right: 1rem;
     &:last-child {
       margin: 0;
@@ -21,7 +21,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const Title = ({ dataList }) => {
+const Title = ({ categoryList, dataList }) => {
   const [categoryVisibleState, setCategoryVisibleState] = useState(false);
   const [countryVisibleState, setCountryVisibleState] = useState(false);
   const [imageVisibleState, setImageVisibleState] = useState(false);
@@ -49,7 +49,7 @@ const Title = ({ dataList }) => {
         title="카테고리 찾기"
         visible={categoryVisibleState}
         setVisible={setCategoryVisibleState}
-        dataList={dataList}
+        categoryList={categoryList}
       />
       <CountryModal
         title="원산지 찾기"
@@ -69,7 +69,9 @@ const Title = ({ dataList }) => {
         </ButtonContainer>
 
         <ButtonContainer>
-          <Button onClick={handleExcelClick}>엑셀양식다운로드</Button>
+          <CSVLink data={dataList} headers={columns} filename={'상품 일괄 등록.csv'}>
+            <Button>엑셀양식다운로드</Button>
+          </CSVLink>
           <Button onClick={handleImageClick}>이미지업로드</Button>
           <Button onClick={handleFileClick}>파일 업로드</Button>
         </ButtonContainer>
@@ -79,3 +81,38 @@ const Title = ({ dataList }) => {
 };
 
 export default Title;
+
+const columns = [
+  {
+    label: '처리상태',
+    key: 'status'
+  },
+  {
+    label: '실패사유',
+    key: 'fail',
+  },
+  {
+    label: '상품번호',
+    key: 'id',
+  },
+  {
+    label: '판매상태',
+    key: 'status',
+  },
+  {
+    label: '카테고리',
+    key: 'category',
+  },
+  {
+    label: '상품명',
+    key: 'name',
+  },
+  {
+    label: '판매가',
+    key: 'actual_price',
+  },
+  {
+    label: '재고수량',
+    key: 'count',
+  },
+];
