@@ -84,7 +84,8 @@ const PriceContainer = styled.div`
 
 const PriceWrap = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
+  flex-direction: column-reverse;
 `;
 
 const BeforePrice = styled.div`

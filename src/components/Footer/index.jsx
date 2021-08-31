@@ -34,7 +34,7 @@ const PageInnerListContainer = styled.div`
 const CorpContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding: 2.5rem 0;
+  padding: 4.5rem 0;
   width: 100%;
   border-bottom: 0.1rem solid ${(props) => props.theme.LINE};
 `;
