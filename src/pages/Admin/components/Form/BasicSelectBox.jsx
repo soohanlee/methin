@@ -14,6 +14,7 @@ const BasicSelectBox = ({
   list,
   onChange,
   disabled,
+  defaultValue,
   ...props
 }) => {
   const renderOption = (list) => {

@@ -4,9 +4,13 @@ import { Input } from 'antd';
 
 const { TextArea } = Input;
 
-const BasicTextArea = ({ disabled, onChange, label, className }, ref) => {
+const BasicTextArea = (
+  { value, disabled, onChange, label, className },
+  ref,
+) => {
   return (
     <TextArea
+      value={value}
       onChange={onChange}
       className={className}
       ref={ref}

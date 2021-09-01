@@ -6,18 +6,20 @@ import Table from './Table';
 import { useEffect, useState } from 'react';
 import { notification } from 'utils/notification';
 import { getProductList, getProductDetail } from 'apis/product';
+import moment from 'moment';
+import { DateFormat } from 'configs/config';
 
 const ProductSearch = () => {
   const limit = 16;
   const [tableDataState, setTableDataState] = useState([]);
   const [tableCountState, setTableCountState] = useState(0);
   const [categoryCountArrayState, setCategoryCountArrayState] = useState([]);
-  const [productOffset,setProductOffset] = useState(0);
+  const [productOffset, setProductOffset] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     getApiProductData(productOffset);
-  },[productOffset]);
+  }, [productOffset]);
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -26,16 +28,25 @@ const ProductSearch = () => {
     fetchAndSetUser();
   }, []);
 
-  const getApiProductData = async (offset=0) => {
+  const getApiProductData = async (offset = 0) => {
     try {
       setLoading(true);
       const result = await getProductList(offset);
       console.log('result', result);
       const list = result.data.data.list;
-      const count = result.data.data.count;
+      const count = result.data.data.list.length;
 
       const newResult = list.map((item) => {
-        let { ship_category, ship_pay_type, status, preview_status } = item;
+        let {
+          ship_category,
+          ship_pay_type,
+          status,
+          preview_status,
+          sales_start_date,
+          sales_end_date,
+          created_at,
+          updated_at,
+        } = item;
         if (status === 0) {
           status = '판매준비';
         } else if (status === 1) {
@@ -49,12 +60,17 @@ const ProductSearch = () => {
           ship_pay_type: ship_pay_type === 0 ? '선불' : '착불',
           status: status,
           preview_status: preview_status === 0 ? 'NO' : 'YES',
+          sales_start_date: moment(sales_start_date).format(DateFormat.Default),
+          sales_end_date: moment(sales_end_date).format(DateFormat.Default),
+          created_at: moment(created_at).format(DateFormat.Default),
+          updated_at: moment(updated_at).format(DateFormat.Default),
         };
       });
 
       setTableDataState(newResult);
       setTableCountState(count);
-      CategoryCount(newResult);
+      SetCategoryCount(newResult);
+      notification.success('상품 정보를 가져왔습니다.');
     } catch (e) {
       console.log('e', e);
       notification.error('상품 정보를 가져오지 못했습니다.');
@@ -73,7 +89,7 @@ const ProductSearch = () => {
     }
   };
 
-  const CategoryCount = (tableList) => {
+  const SetCategoryCount = (tableList) => {
     let all = 0;
     let ready = 0;
     let onSale = 0;
@@ -108,7 +124,7 @@ const ProductSearch = () => {
 
   const handleTableChange = (pagination, filter, sort) => {
     setProductOffset(pagination.current - 1);
-  }
+  };
   return (
     <>
       <Title />
@@ -126,8 +142,9 @@ const ProductSearch = () => {
         count={tableCountState}
         tableList={tableDataState}
         limit={limit}
-        loading ={loading}
+        loading={loading}
         handleTableChange={handleTableChange}
+        getApiProductData={getApiProductData}
       />
     </>
   );

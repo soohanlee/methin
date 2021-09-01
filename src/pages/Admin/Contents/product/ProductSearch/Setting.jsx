@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
-import { Radio} from 'antd';
+import { Radio } from 'antd';
 import { css } from 'styled-components';
 import BasicCheckBox from 'pages/Admin/components/Form/BasicCheckBox';
 import BasicTextArea from 'pages/Admin/components/Form/BasicTextArea';
@@ -9,6 +9,7 @@ import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicBasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import moment from 'moment';
 
 const SettingsStyled = styled.div`
   width: 100%;
@@ -75,6 +76,7 @@ const BasicCheckBoxStyled = styled(BasicCheckBox)`
 
 const BasicTextAreaStyled = styled(BasicTextArea)`
   width: 20rem;
+  margin-right: 10rem;
 `;
 
 const BasicTextInputBoxStyled = styled(BasicTextInputBox)``;
@@ -106,19 +108,38 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
   const productNumberRef = useRef(null); //상품 번호
   const productMultiSearchRef = useRef(null); //상품 복수 검색
   const productNameRef = useRef(null); //상품명
+  const [productNumCheckBox, setProductNumCheckBox] = useState(true);
+  const [productNumTextArea, setProductNumTextArea] = useState();
+  const [productNameInput, setProductNameInput] = useState();
 
   const renderSearchInputBox = () => {
     return (
       <SearchTapInputContainerStyled>
         <TitleTextStyled>검색어</TitleTextStyled>
         <SubContainerStyled>
-          <BasicCheckBoxStyled label="상품번호" ref={productNumberRef} />
+          <BasicCheckBoxStyled
+            defaultChecked={true}
+            checked={productNumCheckBox}
+            onChange={(value) => {
+              setProductNumCheckBox(value.target.checked);
+            }}
+            label="상품번호"
+            ref={productNumberRef}
+          />
           <BasicTextAreaStyled
+            value={productNumTextArea}
+            onChange={(value) => {
+              setProductNumTextArea(value.target.value);
+            }}
             label="복수 검색
           (enter 또는 &#34;,&#34;로 구분)"
             ref={productMultiSearchRef}
           />
           <BasicTextInputBoxStyled
+            value={productNameInput}
+            onChange={(value) => {
+              setProductNameInput(value);
+            }}
             textSize="10rem"
             label="상품명"
             ref={productNameRef}
@@ -128,31 +149,39 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
     );
   };
 
-  const [saleTypeCheckState,setSaleTypeCheckState] = useState();
+  const [saleTypeCheckState, setSaleTypeCheckState] = useState(1);
 
-  const handleSaleStatus = (e)=>{
+  const handleSaleStatus = (e) => {
     setSaleTypeCheckState(e.target.value);
-  }
+  };
 
   const renderSalesStatus = () => {
     return (
       <SalesStatusTapContainerStyled>
         <TitleTextStyled>판매상태</TitleTextStyled>
         <SubContainerStyled>
-        <Radio.Group onChange={handleSaleStatus} value={saleTypeCheckState}>
-          <Radio value={1}>전체</Radio>
-          <Radio value={2}>판매중</Radio>
-          <Radio value={3}>품절</Radio>
-          <Radio value={4}>판매중지</Radio>
-          <Radio value={5}>판매종료</Radio>
-        </Radio.Group>
+          <Radio.Group
+            defaultValue={1}
+            onChange={handleSaleStatus}
+            value={saleTypeCheckState}
+          >
+            <Radio value={1}>전체</Radio>
+            <Radio value={2}>판매중</Radio>
+            <Radio value={3}>품절</Radio>
+            <Radio value={4}>판매중지</Radio>
+            <Radio value={5}>판매종료</Radio>
+          </Radio.Group>
         </SubContainerStyled>
       </SalesStatusTapContainerStyled>
     );
   };
 
-  const [largeGroupState, setLargeGroupState] = useState(''); //대분류
-  const [middleGroupState, setMiddleGroupState] = useState(''); //중분류
+  const [largeGroupState, setLargeGroupState] = useState(
+    largeCategory[0].value,
+  ); //대분류
+  const [middleGroupState, setMiddleGroupState] = useState(
+    middleCategory[0].value,
+  ); //중분류
 
   const renderCategory = () => {
     return (
@@ -160,6 +189,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
         <TitleTextStyled>카테고리</TitleTextStyled>
         <SubContainerStyled>
           <BasicSelectBoxStyled
+            value={largeGroupState}
             list={largeCategory}
             width="20rem"
             onChange={(e) => {
@@ -167,6 +197,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
             }}
           />
           <BasicSelectBoxStyled
+            value={middleGroupState}
             list={middleCategory}
             width="20rem"
             onChange={(e) => {
@@ -179,11 +210,11 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
   };
 
   const [periodCategorySelectState, setPeriodCategorySelectState] = useState(
-    '',
+    periodCategory[0].value,
   ); //상품등록일
-  const [periodBtnState, setPeriodBtnState] = useState(''); //상품 기간 버튼
-  const [startDateState, setStartDateState] = useState(''); //상품 등록 시작일
-  const [endDateState, setEndDateState] = useState(''); //상품 등록 정지일
+  const [periodBtnState, setPeriodBtnState] = useState('today'); //상품 기간 버튼
+  const [startDateState, setStartDateState] = useState(moment()); //상품 등록 시작일
+  const [endDateState, setEndDateState] = useState(moment()); //상품 등록 정지일
   const renderDateTerm = () => {
     const handlePeriodBtnClick = (value) => {
       setPeriodBtnState(value);
@@ -194,31 +225,38 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
         <TitleTextStyled>기간</TitleTextStyled>
         <SubContainerStyled>
           <BasicSelectBoxStyled
+            value={periodCategorySelectState}
             list={periodCategory}
             width="13rem"
             onChange={(e) => {
               setPeriodCategorySelectState(e);
             }}
           />
-
-            <Radio.Group
-              value={periodBtnState}
-              onChange={(e) => setPeriodBtnState(e.target.value)}
-            >
-              <Radio.Button value="today">오늘</Radio.Button>
-              <Radio.Button value="week">1주일</Radio.Button>
-              <Radio.Button value="month">1개월</Radio.Button>
-              <Radio.Button value="3month">3개월</Radio.Button>
-              <Radio.Button value="6month">6개월</Radio.Button>
-              <Radio.Button value="year">1년</Radio.Button>
-            </Radio.Group>
+          <Radio.Group
+            defaultValue={'today'}
+            onChange={(e) => setPeriodBtnState(e.target.value)}
+            value={periodBtnState}
+          >
+            <Radio.Button value="today">오늘</Radio.Button>
+            <Radio.Button value="week">1주일</Radio.Button>
+            <Radio.Button value="month">1개월</Radio.Button>
+            <Radio.Button value="3month">3개월</Radio.Button>
+            <Radio.Button value="6month">6개월</Radio.Button>
+            <Radio.Button value="year">1년</Radio.Button>
+          </Radio.Group>
           <BasicDatePickerStyled
+            defaultValue={moment()}
+            format={'YYYY/MM/DD'}
+            value={startDateState}
             onChange={(value) => {
               setStartDateState(value);
             }}
           />
           ~
           <BasicDatePickerStyled
+            defaultValue={moment()}
+            format={'YYYY/MM/DD'}
+            value={endDateState}
             onChange={(value) => {
               setEndDateState(value);
             }}
@@ -254,7 +292,17 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
     };
 
     const handleResetBtn = () => {
-      getApiProductData();
+      setProductNumCheckBox(true);
+      setProductNumTextArea('');
+      setProductNameInput('');
+      setSaleTypeCheckState(1);
+      setLargeGroupState(largeCategory[0].value);
+      setMiddleGroupState(middleCategory[0].value);
+      setPeriodCategorySelectState(periodCategory[0].value);
+      setPeriodBtnState('today');
+      var nowDate = moment();
+      setStartDateState(nowDate);
+      setEndDateState(nowDate);
     };
 
     return (
