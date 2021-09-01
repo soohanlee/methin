@@ -35,10 +35,18 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-right: 0.5rem;
 `;
 
-const Table = ({ setTableDataState, tableList, count , limit, handleTableChange,loading }) => {
-  const [productSortSelectState, setProductSortSelectState] = React.useState(
-    [],
-  );
+const Table = ({
+  setTableDataState,
+  tableList,
+  count,
+  limit,
+  handleTableChange,
+  loading,
+  getApiProductData,
+}) => {
+  // const [productSortSelectState, setProductSortSelectState] = React.useState(
+  //   [],
+  // );
   const [productCountSelectState, setProductCountSelectState] = React.useState(
     [],
   );
@@ -76,10 +84,13 @@ const Table = ({ setTableDataState, tableList, count , limit, handleTableChange,
     {
       title: '상품번호',
       dataIndex: 'id',
+      key: 'id',
     },
     {
       title: '상품명',
       dataIndex: 'name',
+      key: 'name',
+      sorter: (a, b) => (a.name > b.name ? a.name > b.name : a.name < b.name),
     },
     {
       title: '판매상태',
@@ -143,17 +154,22 @@ const Table = ({ setTableDataState, tableList, count , limit, handleTableChange,
     {
       title: '상품등록일',
       dataIndex: 'created_at',
+      key: 'created_at',
+      sorter: (a, b) =>
+        a.created_at > b.created_at
+          ? a.created_at > b.created_at
+          : a.created_at < b.created_at,
     },
     {
       title: '최종수정일',
       dataIndex: 'updated_at',
+      key: 'updated_at',
+      sorter: (a, b) =>
+        a.updated_at > b.updated_at
+          ? a.updated_at > b.updated_at
+          : a.updated_at < b.updated_at,
     },
   ];
-
-  const statusWordData = ['판매준비', '판매중', '판매종료'];
-  const previewWordData = ['NO', 'Yes'];
-  const shipWordData = ['무료', '유료'];
-  const shipPayWordData = ['선불', '착불'];
 
   const handleExcelDown = () => {
     alert('엑셀다운');
@@ -190,6 +206,7 @@ const Table = ({ setTableDataState, tableList, count , limit, handleTableChange,
         });
 
         setTableDataState(newTable);
+        getApiProductData();
       } else if (result.status === 404) {
         notification.error('이미 삭제되었습니다.');
       }
@@ -212,12 +229,12 @@ const Table = ({ setTableDataState, tableList, count , limit, handleTableChange,
       <HeaderContainerStyled>
         <div>상품목록(총 {count}개)</div>
         <ButtonContainerStyled>
-          <BasicSelectBoxStyled
+          {/* <BasicSelectBoxStyled
             onChange={(value) => {
               setProductSortSelectState(value);
             }}
             list={SortViewList}
-          ></BasicSelectBoxStyled>
+          ></BasicSelectBoxStyled> */}
           <BasicSelectBoxStyled
             onChange={(value) => {
               setProductCountSelectState(value);
@@ -245,8 +262,8 @@ const Table = ({ setTableDataState, tableList, count , limit, handleTableChange,
         onChange={handleChange}
         onTableChange={handleTableChange}
         loading={loading}
-        total = {count}
-        pageSize = {limit}
+        total={count}
+        pageSize={limit}
       />
       <BasicModal
         visible={isDeleteModalOpenState}
@@ -260,12 +277,12 @@ const Table = ({ setTableDataState, tableList, count , limit, handleTableChange,
 };
 
 export default Table;
-const SortViewList = [
-  { label: '연관상품 ID순', value: 'associatedProductID' },
-  { label: '대표 상품명순', value: 'representativeProduct' },
-  { label: '등록일순', value: 'registrationDate' },
-  { label: '최종수정일순', value: 'lastModifiedDate' },
-];
+// const SortViewList = [
+//   { label: '연관상품 ID순', value: 'associatedProductID' },
+//   { label: '대표 상품명순', value: 'representativeProduct' },
+//   { label: '등록일순', value: 'registrationDate' },
+//   { label: '최종수정일순', value: 'lastModifiedDate' },
+// ];
 
 const CountList = [
   { label: '50개씩', value: 'fiftyCount' },

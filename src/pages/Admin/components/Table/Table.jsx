@@ -102,7 +102,7 @@ const Table = ({
       loading={loading}
       bordered
       onChange={onTableChange}
-      pagination={{total,pageSize}}
+      pagination={{ total, pageSize }}
       scroll={scroll}
       {...props}
     />

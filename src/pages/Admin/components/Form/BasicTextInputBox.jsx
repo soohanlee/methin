@@ -8,7 +8,7 @@ const Label = styled.div`
   width: ${(props) => props.textSize};
   clear: both;
   float: left;
-  margin-right : 0.7rem;
+  margin-right: 0.7rem;
 `;
 
 const TextInput = styled.div`
@@ -16,14 +16,15 @@ const TextInput = styled.div`
 `;
 
 const BasicTextInputBox = (
-  { placeholder,onBlur, textSize, label, className, disabled },
+  { value, placeholder, onBlur, textSize, label, className, disabled },
   ref,
 ) => {
   return (
     <TextInput>
       <Label textSize={textSize}>{label}</Label>
       <Input
-      placeholder = {placeholder}
+        value={value}
+        placeholder={placeholder}
         disabled={disabled}
         onBlur={onBlur}
         className={className}
