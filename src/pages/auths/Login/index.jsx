@@ -85,13 +85,34 @@ const SubButton = styled(OriginSubButton)`
 const NoticeJoinContainer = styled.div`
   display: flex;
   margin-top: 2rem;
-  justify-content: flex-end;
+  justify-content: space-between;
+
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 `;
 
 const NoticeJoin = styled.span`
   border-bottom: 0.1rem solid ${(props) => props.theme.BORDER};
   text-align: center;
   cursor: pointer;
+
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    text-align: left;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+  }
+`;
+
+const FindButtonContainer = styled.div`
+  display: flex;
+  > span {
+    border-bottom: 0;
+    &:first-child {
+      margin-right: 1rem;
+    }
+  }
 `;
 
 const Login = () => {
@@ -202,15 +223,17 @@ const Login = () => {
 
         <MainButton type="submit">로그인</MainButton>
         <SubButton onClick={handleMoveSignupPage}>회원가입</SubButton>
-        {history.location.state?.purchase ? (
-          <NoticeJoinContainer>
+        <NoticeJoinContainer>
+          {history.location.state?.purchase ? (
             <NoticeJoin onClick={handleClickNoMember}>비회원 구매</NoticeJoin>
-          </NoticeJoinContainer>
-        ) : (
-          <NoticeJoinContainer>
+          ) : (
             <NoticeJoin onClick={handleSearchProduct}>비회원 조회</NoticeJoin>
-          </NoticeJoinContainer>
-        )}
+          )}
+          <FindButtonContainer>
+            <NoticeJoin onClick={handleClickNoMember}>아이디 찾기</NoticeJoin>
+            <NoticeJoin onClick={handleClickNoMember}>비밀번호 찾기</NoticeJoin>
+          </FindButtonContainer>
+        </NoticeJoinContainer>
 
         {login.loginState === LOGGING_IN && <div>로그인중</div>}
       </Form>

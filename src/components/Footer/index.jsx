@@ -78,19 +78,22 @@ const Footer = () => {
           <CorpInnerContainer>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
               <GutterCol span={6}>
-                <Label>상호명</Label>
+                <Label>상호명: 미띤</Label>
                 <Label>대표: 문상현</Label>
                 <Label>COPYRIGHT @Methin.All rights reserved.</Label>
               </GutterCol>
               <GutterCol span={6}>
-                <Label>고객센터</Label>
+                <Label>고객센터: 010-4146-5799</Label>
                 <Label>운영시간</Label>
-                <Label>미띤 메일</Label>
+                <Label>미띤 메일: moonssang95@naver.com</Label>
               </GutterCol>
               <GutterCol span={6}>
-                <Label>전자 금융분쟁처리안내</Label>
-                <Label>TEL</Label>
-                <Label>Fax</Label>
+                <Label>사업자등록번호: 4994500744</Label>
+                <Label>
+                  사업장 소재지: 인천광역시 계양구 주부토로 573-1 B동 1층(우:
+                  21040)
+                </Label>
+                <Label>통신판매업번호: 2020-인천계양-1237</Label>
               </GutterCol>
               <GutterCol span={6}>
                 <Label>인스타</Label>

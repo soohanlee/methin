@@ -67,7 +67,6 @@ const UserContainer = styled(Layout).attrs({ id: 'UserContainer' })`
   @media screen and (max-width: ${BreakPoint.s}px) {
     min-width: unset;
     width: 100vw;
-    padding-bottom: 6rem;
   }
 `;
 
