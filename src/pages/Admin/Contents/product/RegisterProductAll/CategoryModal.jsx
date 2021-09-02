@@ -49,7 +49,7 @@ const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
   margin-bottom : 1rem;
 `;
 
-const CategoryModal = ({ title, visible, setVisible, dataList }) => {
+const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
   const categoryRef = useRef();
   const [categoryTypeState, setCategoryTypeState] = useState(0);
   const [classificationdataState, setClassificationdataState] = useState({});
@@ -61,7 +61,7 @@ const CategoryModal = ({ title, visible, setVisible, dataList }) => {
   const [selectCategoryCodeState,setSelectCategoryCodeState] = useState();
 
   useEffect(() => {
-    setClassificationdataState(dataList);
+    setClassificationdataState(categoryList);
   }, []);
 
   const handleFristItemClick = (value) => {
