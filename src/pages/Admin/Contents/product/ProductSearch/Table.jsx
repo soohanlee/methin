@@ -66,7 +66,7 @@ const Table = ({
       dataIndex: 'modify',
       render: (_, record) => (
         <BasicButton
-          onClick={() => handleMoveEditPage(record.id)}
+          onClick={() => handleModifyEditPage(record.id)}
           label="수정"
         ></BasicButton>
       ),
@@ -175,7 +175,7 @@ const Table = ({
     alert('엑셀다운');
   };
 
-  const handleMoveEditPage = (id) => {
+  const handleModifyEditPage = (id) => {
     history.push({
       pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerProduct}`,
       state: id,
@@ -188,7 +188,6 @@ const Table = ({
   };
 
   const handleDeleteModalOpen = (id) => {
-    console.log('id', id);
     setSelectedProductState(id);
     setisDeleteModalOpenState(true);
   };

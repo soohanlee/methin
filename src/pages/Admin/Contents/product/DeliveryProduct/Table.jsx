@@ -1,11 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
-import antTable from 'pages/Admin/components/Table/Table';
+import BasicTable from 'pages/Admin/components/Table/Table';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { css } from 'styled-components';
 import DeliveryUpdateModal from './DeliveryUpdateModal';
+import { ROUTE_PATH } from 'configs/config';
+import BasicModal from 'pages/Admin/components/Modal/BasicModal';
 
 const TitlesCss = css`
   width: 100%;
@@ -38,7 +40,7 @@ const TitleText = styled.div`
   font-size: 15px;
 `;
 
-const TableStyled = styled(antTable)``;
+const TableStyled = styled(BasicTable)``;
 
 const BasicSelectBoxStyled = styled(BasicSelectBox)`
   width: ${(props) => props.width};
@@ -49,11 +51,14 @@ const BasicSelectBoxStyled = styled(BasicSelectBox)`
 `;
 
 const Table = ({
+  updateDeliveryData,
+  count,
+  tableList,
+  limit,
+  loading,
+  handleTableChange,
   updateDeliveryDetailData,
   deleteDeliveryData,
-  updateDeliveryData,
-  result,
-  count,
 }) => {
   const [tableState, setTableState] = useState([]);
   const [selectTableKeyState, setSelectTableKeyState] = useState([]);
@@ -62,6 +67,11 @@ const Table = ({
   const [addVisibleState, setAddVisibleState] = useState(false);
   const [indexState, setIndexState] = useState([]);
   const [maxSearchCoutState, setMaxSearchCoutState] = useState([]);
+  const [recordState, setRecordState] = useState([]);
+
+  const [isDeleteModalOpenState, setDeleteModalOpenState] = useState(false);
+  const [selectProductState, setSlectProductState] = useState(-1);
+  const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -84,33 +94,50 @@ const Table = ({
   };
 
   const handelShowDeleteModalBtn = (index) => {
-    deleteDeliveryData(index);
+    setSlectProductState(index);
+    setDeleteModalOpenState(true);
   };
 
   const handleShowAddModalBtn = () => {
     setAddVisibleState(true);
   };
 
-  const handleModifyDataSaveBtn = (data) => {
+  const handleModifyDataBtn = (data) => {
     updateDeliveryDetailData(indexState, data);
   };
 
-  const handleAddDataSaveBtn = (data) => {
+  const handleAddDataBtn = (data) => {
     updateDeliveryData(data);
   };
 
   const handleChangeMaxSearchCount = (e) => {
     setMaxSearchCoutState(e);
-    console.log(e);
   };
+
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRowKeys', selectedRowKeys);
+    setSelectedTableKeysState(selectedRowKeys);
+  };
+
+  const handleDeleteProduct = () => {
+    console.log(selectProductState);
+    deleteDeliveryData(selectProductState);
+    setDeleteModalOpenState(false);
+  };
+
+  const handleDeleteModalClose = () => {
+    setDeleteModalOpenState(false);
+  };
+
   const columns = [
     {
       title: '수정',
       dataIndex: 'id',
-      render: (id) => (
+      render: (id, record) => (
         <BasicButton
           onClick={() => {
             handleShowModifyModalBtn(id);
+            setRecordState(record);
           }}
           label="수정"
         ></BasicButton>
@@ -157,28 +184,20 @@ const Table = ({
     },
   ];
 
-  const wordData = ['미사용', '사용', '???'];
-
-  const NumDataToWord = () => {
-    for (var i = 0; i < result.length; i++) {
-      result[i].status = wordData[i];
-    }
-  };
-  NumDataToWord();
-
   return (
     <>
       <DeliveryUpdateModal
         visible={modifyVisibleState}
         setVisible={setModifyVisibleState}
-        onClick={handleModifyDataSaveBtn}
+        onClick={handleModifyDataBtn}
         title="배송비묶음그룹수정"
         type="modify"
+        record={recordState}
       />
       <DeliveryUpdateModal
         visible={addVisibleState}
         setVisible={setAddVisibleState}
-        onClick={handleAddDataSaveBtn}
+        onClick={handleAddDataBtn}
         title="배송비묶음그룹추가"
         type="add"
       />
@@ -203,12 +222,24 @@ const Table = ({
       </MenuBtn>
 
       <TableStyled
-        scroll={{ x: '100vw', y: 500 }}
+        scroll={{ x: '50vw', y: 800 }}
+        data={tableList}
         columns={columns}
-        data={result}
         selectionType={'checkbox'}
-        onChange={() => {}}
+        onChange={handleChange}
+        onTableChange={handleTableChange}
+        loading={loading}
+        total={count}
+        pageSize={limit}
       />
+
+      <BasicModal
+        visible={isDeleteModalOpenState}
+        onOk={handleDeleteProduct}
+        onCancel={handleDeleteModalClose}
+      >
+        정말 삭제하시겠습니까?
+      </BasicModal>
     </>
   );
 };

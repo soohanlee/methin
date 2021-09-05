@@ -58,11 +58,17 @@ const Setting = ({
   const [searchValueState, setSearchValueState] = useState(
     'deliveryPriceNames',
   );
+  const [groupNameInputBoxState, setGroupNameInputBoxState] = useState('');
   const groupNameInputBoxRef = useRef(null); //배송비 묶음그룹 명 인풋박스
   const searchBtnRef = useRef(null); //검색
 
   const handleSelectChange = (value) => {
     setSearchValueState(value);
+    setGroupNameInputBoxState('');
+  };
+
+  const handleInputbox = (value) => {
+    setGroupNameInputBoxState(value.target.value);
   };
 
   const RenderSetMenu = () => {
@@ -79,7 +85,12 @@ const Setting = ({
             { value: 'deliveryPriceNumbers', label: '배송비 묶음그룹번호' },
           ]}
         />
-        <BasicTextInputBoxStyled label="" ref={groupNameInputBoxRef} />
+        <BasicTextInputBoxStyled
+          label=""
+          ref={groupNameInputBoxRef}
+          onChange={handleInputbox}
+          value={groupNameInputBoxState}
+        />
       </>
     );
   };
@@ -98,7 +109,6 @@ const Setting = ({
     };
 
     const handleResetBtn = () => {
-      getApiDeliveryData();
       handleSelectChange('deliveryPriceNames');
     };
 

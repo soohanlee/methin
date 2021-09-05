@@ -32,7 +32,6 @@ const ProductSearch = () => {
     try {
       setLoading(true);
       const result = await getProductList(offset);
-      console.log('result', result);
       const list = result.data.data.list;
       const count = result.data.data.list.length;
 
