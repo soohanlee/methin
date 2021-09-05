@@ -1,31 +1,37 @@
 import React from 'react';
+import BasicTable from 'pages/Admin/components/Table/Table';
 
 import OriginTable from 'pages/Admin/components/Table/Table';
 import styled from 'styled-components';
 
-const CustomTable = styled(OriginTable)`
+const CustomTable = styled(BasicTable)`
   margin-bottom: 1rem;
 `;
 
-const Table = ({ data }) => {
-  const wordData = ['판매준비', '판매중', '판매종료'];
+const Table = ({ count, tableList, limit, handleTableChange, loading }) => {
+  // const wordData = ['판매준비', '판매중', '판매종료'];
 
-  const NumDataToWord = () => {
-    //판매상태
-    for (var i = 0; i < data.length; i++) {
-      data[i].status = wordData[i];
-    }
-  };
-  
-  NumDataToWord();
+  // const NumDataToWord = () => {
+  //   //판매상태
+  //   for (var i = 0; i < tableList.length; i++) {
+  //     tableList[i].status = wordData[i];
+  //   }
+  // };
+
+  // NumDataToWord();
 
   return (
     <>
       <CustomTable
         scroll={{ x: '50vw', y: 500 }}
+        data={tableList}
         columns={columns}
-        data={data}
+        selectionType="checkbox"
         onChange={() => {}}
+        onTableChange={handleTableChange}
+        loading={loading}
+        total={count}
+        pageSize={limit}
       />
     </>
   );

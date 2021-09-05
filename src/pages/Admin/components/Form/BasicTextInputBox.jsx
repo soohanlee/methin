@@ -16,7 +16,16 @@ const TextInput = styled.div`
 `;
 
 const BasicTextInputBox = (
-  { value, placeholder, onBlur, textSize, label, className, disabled },
+  {
+    onChange,
+    value,
+    placeholder,
+    onBlur,
+    textSize,
+    label,
+    className,
+    disabled,
+  },
   ref,
 ) => {
   return (
@@ -29,6 +38,7 @@ const BasicTextInputBox = (
         onBlur={onBlur}
         className={className}
         ref={ref}
+        onChange={onChange}
       ></Input>
     </TextInput>
   );
