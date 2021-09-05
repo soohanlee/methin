@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Button } from 'antd';
+import { message, Upload, Button } from 'antd';
 import CategoryModal from './CategoryModal';
 import CountryModal from './CountryModal';
 import ImageModal from './ImageModal';
-import { CSVLink }  from 'react-csv'
+import { CSVLink } from 'react-csv';
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -40,9 +40,39 @@ const Title = ({ categoryList, dataList }) => {
     alert('엑셀양식다운로드 클릭');
   };
 
-  const handleFileClick = () => {
-    alert('파일 업로드 클릭');
+  const handleFileClick = () => {};
+
+  const props = {
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    listType: 'picture',
+    beforeUpload(file) {
+      if (file.type !== 'application/vnd.ms-excel') {
+        message.error(`${file.name} is not a png xml`);
+      } else {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            const img = document.createElement('img');
+            img.src = reader.result;
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              canvas.width = img.naturalWidth;
+              canvas.height = img.naturalHeight;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0);
+              ctx.fillStyle = 'red';
+              ctx.textBaseline = 'middle';
+              ctx.font = '33px Arial';
+              ctx.fillText('Ant Design', 20, 20);
+              canvas.toBlob(resolve);
+            };
+          };
+        });
+      }
+    },
   };
+
   return (
     <>
       <CategoryModal
@@ -69,11 +99,17 @@ const Title = ({ categoryList, dataList }) => {
         </ButtonContainer>
 
         <ButtonContainer>
-          <CSVLink data={dataList} headers={columns} filename={'상품 일괄 등록.csv'}>
+          <CSVLink
+            data={dataList}
+            headers={columns}
+            filename={'상품 일괄 등록.csv'}
+          >
             <Button>엑셀양식다운로드</Button>
           </CSVLink>
           <Button onClick={handleImageClick}>이미지업로드</Button>
-          <Button onClick={handleFileClick}>파일 업로드</Button>
+          <Upload {...props}>
+            <Button onClick={handleFileClick}>파일 업로드</Button>
+          </Upload>
         </ButtonContainer>
       </Container>
     </>
@@ -85,7 +121,7 @@ export default Title;
 const columns = [
   {
     label: '처리상태',
-    key: 'status'
+    key: 'status',
   },
   {
     label: '실패사유',
