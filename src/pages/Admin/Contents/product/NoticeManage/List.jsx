@@ -32,8 +32,16 @@ const BodyContainer = styled.div`
 
 const ButtonStyled = styled(Button)``;
 
-const List = ({ tableData, getApiNoticeData }) => {
+const List = ({
+  tableData,
+  count,
+  limit,
+  handleTableChange,
+  loading,
+  getApiNoticeData,
+}) => {
   const [tableState, setTableState] = useState([]);
+  const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
   const [selectTableKeyState, setSelectTableKeyState] = useState([]);
   const [selectionTypeState, setSelectionTypeState] = useState('checkbox');
   const history = useHistory();
@@ -51,7 +59,6 @@ const List = ({ tableData, getApiNoticeData }) => {
 
   //여러개 선택삭제
   const handleSelectDeleteBtn = () => {
-
     async function fetchAndSetUser(num) {
       try {
         await deleteNotice(num);
@@ -64,19 +71,20 @@ const List = ({ tableData, getApiNoticeData }) => {
 
     for (var i = 0; i < selectTableKeyState.length; i++) {
       if (i === selectTableKeyState.length - 1) {
-        console.log(tableData[i].id)
+        console.log(tableData[i].id);
         fetchAndSetUser(tableData[i].id);
       } else {
-        console.log(tableData[i].id)
+        console.log(tableData[i].id);
         deleteNotice(tableData[i].id);
       }
     }
   };
 
-  const handleModifyNotice = () => {
+  const handleModifyNotice = (record) => {
+    console.log(record);
     history.push({
       pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`,
-      state: { tableState: tableState },
+      id: record.id,
     });
   };
 
@@ -84,8 +92,14 @@ const List = ({ tableData, getApiNoticeData }) => {
     {
       title: '수정',
       dataIndex: 'modify',
-      render: () => (
-        <ButtonStyled onClick={handleModifyNotice}>수정</ButtonStyled>
+      render: (_, record) => (
+        <ButtonStyled
+          onClick={() => {
+            handleModifyNotice(record);
+          }}
+        >
+          수정
+        </ButtonStyled>
       ),
     },
     {
@@ -109,16 +123,10 @@ const List = ({ tableData, getApiNoticeData }) => {
       dataIndex: 'created_at',
     },
   ];
-
-  const wordData = ['NO', 'YES'];
-
-  const NumDataToWord = () => {
-    for (var i = 0; i < tableData.length; i++) {
-      tableData[i].preview_status = wordData[i];
-    }
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRowKeys', selectedRowKeys);
+    setSelectedTableKeysState(selectedRowKeys);
   };
-  NumDataToWord();
-
   return (
     <Container>
       <TitleContainer>
@@ -135,10 +143,15 @@ const List = ({ tableData, getApiNoticeData }) => {
           </Button>
         </ButtonContainer>
         <Table
-          scroll={{ x: '50vw', y: 500 }}
-          columns={columns}
+          scroll={{ x: '25vw', y: 800 }}
           data={tableData}
-          onChange={() => {}}
+          columns={columns}
+          selectionType="checkbox"
+          onChange={handleChange}
+          onTableChange={handleTableChange}
+          loading={loading}
+          total={count}
+          pageSize={limit}
           rowSelection={{
             type: selectionTypeState,
             ...rowSelection,

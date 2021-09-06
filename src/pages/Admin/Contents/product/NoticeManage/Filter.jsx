@@ -9,6 +9,7 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import { Input as OriginInput } from 'pages/Admin/components/styled/Input';
 
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import moment from 'moment';
 
 const Container = styled.div`
   padding: 2rem;
@@ -47,12 +48,15 @@ const ItemWrap = styled.div`
 `;
 
 const Filter = ({ getApiNoticeData }) => {
-  const [searchTypeState, setSearchTypeState] = useState(''); //검색어 드랍박스
+  const [searchTypeState, setSearchTypeState] = useState('제목'); //검색어 드랍박스
   const searchRef = useRef(''); //검색어 인풋
-  const [classificationState, setClassificationState] = useState(''); //분류 드랍박스
-  const [classification2State, setClassification2State] = useState(''); //전시상태 드랍박스
-  const [startDateState, setStarttDateState] = useState(''); //시작날짜
-  const [endDateState, setEndDateState] = useState(''); //끝날짜
+  const [searchInputState, setsearchInputState] = useState(''); //검색어 인풋박스
+  const [classificationState, setClassificationState] = useState('분류 전체'); //분류 드랍박스
+  const [classification2State, setClassification2State] = useState(
+    '전시상태 전체',
+  ); //전시상태 드랍박스
+  const [startDateState, setStarttDateState] = useState(moment()); //시작날짜
+  const [endDateState, setEndDateState] = useState(moment()); //끝날짜
   const [dateRangeState, setDateRangeState] = useState('today'); //기간버튼
   const history = useHistory();
 
@@ -76,6 +80,10 @@ const Filter = ({ getApiNoticeData }) => {
     setEndDateState(value);
   };
 
+  const handleSearchInputChange = (value) => {
+    setsearchInputState(value.target.value);
+  };
+
   const handleRegisterNotice = () => {
     history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
   };
@@ -90,8 +98,16 @@ const Filter = ({ getApiNoticeData }) => {
     console.log(endDateState._d);
     getApiNoticeData();
   };
+
   const handleResetOnClick = () => {
-    getApiNoticeData();
+    setSearchTypeState('제목');
+    setsearchInputState('');
+    setClassificationState('분류전체');
+    setClassification2State('전시상태 전체');
+    var nowDate = moment();
+    setStarttDateState(nowDate);
+    setEndDateState(nowDate);
+    setDateRangeState('today');
   };
 
   return (
@@ -102,16 +118,27 @@ const Filter = ({ getApiNoticeData }) => {
       <LabelContents title="검색어">
         <BasicSelectBox
           list={searchNameList}
+          value={searchTypeState}
           onChange={handleSearchNameChange}
         />
-        <Input ref={searchRef} placeholder={'제목을 입력하세요'} />
+        <Input
+          value={searchInputState}
+          onChange={handleSearchInputChange}
+          ref={searchRef}
+          placeholder={'제목을 입력하세요'}
+        />
       </LabelContents>
       <LabelContents title="상세검색">
         <ItemContainer>
           <ItemWrap>
-            <BasicSelectBox list={typeList} onChange={handleTypeListChange} />
+            <BasicSelectBox
+              value={classificationState}
+              list={typeList}
+              onChange={handleTypeListChange}
+            />
             <DisplaySelectBox
               list={displayList}
+              value={classification2State}
               onChange={handleDisplayChange}
             />
           </ItemWrap>
@@ -130,12 +157,14 @@ const Filter = ({ getApiNoticeData }) => {
           </ItemWrap>
           <ItemWrap>
             <BasicDatePicker
+              value={startDateState}
               onChange={(value) => {
                 handleStartDateChange(value);
               }}
             />
             {`　~　`}
             <BasicDatePicker
+              value={endDateState}
               onChange={(value) => {
                 handleEndDateChange(value);
               }}

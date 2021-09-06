@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import { Radio, Input, Button } from 'antd';
 import { EditorState, ContentState, convertFromHTML } from 'draft-js';
 import styled from 'styled-components';
@@ -25,11 +25,10 @@ const RegisterNotice = () => {
   const [noticeIDState, setNoticeID] = useState(-1);
   const [titleState, setTitleState] = useState('');
   const [categoryState, setCategoryState] = useState(0);
-  const [preview_statusState, setPreview_statusState] = useState('');
+  const [preview_statusState, setPreview_statusState] = useState(0);
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [uploadedImagesState, setUploadedImagesState] = useState([]);
-  const [isDisplayDateState, setIsDisplayDateState] = useState(false);
 
   const [startDisplayDateState, setStartDisplayDateState] = useState(moment());
   const [
@@ -41,10 +40,12 @@ const RegisterNotice = () => {
     selectedEndDisplayDateState,
     setSelectedEndDisplayDateState,
   ] = useState(moment());
-  const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
     async function fetchAndSetUser() {
+      console.log(history);
+
       await getApiNoticeData();
     }
     fetchAndSetUser();
@@ -52,10 +53,10 @@ const RegisterNotice = () => {
 
   const getApiNoticeData = async () => {
     try {
-      if (location.state.tableState.length === 0) {
+      if (history.location < 1) {
       } else {
-        const result = await getNoticeId(location.state.tableState[0].id);
-        console.log(result.data.data);
+        const result = await getNoticeId(history.location.id);
+        console.log(result);
         const customData = result.data.data;
         // antd 에서 선택을 하려면 key라는 이름의 key값이 있어야하여 key를 주입
 
@@ -63,6 +64,8 @@ const RegisterNotice = () => {
         setTitleState(customData.title);
         setCategoryState(customData.category);
         setPreview_statusState(customData.preview_status);
+        console.log(customData);
+
         setEditorState(
           EditorState.createWithContent(
             ContentState.createFromBlockArray(convertFromHTML(customData.body)),
@@ -122,13 +125,33 @@ const RegisterNotice = () => {
       body: editorState.getCurrentContent().getPlainText(),
       preview_status: preview_statusState,
     };
-    if (noticeIDState !== -1) {
+    if (history.location.id) {
       console.log('patch');
       patchNotice(noticeIDState, data);
     } else {
       console.log('post');
       postNotice(data);
     }
+  };
+
+  const showCalender = () => {
+    if (preview_statusState)
+      return (
+        <>
+          <Calendar
+            value={startDisplayDateState}
+            selectedValue={selectedStartDisplayDateState}
+            onSelect={handlestartDisplayDateSelect}
+            onPanelChange={handleSelectedStartDisplayDateChange}
+          />
+          <Calendar
+            value={endDisplayDateState}
+            selectedValue={selectedEndDisplayDateState}
+            onSelect={handleEndDisplayDateSelect}
+            onPanelChange={handleEndDisplayDateChange}
+          />
+        </>
+      );
   };
 
   return (
@@ -154,28 +177,13 @@ const RegisterNotice = () => {
       <LabelContents title="공지 노출정보">
         <DisplayDateContainerStyled>
           <Radio.Group
-            value={isDisplayDateState}
-            onChange={(e) => setIsDisplayDateState(e.target.value)}
+            value={preview_statusState}
+            onChange={(e) => setPreview_statusState(e.target.value)}
           >
-            <Radio.Button value={true}>미리보기</Radio.Button>
-            <Radio.Button value={false}>노출</Radio.Button>
+            <Radio.Button value={0}>미리보기</Radio.Button>
+            <Radio.Button value={1}>노출</Radio.Button>
           </Radio.Group>
-          {isDisplayDateState && (
-            <>
-              <Calendar
-                value={startDisplayDateState}
-                selectedValue={selectedStartDisplayDateState}
-                onSelect={handlestartDisplayDateSelect}
-                onPanelChange={handleSelectedStartDisplayDateChange}
-              />
-              <Calendar
-                value={endDisplayDateState}
-                selectedValue={selectedEndDisplayDateState}
-                onSelect={handleEndDisplayDateSelect}
-                onPanelChange={handleEndDisplayDateChange}
-              />
-            </>
-          )}
+          {showCalender()}
         </DisplayDateContainerStyled>
       </LabelContents>
       <Button onClick={handleRegistNoticeBtn}>상품 공지사항 등록</Button>
