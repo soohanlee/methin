@@ -7,8 +7,10 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
-import Table from 'pages/Admin/components/Table/Table';
+import BasicTable from 'pages/Admin/components/Table/Table';
 import { notification } from 'utils/notification';
+import moment from 'moment';
+import { DateFormat } from 'configs/config';
 
 // 주문통합검색
 const SelectBox = styled(BasicSelectBox)`
@@ -64,52 +66,68 @@ const BasicButtonStyled = styled(BasicButton)`
   width: 10rem;
 `;
 const OrderSerach = () => {
-  const limite = 16;
+  const limit = 16;
   const [searchTypeState, setSearchTypeState] = useState(''); //조회기간 드랍박스
   const [datePeriodState, setDatePeriodState] = useState(''); //조회기간 기간버튼
   const [startDateState, setStartDateState] = useState(''); //시작날짜
   const [endDateState, setEndDateState] = useState(''); //종료날짜
+  const [selectedTableKeysState, setSelectedTableKeysState] = React.useState(
+    [],
+  );
   const [searchDateTypeState, setSearchDateTypeState] = useState(''); //조회타입
   const searchInputRef = useRef(null); //조회타입인풋
-  const [tableDataStat, setTableDataStat] = useState([]);
-  const [tableCountStat, setTableCountStat] = useState(0);
 
-  const wordData = [
-    '결제대기',
-    '결제완료',
-    '상품준비',
-    '배송중',
-    '배송완료',
-    '취소완료',
-    '반품완료',
-  ];
+  const [tableDataState, setTableDataState] = useState([]);
+  const [tableCountState, setTableCountState] = useState(0);
+  const [productOffset, setProductOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchAndSetUser() {
       await getApiPaymentData();
     }
-    fetchData();
+    fetchAndSetUser();
   }, []);
 
-  const getApiPaymentData = async () => {
+  const getApiPaymentData = async (offset = 0) => {
     try {
-      const result = await getPaymentList(0);
+      setLoading(true);
+      const result = await getPaymentList(offset);
+      const list = result.data.data.list;
+      const count = result.data.data.list.length;
 
-      const count = result.data.data.count;
-      const maxOffset = Math.floor(count / limite) + 1;
-      let customList = [];
-      for (let i = 0; i < maxOffset; i++) {
-        const _result = await getPaymentList(i);
-        customList = customList.concat(_result.data.data.list);
-      }
+      const newResult = list.map((item) => {
+        let { status, created_at } = item;
+        if (status === 0) {
+          status = '결제대기';
+        } else if (status === 1) {
+          status = '결제완료';
+        } else if (status === 2) {
+          status = '상품준비';
+        } else if (status === 3) {
+          status = '배송중';
+        } else if (status === 4) {
+          status = '배송완료';
+        } else if (status === 5) {
+          status = '취소완료';
+        } else {
+          status = '반품완료';
+        }
+        return {
+          ...item,
+          status: status,
+          created_at: moment(created_at).format(DateFormat.Default),
+        };
+      });
 
-      setTableDataStat(customList);
-      setTableCountStat(customList.length);
+      setTableDataState(newResult);
+      setTableCountState(count);
 
-      notification.success('검색 성공');
+      notification.success('주문조회 검색성공');
     } catch (e) {
-      notification.error(e);
+      notification.error('주문조회 검색실패');
     }
+    setLoading(false);
   };
 
   const handleSearchType = (value) => {
@@ -136,15 +154,13 @@ const OrderSerach = () => {
     console.log(searchInputRef.current.state.value);
     getApiPaymentData();
   };
-
-  const NumDataToWord = () => {
-    for (var i = 0; i < tableDataStat.length; i++) {
-      tableDataStat[i].status = wordData[i];
-    }
+  const handleTableChange = (pagination, filter, sort) => {
+    setProductOffset(pagination.current - 1);
   };
-
-  NumDataToWord();
-
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRowKeys', selectedRowKeys);
+    setSelectedTableKeysState(selectedRowKeys);
+  };
   return (
     <Container>
       <HeaderContainer>
@@ -189,15 +205,19 @@ const OrderSerach = () => {
               label="검색"
             ></BasicButtonStyled>
           </ButtonContainer>
-          <Title>목록 (총{tableCountStat}개)</Title>
+          <Title>목록 (총{tableCountState}개)</Title>
         </BodyHeaderContainer>
 
-        <Table
+        <BasicTable
           scroll={{ x: '120vw', y: 500 }}
-          selectionType="checkbox"
-          data={tableDataStat}
+          data={tableDataState}
           columns={columns}
-          onChange={() => {}}
+          selectionType="checkbox"
+          onChange={handleChange}
+          onTableChange={handleTableChange}
+          loading={loading}
+          total={tableCountState}
+          pageSize={limit}
         />
       </BodyContainer>
     </Container>

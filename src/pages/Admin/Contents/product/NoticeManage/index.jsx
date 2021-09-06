@@ -25,6 +25,7 @@ const NoticeManage = () => {
 
   const getApiNoticeData = async (offset = 0) => {
     try {
+      setLoading(true);
       const result = await getNotice(offset);
       const list = result.data.data.list;
       const count = result.data.data.list.length;
@@ -45,6 +46,7 @@ const NoticeManage = () => {
     } catch (e) {
       notification.error('공지 정보를 가져오지 못했습니다.');
     }
+    setLoading(false);
   };
 
   const handleTableChange = (pagination, filter, sort) => {
