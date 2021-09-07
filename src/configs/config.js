@@ -43,6 +43,8 @@ export const ROUTE_PATH = {
     qnaManage: '/qna-manage',
     reviewManage: '/review-manage',
     registerNotice: '/register-notice',
+    menuManage : '/menu-manage',
+    displayManage: '/display-manage'
   },
 
   mobile: {

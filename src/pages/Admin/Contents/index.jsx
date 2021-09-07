@@ -18,6 +18,8 @@ import DeliveryStatusManage from 'pages/Admin/Contents/sale/DeliveryStatusManage
 import QNAManager from 'pages/Admin/Contents/Review/ReviewManage/QNAManager';
 import ReviewManager from 'pages/Admin/Contents/Review/ReviewManage/ReviewManager';
 import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice';
+import MenuManager from 'pages/Admin/Contents/menu/menuManagement';
+import DisplayManager from 'pages/Admin/Contents/menu/displayManagement';
 
 const Container = styled.div`
   width: 100%;
@@ -105,6 +107,16 @@ const Contents = () => {
           exact
           path={`${prePath}${ROUTE_PATH.admin.reviewManage}`}
           component={ReviewManager}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.menuManage}`}
+          component={MenuManager}
+        />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.displayManage}`}
+          component={DisplayManager}
         />
       </Switch>
     </Container>
