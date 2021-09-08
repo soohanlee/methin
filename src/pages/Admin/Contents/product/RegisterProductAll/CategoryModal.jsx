@@ -1,5 +1,5 @@
 import 'antd/dist/antd.css';
-import { Modal } from 'antd';
+import { Radio, Modal } from 'antd';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
@@ -46,7 +46,7 @@ const TitleTextStyled = styled.div`
 
 const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
   width: 58rem;
-  margin-bottom : 1rem;
+  margin-bottom: 1rem;
 `;
 
 const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
@@ -57,8 +57,11 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
   const [selectdSecondItemState, setSelectedSecondItemState] = useState('축산');
   const dataKey = Object.keys(classificationdataState);
 
-  const [selectCategoryState,setSelectCategoryState] = useState();
-  const [selectCategoryCodeState,setSelectCategoryCodeState] = useState();
+  const [selectCategoryState, setSelectCategoryState] = useState();
+  const [selectCategoryCodeState, setSelectCategoryCodeState] = useState();
+  const [categoryTapSelectState, setCategoryTapSelectState] = useState(
+    'search',
+  );
 
   useEffect(() => {
     setClassificationdataState(categoryList);
@@ -88,10 +91,10 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
     setVisible(false);
   };
 
-  const handleSearchBtn = () =>{
+  const handleSearchBtn = () => {
     setSelectCategoryState(categoryRef.current.state.value);
-    setSelectCategoryCodeState("Code??");
-  }
+    setSelectCategoryCodeState('Code??');
+  };
 
   const renderChangedTap = () => {
     switch (categoryTypeState) {
@@ -108,16 +111,23 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
     return (
       <>
         <_ContainerStyled>
-          <BasicTextInputBoxStyled placeholder = "카테고리명 입력" ref={categoryRef}></BasicTextInputBoxStyled>
-          <BasicButton onClick = {handleSearchBtn} label = "검색"></BasicButton>
+          <BasicTextInputBoxStyled
+            placeholder="카테고리명 입력"
+            ref={categoryRef}
+          ></BasicTextInputBoxStyled>
+          <BasicButton onClick={handleSearchBtn} label="검색"></BasicButton>
         </_ContainerStyled>
 
         <ContainerStyled>
-          <TitleTextStyled>선택한 카테고리 : {selectCategoryState}</TitleTextStyled>
+          <TitleTextStyled>
+            선택한 카테고리 : {selectCategoryState}
+          </TitleTextStyled>
         </ContainerStyled>
 
         <ContainerStyled>
-          <TitleTextStyled>선택한 카테고리 코드 : {selectCategoryCodeState}</TitleTextStyled>
+          <TitleTextStyled>
+            선택한 카테고리 코드 : {selectCategoryCodeState}
+          </TitleTextStyled>
         </ContainerStyled>
       </>
     );
@@ -161,6 +171,11 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
       </>
     );
   };
+
+  const handleCategorySelect = (e) => {
+    setCategoryTapSelectState(e.target.value);
+  };
+
   return (
     <>
       <Modal
@@ -170,6 +185,8 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
         onOk={handleOkBtn}
         onCancel={() => {
           setVisible(false);
+          setCategoryTapSelectState('search');
+          setCategoryTypeState(0);
         }}
         width={900}
         okText="저장"
@@ -177,18 +194,28 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
       >
         <ContainerStyled>
           <ContainerStyled>
-            <BasicButton
-              onClick={() => {
-                setCategoryTypeState(0);
-              }}
-              label="카테고리명 검색"
-            ></BasicButton>
-            <BasicButton
-              onClick={() => {
-                setCategoryTypeState(1);
-              }}
-              label="카테고리명 선택"
-            ></BasicButton>
+            <Radio.Group
+              onChange={handleCategorySelect}
+              value={categoryTapSelectState}
+              defaultValue={'search'}
+            >
+              <Radio.Button
+                value="search"
+                onClick={() => {
+                  setCategoryTypeState(0);
+                }}
+              >
+                카테고리명 검색
+              </Radio.Button>
+              <Radio.Button
+                value="select"
+                onClick={() => {
+                  setCategoryTypeState(1);
+                }}
+              >
+                카테고리명 선택
+              </Radio.Button>
+            </Radio.Group>
           </ContainerStyled>
           {renderChangedTap()}
         </ContainerStyled>
