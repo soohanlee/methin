@@ -23,7 +23,7 @@ const Table = ({ count, tableList, limit, handleTableChange, loading }) => {
   return (
     <>
       <CustomTable
-        scroll={{ x: '50vw', y: 500 }}
+        scroll={{ x: 'max-content', y: '20vw' }}
         data={tableList}
         columns={columns}
         selectionType="checkbox"
@@ -44,33 +44,41 @@ const columns = [
     title: '처리상태',
     dataIndex: 'status',
     render: (text) => <a href={'www.naver.com'}>{text}</a>,
+    align: 'center',
   },
   {
     title: '실패사유',
     dataIndex: 'fail',
+    align: 'center',
   },
   {
     title: '상품번호',
     dataIndex: 'id',
+    align: 'center',
   },
   {
     title: '판매상태',
     dataIndex: 'status',
+    align: 'center',
   },
   {
     title: '카테고리',
     dataIndex: 'category',
+    align: 'center',
   },
   {
     title: '상품명',
     dataIndex: 'name',
+    align: 'center',
   },
   {
     title: '판매가',
     dataIndex: 'actual_price',
+    align: 'center',
   },
   {
     title: '재고수량',
     dataIndex: 'count',
+    align: 'center',
   },
 ];

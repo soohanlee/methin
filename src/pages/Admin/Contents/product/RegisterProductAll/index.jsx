@@ -29,7 +29,7 @@ const RegisterProductAll = () => {
       const list = result.data.data.list;
       const count = result.data.data.count;
 
-      const newResult = list.map((item) => {
+      const newResult = list.map((item, index) => {
         let { status } = item;
         if (status === 0) {
           status = '판매준비';
@@ -38,7 +38,7 @@ const RegisterProductAll = () => {
         } else {
           status = '판매종료';
         }
-        return { ...item, status: status };
+        return { ...item, status: status, key: index };
       });
       setTableDataState(newResult);
       setTableCountState(count);

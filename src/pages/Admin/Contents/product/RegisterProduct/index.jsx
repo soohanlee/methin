@@ -26,9 +26,10 @@ import {
 } from 'apis/product';
 import { removeRest } from 'utils/common';
 import { notification } from 'utils/notification';
+import { ROUTE_PATH } from 'configs/config';
 
 const Container = styled.div`
-width:70vw
+  width: 70vw;
 `;
 
 const RegisterProduct = ({ history }) => {
@@ -48,7 +49,7 @@ const RegisterProduct = ({ history }) => {
   const [saleTypePrice, setSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
   const [VAT, setVAT] = useState(0); //0과세 1 면세 2 영세
   const [stauts, setStatus] = useState(0); //0 미설정 1판매중 2 판매종료
-  
+
   // 배송
   const [isDelivery, setIsDelivery] = useState('yes');
   const [deliveryType, setDeliveryType] = useState(0); //package, directly
@@ -146,24 +147,21 @@ const RegisterProduct = ({ history }) => {
 
     fetchData();
   }, []);
-  const addCategory = (primary, secondary) => { 
-    if(!primary) return;
-    if(!secondary) //set only primary category
-    {
-      var newData = {...category};
-      newData[primary] = []
-      setCategory(newData); 
-    }    
-    else
-    {
-      let newData = {...category};
-      if(newData[primary])
-      {
+  const addCategory = (primary, secondary) => {
+    if (!primary) return;
+    if (!secondary) {
+      //set only primary category
+      var newData = { ...category };
+      newData[primary] = [];
+      setCategory(newData);
+    } else {
+      let newData = { ...category };
+      if (newData[primary]) {
         newData[primary] = newData[primary].concat(secondary);
         setCategory(newData);
       }
     }
-  }
+  };
   const handleRegisterProductButtonClick = async () => {
     if (productName === '' || price === '') {
       notification.error('필수 입력사항을 입력해주세요.');
@@ -200,7 +198,9 @@ const RegisterProduct = ({ history }) => {
         const result = await updateProductDetail(history.location.state, data);
         if (result.status === 200) {
           notification.success('상품수정을 완료했습니다.');
-          history.push('/admin/edit-product');
+          history.push({
+            pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.productSearch}`,
+          });
         } else if (result.status === 400) {
           notification.error('상품명 혹은 가격을 입력해주세요.');
         } else {
@@ -224,7 +224,7 @@ const RegisterProduct = ({ history }) => {
 
   return (
     <Container>
-      <Category category={category} addCategory={addCategory}/>
+      <Category category={category} addCategory={addCategory} />
       <ProductName value={productName} setValue={setProductName} />
       <Price
         price={price}

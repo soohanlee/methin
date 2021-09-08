@@ -142,6 +142,8 @@ const Table = ({
           label="수정"
         ></BasicButton>
       ),
+      align: 'center',
+      width: 130,
     },
     {
       title: '삭제',
@@ -152,35 +154,47 @@ const Table = ({
           label="삭제"
         ></BasicButton>
       ),
+      align: 'center',
+      width: 130,
     },
     {
       title: '그룹번호',
       dataIndex: 'id',
+      align: 'center',
+      width: 100,
     },
     {
       title: '그룹명',
       dataIndex: 'body',
+      align: 'center',
     },
 
     {
       title: '기본배송비',
       dataIndex: 'amount1',
+      align: 'center',
+      width: 130,
     },
     {
       title: '제주,산간 배송비',
       dataIndex: 'amount2',
+      align: 'center',
     },
     {
       title: '사용여부',
       dataIndex: 'status',
+      align: 'center',
+      width: 150,
     },
     {
       title: '등록일',
       dataIndex: 'created_at',
+      align: 'center',
     },
     {
       title: '수정일',
       dataIndex: 'updated_at',
+      align: 'center',
     },
   ];
 
@@ -222,7 +236,7 @@ const Table = ({
       </MenuBtn>
 
       <TableStyled
-        scroll={{ x: '50vw', y: 800 }}
+        scroll={{ x: 'max-content', y: '20vw' }}
         data={tableList}
         columns={columns}
         selectionType={'checkbox'}
