@@ -14,7 +14,8 @@ const Container = styled(AuthContainer)`
   max-width: 44rem;
   margin: auto;
   @media screen and (max-width: ${BreakPoint.s}px) {
-    padding: 4rem;
+    padding: 2rem;
+    padding-bottom: 6rem;
   }
 `;
 

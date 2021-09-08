@@ -21,6 +21,10 @@ const CartIcon = styled.img.attrs({
 `;
 
 const CartContainer = styled.div`
+  padding: 2rem;
+`;
+
+const FooterContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -34,6 +38,11 @@ const NoCart = styled.div`
   justify-content: center;
   height: 30rem;
   border-bottom: 0.1rem solid ${(props) => props.theme.LINE};
+`;
+
+const SelectContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const MobileCart = ({
@@ -130,13 +139,20 @@ const MobileCart = ({
         </>
       }
       footer={
-        <CartContainer onClick={handleOpenOptionModal}>주문하기</CartContainer>
+        <FooterContainer onClick={handleOpenOptionModal}>
+          주문하기
+        </FooterContainer>
       }
     >
-      <Checkbox checked={isAllCheck} onChange={handleAllCheckboxChange}>
-        전체 선택
-      </Checkbox>
-      <div>선택 삭제</div>
+      <CartContainer>
+        <SelectContainer>
+          <Checkbox checked={isAllCheck} onChange={handleAllCheckboxChange}>
+            전체 선택
+          </Checkbox>
+          <div>선택 삭제</div>
+        </SelectContainer>
+      </CartContainer>
+
       {renderCartList()}
     </MobilePageTemplate>
   );

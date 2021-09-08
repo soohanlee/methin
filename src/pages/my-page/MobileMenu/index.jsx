@@ -1,10 +1,22 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Route } from 'react-router-dom';
 import { ROUTE_PATH } from 'configs/config';
 import { UserContext, LOGGED_IN, NOT_LOGGED_IN } from 'store/user-context';
 
 import { Label as OriginLabel } from 'components/styled/Form';
+import MobilePageModal from 'components/MobilePageModal/MobilePageModal';
+
+import { MobilePaddingContainer } from 'components/styled/Container';
+
+const Container = styled.div`
+  padding-bottom: 6rem;
+`;
+
+const Header = styled(MobilePaddingContainer)`
+  border-bottom: 0.1rem solid ${(props) => props.theme.LINE};
+`;
+
 const Label = styled(OriginLabel)`
   font-size: 1.6rem;
 `;
@@ -32,7 +44,7 @@ const Img = styled.img`
 `;
 
 const PaddingContainer = styled.div`
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
 `;
@@ -40,6 +52,7 @@ const PaddingContainer = styled.div`
 const MobileMenu = () => {
   const history = useHistory();
   const userState = useContext(UserContext);
+  const [selectedPageName, setSelectedPageName] = useState('');
 
   const handleMovePage = (path) => {
     history.push(`${path}`);
@@ -51,11 +64,16 @@ const MobileMenu = () => {
     }
   }, [userState.loginState, history]);
 
+  const handleModalOpen = (name) => {
+    history.push(`/menu/${name}`);
+    setSelectedPageName(name);
+  };
+
   return (
-    <div>
-      <Label>
+    <Container>
+      <Header>
         <Label hightlight>이수한</Label> 님 반갑습니다.
-      </Label>
+      </Header>
       <MenuIconContainer>
         <IconWithLabelContainer>
           <Img src="/assets/images/mobile/black-home-icon.svg" />
@@ -76,19 +94,33 @@ const MobileMenu = () => {
         </IconWithLabelContainer>
       </MenuIconContainer>
       <PaddingContainer>
-        <PageNameLabel
-          onClick={() => handleMovePage(ROUTE_PATH.serviceCenter.notice)}
-        >
-          공지사항
-        </PageNameLabel>
-        <PageNameLabel
-          onClick={() => handleMovePage(ROUTE_PATH.serviceCenter.main)}
-        >
-          고객센터
-        </PageNameLabel>
+        {pageList.map(({ name, pageName }) => {
+          return (
+            <PageNameLabel onClick={() => handleModalOpen(pageName)}>
+              {name}
+            </PageNameLabel>
+          );
+        })}
       </PaddingContainer>
-    </div>
+
+      {pageList.map(({ name, pageName, component }) => {
+        return (
+          <MobilePageModal
+            setIsOpen={setSelectedPageName}
+            title={name}
+            isOpen={selectedPageName === pageName}
+          >
+            {component}
+          </MobilePageModal>
+        );
+      })}
+    </Container>
   );
 };
 
 export default MobileMenu;
+
+const pageList = [
+  { name: '자주하는 질문', pageName: 'j' },
+  { name: '이용안내', pageName: 'k' },
+];

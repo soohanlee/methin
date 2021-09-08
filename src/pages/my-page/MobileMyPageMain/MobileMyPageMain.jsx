@@ -8,6 +8,9 @@ import { cleanToken } from 'utils/tokenManager';
 import { notification } from 'utils/notification';
 import { useHistory } from 'react-router-dom';
 
+import MobilePageModal from 'components/MobilePageModal/MobilePageModal';
+import Notice from 'pages/my-page/MobileMyPageMain/MobileModalPages/Notice/Notice';
+
 const Container = styled.div``;
 
 const InnerContainer = styled.div`
@@ -50,6 +53,8 @@ const MobileMyPageMain = (props) => {
   const userState = useContext(UserContext);
   const history = useHistory();
 
+  const [selectedPageName, setSelectedPageName] = React.useState('');
+
   const logout = () => {
     try {
       cleanToken();
@@ -63,6 +68,10 @@ const MobileMyPageMain = (props) => {
     history.push({
       pathname: `${path}`,
     });
+  };
+
+  const handleModalOpen = (name) => {
+    setSelectedPageName(name);
   };
 
   return (
@@ -94,18 +103,16 @@ const MobileMyPageMain = (props) => {
         </MenuContainer>
         <MenuContainer>
           <Title>고객센터</Title>
-          <Label onClick={() => handleMovePage('')}>1:1 문의내역</Label>
-          <Label onClick={() => handleMovePage('')}>상품 QnA 현황</Label>
-          <Label onClick={() => handleMovePage('')}>FAQ</Label>
-          <Label onClick={() => handleMovePage('')}>기타 문의</Label>
+          <Label onClick={() => handleModalOpen('privateAsk')}>
+            1:1 문의내역
+          </Label>
+          <Label onClick={() => handleModalOpen('qna')}>상품 QnA 현황</Label>
+          <Label onClick={() => handleModalOpen('faq')}>FAQ</Label>
+          <Label onClick={() => handleModalOpen('extra')}>기타 문의</Label>
         </MenuContainer>
         <MenuContainer>
           <Title>ABOUT</Title>
-          <Label
-            onClick={() => handleMovePage(ROUTE_PATH.serviceCenter.notice)}
-          >
-            공지사항
-          </Label>
+          <Label onClick={() => handleModalOpen('notice')}>공지사항</Label>
           <Label onClick={() => handleMovePage('')}>회사 소개</Label>
           <Label onClick={() => handleMovePage('')}>브랜드 스토리</Label>
         </MenuContainer>
@@ -113,8 +120,24 @@ const MobileMyPageMain = (props) => {
           로그아웃
         </MainButton>
       </InnerContainer>
+      {pageList.map(({ name, pageName, component }) => {
+        return (
+          <MobilePageModal
+            setIsOpen={setSelectedPageName}
+            title={name}
+            isOpen={selectedPageName === pageName}
+          >
+            {component}
+          </MobilePageModal>
+        );
+      })}
     </Container>
   );
 };
 
 export default MobileMyPageMain;
+
+const pageList = [
+  { name: '공지사항', pageName: 'notice', component: <Notice /> },
+  { name: '이용안내', pageName: 'k' },
+];

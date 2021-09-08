@@ -157,9 +157,13 @@ const Navigation = () => {
       `${ROUTE_PATH.serviceCenter.main}${ROUTE_PATH.serviceCenter.notice}`,
     );
   };
+  console.log('history.location.pathname', history);
+  const isHideNavigation = history.location.pathname === '/mobile/mypage';
 
   return (
-    <ResponsiveTemplate NonPCContents={<MobileNavigation isLogo />}>
+    <ResponsiveTemplate
+      NonPCContents={!isHideNavigation && <MobileNavigation isLogo />}
+    >
       <>
         <Container>
           <Logo onClick={handleMoveMainPage}>

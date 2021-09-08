@@ -69,3 +69,7 @@ export const ContentsContainer = styled.div`
 export const ModalContainer = styled.div.attrs({
   id: SEPCIAL_CONTAINER_ID_LIST.MODAL,
 })``;
+
+export const MobilePaddingContainer = styled.div`
+  padding: 2rem;
+`;
