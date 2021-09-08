@@ -38,7 +38,7 @@ const DeliveryProduct = () => {
       const list = result.data.data.list;
       const count = result.data.data.list.length;
 
-      const newResult = list.map((item) => {
+      const newResult = list.map((item, index) => {
         let { status, created_at, updated_at } = item;
 
         if (status === 1) {
@@ -52,6 +52,7 @@ const DeliveryProduct = () => {
           status: status,
           created_at: moment(created_at).format(DateFormat.Default),
           updated_at: moment(updated_at).format(DateFormat.Default),
+          key: index,
         };
       });
 

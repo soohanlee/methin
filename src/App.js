@@ -193,10 +193,7 @@ function App() {
                 <Navigation />
 
                 <CustomContent>
-                  <Scrollbars
-                    autoHide
-                    style={{ width: '100%', heigth: '100%' }}
-                  >
+                  <Scrollbars autoHide style={{ width: '8px', heigth: '100%' }}>
                     <Switch>
                       {/* 라우트 예시 */}
                       <Route exact path={'/'} component={Main} />

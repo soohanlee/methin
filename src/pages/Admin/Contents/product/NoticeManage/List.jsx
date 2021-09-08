@@ -101,26 +101,36 @@ const List = ({
           수정
         </ButtonStyled>
       ),
+      align: 'center',
+      width: 130,
     },
     {
       title: '번호',
       dataIndex: 'id',
+      align: 'center',
+      width: 130,
     },
     {
       title: '공지사항',
       dataIndex: 'title',
+      align: 'center',
     },
     {
       title: '카테고리',
       dataIndex: 'category',
+      align: 'center',
+      width: 130,
     },
     {
       title: '전시상태',
       dataIndex: 'preview_status',
+      align: 'center',
+      width: 130,
     },
     {
       title: '등록일',
       dataIndex: 'created_at',
+      align: 'center',
     },
   ];
   const handleChange = (selectedRowKeys, selectedRows) => {
@@ -143,7 +153,7 @@ const List = ({
           </Button>
         </ButtonContainer>
         <Table
-          scroll={{ x: '25vw', y: 800 }}
+          scroll={{ x: 'max-content', y: '20vw' }}
           data={tableData}
           columns={columns}
           selectionType="checkbox"

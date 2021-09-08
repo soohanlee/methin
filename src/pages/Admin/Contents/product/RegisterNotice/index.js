@@ -9,6 +9,7 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import Editor from 'pages/Admin/components/Editor';
 import Calendar from 'pages/Admin/components/Calendar';
+import { ROUTE_PATH } from 'configs/config';
 
 const ContainerStyled = styled.div`
   padding: 2rem;
@@ -132,6 +133,9 @@ const RegisterNotice = () => {
       console.log('post');
       postNotice(data);
     }
+    history.push({
+      pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.noticeManage}`,
+    });
   };
 
   const showCalender = () => {
@@ -152,6 +156,12 @@ const RegisterNotice = () => {
           />
         </>
       );
+  };
+
+  const handleCancel = () => {
+    history.push({
+      pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.noticeManage}`,
+    });
   };
 
   return (
@@ -187,7 +197,7 @@ const RegisterNotice = () => {
         </DisplayDateContainerStyled>
       </LabelContents>
       <Button onClick={handleRegistNoticeBtn}>상품 공지사항 등록</Button>
-      <Button>취소</Button>
+      <Button onClick={handleCancel}>취소</Button>
     </ContainerStyled>
   );
 };

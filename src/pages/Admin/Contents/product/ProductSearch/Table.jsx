@@ -70,6 +70,8 @@ const Table = ({
           label="수정"
         ></BasicButton>
       ),
+      align: 'center',
+      width: 130,
     },
     {
       title: '삭제',
@@ -80,76 +82,109 @@ const Table = ({
           label="삭제"
         ></BasicButton>
       ),
+      align: 'center',
+      width: 130,
     },
     {
       title: '상품번호',
       dataIndex: 'id',
       key: 'id',
+      align: 'center',
+      width: 100,
     },
     {
       title: '상품명',
       dataIndex: 'name',
       key: 'name',
       sorter: (a, b) => (a.name > b.name ? a.name > b.name : a.name < b.name),
+      align: 'center',
     },
     {
       title: '판매상태',
       dataIndex: 'status',
+      align: 'center',
+      width: 130,
     },
     {
       title: '전시상태',
       dataIndex: 'preview_status',
+      align: 'center',
+      width: 100,
     },
     {
       title: '재고수량',
       dataIndex: 'count',
+      align: 'center',
+      width: 100,
     },
     {
       title: '판매가',
       dataIndex: 'price',
+      align: 'center',
+      width: 100,
     },
     {
       title: '할인가',
       dataIndex: 'discount_amount',
+      align: 'center',
+      width: 100,
     },
     {
       title: '최소구매수량',
       dataIndex: 'min_quantity',
+      align: 'center',
+      width: 130,
     },
     {
       title: '최대구매수량',
       dataIndex: 'max_quantity',
+      align: 'center',
+      width: 130,
     },
     {
       title: '배송비유형',
       dataIndex: 'ship_category',
+      align: 'center',
+      width: 130,
     },
     ,
     {
       title: '배송비결제방식',
       dataIndex: 'ship_pay_type',
+      align: 'center',
+      width: 140,
     },
     ,
     {
       title: '기본배송비',
       dataIndex: 'ship_amount',
+      align: 'center',
+      width: 110,
     },
     {
       title: '반품배송비',
       dataIndex: 'refund_ship_amount',
+      align: 'center',
+      width: 110,
     },
     {
       title: '교환배송비',
       dataIndex: 'exchange_ship_amount',
+      align: 'center',
+      width: 110,
     },
     ,
     {
       title: '판매시작일',
       dataIndex: 'sales_start_date',
+      align: 'center',
+      width: 150,
     },
     {
       title: '판매종료일',
       dataIndex: 'sales_end_date',
+      align: 'center',
+      width: 150,
     },
     {
       title: '상품등록일',
@@ -159,6 +194,8 @@ const Table = ({
         a.created_at > b.created_at
           ? a.created_at > b.created_at
           : a.created_at < b.created_at,
+      align: 'center',
+      width: 150,
     },
     {
       title: '최종수정일',
@@ -168,6 +205,8 @@ const Table = ({
         a.updated_at > b.updated_at
           ? a.updated_at > b.updated_at
           : a.updated_at < b.updated_at,
+      align: 'center',
+      width: 150,
     },
   ];
 
@@ -254,7 +293,7 @@ const Table = ({
       </HeaderContainerStyled>
 
       <BasicTable
-        scroll={{ x: '250vw', y: 800 }}
+        scroll={{ x: 'max-content', y: '20vw' }}
         data={tableList}
         columns={columns}
         selectionType="checkbox"

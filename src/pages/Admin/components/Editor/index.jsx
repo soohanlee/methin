@@ -21,9 +21,23 @@ const Editor = ({ editorState, onEditorStateChange, uploadImageCallBack }) => {
       editorClassName="editorClassName"
       onEditorStateChange={onEditorStateChange}
       toolbar={{
+        fontFamily: {
+          options: [
+            'Arial',
+            'Georgia',
+            'Impact',
+            'Tahoma',
+            'Times New Roman',
+            'Verdana',
+            '사요나라',
+          ],
+          className: undefined,
+          component: undefined,
+          dropdownClassName: undefined,
+        },
         inline: { inDropdown: true },
         list: { inDropdown: true },
-        textAlign: { inDropdown: true },
+        textAlign: { inDropdown: true, width: 100 },
         link: { inDropdown: true },
         history: { inDropdown: true },
         image: { uploadCallback: uploadImageCallBack },

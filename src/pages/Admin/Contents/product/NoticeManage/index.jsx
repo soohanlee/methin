@@ -30,12 +30,13 @@ const NoticeManage = () => {
       const list = result.data.data.list;
       const count = result.data.data.list.length;
 
-      const newResult = list.map((item) => {
+      const newResult = list.map((item, index) => {
         let { preview_status, created_at } = item;
         return {
           ...item,
           preview_status: preview_status === 0 ? 'NO' : 'Yes',
           created_at: moment(created_at).format(DateFormat.Default),
+          key: index,
         };
       });
 

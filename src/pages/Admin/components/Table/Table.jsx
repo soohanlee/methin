@@ -72,7 +72,7 @@ const Table = ({
   const customColumns =
     columns &&
     columns.map((item) => {
-      return { ...item, width: 100 };
+      return { ...item };
     });
 
   const rowSelection = {

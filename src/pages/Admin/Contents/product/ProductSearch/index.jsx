@@ -35,7 +35,7 @@ const ProductSearch = () => {
       const list = result.data.data.list;
       const count = result.data.data.list.length;
 
-      const newResult = list.map((item) => {
+      const newResult = list.map((item, index) => {
         let {
           ship_category,
           ship_pay_type,
@@ -63,6 +63,7 @@ const ProductSearch = () => {
           sales_end_date: moment(sales_end_date).format(DateFormat.Default),
           created_at: moment(created_at).format(DateFormat.Default),
           updated_at: moment(updated_at).format(DateFormat.Default),
+          key: index,
         };
       });
 
