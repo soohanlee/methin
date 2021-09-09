@@ -46,12 +46,14 @@ import ServiceCenter from 'pages/service-center';
 import Order from 'pages/Order';
 import Cart from 'pages/Cart';
 import Category from 'pages/Category';
+import Agreement from 'pages/Agreement';
 
 import ResponsiveTemplateForRoot from 'template/ResponsiveTemplateForRoot';
 import { useWindowSize } from 'hooks/useWindowSize';
 import MobileMenu from 'pages/my-page/MobileMenu';
 import DeliveryTrackingPage from 'pages/DeliveryTracking/DeliveryTrackingPage';
 import MobileMyPageMain from 'pages/my-page/MobileMyPageMain/MobileMyPageMain';
+import Private from 'pages/Private';
 
 const { Content } = Layout;
 
@@ -203,6 +205,11 @@ function App() {
                       <Route exact path={ROUTE_PATH.main} component={Main} />
                       <Route exact path={ROUTE_PATH.login} component={Login} />
                       <Route
+                        path={ROUTE_PATH.agreement}
+                        component={Agreement}
+                      />
+                      <Route path={ROUTE_PATH.private} component={Private} />
+                      <Route
                         exact
                         path={ROUTE_PATH.signup}
                         component={SignUp}
@@ -217,32 +224,26 @@ function App() {
                         component={ProductDetail}
                       />
 
+                      <Route path={ROUTE_PATH.mypage.main} component={MyPage} />
                       <Route
-                        path={`${ROUTE_PATH.mypage.main}`}
-                        component={MyPage}
-                      />
-                      <Route
-                        path={`${ROUTE_PATH.mypage.mobileMenu}`}
+                        path={ROUTE_PATH.mypage.mobileMenu}
                         component={MobileMenu}
                       />
                       <Route
-                        path={`${ROUTE_PATH.serviceCenter.main}`}
+                        path={ROUTE_PATH.serviceCenter.main}
                         component={ServiceCenter}
                       />
-                      <Route path={`${ROUTE_PATH.order}`} component={Order} />
-                      <Route path={`${ROUTE_PATH.cart}`} component={Cart} />
+                      <Route path={ROUTE_PATH.order} component={Order} />
+                      <Route path={ROUTE_PATH.cart} component={Cart} />
+                      <Route path={ROUTE_PATH.category} component={Category} />
                       <Route
-                        path={`${ROUTE_PATH.category}`}
-                        component={Category}
-                      />
-                      <Route
-                        path={`${ROUTE_PATH.deliveryTracking}`}
+                        path={ROUTE_PATH.deliveryTracking}
                         component={DeliveryTrackingPage}
                       />
 
                       {/* 모바일 */}
                       <Route
-                        path={`${ROUTE_PATH.mobile.mypage}`}
+                        path={ROUTE_PATH.mobile.mypage}
                         component={MobileMyPageMain}
                       />
                     </Switch>

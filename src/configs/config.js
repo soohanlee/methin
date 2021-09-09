@@ -5,6 +5,8 @@ export const ROUTE_PATH = {
   findId: '/findId',
   product: '/product',
   deliveryTracking: '/delivery-tracking',
+  agreement: '/agreement',
+  private: '/private',
   mypage: {
     main: '/mypage',
     destination: '/destination',

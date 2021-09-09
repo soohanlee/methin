@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 
 import MobilePageModal from 'components/MobilePageModal/MobilePageModal';
 import Notice from 'pages/my-page/MobileMyPageMain/MobileModalPages/Notice/Notice';
+import ProductQna from 'pages/my-page/MobileMyPageMain/MobileModalPages/ProductQna/ProductQna';
 
 const Container = styled.div``;
 
@@ -103,10 +104,7 @@ const MobileMyPageMain = (props) => {
         </MenuContainer>
         <MenuContainer>
           <Title>고객센터</Title>
-          <Label onClick={() => handleModalOpen('privateAsk')}>
-            1:1 문의내역
-          </Label>
-          <Label onClick={() => handleModalOpen('qna')}>상품 QnA 현황</Label>
+          <Label onClick={() => handleModalOpen('qna')}>상품 QnA 내역</Label>
           <Label onClick={() => handleModalOpen('faq')}>FAQ</Label>
           <Label onClick={() => handleModalOpen('extra')}>기타 문의</Label>
         </MenuContainer>
@@ -140,4 +138,5 @@ export default MobileMyPageMain;
 const pageList = [
   { name: '공지사항', pageName: 'notice', component: <Notice /> },
   { name: '이용안내', pageName: 'k' },
+  { name: '상품 QnA 내역', pageName: 'qna', component: <ProductQna /> },
 ];

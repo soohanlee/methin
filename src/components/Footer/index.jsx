@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { Row as OriginRow, Col } from 'antd';
 import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import MobileFooter from 'components/Footer/mobile';
+import { ROUTE_PATH } from 'configs/config';
 
 const Container = styled.div`
   display: flex;
@@ -68,8 +69,8 @@ const Footer = () => {
           <PageInnerListContainer>
             <NavLink to={`/`}>METHINE 소개</NavLink>
             <NavLink to={`/`}>채용정보</NavLink>
-            <NavLink to={`/`}>이용약관</NavLink>
-            <NavLink to={`/`}>개인정보처리방침</NavLink>
+            <NavLink to={ROUTE_PATH.agreement}>이용약관</NavLink>
+            <NavLink to={ROUTE_PATH.private}>개인정보처리방침</NavLink>
             <NavLink to={`/`}>이용안내</NavLink>
             <NavLink to={`/`}>전자금융거래약관</NavLink>
           </PageInnerListContainer>
