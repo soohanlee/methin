@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import NoticeItem from 'pages/my-page/MobileMyPageMain/MobileModalPages/Notice/NoticeItem';
-import NoticeDetail from 'pages/my-page/MobileMyPageMain/MobileModalPages/Notice/NoticeDetail';
-import { useHistory, Route } from 'react-router';
 import MobileTabs from 'components/MobileTabs/MobileTabs';
+import FAQItem from 'pages/my-page/MobileMyPageMain/MobileModalPages/FAQ/FAQItem.jsx';
 
 const MobileTabsContainer = styled(MobileTabs)`
   &.ant-tabs {
@@ -28,9 +26,9 @@ const MobileTabsContainer = styled(MobileTabs)`
   }
 `;
 
-const Notice = () => {
+const FAQ = () => {
   const [selectedId, setSelectedId] = React.useState('');
-  const [tab, setTab] = React.useState('notice');
+  const [tab, setTab] = React.useState('faq');
 
   const [selectedItem, setSelectedItem] = React.useState({
     title: '',
@@ -42,10 +40,10 @@ const Notice = () => {
     setTab(value);
   };
 
-  const renderNotice = () => {
-    return noticeList.map(({ index, title, createdAt, id }) => {
+  const renderFAQ = () => {
+    return FAQList.map(({ index, title, createdAt, id }) => {
       return (
-        <NoticeItem
+        <FAQItem
           index={index}
           title={title}
           createdAt={createdAt}
@@ -58,28 +56,29 @@ const Notice = () => {
   };
 
   const list = [
-    { key: 'notice', tabTitle: '공지사항' },
+    { key: 'faq', tabTitle: '주문 결제' },
     {
-      key: 'event-ing',
-      tabTitle: '진행중인 이벤트',
+      key: 'delivery',
+      tabTitle: '배송',
     },
-    { key: 'event-end', tabTitle: '종료된 이벤트' },
+    { key: 'cancel', tabTitle: '취소 반품' },
+    { key: 'other', tabTitle: '기타' },
   ];
 
   return (
     <div>
       {
         <MobileTabsContainer list={list} onChange={handleTabsChange}>
-          {tab === 'notice' && renderNotice()}
+          {tab === 'faq' && renderFAQ()}
         </MobileTabsContainer>
       }
     </div>
   );
 };
 
-export default Notice;
+export default FAQ;
 
-const noticeList = [
+const FAQList = [
   {
     id: 1,
     index: 1,

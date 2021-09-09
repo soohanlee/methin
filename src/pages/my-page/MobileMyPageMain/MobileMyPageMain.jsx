@@ -11,6 +11,7 @@ import { useHistory } from 'react-router-dom';
 import MobilePageModal from 'components/MobilePageModal/MobilePageModal';
 import Notice from 'pages/my-page/MobileMyPageMain/MobileModalPages/Notice/Notice';
 import ProductQna from 'pages/my-page/MobileMyPageMain/MobileModalPages/ProductQna/ProductQna';
+import FAQ from 'pages/my-page/MobileMyPageMain/MobileModalPages/FAQ/FAQ';
 
 const Container = styled.div``;
 
@@ -139,4 +140,5 @@ const pageList = [
   { name: '공지사항', pageName: 'notice', component: <Notice /> },
   { name: '이용안내', pageName: 'k' },
   { name: '상품 QnA 내역', pageName: 'qna', component: <ProductQna /> },
+  { name: 'FAQ', pageName: 'faq', component: <FAQ /> },
 ];
