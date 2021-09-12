@@ -138,7 +138,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
           <BasicTextInputBoxStyled
             value={productNameInput}
             onChange={(value) => {
-              setProductNameInput(value);
+              setProductNameInput(value.target.value);
             }}
             textSize="10rem"
             label="상품명"

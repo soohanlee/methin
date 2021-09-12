@@ -17,6 +17,10 @@ const NoticeManage = () => {
   const limit = 16;
 
   useEffect(() => {
+    getApiNoticeData(productOffset);
+  }, [productOffset]);
+
+  useEffect(() => {
     async function fetchAndSetUser() {
       await getApiNoticeData();
     }

@@ -25,6 +25,10 @@ const DeliveryProduct = () => {
   const [productOffset, setProductOffset] = useState(0);
 
   useEffect(() => {
+    getApiDeliveryData(productOffset);
+  }, [productOffset]);
+
+  useEffect(() => {
     async function fetchAndSetUser() {
       await getApiDeliveryData();
     }

@@ -45,8 +45,6 @@ const RegisterNotice = () => {
 
   useEffect(() => {
     async function fetchAndSetUser() {
-      console.log(history);
-
       await getApiNoticeData();
     }
     fetchAndSetUser();
