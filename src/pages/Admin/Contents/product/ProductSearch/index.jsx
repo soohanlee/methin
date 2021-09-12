@@ -67,6 +67,8 @@ const ProductSearch = () => {
         };
       });
 
+      console.log(newResult);
+
       setTableDataState(newResult);
       setTableCountState(count);
       SetCategoryCount(newResult);

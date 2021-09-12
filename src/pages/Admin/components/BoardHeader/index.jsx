@@ -63,7 +63,7 @@ const BoardHeader = ({ list, onClick }) => {
                     <IconContainer>{img}</IconContainer>
                     <TextContainer>
                       <Title>{label}</Title>
-                      <Length>건</Length>
+                      <Length>{value}건</Length>
                     </TextContainer>
                   </ItemContainer>
                 );

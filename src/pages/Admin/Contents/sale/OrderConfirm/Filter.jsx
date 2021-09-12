@@ -4,6 +4,7 @@ import { Button, Radio, Input as OriginInput } from 'antd';
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import moment from 'moment';
 
 const SelectBox = styled(BasicSelectBox)`
   margin-right: 1rem;
@@ -30,11 +31,11 @@ const Input = styled(OriginInput)`
   width: 200px;
 `;
 
-const Filter = ({ getApiDeliveryData }) => {
-  const [searchTypeState, setSearchTypeState] = useState(''); //조회기간 타입
-  const [datePeriodState, setdatePeriodState] = useState(''); //조회기간 기간
-  const [startDateState, setStartDateState] = useState(''); //시작날짜
-  const [endDateState, setEndDateState] = useState(''); //종료날짜
+const Filter = ({ getApiDeliveryData, categoryCountArrayState }) => {
+  const [searchTypeState, setSearchTypeState] = useState(); //조회기간 타입
+  const [datePeriodState, setdatePeriodState] = useState('today'); //조회기간 기간
+  const [startDateState, setStartDateState] = useState(moment()); //시작날짜
+  const [endDateState, setEndDateState] = useState(moment()); //종료날짜
   const [detailTypeState, setDetailTypeState] = useState(''); //상세조건 타입
   const detailInputRef = useRef(); //상세조건 인풋
   const [orderState, setOrderState] = useState(''); //주문상태타입
@@ -108,9 +109,12 @@ const Filter = ({ getApiDeliveryData }) => {
           </Radio.Group>
         </RadioGroupContainer>
 
-        <BasicDatePicker onChange={handleStartDateChange} />
+        <BasicDatePicker
+          value={startDateState}
+          onChange={handleStartDateChange}
+        />
         {`　~　`}
-        <BasicDatePicker onChange={handleEndDateChange} />
+        <BasicDatePicker value={endDateState} onChange={handleEndDateChange} />
       </LabelContents>
       <LabelContents title="상세조건">
         <SelectBox list={detailList} onChange={handledetailChange} />

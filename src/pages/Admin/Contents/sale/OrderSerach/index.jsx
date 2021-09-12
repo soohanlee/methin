@@ -83,6 +83,10 @@ const OrderSerach = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    getApiPaymentData(productOffset);
+  }, [productOffset]);
+
+  useEffect(() => {
     async function fetchAndSetUser() {
       await getApiPaymentData();
     }
