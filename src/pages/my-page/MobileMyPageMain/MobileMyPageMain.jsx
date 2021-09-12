@@ -12,6 +12,8 @@ import MobilePageModal from 'components/MobilePageModal/MobilePageModal';
 import Notice from 'pages/my-page/MobileMyPageMain/MobileModalPages/Notice/Notice';
 import ProductQna from 'pages/my-page/MobileMyPageMain/MobileModalPages/ProductQna/ProductQna';
 import FAQ from 'pages/my-page/MobileMyPageMain/MobileModalPages/FAQ/FAQ';
+import ExtraAsk from 'pages/my-page/MobileMyPageMain/MobileModalPages/ExtraAsk/ExtraAsk';
+import Delivery from 'pages/my-page/MobileMyPageMain/MobileModalPages/Delivery/Delivery';
 
 const Container = styled.div``;
 
@@ -85,7 +87,9 @@ const MobileMyPageMain = (props) => {
       <InnerContainer>
         <MenuContainer>
           <Title>쇼핑 정보</Title>
-          <Label onClick={() => handleMovePage('')}>주문배송조회</Label>
+          <Label onClick={() => handleModalOpen('delivery')}>
+            주문배송조회
+          </Label>
           <Label onClick={() => handleMovePage('')}>취소 교환 반품 조회</Label>
           <Label onClick={() => handleMovePage('')}>상품리뷰</Label>
         </MenuContainer>
@@ -141,4 +145,6 @@ const pageList = [
   { name: '이용안내', pageName: 'k' },
   { name: '상품 QnA 내역', pageName: 'qna', component: <ProductQna /> },
   { name: 'FAQ', pageName: 'faq', component: <FAQ /> },
+  { name: '기타문의', pageName: 'extra', component: <ExtraAsk /> },
+  { name: '주문배송조회', pageName: 'delivery', component: <Delivery /> },
 ];
