@@ -65,14 +65,17 @@ const Table = ({
   pageSize,
   onTableChange,
   loading,
+  fixedCount,
   ...props
 }) => {
   // selectionType = 'checkbox' | 'radio' 타입은 둘중 하나로 들어와야합니다.
 
   const customColumns =
     columns &&
-    columns.map((item) => {
-      return { ...item };
+    columns.map((item, index) => {
+      let fixedType = index < fixedCount ? 'left' : '';
+
+      return { fixed: fixedType, ...item };
     });
 
   const rowSelection = {
