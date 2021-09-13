@@ -66,7 +66,8 @@ const QueryItemModal = (property) => {
 
   const resetData = () => {
     if (getTargetCookie() !== null) {
-      setTargetKeys(getTargetCookie());
+      var key = getTargetCookie();
+      setTargetKeys([...key]);
     }
   };
 
@@ -77,7 +78,7 @@ const QueryItemModal = (property) => {
 
   function getTargetCookie() {
     const key = get(COOKIE_KEYS.CheckOutStandingPaymentTargetKeys);
-    return [...key] || null;
+    return key || null;
   }
 
   return (
