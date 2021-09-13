@@ -43,8 +43,8 @@ export const ROUTE_PATH = {
     qnaManage: '/qna-manage',
     reviewManage: '/review-manage',
     registerNotice: '/register-notice',
-    menuManage : '/menu-manage',
-    displayManage: '/display-manage'
+    menuManage: '/menu-manage',
+    displayManage: '/display-manage',
   },
 
   mobile: {
@@ -60,6 +60,7 @@ export const COOKIE_KEYS = {
   UserRefreshToken: '__user_refresh_token__',
   UserAccessToken: '__user_access_token__',
   cart: 'CART',
+  CheckOutStandingPaymentTargetKeys: '1',
 };
 
 export const DateFormat = {
