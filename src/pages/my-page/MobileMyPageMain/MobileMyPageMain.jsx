@@ -14,6 +14,8 @@ import ProductQna from 'pages/my-page/MobileMyPageMain/MobileModalPages/ProductQ
 import FAQ from 'pages/my-page/MobileMyPageMain/MobileModalPages/FAQ/FAQ';
 import ExtraAsk from 'pages/my-page/MobileMyPageMain/MobileModalPages/ExtraAsk/ExtraAsk';
 import Delivery from 'pages/my-page/MobileMyPageMain/MobileModalPages/Delivery/Delivery';
+import Cancel from 'pages/my-page/MobileMyPageMain/MobileModalPages/Cancel/Cancel';
+import Setting from 'pages/my-page/MobileMyPageMain/MobileModalPages/Setting/Setting';
 
 const Container = styled.div``;
 
@@ -90,7 +92,9 @@ const MobileMyPageMain = (props) => {
           <Label onClick={() => handleModalOpen('delivery')}>
             주문배송조회
           </Label>
-          <Label onClick={() => handleMovePage('')}>취소 교환 반품 조회</Label>
+          <Label onClick={() => handleModalOpen('cancel')}>
+            취소 교환 반품 조회
+          </Label>
           <Label onClick={() => handleMovePage('')}>상품리뷰</Label>
         </MenuContainer>
         <MenuContainer>
@@ -104,8 +108,8 @@ const MobileMyPageMain = (props) => {
           >
             내 정보 수정
           </Label>
-          <Label onClick={() => handleMovePage('')}>회원등급</Label>
-          <Label onClick={() => handleMovePage('')}>설정</Label>
+          {/* <Label onClick={() => handleMovePage('')}>회원등급</Label> */}
+          <Label onClick={() => handleModalOpen('setting')}>설정</Label>
         </MenuContainer>
         <MenuContainer>
           <Title>고객센터</Title>
@@ -147,4 +151,6 @@ const pageList = [
   { name: 'FAQ', pageName: 'faq', component: <FAQ /> },
   { name: '기타문의', pageName: 'extra', component: <ExtraAsk /> },
   { name: '주문배송조회', pageName: 'delivery', component: <Delivery /> },
+  { name: '취소 교환 반품', pageName: 'cancel', component: <Cancel /> },
+  { name: '설정', pageName: 'setting', component: <Setting /> },
 ];

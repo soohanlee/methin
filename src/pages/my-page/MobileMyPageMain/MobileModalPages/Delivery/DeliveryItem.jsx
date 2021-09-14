@@ -67,6 +67,7 @@ const MainButton = styled(OriginMainButton)`
 const DeliveryItem = ({
   id,
   date,
+
   orderNumber,
   img,
   title,
@@ -74,6 +75,7 @@ const DeliveryItem = ({
   price,
   deliveryState,
   company,
+  buttonTitle,
 }) => {
   const handleClickReview = (id) => {
     alert(id);
@@ -101,7 +103,7 @@ const DeliveryItem = ({
         </FooterLeft>
         <FooterRight>
           <MainButton onClick={() => handleClickReview(id)}>
-            리뷰 작성
+            {buttonTitle}
           </MainButton>
         </FooterRight>
       </Footer>
