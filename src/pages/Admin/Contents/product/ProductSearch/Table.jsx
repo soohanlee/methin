@@ -267,28 +267,18 @@ const Table = ({
       <HeaderContainerStyled>
         <div>상품목록(총 {count}개)</div>
         <ButtonContainerStyled>
-          {/* <BasicSelectBoxStyled
-            onChange={(value) => {
-              setProductSortSelectState(value);
-            }}
-            list={SortViewList}
-          ></BasicSelectBoxStyled> */}
           <BasicSelectBoxStyled
             onChange={(value) => {
               setProductCountSelectState(value);
             }}
             list={CountList}
           ></BasicSelectBoxStyled>
-          <BasicButtonStyled onClick={handleExcelDown}>
-            엑셀다운
-          </BasicButtonStyled>
+          <BasicButtonStyled label="엑셀다운" onClick={handleExcelDown} />
         </ButtonContainerStyled>
       </HeaderContainerStyled>
       <HeaderContainerStyled>
         <ButtonContainerStyled>
-          <BasicButtonStyled onClick={handleSelectDelete}>
-            선택삭제
-          </BasicButtonStyled>
+          <BasicButtonStyled label="선택삭제" onClick={handleSelectDelete} />
         </ButtonContainerStyled>
       </HeaderContainerStyled>
 

@@ -3,6 +3,7 @@ import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
+import { CSVLink } from 'react-csv';
 
 const ExcelModal = (property) => {
   const InputBox = styled.div`
@@ -33,7 +34,9 @@ const ExcelModal = (property) => {
         <div>엑셀 파일을 업로드해 주세요.</div>
         <InputBox>
           <BasicTextInputBoxStyled />
-          <BasicButton label="찾아보기" />
+          <CSVLink>
+            <BasicButton label="찾아보기" />
+          </CSVLink>
         </InputBox>
       </Modal>
     </>
