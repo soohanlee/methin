@@ -36,9 +36,6 @@ const Title = ({ categoryList, dataList }) => {
   const handleImageClick = () => {
     setImageVisibleState(true);
   };
-  const handleExcelClick = () => {
-    alert('엑셀양식다운로드 클릭');
-  };
 
   const handleFileClick = () => {};
 

@@ -1,4 +1,3 @@
-import { Modal } from 'antd';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import BasicModal from 'pages/Admin/components/Modal/BasicModal';

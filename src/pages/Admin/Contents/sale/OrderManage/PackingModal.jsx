@@ -1,10 +1,12 @@
-import { useRef, useState } from 'react';
-import { Modal, Table } from 'antd';
+import { useRef, useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
+import BasicModal from 'pages/Admin/components/Modal/BasicModal';
+import BasicTable from 'pages/Admin/components/Table/Table';
+
 const SelectBoxContainer = styled.div`
   display: flex;
 `;
@@ -13,16 +15,35 @@ const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
   width: 20rem;
 `;
 const PackingModal = (property) => {
-  const [packingType, setPackingType] = useState();
-  const [deliveryType, setDeliveryType] = useState();
+  const [tableDataState, setTableDataState] = useState();
+  const [shipTypeState, setShipTypeState] = useState();
+  const [shipcompanyState, setShipcompanyState] = useState();
+  const [invoiceNumberState, setInvoiceNumberState] = useState();
+
+  const [dataShipTypeState, setDataShipTypeState] = useState([]);
+  const [dataShipCompanyState, setDataShipCompanyState] = useState([]);
+  const [dataInvoiceNumberState, setDataInvoiceNumberState] = useState([]);
+
   const inputRef = useRef();
 
-  const handlePackingType = (value) => {
-    setPackingType(value);
-  };
+  const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
+  const [selectedTableRowsState, setSelectedTableRowsState] = useState([]);
 
-  const handleDeliveryType = (value) => {
-    setDeliveryType(value);
+  let limit = 3;
+
+  useEffect(() => {
+    setTableDataState(property.selectedTableRowsState);
+  }, [property.visible === true]);
+
+  const handleColumnsSetData = (value, index, state, setState) => {
+    let _array = [...state];
+
+    if (_array.length <= index) {
+      _array = [..._array, value];
+    } else {
+      _array[index] = value;
+    }
+    setState(_array);
   };
 
   const handleOkClick = () => {
@@ -30,40 +51,111 @@ const PackingModal = (property) => {
   };
 
   const handleApplyClick = () => {
-    console.log(packingType);
-    console.log(deliveryType);
-    console.log(inputRef.current.state.value);
+    let shipType = [...dataShipTypeState];
+    let shipCompany = [...dataShipCompanyState];
+    let invoiceNumber = [...dataInvoiceNumberState];
+
+    selectedTableRowsState.map((item, index) => {
+      let { key } = item;
+      shipType[item.key] = shipTypeState;
+      shipCompany[item.key] = shipcompanyState;
+      invoiceNumber[item.key] = invoiceNumberState;
+    });
+
+    setDataShipTypeState(shipType);
+    setDataShipCompanyState(shipCompany);
+    setDataInvoiceNumberState(invoiceNumber);
   };
 
   const columns = [
     {
       title: '상품번호',
-      dataIndex: 'ProductNum',
+      dataIndex: 'product_id',
+      align: 'center',
+      width: 100,
     },
     {
-      title: '상품주문번호',
-      dataIndex: 'delete',
+      title: '주문번호',
+      dataIndex: 'id',
+      align: 'center',
+      width: 100,
     },
     {
       title: '배송방법',
-      dataIndex: 'id',
-      render: (_, record) => <BasicSelectBox lsit={deliveryWayCategory} />,
+      dataIndex: 'shipType',
+      render: (_, record) => (
+        <BasicSelectBox
+          value={dataShipTypeState[record.key]}
+          onChange={(value) => {
+            handleColumnsSetData(
+              value,
+              record.key,
+              dataShipTypeState,
+              setDataShipTypeState,
+            );
+          }}
+          list={property.deliveryTypeList}
+        />
+      ),
+      align: 'center',
+      width: 200,
     },
+
     {
-      title: '택배사',
-      dataIndex: 'id',
-      render: (_, record) => <BasicSelectBox lsit={deliveryWayCategory} />,
+      title: '배송사',
+      dataIndex: 'shipCompany',
+      render: (_, record) => (
+        <BasicSelectBox
+          value={dataShipCompanyState[record.key]}
+          onChange={(value) => {
+            handleColumnsSetData(
+              value,
+              record.key,
+              dataShipCompanyState,
+              setDataShipCompanyState,
+            );
+          }}
+          list={property.deliveryTypeList}
+        />
+      ),
+      align: 'center',
+      width: 200,
     },
+
     {
       title: '송장번호',
-      dataIndex: 'id',
-      render: (_, record) => <BasicTextInputBox />,
+      dataIndex: 'invoiceNumber',
+      render: (_, record) => (
+        <BasicTextInputBox
+          value={dataInvoiceNumberState[record.key]}
+          onChange={(value) => {
+            handleColumnsSetData(
+              value.target.value,
+              record.key,
+              dataInvoiceNumberState,
+              setDataInvoiceNumberState,
+            );
+          }}
+          disabled={
+            dataShipTypeState[record.key] !== 'delivery' ||
+            dataShipCompanyState[record.key] === 'select' ||
+            dataShipCompanyState[record.key] === undefined
+              ? 'disabled'
+              : ''
+          }
+        />
+      ),
+      align: 'center',
     },
   ];
-
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRowKeys', selectedRowKeys);
+    setSelectedTableKeysState(selectedRowKeys);
+    setSelectedTableRowsState(selectedRows);
+  };
   return (
     <>
-      <Modal
+      <BasicModal
         title={property.title}
         centered
         visible={property.visible}
@@ -75,44 +167,50 @@ const PackingModal = (property) => {
       >
         <SelectBoxContainer>
           <BasicSelectBox
-            list={Category}
+            list={property.deliveryTypeList}
+            value={shipTypeState}
             onChange={(value) => {
-              handlePackingType(value);
+              setShipTypeState(value);
             }}
           />
           <BasicSelectBox
-            list={deliveryCategory}
+            list={property.deliveryCompanyList}
+            value={shipcompanyState}
             onChange={(value) => {
-              handleDeliveryType(value);
+              setShipcompanyState(value);
             }}
+            disabled={shipTypeState === 'delivery' ? '' : 'disabled'}
           />
-          <BasicTextInputBoxStyled disabled ref={inputRef} />
-          <BasicButton onClick={handleApplyClick} label="선택건적용" />
+          <BasicTextInputBoxStyled
+            value={invoiceNumberState}
+            onChange={(value) => {
+              setInvoiceNumberState(value.target.value);
+            }}
+            ref={inputRef}
+            disabled={
+              shipTypeState !== 'delivery' ||
+              shipcompanyState === 'select' ||
+              shipcompanyState === undefined
+                ? 'disabled'
+                : ''
+            }
+          />
+          <BasicButton
+            selectionType="checkbox"
+            onClick={handleApplyClick}
+            label="선택건적용"
+          />
         </SelectBoxContainer>
-        <Table columns={columns} />
-      </Modal>
+        <BasicTable
+          pageSize={limit}
+          scroll={{ x: 'max-content', y: '11vw' }}
+          data={tableDataState}
+          columns={columns}
+          selectionType="checkbox"
+          onChange={handleChange}
+        />
+      </BasicModal>
     </>
   );
 };
 export default PackingModal;
-
-const Category = [
-  { value: '0', label: '선택' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
-];
-
-const deliveryCategory = [
-  { value: '0', label: '택배명' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
-];
-
-const deliveryWayCategory = [
-  { value: '0', label: '택배방법' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
-];

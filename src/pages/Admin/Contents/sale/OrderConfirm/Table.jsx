@@ -341,7 +341,6 @@ const Table = ({
   };
 
   const handleOrderSheetPrint = () => {
-    console.log(selectedTableRowsState.length);
     if (selectedTableRowsState.length > 0) {
       setOrderSheetPrintVisible(true);
     } else {
