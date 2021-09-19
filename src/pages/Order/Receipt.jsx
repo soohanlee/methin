@@ -5,6 +5,7 @@ import OriginCheckboxLabel from 'components/Form/CheckboxLabel';
 import { MainButton as OrginMainButton } from 'components/styled/Button';
 import { ROUTE_PATH } from 'configs/config';
 import { useHistory } from 'react-router';
+import { BreakPoint } from 'configs/config';
 
 const Container = styled.div`
   width: 275px;
@@ -12,6 +13,14 @@ const Container = styled.div`
   padding: 4rem 2rem;
   border: 0.2rem solid ${(props) => props.theme.TEXT_MAIN};
   margin-left: 3rem;
+
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    border: 0;
+    margin-bottom: 5rem;
+  }
 `;
 
 const Title = styled.div`

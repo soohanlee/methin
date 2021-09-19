@@ -9,6 +9,15 @@ import MobilePageModal from 'components/MobilePageModal/MobilePageModal';
 
 import { MobilePaddingContainer } from 'components/styled/Container';
 
+import Notice from 'pages/my-page/MobileMyPageMain/MobileModalPages/Notice/Notice';
+import ProductQna from 'pages/my-page/MobileMyPageMain/MobileModalPages/ProductQna/ProductQna';
+import FAQ from 'pages/my-page/MobileMyPageMain/MobileModalPages/FAQ/FAQ';
+import ExtraAsk from 'pages/my-page/MobileMyPageMain/MobileModalPages/ExtraAsk/ExtraAsk';
+import Delivery from 'pages/my-page/MobileMyPageMain/MobileModalPages/Delivery/Delivery';
+import Cancel from 'pages/my-page/MobileMyPageMain/MobileModalPages/Cancel/Cancel';
+import Setting from 'pages/my-page/MobileMyPageMain/MobileModalPages/Setting/Setting';
+import InformationGuide from 'pages/my-page/MobileMyPageMain/MobileModalPages/InformationGuide/InformationGuide';
+
 const Container = styled.div`
   padding-bottom: 6rem;
 `;
@@ -74,7 +83,7 @@ const MobileMenu = () => {
       <Header>
         <Label hightlight>이수한</Label> 님 반갑습니다.
       </Header>
-      <MenuIconContainer>
+      {/* <MenuIconContainer>
         <IconWithLabelContainer>
           <Img src="/assets/images/mobile/black-home-icon.svg" />
           <Label>주문조회</Label>
@@ -92,7 +101,7 @@ const MobileMenu = () => {
           <Img src="/assets/images/mobile/service-center-icon.svg" />
           <Label>고객센터</Label>
         </IconWithLabelContainer>
-      </MenuIconContainer>
+      </MenuIconContainer> */}
       <PaddingContainer>
         {pageList.map(({ name, pageName }) => {
           return (
@@ -121,6 +130,16 @@ const MobileMenu = () => {
 export default MobileMenu;
 
 const pageList = [
-  { name: '자주하는 질문', pageName: 'j' },
-  { name: '이용안내', pageName: 'k' },
+  { name: '공지사항', pageName: 'notice', component: <Notice /> },
+  {
+    name: '이용안내',
+    pageName: 'information',
+    component: <InformationGuide />,
+  },
+  { name: '상품 QnA 내역', pageName: 'qna', component: <ProductQna /> },
+  { name: 'FAQ', pageName: 'faq', component: <FAQ /> },
+  { name: '기타문의', pageName: 'extra', component: <ExtraAsk /> },
+  { name: '주문배송조회', pageName: 'delivery', component: <Delivery /> },
+  { name: '취소 교환 반품', pageName: 'cancel', component: <Cancel /> },
+  { name: '설정', pageName: 'setting', component: <Setting /> },
 ];

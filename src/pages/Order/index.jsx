@@ -27,6 +27,7 @@ import {
 } from 'components/styled/Button';
 import SelectDelivery from 'components/SelectDelivery';
 import { cleanToken } from 'utils/tokenManager';
+import { BreakPoint } from 'configs/config';
 
 const PageTitle = styled(OriginPageTitle)`
   text-align: center;
@@ -36,6 +37,9 @@ const PageTitle = styled(OriginPageTitle)`
 const OrderContainer = styled.div`
   display: flex;
   align-items: flex-start;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    flex-direction: column;
+  }
 `;
 
 const Contents = styled.div`
@@ -48,6 +52,10 @@ const ProductItemLine = styled.div`
   justify-content: space-between;
   border-bottom: 0.1rem solid ${(props) => props.theme.BORDER};
   width: 100%;
+
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    padding: 2rem 0;
+  }
 `;
 
 const ProductItemContainer = styled.div`
@@ -140,6 +148,9 @@ const InfoContainer = styled.div`
 
 const BorderTitleContainer = styled(OriginBorderTitleContainer)`
   margin-bottom: 10rem;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    margin-bottom: 5rem;
+  }
 `;
 
 const DeliveryWrap = styled.div`
@@ -158,6 +169,10 @@ const SubButton = styled(OriginSubButton)`
 const PayButtonContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    justify-content: space-between;
+  }
 `;
 
 const MainButton = styled(OriginMainButton)`
@@ -165,6 +180,12 @@ const MainButton = styled(OriginMainButton)`
   line-height: 5rem;
   margin-left: 1rem;
   margin-bottom: 1rem;
+
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    width: 47%;
+    margin: 0;
+    margin-bottom: 1rem;
+  }
 `;
 
 const Img = styled.img`
@@ -197,22 +218,22 @@ const Order = () => {
 
   const { state } = history.location;
   console.log('state', state);
-  const getProductDetatil = useCallback(async () => {
-    const result = await getUserProductDetail(state.productId);
-    console.log('result', result);
-    if (result && result.data && result.status === 200) {
-      setProductList([result.data.data]);
-    } else {
-      notification.error('통신 성공');
-    }
-  }, [state.productId]);
+  // const getProductDetatil = useCallback(async () => {
+  //   const result = await getUserProductDetail(state.productId);
+  //   console.log('result', result);
+  //   if (result && result.data && result.status === 200) {
+  //     setProductList([result.data.data]);
+  //   } else {
+  //     notification.error('통신 성공');
+  //   }
+  // }, [state.productId]);
 
-  useEffect(() => {
-    if (state.productId) {
-      getProductDetatil();
-    }
-    return (state.productId = null);
-  }, [getProductDetatil, state.productId, state.purchase, state]);
+  // useEffect(() => {
+  //   if (state && state.productId) {
+  //     getProductDetatil();
+  //   }
+  //   return (state.productId = null);
+  // }, [getProductDetatil, state.productId, state.purchase, state]);
 
   useEffect(() => {
     if (showSelectedAddressItem.id === '' && userAddressList.length > 0) {
@@ -220,11 +241,11 @@ const Order = () => {
     }
   }, [showSelectedAddressItem, userAddressList]);
 
-  useEffect(() => {
-    if (state.cartList) {
-      setProductList(state.cartList);
-    }
-  }, [state.cartList]);
+  // useEffect(() => {
+  //   if (state && state.cartList) {
+  //     setProductList(state.cartList);
+  //   }
+  // }, [state.cartList]);
 
   // const setCart = async () => {
   //   try {

@@ -16,6 +16,7 @@ import ExtraAsk from 'pages/my-page/MobileMyPageMain/MobileModalPages/ExtraAsk/E
 import Delivery from 'pages/my-page/MobileMyPageMain/MobileModalPages/Delivery/Delivery';
 import Cancel from 'pages/my-page/MobileMyPageMain/MobileModalPages/Cancel/Cancel';
 import Setting from 'pages/my-page/MobileMyPageMain/MobileModalPages/Setting/Setting';
+import InformationGuide from 'pages/my-page/MobileMyPageMain/MobileModalPages/InformationGuide/InformationGuide';
 
 const Container = styled.div``;
 
@@ -146,7 +147,11 @@ export default MobileMyPageMain;
 
 const pageList = [
   { name: '공지사항', pageName: 'notice', component: <Notice /> },
-  { name: '이용안내', pageName: 'k' },
+  {
+    name: '이용안내',
+    pageName: 'information',
+    component: <InformationGuide />,
+  },
   { name: '상품 QnA 내역', pageName: 'qna', component: <ProductQna /> },
   { name: 'FAQ', pageName: 'faq', component: <FAQ /> },
   { name: '기타문의', pageName: 'extra', component: <ExtraAsk /> },

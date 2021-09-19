@@ -32,6 +32,7 @@ const ItemInfoContainer = styled.div`
   border-bottom: 0.1rem solid ${(props) => props.theme.LINE};
   padding: 1rem 0;
   margin: 1rem 0;
+  align-items: center;
   > div {
     padding-bottom: 0.5rem;
   }
