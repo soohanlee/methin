@@ -81,6 +81,7 @@ const ViewMoreImg = styled.img.attrs({
 const Main = () => {
   const { pathname } = useLocation();
   const product = ROUTE_PATH.product;
+
   const [selectedItem, setSelectedItem] = useState({
     key: 1,
     value: '신상품순',

@@ -97,7 +97,6 @@ const MyPageOrderListContainer = ({ title }) => {
             </ProductItemTextContainer>
           </ProductItemContainer>
           <ProductItemButtonContainer>
-            <SubButton>1:1 문의</SubButton>
             <SubButton>리뷰쓰기</SubButton>
           </ProductItemButtonContainer>
         </ProductItemLine>
