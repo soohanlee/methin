@@ -198,7 +198,8 @@ const countryCodeColumns = [
   },
 ];
 
-const countryCodeDataList = {
-  country_code: ['00', '01', '02'],
-  region: ['국산', '원양산', '수입산'],
-};
+const countryCodeDataList = [
+  { country_code: '00', region:'국산'},
+  { country_code: '01', region:'원양산'},
+  { country_code: '02', region:'수입산'}
+];

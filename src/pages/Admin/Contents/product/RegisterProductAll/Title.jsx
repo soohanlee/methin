@@ -97,7 +97,7 @@ const Title = ({ categoryList, dataList }) => {
 
         <ButtonContainer>
           <CSVLink
-            data={dataList}
+            data={[]}
             headers={columns}
             filename={'상품 일괄 등록.csv'}
           >
