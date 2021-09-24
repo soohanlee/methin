@@ -1,53 +1,80 @@
-import React from 'react';
-import { Editor as OriginEditor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import styled from 'styled-components';
+import React, { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 
-const CustomEditor = styled(OriginEditor)`
-  .toolbarClassName {
-  }
-  .wrapperClassName {
-  }
-  .editorClassName {
-  }
-`;
+const Editor = (props, ref) => {
+  const [isInitialized, setIsInitialized] = useState(false)
+  const editorDivRef = useRef(null)
+  const editorRef = useRef(null)
 
-const Editor = ({ editorState, onEditorStateChange, uploadImageCallBack }) => {
-  return (
-    <CustomEditor
-      editorState={editorState}
-      toolbarClassName="toolbarClassName"
-      wrapperClassName="wrapperClassName"
-      editorClassName="editorClassName"
-      onEditorStateChange={onEditorStateChange}
-      toolbar={{
-        fontFamily: {
-          options: [
-            'Arial',
-            'Georgia',
-            'Impact',
-            'Tahoma',
-            'Times New Roman',
-            'Verdana',
-            '사요나라',
-          ],
-          className: undefined,
-          component: undefined,
-          dropdownClassName: undefined,
+  useEffect(() => {
+    if (!isInitialized && window.ClassicEditor && editorDivRef.current) {
+      setIsInitialized(true)
+
+      window.ClassicEditor.create(editorDivRef.current, {
+        toolbar: {
+          items: [
+            'alignment',
+            'bold',
+            'italic',
+            'underline',
+            // 'horizontalLine',
+            'link',
+            '|',
+            'fontColor',
+            'fontFamily',
+            'fontSize',
+            '|',
+            'imageUpload',
+            'mediaEmbed',
+            '|',
+            'undo',
+            'redo'
+          ]
         },
-        inline: { inDropdown: true },
-        list: { inDropdown: true },
-        textAlign: { inDropdown: true, width: 100 },
-        link: { inDropdown: true },
-        history: { inDropdown: true },
-        image: { uploadCallback: uploadImageCallBack },
-        inputAccept:
-          'application/pdf,text/plain,application/vnd.openxmlformatsofficedocument.wordprocessingml.document,application/msword,application/vnd.ms-excel',
-      }}
-      placeholder="내용"
-      value="테스트"
-    />
-  );
+        language: 'ko',
+        image: {
+          toolbar: [
+            'imageTextAlternative',
+            'imageStyle:inline',
+            'imageStyle:block',
+            'imageStyle:side',
+            'linkImage'
+          ]
+        },
+        licenseKey: ''
+      })
+        .then(editor => {
+          editorRef.current = editor
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+    return () => {
+      if (editorRef && editorRef.current instanceof window.ClassicEditor) {
+        // 이 시점에 DIV ref 날라가서 호출하면 에러남. 나중에 재확인 필요
+        // editorRef.current.destroy()
+      }
+    }
+  }, [isInitialized, editorDivRef, window.ClassicEditor])
+
+  useImperativeHandle(ref, () => ({
+    getData() {
+      if (editorRef.current instanceof window.ClassicEditor) {
+        return editorRef.current.getData()
+      }
+      else return null
+    },
+
+    setData(data) {
+      if (editorRef.current instanceof window.ClassicEditor) {
+        editorRef.current.setData(data)
+      }
+    }
+  }))
+
+  return (
+    <div ref={editorDivRef} />
+  )
 };
 
-export default Editor;
+export default forwardRef(Editor);
