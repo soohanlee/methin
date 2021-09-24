@@ -1,39 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import CustomCollapse from 'pages/Admin/components/Collapse';
 import Editor from 'pages/Admin/components/Editor';
-import { EditorState } from 'draft-js';
+// import { EditorState } from 'draft-js';
 
 const DetailedDescription = () => {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [uploadedImages, setUploadedImages] = useState([]);
+  const editorRef = useRef(null)
 
-  const handleEditorStateChange = (editorState) => {
-    setEditorState(editorState);
-  };
+  // const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  // const [uploadedImages, setUploadedImages] = useState([]);
 
-  const uploadImageCallBack = (file) => {
-    let newUploadedImages = uploadedImages;
+  // const handleEditorStateChange = (editorState) => {
+  //   setEditorState(editorState);
+  // };
 
-    const imageObject = {
-      file: file,
-      localSrc: URL.createObjectURL(file),
-    };
+  // const uploadImageCallBack = (file) => {
+  //   let newUploadedImages = uploadedImages;
 
-    newUploadedImages.concat(imageObject);
+  //   const imageObject = {
+  //     file: file,
+  //     localSrc: URL.createObjectURL(file),
+  //   };
 
-    setUploadedImages(newUploadedImages);
+  //   newUploadedImages.concat(imageObject);
 
-    return new Promise((resolve, reject) => {
-      resolve({ data: { link: imageObject.localSrc } });
-    });
-  };
+  //   setUploadedImages(newUploadedImages);
+
+  //   return new Promise((resolve, reject) => {
+  //     resolve({ data: { link: imageObject.localSrc } });
+  //   });
+  // };
 
   return (
     <CustomCollapse header="상세설명" extra={''}>
       <Editor
-        editorState={editorState}
-        onEditorStateChange={handleEditorStateChange}
-        uploadImageCallBack={uploadImageCallBack}
+          ref={editorRef}
+        // editorState={editorState}
+        // onEditorStateChange={handleEditorStateChange}
+        // uploadImageCallBack={uploadImageCallBack}
       />
     </CustomCollapse>
   );
