@@ -6,6 +6,8 @@ import BoardHeader from 'pages/Admin/components/BoardHeader';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
 import { notification } from 'utils/notification';
 import { getCanceledPaymentList } from 'apis/payment';
+import moment from 'moment';
+import { DateFormat } from 'configs/config';
 
 const Icon = css`
   font-size: 4rem;
@@ -18,15 +20,19 @@ const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
 
 const Container = styled.div``;
 
-const categoryTypeClick = (value) => {
-  alert(value);
-};
-
 // 배송 현황 관리
 const OrderCancel = () => {
-  const limite = 16;
+  const limit = 16;
+  const [allTableDataState, setAllTableDataState] = useState([]);
   const [tableDataState, setTableDataState] = useState([]);
   const [tableCountState, setTableCountState] = useState(0);
+  const [productOffset, setProductOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [categoryCountArrayState, setCategoryCountArrayState] = useState([]);
+
+  useEffect(() => {
+    getApiDeliveryData(productOffset);
+  }, [productOffset]);
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -35,24 +41,93 @@ const OrderCancel = () => {
     fetchAndSetUser();
   }, []);
 
-  const getApiDeliveryData = async () => {
+  const getApiDeliveryData = async (offset = 0) => {
     try {
-      const result = await getCanceledPaymentList(0);
-      const count = result.data.data.count;
-      const maxOffset = Math.floor(count / limite) + 1;
-      let customList = [];
-      for (let i = 0; i < maxOffset; i++) {
-        const _result = await getCanceledPaymentList(i);
-        customList = customList.concat(_result.data.data.list);
-      }
+      setLoading(true);
+      const result = await getCanceledPaymentList(offset);
+      const list = result.data.data.list;
+      const count = result.data.data.list.length;
 
-      setTableDataState(customList);
-      setTableCountState(customList.length);
-
+      let newResult = list.map((item, index) => {
+        let { status, cancel_status, paid_at, canceled_at } = item;
+        switch (status) {
+          case 0:
+            status = '취소요청';
+            break;
+          case 1:
+            status = '취소완료';
+            break;
+        }
+        return {
+          ...item,
+          status: status === 0 ? '취소요청' : '취소완료',
+          cancel_status: cancel_status === 0 ? '취소' : '',
+          paid_at: moment(paid_at).format(DateFormat.Default),
+          canceled_at: moment(canceled_at).format(DateFormat.Default),
+          key: index,
+        };
+      });
+      setAllTableDataState(newResult);
+      setTableDataState(newResult);
+      setTableCountState(count);
+      SetCategoryCount(newResult);
       notification.success('검색성공');
     } catch (e) {
       notification.error('배송취소 정보를 가져오지 못했습니다.');
     }
+    setLoading(false);
+  };
+
+  const SetCategoryCount = (tableList) => {
+    let cancelRequest = 0;
+    let cancelSuccess = 0;
+
+    tableList.forEach((element) => {
+      switch (element.status) {
+        case '취소요청':
+          cancelRequest++;
+          break;
+        case '취소완료':
+          cancelSuccess++;
+          break;
+
+        default:
+          break;
+      }
+    });
+    setCategoryCountArrayState([cancelRequest, cancelSuccess]);
+  };
+
+  const list = [
+    {
+      title: '취소진행중, 완료 주문건을 확인해 주세요!',
+      itemList: [
+        {
+          label: '취소요청',
+          value: categoryCountArrayState[0],
+          img: <AppstoreTwoToneIcon />,
+        },
+        {
+          label: '취소완료(최근 3일)',
+          value: categoryCountArrayState[1],
+          img: <AppstoreTwoToneIcon />,
+        },
+      ],
+    },
+  ];
+
+  const handleTableChange = (pagination, filter, sort) => {
+    setProductOffset(pagination.current - 1);
+  };
+
+  const categoryTypeClick = (value) => {
+    let status = value === 0 ? '취소요청' : '취소완료';
+
+    let data = allTableDataState.filter((item) => {
+      return item.status === status;
+    });
+    setTableDataState(data);
+    setTableCountState(data.length);
   };
 
   return (
@@ -60,57 +135,14 @@ const OrderCancel = () => {
       <BoardHeader onClick={categoryTypeClick} list={list} />
       <Filter getApiDeliveryData={getApiDeliveryData} />
       <Table
-        columns={columns}
-        tableData={tableDataState}
         count={tableCountState}
+        tableData={tableDataState}
+        limit={limit}
+        handleTableChange={handleTableChange}
+        loading={loading}
       />
     </Container>
   );
 };
 
 export default OrderCancel;
-
-const list = [
-  {
-    title: '취소진행중, 완료 주문건을 확인해 주세요!',
-    itemList: [
-      {
-        label: '취소요청',
-        value: 'cancelRequest',
-        img: <AppstoreTwoToneIcon />,
-      },
-      {
-        label: '취소완료(최근 3일)',
-        value: 'cancelSuccess',
-        img: <AppstoreTwoToneIcon />,
-      },
-    ],
-  },
-];
-
-const columns = [
-  {
-    title: '주문번호',
-    dataIndex: 'id',
-  },
-  {
-    title: '주문상태',
-    dataIndex: 'status',
-  },
-  {
-    title: '취소 처리상태',
-    dataIndex: 'cancel_status',
-  },
-  {
-    title: '결제일',
-    dataIndex: 'paid_at',
-  },
-  {
-    title: '취소요청일',
-    dataIndex: 'canceled_at',
-  },
-  {
-    title: '취소사유',
-    dataIndex: 'cancel_reason',
-  },
-];
