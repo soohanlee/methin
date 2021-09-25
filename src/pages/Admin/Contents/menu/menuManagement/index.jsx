@@ -59,7 +59,7 @@ function MenuManagementPage(props) {
                         </Form.Item>
                     </Form>
                 </div>
-                <div style={{width : 500, height:500, border:'1px solid #f0f0f0', padding:20}}>
+                <div style={{width : 500, height:500, border:'1px solid #f0f0f0', padding:20, overflow:'auto'}}>
                     <List>
                         {menu.length !== 0 && renderMenu()}
                     </List>

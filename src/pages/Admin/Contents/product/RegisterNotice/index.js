@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router';
 import { Radio, Input, Button } from 'antd';
-import { EditorState, ContentState, convertFromHTML } from 'draft-js';
+// import { EditorState, ContentState, convertFromHTML } from 'draft-js';
 import styled from 'styled-components';
 import moment from 'moment';
 import { postNotice, patchNotice, getNoticeId } from 'apis/notice';
@@ -27,8 +27,9 @@ const RegisterNotice = () => {
   const [titleState, setTitleState] = useState('');
   const [categoryState, setCategoryState] = useState(0);
   const [preview_statusState, setPreview_statusState] = useState(0);
+  const editorRef = useRef(null)
 
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  // const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [uploadedImagesState, setUploadedImagesState] = useState([]);
 
   const [startDisplayDateState, setStartDisplayDateState] = useState(moment());
@@ -65,11 +66,14 @@ const RegisterNotice = () => {
         setPreview_statusState(customData.preview_status);
         console.log(customData);
 
-        setEditorState(
-          EditorState.createWithContent(
-            ContentState.createFromBlockArray(convertFromHTML(customData.body)),
-          ),
-        );
+        if (editorRef.current) {
+          editorRef.current.setData(customData.body)
+        }
+        // setEditorState(
+        //   EditorState.createWithContent(
+        //     ContentState.createFromBlockArray(convertFromHTML(customData.body)),
+        //   ),
+        // );
       }
     } catch (e) {}
   };
@@ -78,9 +82,9 @@ const RegisterNotice = () => {
     console.log(value);
   };
 
-  const handleEditorStateChange = (editorState) => {
-    setEditorState(editorState);
-  };
+  // const handleEditorStateChange = (editorState) => {
+  //   setEditorState(editorState);
+  // };
 
   const handlestartDisplayDateSelect = (value) => {
     setStartDisplayDateState(value);
@@ -100,28 +104,28 @@ const RegisterNotice = () => {
     setEndDisplayDateState(value);
   };
 
-  const uploadImageCallBack = (file) => {
-    let newUploadedImages = uploadedImagesState;
+  // const uploadImageCallBack = (file) => {
+  //   let newUploadedImages = uploadedImagesState;
 
-    const imageObject = {
-      file: file,
-      localSrc: URL.createObjectURL(file),
-    };
+  //   const imageObject = {
+  //     file: file,
+  //     localSrc: URL.createObjectURL(file),
+  //   };
 
-    newUploadedImages.concat(imageObject);
+  //   newUploadedImages.concat(imageObject);
 
-    setUploadedImagesState(newUploadedImages);
+  //   setUploadedImagesState(newUploadedImages);
 
-    return new Promise((resolve, reject) => {
-      resolve({ data: { link: imageObject.localSrc } });
-    });
-  };
+  //   return new Promise((resolve, reject) => {
+  //     resolve({ data: { link: imageObject.localSrc } });
+  //   });
+  // };
 
   const handleRegistNoticeBtn = () => {
     const data = {
       title: titleState,
       category: categoryState,
-      body: editorState.getCurrentContent().getPlainText(),
+      body: editorRef.current ? editorRef.current.getData() : null,// editorState.getCurrentContent().getPlainText(),
       preview_status: preview_statusState,
     };
     if (history.location.id) {
@@ -177,9 +181,10 @@ const RegisterNotice = () => {
       </LabelContents>
       <LabelContents title="상품 공지사항 상세">
         <Editor
-          editorState={editorState}
-          onEditorStateChange={handleEditorStateChange}
-          uploadImageCallBack={uploadImageCallBack}
+          ref={editorRef}
+          // editorState={editorState}
+          // onEditorStateChange={handleEditorStateChange}
+          // uploadImageCallBack={uploadImageCallBack}
         />
       </LabelContents>
       <LabelContents title="공지 노출정보">
