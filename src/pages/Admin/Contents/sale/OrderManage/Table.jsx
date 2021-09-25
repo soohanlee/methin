@@ -43,14 +43,7 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({
-  sheetList,
-  tableData,
-  count,
-  limit,
-  handleTableChange,
-  loading,
-}) => {
+const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
   const invoiceNumber = useRef(null);
 
   const [
@@ -424,7 +417,6 @@ const Table = ({
         width={500}
         okText="확인"
         cancelText="취소"
-        sheetList={sheetList}
       ></SaleCancelModal>
 
       <SearchContainer>

@@ -66,6 +66,7 @@ const Table = ({
   onTableChange,
   loading,
   fixedCount,
+  selectedRowKeys,
   ...props
 }) => {
   // selectionType = 'checkbox' | 'radio' 타입은 둘중 하나로 들어와야합니다.
@@ -79,6 +80,7 @@ const Table = ({
     });
 
   const rowSelection = {
+    selectedRowKeys,
     onChange: (selectedRowKeys, selectedRows) => {
       onChange(selectedRowKeys, selectedRows);
     },

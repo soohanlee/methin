@@ -33,6 +33,7 @@ const PackingModal = (property) => {
 
   useEffect(() => {
     setTableDataState(property.selectedTableRowsState);
+    resetData();
   }, [property.visible === true]);
 
   const handleColumnsSetData = (value, index, state, setState) => {
@@ -115,7 +116,8 @@ const PackingModal = (property) => {
               setDataShipCompanyState,
             );
           }}
-          list={property.deliveryTypeList}
+          disabled={dataShipTypeState[record.key] !== 'delivery'}
+          list={property.deliveryCompanyList}
         />
       ),
       align: 'center',
@@ -153,6 +155,32 @@ const PackingModal = (property) => {
     setSelectedTableKeysState(selectedRowKeys);
     setSelectedTableRowsState(selectedRows);
   };
+
+  const resetData = () => {
+    setShipTypeState('select');
+    setShipcompanyState('select');
+    setInvoiceNumberState('');
+
+    var dataTypes = dataShipTypeState.map((element) => {
+      return (element = 'select');
+    });
+
+    var dataCompanys = dataShipCompanyState.map((element) => {
+      return (element = 'select');
+    });
+
+    var invoices = dataInvoiceNumberState.map((element) => {
+      return (element = '');
+    });
+
+    setDataShipTypeState(dataTypes);
+    setDataShipCompanyState(dataCompanys);
+    setDataInvoiceNumberState(invoices);
+
+    setSelectedTableKeysState([]);
+    setSelectedTableRowsState([]);
+  };
+
   return (
     <>
       <BasicModal
@@ -202,12 +230,13 @@ const PackingModal = (property) => {
           />
         </SelectBoxContainer>
         <BasicTable
-          pageSize={limit}
           scroll={{ x: 'max-content', y: '11vw' }}
           data={tableDataState}
           columns={columns}
           selectionType="checkbox"
           onChange={handleChange}
+          pageSize={limit}
+          selectedRowKeys={selectedTableKeysState}
         />
       </BasicModal>
     </>

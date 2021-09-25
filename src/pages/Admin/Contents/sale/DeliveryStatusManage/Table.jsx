@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
-import OriginTable from 'pages/Admin/components/Table/Table';
+import BasicTable from 'pages/Admin/components/Table/Table';
 import DirectReturnModal from './DirectExchangeModal';
 import DirectExchangeModal from './DirectExchangeModal';
 import ModifyInvoiceModal from './ModifyInvoiceModal';
-
+import { CSVLink } from 'react-csv';
 const Container = styled.div`
   background: #fff;
   padding: 3rem;
@@ -33,7 +33,7 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ tableData, count }) => {
+const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
   const [directReturnVisibleState, setDirectReturnVisibleState] = useState(
     false,
   );
@@ -43,48 +43,40 @@ const Table = ({ tableData, count }) => {
   const [modifyInvoiceVisibleState, setModifyInvoiceVisibleState] = useState(
     false,
   );
-
-  const statusWord = [
-    '결제대기',
-    '결제완료',
-    '상품준비',
-    '배송중',
-    '배송완료',
-    '취소완료',
-    '반품완료',
-  ];
-
-  const shipPayTypeWord = ['선불', '착불'];
-
-  const shipCategoryWord = ['무료', '유료'];
-  const NumDataToWord = () => {
-    for (var i = 0; i < tableData.length; i++) {
-      tableData[i].status[i] = statusWord[tableData[i].status[i]];
-      tableData[i].ship_pay_type = shipPayTypeWord[tableData[i].ship_pay_type];
-      tableData[i].ship_ship_category =
-        shipCategoryWord[tableData[i].ship_ship_category];
-    }
-  };
+  const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
+  const [selectedTableRowsState, setSelectedTableRowsState] = useState([]);
 
   const handleButtonClick = (type) => {
     switch (type) {
       case 'directReturn':
-        setDirectReturnVisibleState(true);
+        if (selectedTableRowsState.length > 0) {
+          setDirectReturnVisibleState(true);
+          return;
+        }
         break;
       case 'directExchange':
-        setDirectExchangeVisibleState(true);
+        if (selectedTableRowsState.length > 0) {
+          setDirectExchangeVisibleState(true);
+          return;
+        }
         break;
       case 'modifyInvoice':
-        setModifyInvoiceVisibleState(true);
+        if (selectedTableRowsState.length > 0) {
+          setModifyInvoiceVisibleState(true);
+          return;
+        }
         break;
       default:
         break;
     }
+    alert('데이터를 선택해주세요');
   };
 
-  useEffect(() => {
-    NumDataToWord();
-  }, []);
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRowKeys', selectedRowKeys);
+    setSelectedTableKeysState(selectedRowKeys);
+    setSelectedTableRowsState(selectedRows);
+  };
 
   return (
     <Container>
@@ -99,6 +91,7 @@ const Table = ({ tableData, count }) => {
           setDirectReturnVisibleState(false);
         }}
         width={500}
+        selectedTableRowsState={selectedTableRowsState}
       ></DirectReturnModal>
 
       <DirectExchangeModal
@@ -112,6 +105,7 @@ const Table = ({ tableData, count }) => {
           setDirectExchangeVisibleState(false);
         }}
         width={500}
+        selectedTableRowsState={selectedTableRowsState}
       ></DirectExchangeModal>
 
       <ModifyInvoiceModal
@@ -125,21 +119,32 @@ const Table = ({ tableData, count }) => {
           setModifyInvoiceVisibleState(false);
         }}
         width={500}
+        selectedTableRowsState={selectedTableRowsState}
       ></ModifyInvoiceModal>
 
       <HeaderContainer>
         <Title>목록(총 {count}개)</Title>
         <ButtonContainer>
-          <Button>엑셀다운</Button>
+          <CSVLink
+            data={tableData}
+            headers={columns}
+            filename={'배송현황 목록.csv'}
+          >
+            <Button>엑셀다운</Button>
+          </CSVLink>
         </ButtonContainer>
       </HeaderContainer>
 
-      <OriginTable
-        scroll={{ x: '300vw', y: 500 }}
+      <BasicTable
+        scroll={{ x: 'max-content', y: '20vw' }}
         data={tableData}
         columns={columns}
         selectionType="checkbox"
-        onChange={() => {}}
+        onChange={handleChange}
+        onTableChange={handleTableChange}
+        loading={loading}
+        total={count}
+        pageSize={limit}
       />
 
       <ButtomContainer>
@@ -178,109 +183,208 @@ export default Table;
 
 const columns = [
   {
+    label: '주문번호',
+    key: 'id',
     title: '주문번호',
     dataIndex: 'id',
     render: (Text) => <a href="https://www.naver.com">{Text}</a>,
+    align: 'center',
+    width: 130,
   },
   {
+    label: '발송처리일',
+    key: 'ship_confirmedProcess_at',
     title: '발송처리일',
-    dataIndex: 'ship_confirmed_at',
+    dataIndex: 'ship_confirmedProcess_at',
+    align: 'center',
+    width: 160,
   },
   {
+    label: '주문상태',
+    key: 'status',
     title: '주문상태',
     dataIndex: 'status',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '배송방법',
+    key: 'ship_type',
     title: '배송방법',
     dataIndex: 'ship_type',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '택배사',
+    key: 'ship_company_name',
     title: '택배사',
     dataIndex: 'ship_company_name',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '송장번호',
+    key: 'ship_number',
     title: '송장번호',
     dataIndex: 'ship_number',
+    align: 'center',
   },
   {
+    label: '발송일',
+    key: 'ship_confirmed_at',
     title: '발송일',
     dataIndex: 'ship_confirmed_at',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '구매자명',
+    key: 'buyer_name',
     title: '구매자명',
     dataIndex: 'buyer_name',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '구매자ID',
+    key: 'buyer_id',
     title: '구매자ID',
     dataIndex: 'buyer_id',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '수취인명',
+    key: 'recipient_name',
     title: '수취인명',
     dataIndex: 'recipient_name',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '상품번호',
+    key: 'product_id',
     title: '상품번호',
     dataIndex: 'product_id',
     render: (Text) => <a href="https://www.naver.com">{Text}</a>,
+    align: 'center',
+    width: 130,
   },
   {
+    label: '상품명',
+    key: 'product_name',
     title: '상품명',
     dataIndex: 'product_name',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '옵션정보',
+    key: 'option_name',
     title: '옵션정보',
     dataIndex: 'option_name',
+    align: 'center',
   },
   {
+    label: '수량',
+    key: 'count',
     title: '수량',
     dataIndex: 'count',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '상품가격',
+    key: 'price',
     title: '상품가격',
     dataIndex: 'price',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '옵션가격',
+    key: 'option_add_price',
     title: '옵션가격',
     dataIndex: 'option_add_price',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '총 주문금액',
+    key: 'total_price',
     title: '총 주문금액',
     dataIndex: 'total_price',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '결제일',
+    key: 'paid_at',
     title: '결제일',
     dataIndex: 'paid_at',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '배송비 형태',
+    key: 'ship_pay_type',
     title: '배송비 형태',
     dataIndex: 'ship_pay_type',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '배송비 유형',
+    key: 'ship_category',
     title: '배송비 유형',
     dataIndex: 'ship_category',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '배송비 합계',
+    key: 'total_ship_amount',
     title: '배송비 합계',
     dataIndex: 'total_ship_amount',
+    align: 'center',
+    width: 130,
   },
   {
+    label: '제주/도서 추가배송비',
+    key: 'ship_add_amount',
     title: '제주/도서 추가배송비',
     dataIndex: 'ship_add_amount',
+    align: 'center',
+    width: 200,
   },
   {
+    label: '수취인 연락처',
+    key: 'recipient_phone',
     title: '수취인 연락처',
     dataIndex: 'recipient_phone',
+    align: 'center',
   },
   {
+    label: '배송지',
+    key: 'ship_address_main',
     title: '배송지',
     dataIndex: 'ship_address_main',
+    align: 'center',
   },
   {
+    label: '구매자 연락처',
+    key: 'buyer_phone',
     title: '구매자 연락처',
     dataIndex: 'buyer_phone',
+    align: 'center',
   },
   {
+    label: '우편번호',
+    key: 'ship_zip_code',
     title: '우편번호',
     dataIndex: 'ship_zip_code',
+    align: 'center',
+    width: 130,
   },
 ];
