@@ -9,6 +9,7 @@ import BasicTable from 'pages/Admin/components/Table/Table';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicModal from 'pages/Admin/components/Modal/BasicModal';
+import { CSVLink } from 'react-csv';
 
 const ContainerStyled = styled.div`
   background: #fff;
@@ -62,6 +63,8 @@ const Table = ({
 
   const columns = [
     {
+      label: '수정',
+      key: 'modify',
       title: '수정',
       dataIndex: 'modify',
       render: (_, record) => (
@@ -74,6 +77,8 @@ const Table = ({
       width: 130,
     },
     {
+      label: '삭제',
+      key: 'delete',
       title: '삭제',
       dataIndex: 'delete',
       render: (_, record) => (
@@ -86,6 +91,8 @@ const Table = ({
       width: 130,
     },
     {
+      label: '상품번호',
+      key: 'id',
       title: '상품번호',
       dataIndex: 'id',
       key: 'id',
@@ -93,6 +100,8 @@ const Table = ({
       width: 100,
     },
     {
+      label: '상품명',
+      key: 'name',
       title: '상품명',
       dataIndex: 'name',
       key: 'name',
@@ -100,93 +109,120 @@ const Table = ({
       align: 'center',
     },
     {
+      label: '판매상태',
+      key: 'status',
       title: '판매상태',
       dataIndex: 'status',
       align: 'center',
       width: 130,
     },
     {
+      label: '전시상태',
+      key: 'preview_status',
       title: '전시상태',
       dataIndex: 'preview_status',
       align: 'center',
       width: 100,
     },
     {
+      label: '재고수량',
+      key: 'count',
       title: '재고수량',
       dataIndex: 'count',
       align: 'center',
       width: 100,
     },
     {
+      label: '판매가',
+      key: 'price',
       title: '판매가',
       dataIndex: 'price',
       align: 'center',
       width: 100,
     },
     {
+      label: '할인가',
+      key: 'discount_amount',
       title: '할인가',
       dataIndex: 'discount_amount',
       align: 'center',
       width: 100,
     },
     {
+      label: '최소구매수량',
+      key: 'min_quantity',
       title: '최소구매수량',
       dataIndex: 'min_quantity',
       align: 'center',
       width: 130,
     },
     {
+      label: '최대구매수량',
+      key: 'max_quantity',
       title: '최대구매수량',
       dataIndex: 'max_quantity',
       align: 'center',
       width: 130,
     },
     {
+      label: '배송비유형',
+      key: 'ship_category',
       title: '배송비유형',
       dataIndex: 'ship_category',
       align: 'center',
       width: 130,
     },
-    ,
     {
+      label: '배송비결제방식',
+      key: 'ship_pay_type',
       title: '배송비결제방식',
       dataIndex: 'ship_pay_type',
       align: 'center',
       width: 140,
     },
-    ,
     {
+      label: '기본배송비',
+      key: 'ship_amount',
       title: '기본배송비',
       dataIndex: 'ship_amount',
       align: 'center',
       width: 110,
     },
     {
+      label: '반품배송비',
+      key: 'refund_ship_amount',
       title: '반품배송비',
       dataIndex: 'refund_ship_amount',
       align: 'center',
       width: 110,
     },
     {
+      label: '교환배송비',
+      key: 'exchange_ship_amount',
       title: '교환배송비',
       dataIndex: 'exchange_ship_amount',
       align: 'center',
       width: 110,
     },
-    ,
     {
+      label: '판매시작일',
+      key: 'sales_start_date',
       title: '판매시작일',
       dataIndex: 'sales_start_date',
       align: 'center',
       width: 150,
     },
     {
+      label: '판매종료일',
+      key: 'sales_end_date',
       title: '판매종료일',
       dataIndex: 'sales_end_date',
       align: 'center',
       width: 150,
     },
     {
+      label: '상품등록일',
+      key: 'created_at',
       title: '상품등록일',
       dataIndex: 'created_at',
       key: 'created_at',
@@ -198,6 +234,8 @@ const Table = ({
       width: 150,
     },
     {
+      label: '최종수정일',
+      key: 'updated_at',
       title: '최종수정일',
       dataIndex: 'updated_at',
       key: 'updated_at',
@@ -209,11 +247,6 @@ const Table = ({
       width: 150,
     },
   ];
-
-  const handleExcelDown = () => {
-    alert('엑셀다운');
-  };
-
   const handleModifyEditPage = (id) => {
     history.push({
       pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerProduct}`,
@@ -273,7 +306,13 @@ const Table = ({
             }}
             list={CountList}
           ></BasicSelectBoxStyled>
-          <BasicButtonStyled label="엑셀다운" onClick={handleExcelDown} />
+          <CSVLink
+            data={tableList}
+            headers={columns}
+            filename={'상품 목록.csv'}
+          >
+            <BasicButtonStyled label="엑셀다운" />
+          </CSVLink>
         </ButtonContainerStyled>
       </HeaderContainerStyled>
       <HeaderContainerStyled>

@@ -6,11 +6,13 @@ import TextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
 
 const SaleCancelModal = (property) => {
   const [typeState, setTypeState] = useState();
+  const [inputState, setInputState] = useState();
   const areaRef = useRef();
 
   const handleType = (value) => {
     setTypeState(value);
   };
+
   const handleOkClick = () => {
     console.log(typeState);
     console.log(areaRef.current.resizableTextArea.props.value);
@@ -24,6 +26,15 @@ const SaleCancelModal = (property) => {
     }
   };
 
+  const handleInputChange = (value) => {
+    setInputState(value.target.value);
+  };
+
+  const resetData = () => {
+    setTypeState('선택');
+    setInputState('');
+  };
+
   return (
     <>
       <Modal
@@ -33,19 +44,29 @@ const SaleCancelModal = (property) => {
         onOk={() => {
           property.onOk();
           handleOkClick();
+          resetData();
         }}
-        onCancel={property.onCancel}
+        onCancel={() => {
+          property.onCancel();
+          resetData();
+        }}
         width={500}
         okText="변경"
         cancelText="닫기"
       >
         <BasicSelectBox
+          value={typeState}
+          defaultValue={typeState}
           onChange={(value) => {
             handleType(value);
           }}
           list={SortViewList}
         />
-        <TextAreaBox ref={areaRef} />
+        <TextAreaBox
+          value={inputState}
+          onChange={handleInputChange}
+          ref={areaRef}
+        />
       </Modal>
     </>
   );

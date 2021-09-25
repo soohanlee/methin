@@ -1,10 +1,10 @@
-import { useRef, useState } from 'react';
-import { Modal, Table } from 'antd';
+import { useRef, useState, useEffect } from 'react';
+import { Modal } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
-
+import BasicTable from 'pages/Admin/components/Table/Table';
 const SelectBoxLabelContainer = styled.div`
   display: flex;
   align-items: center;
@@ -13,39 +13,69 @@ const SelectBoxLabelContainer = styled.div`
 `;
 
 const ModifyInvoiceModal = (property) => {
+  const [deliveryTypeState, setDeliveryTypeState] = useState();
+  const [deliveryType2State, setDeliveryType2State] = useState();
+  const [deliveryTypeInputState, setDeliveryTypeInputState] = useState();
+  const deliveryTypeInputRef = useRef();
 
-  const [deliveryTypeState,setDeliveryTypeState] = useState();
-  const [deliveryType2State,setDeliveryType2State] = useState();
-  const deliveryTypeRef = useRef();
+  const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
+  const [selectedTableRowsState, setSelectedTableRowsState] = useState([]);
 
-  const handleDeliveryType=(value)=>{
-    setDeliveryTypeState(value)
-  }
-  const handleDeliveryType2=(value)=>{
-    setDeliveryType2State(value)
-  }
+  let limit = 3;
+
+  useEffect(() => {
+    resetData();
+  }, [property.visible === true]);
+
+  const handleDeliveryType = (value) => {
+    setDeliveryTypeState(value);
+  };
+  const handleDeliveryType2 = (value) => {
+    setDeliveryType2State(value);
+  };
+  const handleDeliveryTypeInput = (value) => {
+    setDeliveryTypeInputState(value.target.value);
+  };
 
   const handleOkClick = () => {
-    console.log(deliveryTypeState)
-    console.log(deliveryType2State)
-    console.log(deliveryTypeRef.current.state.value)
+    console.log(deliveryTypeState);
+    console.log(deliveryType2State);
+    console.log(deliveryTypeInputRef.current.state.value);
     property.onOk();
   };
 
   const columns = [
     {
-      title: '주문번호',
-      dataIndex: 'Number',
-    },
-    {
       title: '상품주문번호',
-      dataIndex: 'orderNumber',
+      dataIndex: 'product_id',
+      align: 'center',
     },
     {
       title: '상품명',
-      dataIndex: 'name',
+      dataIndex: 'product_name',
+      align: 'center',
+    },
+    {
+      title: '판매가',
+      dataIndex: 'price',
+      align: 'center',
     },
   ];
+
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRowKeys', selectedRowKeys);
+    setSelectedTableKeysState(selectedRowKeys);
+    setSelectedTableRowsState(selectedRows);
+  };
+
+  const resetData = () => {
+    setDeliveryTypeState('선택');
+    setDeliveryType2State('선택');
+    setDeliveryTypeInputState('');
+
+    setSelectedTableKeysState([]);
+    setSelectedTableRowsState([]);
+  };
 
   return (
     <>
@@ -60,11 +90,31 @@ const ModifyInvoiceModal = (property) => {
         cancelText="닫기"
       >
         <SelectBoxLabelContainer>
-          <BasicSelectBox onChange = {handleDeliveryType} list={waySelect} />
-          <BasicSelectBox onChange = {handleDeliveryType2} list={companySelect} />
-          <BasicTextInputBox ref = {deliveryTypeRef} />
+          <BasicSelectBox
+            value={deliveryTypeState}
+            onChange={handleDeliveryType}
+            list={waySelect}
+          />
+          <BasicSelectBox
+            value={deliveryType2State}
+            onChange={handleDeliveryType2}
+            list={companySelect}
+          />
+          <BasicTextInputBox
+            value={deliveryTypeInputState}
+            onChange={handleDeliveryTypeInput}
+            ref={deliveryTypeInputRef}
+          />
         </SelectBoxLabelContainer>
-        <Table columns={columns} />
+        <BasicTable
+          scroll={{ x: 'max-content', y: '20vw' }}
+          data={property.selectedTableRowsState}
+          columns={columns}
+          selectionType="checkbox"
+          onChange={handleChange}
+          pageSize={limit}
+          selectedRowKeys={selectedTableKeysState}
+        />
       </Modal>
     </>
   );

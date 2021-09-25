@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button, Radio, Input as OriginInput } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import moment from 'moment';
 
 const SelectBox = styled(BasicSelectBox)`
   margin-right: 1rem;
@@ -32,21 +33,21 @@ const Input = styled(OriginInput)`
 `;
 
 const Filter = ({ getApiDeliveryStatusData }) => {
-  const [searchTypeState, setSearchTypeState] = useState(''); //조회기간 타입
-  const [datePeriodState, setdatePeriodState] = useState(''); //조회기간 기간
-  const [startDateState, setStartDateState] = useState(''); //시작날짜
-  const [endDateState, setEndDateState] = useState(''); //종료날짜
-  const [orderState, setOrderState] = useState(''); //주문상태타입
-  const [order2State, setOrder2State] = useState(''); //주문상태타입2
-  const [detailTypeState, setDetailTypeState] = useState(''); //상세조건 타입
-  const detailInputState = useRef(); //상세조건 인풋
+  const [searchTypeState, setSearchTypeState] = useState('선택'); //조회기간 타입
+  const [datePeriodState, setDatePeriodState] = useState('today'); //조회기간 기간
+  const [startDateState, setStartDateState] = useState(moment()); //시작날짜
+  const [endDateState, setEndDateState] = useState(moment()); //종료날짜
+  const [orderState, setOrderState] = useState('선택'); //주문상태타입
+  const [order2State, setOrder2State] = useState('선택'); //주문상태타입2
+  const [detailTypeState, setDetailTypeState] = useState('선택'); //상세조건 타입
+  const [detailInputState, setDetailInputState] = useState(''); //상세조건 인풋
 
   const handleSearchPeriodChange = (value) => {
     setSearchTypeState(value);
   };
 
   const handleDatePeriodBtn = (e) => {
-    setdatePeriodState(e.target.value);
+    setDatePeriodState(e.target.value);
   };
 
   const handledetailChange = (value) => {
@@ -69,6 +70,10 @@ const Filter = ({ getApiDeliveryStatusData }) => {
     setEndDateState(value);
   };
 
+  const handleDetailInputChange = (value) => {
+    setDetailInputState(value.target.value);
+  };
+
   const handleSearchOnClick = () => {
     console.log(searchTypeState);
     console.log(datePeriodState);
@@ -76,7 +81,6 @@ const Filter = ({ getApiDeliveryStatusData }) => {
     console.log(endDateState._d);
     console.log(orderState);
     console.log(order2State);
-    console.log(detailInputState.current.state.value);
     getApiDeliveryStatusData();
   };
 
@@ -84,6 +88,7 @@ const Filter = ({ getApiDeliveryStatusData }) => {
     <Container>
       <LabelContents title="조회기간">
         <SelectBox
+          value={searchTypeState}
           list={searchPeriodList}
           onChange={handleSearchPeriodChange}
         />
@@ -96,19 +101,31 @@ const Filter = ({ getApiDeliveryStatusData }) => {
           </Radio.Group>
         </RadioGroupContainer>
 
-        <BasicDatePicker onChange={handleStartDateChange} />
+        <BasicDatePicker
+          value={startDateState}
+          onChange={handleStartDateChange}
+        />
         {`　~　`}
-        <BasicDatePicker onChange={handleEndDateChange} />
+        <BasicDatePicker value={endDateState} onChange={handleEndDateChange} />
       </LabelContents>
 
       <LabelContents title="상세조건">
-        <SelectBox list={detailList} onChange={handledetailChange} />
-        <Input ref={detailInputState} />
+        <SelectBox
+          value={detailTypeState}
+          list={detailList}
+          onChange={handledetailChange}
+        />
+        <Input value={detailInputState} onChange={handleDetailInputChange} />
       </LabelContents>
 
       <LabelContents title="주문상태">
-        <SelectBox list={orderStateList} onChange={handleOrderStateChange} />
         <SelectBox
+          value={orderState}
+          list={orderStateList}
+          onChange={handleOrderStateChange}
+        />
+        <SelectBox
+          value={order2State}
           list={waitingForShipmentList}
           onChange={handleWaitingForShipmentChange}
         />

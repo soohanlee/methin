@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import QuestionCircleOutlined from '@ant-design/icons/QuestionCircleOutlined';
 import PageHeaderBtn from 'pages/Admin/components/Form/PageHeaderBtn';
-
 const TitlesStyled = styled.div`
   width: 100%;
   height: 7rem;
