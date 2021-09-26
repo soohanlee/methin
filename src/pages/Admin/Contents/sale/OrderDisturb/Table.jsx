@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
-import OriginTable from 'pages/Admin/components/Table/Table';
-
+import BasicTable from 'pages/Admin/components/Table/Table';
 const Container = styled.div`
   background: #fff;
   padding: 3rem;
@@ -23,9 +22,18 @@ const Button = styled(OriginButton)`
   margin-right: 0.5rem;
 `;
 
-const Table = ({ data }) => {
+const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
+  const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
+  const [selectedTableRowsState, setSelectedTableRowsState] = useState([]);
+
   const handleSelectReleaseBtn = () => {
     alert('선택건 해제하기');
+  };
+
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRows', selectedRows);
+    setSelectedTableKeysState(selectedRowKeys);
+    setSelectedTableRowsState(selectedRows);
   };
 
   return (
@@ -36,12 +44,16 @@ const Table = ({ data }) => {
         </ButtonContainer>
       </HeaderContainer>
 
-      <OriginTable
-        scroll={{ x: '50vw', y: 500 }}
-        data={data}
+      <BasicTable
+        scroll={{ x: 'max-content', y: '20vw' }}
+        data={tableData}
         columns={columns}
         selectionType="checkbox"
-        onChange={() => {}}
+        onChange={handleChange}
+        onTableChange={handleTableChange}
+        loading={loading}
+        total={count}
+        pageSize={limit}
       />
     </Container>
   );
@@ -53,17 +65,24 @@ const columns = [
   {
     title: '구매자ID',
     dataIndex: 'buyerID',
+    align: 'center',
+    width: 150,
   },
   {
     title: '상품주문번호',
     dataIndex: 'productOrderNumber',
+    align: 'center',
+    width: 150,
   },
   {
     title: '등록일자',
     dataIndex: 'registerDate',
+    align: 'center',
+    width: 200,
   },
   {
     title: '등록사유',
     dataIndex: 'registerWhy',
+    align: 'center',
   },
 ];
