@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import styled from 'styled-components';
 
@@ -8,6 +8,9 @@ import { Input } from 'antd';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicCheckBox from 'pages/Admin/components/Form/BasicCheckBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
+import { notification } from 'utils/notification';
+import moment from 'moment';
+import { DateFormat } from 'configs/config';
 
 const RegistertBox = styled.div`
   background-color: white;
@@ -93,19 +96,96 @@ const InquiryConditions = styled.div`
 
 // 발주 확인/발송관리
 const OrderDisturb = () => {
-  const [registTypeState, setRegistTypeState] = useState(); //등록조건
+  const limit = 4;
+  const [allTableDataState, setAllTableDataState] = useState([]);
+  const [tableDataState, setTableDataState] = useState([]);
+  const [tableCountState, setTableCountState] = useState(0);
+  const [productOffset, setProductOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const [registTypeState, setRegistTypeState] = useState('선택'); //등록조건
+  const [registTypeInputState, setRegistTypeInputState] = useState(''); //등록조건인풋박스
+  const [restrictionInputState, setRestrictionInputState] = useState(''); //제한사유인풋박스
+  const [repeatedCheckBoxState, setRepeatedCheckBoxState] = useState(); //반복구매
+  const [violenceCheckBoxState, setViolenceCheckBoxState] = useState(); //언어폭력
+  const [obstructionCheckBoxState, setObstructionCheckBoxState] = useState(); //영업방해
+  const [etcCheckBoxState, setEtcCheckBoxState] = useState(); //기타
+  const [searchTypeInputState, setSearchTypeInputState] = useState(); //조회조건인풋
+
   const registTypeInputRef = useRef(); //등록조건인풋박스
   const restrictionInputRef = useRef(); //제한사유인풋박스
   const repeatedCheckBoxRef = useRef(); //반복구매
   const violenceCheckBoxRef = useRef(); //언어폭력
   const obstructionCheckBoxRef = useRef(); //영업방해
   const etcCheckBoxRef = useRef(); //기타
-  const [searchTypeState, setSearchTypeState] = useState(); //조회조건 타입
+  const [searchTypeState, setSearchTypeState] = useState('선택'); //조회조건 타입
   const searchTypeInputRef = useRef(); //조회조건인풋
+
+  useEffect(() => {
+    getApiDeliveryData(productOffset);
+  }, [productOffset]);
+
+  useEffect(() => {
+    async function fetchAndSetUser() {
+      await getApiDeliveryData();
+    }
+    fetchAndSetUser();
+  }, []);
+
+  const getApiDeliveryData = async (offset = 0) => {
+    try {
+      setLoading(true);
+      const result = data;
+      const list = result;
+      const count = list.length;
+
+      let newResult = list.map((item, index) => {
+        let { registerDate } = item;
+        return {
+          ...item,
+          registerDate: moment(registerDate).format(DateFormat.Default),
+          key: index,
+        };
+      });
+
+      setAllTableDataState(newResult);
+      setTableDataState(newResult);
+      setTableCountState(count);
+
+      notification.success('검색성공');
+    } catch (e) {
+      notification.error('배송취소 정보를 가져오지 못했습니다.');
+    }
+    setLoading(false);
+  };
 
   const renderRegistertionConditions = () => {
     const handleRegistType = (value) => {
       setRegistTypeState(value);
+    };
+
+    const handleRegistTypeInput = (value) => {
+      setRegistTypeInputState(value.target.value);
+    };
+
+    const handleRestrictionInput = (value) => {
+      setRestrictionInputState(value.target.value);
+    };
+
+    const handleRepeatedCheckBox = (value) => {
+      setRepeatedCheckBoxState(value.target.checked);
+    };
+
+    const handleViolenceCheckBox = (value) => {
+      setViolenceCheckBoxState(value.target.checked);
+    };
+
+    const handleObstructionCheckBox = (value) => {
+      setObstructionCheckBoxState(value.target.checked);
+    };
+
+    const handleEtcCheckBox = (value) => {
+      setEtcCheckBoxState(value.target.checked);
     };
 
     const handleRegistBtn = () => {
@@ -116,6 +196,8 @@ const OrderDisturb = () => {
       console.log(obstructionCheckBoxRef.current.state.checked);
       console.log(repeatedCheckBoxRef.current.state.checked);
       console.log(etcCheckBoxRef.current.state.checked);
+
+      resetData();
     };
 
     return (
@@ -129,14 +211,15 @@ const OrderDisturb = () => {
                 list={ResisterTypeList}
                 width="15rem"
                 marginbottom="1rem"
-                onChange={(value) => {
-                  handleRegistType(value);
-                }}
+                value={registTypeState}
+                onChange={handleRegistType}
               />
               <InputBox
                 ref={registTypeInputRef}
                 height="10rem"
                 marginbottom="1rem"
+                value={registTypeInputState}
+                onChange={handleRegistTypeInput}
               />
               <div>복수 등록 (enter 또는 ","로 구분)</div>
             </Content>
@@ -148,12 +231,31 @@ const OrderDisturb = () => {
                 <BasicCheckBox
                   ref={repeatedCheckBoxRef}
                   label="구매의사 없는 반복구매"
+                  checked={repeatedCheckBoxState}
+                  onChange={handleRepeatedCheckBox}
                 />
-                <BasicCheckBox ref={violenceCheckBoxRef} label="언어폭력" />
-                <BasicCheckBox ref={obstructionCheckBoxRef} label="영업방해" />
-                <BasicCheckBox ref={etcCheckBoxRef} label="기타" />
+                <BasicCheckBox
+                  checked={violenceCheckBoxState}
+                  onChange={handleViolenceCheckBox}
+                  ref={violenceCheckBoxRef}
+                  label="언어폭력"
+                />
+                <BasicCheckBox
+                  checked={obstructionCheckBoxState}
+                  onChange={handleObstructionCheckBox}
+                  ref={obstructionCheckBoxRef}
+                  label="영업방해"
+                />
+                <BasicCheckBox
+                  checked={etcCheckBoxState}
+                  onChange={handleEtcCheckBox}
+                  ref={etcCheckBoxRef}
+                  label="기타"
+                />
               </SelectCheckBox>
               <InputBox
+                value={restrictionInputState}
+                onChange={handleRestrictionInput}
                 ref={restrictionInputRef}
                 height="10rem"
                 marginbottom="1rem"
@@ -182,20 +284,29 @@ const OrderDisturb = () => {
     const handleSearchType = (value) => {
       setSearchTypeState(value);
     };
+
+    const handleSearchTypeInput = (value) => {
+      setSearchTypeInputState(value.target.value);
+    };
+
     return (
       <DisturbSalesBox>
-        <div>판매방해 고객 리스트 [총 0건]</div>
+        <div>판매방해 고객 리스트 [총 {tableCountState}건]</div>
         <InquiryConditionsBox>
           <InquiryConditions>
             <div>조회조건</div>
             <SelectBox
-              onChange={(e) => {
-                handleSearchType(e);
-              }}
+              value={searchTypeState}
+              onChange={handleSearchType}
               width="10rem"
               list={InquiryConditionsTypeList}
             />
-            <InputBox ref={searchTypeInputRef} width="30rem" />
+            <InputBox
+              value={searchTypeInputState}
+              onChange={handleSearchTypeInput}
+              ref={searchTypeInputRef}
+              width="30rem"
+            />
             <BasicButtonStyled
               onClick={handleSearchBtn}
               label="조회하기"
@@ -207,11 +318,32 @@ const OrderDisturb = () => {
     );
   };
 
+  const handleTableChange = (pagination, filter, sort) => {
+    setProductOffset(pagination.current - 1);
+  };
+
+  const resetData = () => {
+    setRegistTypeState('선택');
+    setRegistTypeInputState();
+    setRestrictionInputState();
+    setRepeatedCheckBoxState();
+    setViolenceCheckBoxState();
+    setObstructionCheckBoxState();
+    setEtcCheckBoxState();
+    setSearchTypeInputState();
+  };
+
   return (
     <div>
       <div>{renderRegistertionConditions()}</div>
       <div>{renderDisturbSales()}</div>
-      <Table data={data} />
+      <Table
+        count={tableCountState}
+        tableData={tableDataState}
+        limit={limit}
+        handleTableChange={handleTableChange}
+        loading={loading}
+      />
     </div>
   );
 };
@@ -229,27 +361,27 @@ const InquiryConditionsTypeList = [
 
 const data = [
   {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
+    buyerID: 'ㅁㅁ',
+    productOrderNumber: '123456789',
+    registerDate: '2019-05-05',
+    registerWhy: '심심해서',
   },
   {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
+    buyerID: 'ㅁㅁ',
+    productOrderNumber: '123456789',
+    registerDate: '2019-05-05',
+    registerWhy: '심심해서',
   },
   {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
+    buyerID: 'ㅁㅁ',
+    productOrderNumber: '123456789',
+    registerDate: '2019-05-05',
+    registerWhy: '심심해서',
   },
   {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
+    buyerID: 'ㅁㅁ',
+    productOrderNumber: '123456789',
+    registerDate: '2019-05-05',
+    registerWhy: '심심해서',
   },
 ];
