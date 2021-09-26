@@ -20,7 +20,7 @@ const SubContainerStyled = styled.div`
 `;
 
 const TitleTextStyled = styled.div`
-  margin-right: 3rem;
+  margin-right: ${(props) => props.marginRight};
 `;
 
 const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
@@ -93,7 +93,7 @@ const CountryModal = ({ title, visible, setVisible }) => {
         </CSVLink>
         <ContainerStyled>
           <SubContainerStyled>
-            <TitleTextStyled>원산지</TitleTextStyled>
+            <TitleTextStyled marginRight="6.8rem">원산지</TitleTextStyled>
             <Radio.Group
               value={conturySelectState}
               onChange={handleCountryCheck}
@@ -106,7 +106,7 @@ const CountryModal = ({ title, visible, setVisible }) => {
           </SubContainerStyled>
 
           <SubContainerStyled>
-            <TitleTextStyled>상세지역</TitleTextStyled>
+            <TitleTextStyled marginRight="5.5rem">상세지역</TitleTextStyled>
             <Select
               defaultValue={dataykey[0]}
               list={dataykey}
@@ -128,7 +128,7 @@ const CountryModal = ({ title, visible, setVisible }) => {
           </SubContainerStyled>
 
           <SubContainerStyled>
-            <TitleTextStyled>원산지 코드</TitleTextStyled>
+            <TitleTextStyled marginRight="3rem">원산지 코드</TitleTextStyled>
             <BasicTextInputBoxStyled
               value={countryInput}
               onChange={handleCountryInput}
@@ -199,7 +199,7 @@ const countryCodeColumns = [
 ];
 
 const countryCodeDataList = [
-  { country_code: '00', region:'국산'},
-  { country_code: '01', region:'원양산'},
-  { country_code: '02', region:'수입산'}
+  { country_code: '00', region: '국산' },
+  { country_code: '01', region: '원양산' },
+  { country_code: '02', region: '수입산' },
 ];

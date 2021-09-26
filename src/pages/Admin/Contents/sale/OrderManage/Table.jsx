@@ -189,11 +189,13 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
       title: '상품명',
       dataIndex: 'product_name',
       align: 'center',
+      width: 150,
     },
     {
       title: '옵션정보',
       dataIndex: 'option_name',
       align: 'center',
+      width: 130,
     },
     {
       title: '수량',
@@ -223,6 +225,7 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
       title: '발주확인일',
       dataIndex: 'order_confirmed_at',
       align: 'center',
+      width: 150,
     },
     {
       title: '배송비 형태',
@@ -252,16 +255,19 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
       title: '수취인 연락처',
       dataIndex: 'recipient_phone',
       align: 'center',
+      width: 200,
     },
     {
       title: '배송지',
       dataIndex: 'ship_address_main',
       align: 'center',
+      width: 200,
     },
     {
       title: '구매자 연락처',
       dataIndex: 'buyer_phone',
       align: 'center',
+      width: 150,
     },
     {
       title: '우편번호',
@@ -273,16 +279,19 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
       title: '배송메세지',
       dataIndex: 'ship_message',
       align: 'center',
+      width: 200,
     },
     {
       title: '출고지',
       dataIndex: 'released_address_main',
       align: 'center',
+      width: 200,
     },
     {
       title: '주문일시',
       dataIndex: 'created_at',
       align: 'center',
+      width: 150,
     },
   ];
 

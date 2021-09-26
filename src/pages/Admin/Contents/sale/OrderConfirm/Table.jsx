@@ -44,14 +44,7 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({
-  sheetList,
-  count,
-  tableData,
-  limit,
-  handleTableChange,
-  loading,
-}) => {
+const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
   const allShipSearchInputRef = useRef(null);
 
   //Visible
