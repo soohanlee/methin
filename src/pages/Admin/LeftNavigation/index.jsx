@@ -9,10 +9,22 @@ import {
   leftNavigationMenuTitle,
   adminLeftNavigationSize,
 } from 'configs/constants';
+import styled from 'styled-components';
 
 const { SubMenu } = Menu;
 
-const rootSubmenuKeys = [leftNavigationMenuTitle.manageProduct];
+const ScrollStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+`;
+
+const rootSubmenuKeys = [
+  leftNavigationMenuTitle.manageProduct,
+  leftNavigationMenuTitle.manageMenu,
+  leftNavigationMenuTitle.manageSale,
+  leftNavigationMenuTitle.reviewManage,
+];
 
 const LeftNavigation = () => {
   const history = useHistory();
@@ -23,6 +35,9 @@ const LeftNavigation = () => {
 
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+
+    console.log(rootSubmenuKeys);
+
     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       setOpenKeys(keys);
     } else {
@@ -52,14 +67,16 @@ const LeftNavigation = () => {
   };
 
   return (
-    <Menu
-      mode="inline"
-      openKeys={openKeys}
-      onOpenChange={onOpenChange}
-      style={{ width: adminLeftNavigationSize }}
-    >
-      {renderMenu()}
-    </Menu>
+    <ScrollStyled>
+      <Menu
+        mode="inline"
+        openKeys={openKeys}
+        onOpenChange={onOpenChange}
+        style={{ width: adminLeftNavigationSize }}
+      >
+        {renderMenu()}
+      </Menu>
+    </ScrollStyled>
   );
 };
 

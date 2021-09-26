@@ -167,6 +167,7 @@ const Table = ({
       title: '그룹명',
       dataIndex: 'body',
       align: 'center',
+      width: 200,
     },
 
     {
@@ -179,22 +180,25 @@ const Table = ({
       title: '제주,산간 배송비',
       dataIndex: 'amount2',
       align: 'center',
+      width: 150,
     },
     {
       title: '사용여부',
       dataIndex: 'status',
       align: 'center',
-      width: 150,
+      width: 130,
     },
     {
       title: '등록일',
       dataIndex: 'created_at',
       align: 'center',
+      width: 200,
     },
     {
       title: '수정일',
       dataIndex: 'updated_at',
       align: 'center',
+      width: 200,
     },
   ];
 

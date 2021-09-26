@@ -124,7 +124,7 @@ const CheckOutStandingPayment = () => {
       </TitleContainer>
 
       <BasicTable
-        scroll={{ x: 'max-content', y: '20vw' }}
+        scroll={{ x: 'max-content', y: '35vw' }}
         data={tableDataState}
         columns={columns}
         selectionType="checkbox"
@@ -190,6 +190,7 @@ const columns = [
     dataIndex: 'product_id',
     render: (Text) => <a href="https://www.naver.com">{Text}</a>,
     align: 'center',
+    width: 130,
   },
   {
     label: '상품명',
@@ -197,6 +198,7 @@ const columns = [
     title: '상품명',
     dataIndex: 'product_name',
     align: 'center',
+    width: 150,
   },
   {
     label: '옵션',
@@ -236,5 +238,6 @@ const columns = [
     title: '총 주문금액',
     dataIndex: 'total_price',
     align: 'center',
+    width: 200,
   },
 ];

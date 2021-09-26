@@ -38,7 +38,7 @@ const NoticeManage = () => {
         let { preview_status, created_at } = item;
         return {
           ...item,
-          preview_status: preview_status === 0 ? 'NO' : 'Yes',
+          preview_status: preview_status === 0 ? '미리보기' : '노출',
           created_at: moment(created_at).format(DateFormat.Default),
           key: index,
         };
