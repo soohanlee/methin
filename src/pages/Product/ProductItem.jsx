@@ -9,6 +9,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 24%;
   margin-bottom: 10rem;
+  cursor: pointer;
 
   @media screen and (max-width: ${BreakPoint.s}px) {
     width: unset;

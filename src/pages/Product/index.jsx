@@ -50,6 +50,7 @@ const FilterItemContainer = styled.div`
   height: 4rem;
   align-items: center;
   margin-right: 5rem;
+  cursor: pointer;
 `;
 
 const FilterLabel = styled.div`

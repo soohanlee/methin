@@ -4,47 +4,30 @@ import styled from 'styled-components';
 import { SelectableLabel } from 'components/styled/Form';
 import { ListContainer } from 'components/styled/Container';
 
+import { Select } from 'antd';
+
+const { Option } = Select;
+
 const Container = styled.div`
   position: relative;
 `;
 
-const NameSelect = styled.div`
-  font-size: 1.5rem;
-  border-bottom: 0.1rem solid ${(props) => props.theme.TEXT_MAIN};
-`;
-
-const Selectbox = ({ list, selectedItem, onSelectedItem }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClickItem = (key, value) => {
-    onSelectedItem({ key: key, value: value });
-    setIsOpen(false);
-  };
-
-  const renderList = () => {
-    return list.map(({ value, key }) => {
-      return (
-        <SelectableLabel
-          selected={key === selectedItem.key}
-          onClick={() => handleClickItem(key, value)}
-          key={key}
-        >
-          {value}
-        </SelectableLabel>
-      );
-    });
-  };
-
-  const handleOpenClick = () => {
-    setIsOpen((prev) => !prev);
-  };
-
+const Selectbox = ({ list, onChange }) => {
   return (
     <Container>
-      <NameSelect onClick={handleOpenClick}>
-        {selectedItem.value} {`>`}
-      </NameSelect>
-      {isOpen && <ListContainer>{renderList()}</ListContainer>}
+      <Select
+        defaultValue={list[0].value}
+        style={{ width: 120 }}
+        onChange={onChange}
+      >
+        {list.map((item) => {
+          return (
+            <Option key={item.key} value={item.key}>
+              {item.value}
+            </Option>
+          );
+        })}
+      </Select>
     </Container>
   );
 };

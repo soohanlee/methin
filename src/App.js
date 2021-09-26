@@ -54,6 +54,7 @@ import MobileMenu from 'pages/my-page/MobileMenu';
 import DeliveryTrackingPage from 'pages/DeliveryTracking/DeliveryTrackingPage';
 import MobileMyPageMain from 'pages/my-page/MobileMyPageMain/MobileMyPageMain';
 import Private from 'pages/Private';
+import InformationGuide from 'pages/information-guide/InformationGuide';
 
 const { Content } = Layout;
 
@@ -209,6 +210,10 @@ function App() {
                         component={Agreement}
                       />
                       <Route path={ROUTE_PATH.private} component={Private} />
+                      <Route
+                        path={ROUTE_PATH.informationGuide}
+                        component={InformationGuide}
+                      />
                       <Route
                         exact
                         path={ROUTE_PATH.signup}

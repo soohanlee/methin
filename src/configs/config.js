@@ -7,6 +7,7 @@ export const ROUTE_PATH = {
   deliveryTracking: '/delivery-tracking',
   agreement: '/agreement',
   private: '/private',
+  informationGuide: '/information-guide',
   mypage: {
     main: '/mypage',
     destination: '/destination',

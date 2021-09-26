@@ -1,6 +1,7 @@
 import { SubButton } from 'components/styled/Button';
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { Empty as OriginEmpty } from 'antd';
 
 const Container = styled.div``;
 
@@ -77,36 +78,61 @@ const OrderMessageContainer = styled.div`
   }
 `;
 
-const MyPageOrderListContainer = ({ title }) => {
+const Empty = styled(OriginEmpty)`
+  margin: 2rem;
+`;
+
+const MyPageOrderListContainer = ({ list, title }) => {
+  const renderList = () => {
+    return list.length === 0 ? (
+      <Empty />
+    ) : (
+      list.map(
+        ({
+          title,
+          date,
+          orderNumber,
+          option,
+          price,
+          deliveryState,
+          deliveryNumber,
+        }) => {
+          return (
+            <ListContainer>
+              <IdLine>
+                <Label bold>{date}</Label>
+                <Label>{orderNumber}</Label>
+              </IdLine>
+              <ProductItemLine>
+                <ProductItemContainer>
+                  <ProductItemImgContainer></ProductItemImgContainer>
+
+                  <ProductItemTextContainer>
+                    <Label bold>{title}</Label>
+                    <Label grey>{option}</Label>
+                    <Label bold>{price}원</Label>
+                  </ProductItemTextContainer>
+                </ProductItemContainer>
+                <ProductItemButtonContainer>
+                  <SubButton>리뷰쓰기</SubButton>
+                </ProductItemButtonContainer>
+              </ProductItemLine>
+              <OrderMessageContainer>
+                <Label bold highlight>
+                  {deliveryState ? '배송완료' : '미배송'}
+                </Label>
+                <Label>{deliveryNumber}</Label>
+              </OrderMessageContainer>
+            </ListContainer>
+          );
+        },
+      )
+    );
+  };
   return (
     <Container>
       <Title>{title || '주문 배송 조회'}</Title>
-      <ListContainer>
-        <IdLine>
-          <Label bold>2021.04.27</Label>
-          <Label>order35415312-532413</Label>
-        </IdLine>
-        <ProductItemLine>
-          <ProductItemContainer>
-            <ProductItemImgContainer></ProductItemImgContainer>
-
-            <ProductItemTextContainer>
-              <Label bold>인기 샐러드 도시락</Label>
-              <Label grey>옵션: 리코타 치즈 샐러드/1개</Label>
-              <Label bold>39,800원</Label>
-            </ProductItemTextContainer>
-          </ProductItemContainer>
-          <ProductItemButtonContainer>
-            <SubButton>리뷰쓰기</SubButton>
-          </ProductItemButtonContainer>
-        </ProductItemLine>
-        <OrderMessageContainer>
-          <Label bold highlight>
-            배송완료
-          </Label>
-          <Label>CJ대한통운 543213121</Label>
-        </OrderMessageContainer>
-      </ListContainer>
+      {renderList()}
     </Container>
   );
 };
