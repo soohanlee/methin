@@ -54,7 +54,6 @@ const Table = ({
   updateDeliveryData,
   count,
   tableList,
-  limit,
   loading,
   handleTableChange,
   updateDeliveryDetailData,
@@ -66,12 +65,13 @@ const Table = ({
   const [modifyVisibleState, setModifyVisibleState] = useState(false);
   const [addVisibleState, setAddVisibleState] = useState(false);
   const [indexState, setIndexState] = useState([]);
-  const [maxSearchCoutState, setMaxSearchCoutState] = useState([]);
   const [recordState, setRecordState] = useState([]);
 
   const [isDeleteModalOpenState, setDeleteModalOpenState] = useState(false);
   const [selectProductState, setSlectProductState] = useState(-1);
   const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
+
+  const [productCountSelectState, setProductCountSelectState] = useState(10);
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -110,8 +110,8 @@ const Table = ({
     updateDeliveryData(data);
   };
 
-  const handleChangeMaxSearchCount = (e) => {
-    setMaxSearchCoutState(e);
+  const handleProductSelectChange = (value) => {
+    setProductCountSelectState(value);
   };
 
   const handleChange = (selectedRowKeys, selectedRows) => {
@@ -225,10 +225,8 @@ const Table = ({
           <TitleText>조회 건수 (총 {count} 건) </TitleText>
           <BasicSelectBoxStyled
             width="12rem"
-            list={list}
-            onChange={(e) => {
-              handleChangeMaxSearchCount(e);
-            }}
+            list={CountList}
+            onChange={handleProductSelectChange}
           />
         </TitleTexts>
       </Titles>
@@ -248,7 +246,7 @@ const Table = ({
         onTableChange={handleTableChange}
         loading={loading}
         total={count}
-        pageSize={limit}
+        pageSize={productCountSelectState}
       />
 
       <BasicModal
@@ -263,9 +261,9 @@ const Table = ({
 };
 
 export default Table;
-const list = [
-  { value: 'ten', label: '10개씩' },
-  { value: 'fifty', label: '50개씩' },
-  { value: 'hundred', label: '100개씩' },
-  { value: 'fiveHundred', label: '500개씩' },
+const CountList = [
+  { value: 10, label: '10개씩' },
+  { value: 50, label: '50개씩' },
+  { value: 100, label: '100개씩' },
+  { value: 500, label: '500개씩' },
 ];

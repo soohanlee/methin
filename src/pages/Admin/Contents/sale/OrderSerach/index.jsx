@@ -67,14 +67,14 @@ const BasicButtonStyled = styled(BasicButton)`
 `;
 const OrderSerach = () => {
   const limit = 16;
-  const [searchTypeState, setSearchTypeState] = useState(''); //조회기간 드랍박스
-  const [datePeriodState, setDatePeriodState] = useState(''); //조회기간 기간버튼
-  const [startDateState, setStartDateState] = useState(''); //시작날짜
-  const [endDateState, setEndDateState] = useState(''); //종료날짜
+  const [searchTypeState, setSearchTypeState] = useState('선택'); //조회기간 드랍박스
+  const [datePeriodState, setDatePeriodState] = useState('today'); //조회기간 기간버튼
+  const [startDateState, setStartDateState] = useState(moment()); //시작날짜
+  const [endDateState, setEndDateState] = useState(moment()); //종료날짜
   const [selectedTableKeysState, setSelectedTableKeysState] = React.useState(
     [],
   );
-  const [searchDateTypeState, setSearchDateTypeState] = useState(''); //조회타입
+  const [searchDateTypeState, setSearchDateTypeState] = useState('선택'); //조회타입
   const searchInputRef = useRef(null); //조회타입인풋
 
   const [tableDataState, setTableDataState] = useState([]);
@@ -145,8 +145,8 @@ const OrderSerach = () => {
     setEndDateState(value);
   };
 
-  const handleSearchInput = (e) => {
-    setSearchDateTypeState(e);
+  const handleSearchInput = (value) => {
+    setSearchDateTypeState(value);
   };
 
   const handleSearchOnClick = () => {
@@ -171,7 +171,11 @@ const OrderSerach = () => {
         <LabelContents title="조회기간">
           <ItemContainer>
             <ItemWrap>
-              <PeirodSelectBox onChange={handleSearchType} list={peirodList} />
+              <PeirodSelectBox
+                value={searchTypeState}
+                onChange={handleSearchType}
+                list={peirodList}
+              />
             </ItemWrap>
             <ItemWrap>
               <ButtonContainer>
@@ -187,15 +191,25 @@ const OrderSerach = () => {
               </ButtonContainer>
             </ItemWrap>
             <ItemWrap>
-              <BasicDatePicker onChange={handleStartDateChange} />
+              <BasicDatePicker
+                value={startDateState}
+                onChange={handleStartDateChange}
+              />
               {`　~　`}
-              <BasicDatePicker onChange={handleEndDateChange} />
+              <BasicDatePicker
+                value={endDateState}
+                onChange={handleEndDateChange}
+              />
             </ItemWrap>
           </ItemContainer>
         </LabelContents>
         <LabelContents title="조회기간">
           <ItemWrap>
-            <SearhSelectBox list={detailList} onChange={handleSearchInput} />
+            <SearhSelectBox
+              value={searchDateTypeState}
+              list={detailList}
+              onChange={handleSearchInput}
+            />
             <Input ref={searchInputRef} />
           </ItemWrap>
         </LabelContents>

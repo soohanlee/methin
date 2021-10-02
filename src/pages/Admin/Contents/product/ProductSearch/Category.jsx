@@ -9,6 +9,8 @@ import WarningTwoTone from '@ant-design/icons/WarningTwoTone';
 import CloseCircleTwoTone from '@ant-design/icons/CloseCircleTwoTone';
 import CheckCircleTwoTone from '@ant-design/icons/CheckCircleTwoTone';
 
+///사용안하는 jsx
+
 const CategorysSyled = styled.div`
   width: 100%;
   height: 12rem;

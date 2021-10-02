@@ -59,7 +59,7 @@ const BoardHeader = ({ list, onClick }) => {
             <ItemWrap>
               {itemList.map(({ label, value, img }, index) => {
                 return (
-                  <ItemContainer onClick={() => onClick(value)}>
+                  <ItemContainer onClick={() => onClick(label)}>
                     <IconContainer>{img}</IconContainer>
                     <TextContainer>
                       <Title>{label}</Title>
