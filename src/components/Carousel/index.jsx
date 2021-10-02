@@ -73,6 +73,43 @@ const MobileImg = styled.img`
   width: 100vw;
 `;
 
+const ContentsContainer = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 60rem;
+  height: 20rem;
+  margin: auto;
+  text-align: center;
+  line-height: 4rem;
+`;
+
+const Title = styled.span`
+  font-size: 3rem;
+  display: inline;
+`;
+
+const HighligthLine = styled(Title)`
+  border-bottom: 1px solid black;
+  font-weight: 200;
+`;
+
+const Description = styled.div`
+  font-size: 1.2rem;
+  margin-top: 1rem;
+`;
+
+const Button = styled.div`
+  border: 1px solid black;
+  line-height: 3rem;
+  width: 15rem;
+  padding-bottom: 0.2rem;
+  margin: auto;
+  margin-top: 4rem;
+`;
+
 const Carousel = ({ list }) => {
   const history = useHistory();
 
@@ -94,6 +131,13 @@ const Carousel = ({ list }) => {
       list.map(({ img, link }, index) => {
         return (
           <Div onClick={() => handleMovePage(link)} key={img}>
+            <ContentsContainer>
+              <HighligthLine>아름답고 건강하게</HighligthLine>
+              <br />
+              <Title>다이어트 하자!</Title>
+              <Description>미띤 첫 오픈 기념 이벤트</Description>
+              <Button>view more</Button>
+            </ContentsContainer>
             <Img alt={img + index} src={img} />
           </Div>
         );

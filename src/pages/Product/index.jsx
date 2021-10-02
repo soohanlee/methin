@@ -121,6 +121,8 @@ const Product = () => {
     }
   }, [menuId, getList]);
 
+  // useEffect(() => {}, [selectedItem]);
+
   const renderFilterList = () => {
     return filterList.map(({ key, value, length }) => {
       return (

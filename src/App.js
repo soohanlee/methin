@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { Layout } from 'antd';
@@ -9,7 +9,7 @@ import { LightTheme } from 'configs/theme';
 import { ROUTE_PATH, BreakPoint } from 'configs/config';
 import GlobalStyle from 'configs/globalStyle';
 import { reissueJwt } from 'apis/auth';
-import { Scrollbars } from 'react-custom-scrollbars-2';
+import { Scrollbars, scrollTop } from 'react-custom-scrollbars-2';
 
 import {
   getIsAvalidAccessToken,
@@ -90,6 +90,11 @@ function App() {
 
   const THEME = LightTheme;
   const location = useLocation();
+  const scrollbar = useRef(null);
+
+  useEffect(() => {
+    scrollbar.current.scrollTop();
+  }, [location]);
 
   const [isLogin, setIsLogin] = useState(userState.loginState);
 
@@ -197,6 +202,7 @@ function App() {
 
                 <CustomContent>
                   <Scrollbars
+                    ref={scrollbar}
                     autoHide
                     style={{ width: '100%', heigth: '100%' }}
                   >

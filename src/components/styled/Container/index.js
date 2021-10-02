@@ -15,7 +15,9 @@ export const ListContainer = styled.div`
 `;
 
 export const PaddingContainer = styled.div`
-  padding: 5% 10%;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 5% 0;
   @media screen and (max-width: ${BreakPoint.xl}px) {
     padding: 4rem 5%;
   }

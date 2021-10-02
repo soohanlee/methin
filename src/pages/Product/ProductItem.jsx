@@ -96,7 +96,7 @@ const BeforePrice = styled.div`
 `;
 
 const AfterPrice = styled.div`
-  font-size: 3.1rem;
+  font-size: 2rem;
   font-weight: 600;
   margin-right: 0.5rem;
   @media screen and (max-width: ${BreakPoint.s}px) {
@@ -105,7 +105,7 @@ const AfterPrice = styled.div`
 `;
 
 const SalePercentage = styled.div`
-  font-size: 3.1rem;
+  font-size: 2rem;
   color: ${(props) => props.theme.MAIN};
   @media screen and (max-width: ${BreakPoint.s}px) {
     font-size: 2rem;
