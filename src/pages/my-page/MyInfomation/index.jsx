@@ -136,7 +136,6 @@ const Myinfo = () => {
           return;
         }
       } catch (e) {
-        console.log(e.response);
         if (e.response) {
           message.error(e.response.data.description);
           initData();

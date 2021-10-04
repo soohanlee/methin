@@ -26,8 +26,12 @@ export const deleteDeliveryDetail = async (id) => {
   return await axios.delete(`api/admin/ship/${id}`);
 };
 
-export const getUserAddressList = (data) => {
-  return axios.get(`/api/address`, data);
+export const getUserAddressList = (offset, limit) => {
+  return axios.get(
+    `/api/address${offset ? `/offset=${offset}` : ''}/${
+      limit ? `/limit=${limit}` : ''
+    }`,
+  );
 };
 
 export const addUserAddress = (data) => {
