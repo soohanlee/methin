@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 export const getUserInformation = async () => {
-  return await axios.post(`api/user/info`);
+  return await axios.get(`api/user/info`);
 };
 
-export const updateUserInfo = async (data) => {
+export const updateUserInfomation = async (data) => {
   // old_password
   // password
   // nickname

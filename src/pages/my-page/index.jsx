@@ -7,6 +7,8 @@ import { getAccessToken } from 'utils/tokenManager';
 import LeftNavigation from 'pages/my-page/LeftNavigation';
 import UserInfomation from 'pages/my-page/UserInfomation';
 import Destination from 'pages/my-page/Destination';
+import DestinationManage from 'pages/my-page/DestinationManage/DestinationManage';
+
 import Review from 'pages/my-page/Review';
 import CancelOrderList from 'pages/my-page/CancelOrderList';
 import Myinfo from 'pages/my-page/MyInfomation';
@@ -58,6 +60,12 @@ const MyPage = () => {
           path={`${match.path}${ROUTE_PATH.mypage.destination}`}
           component={Destination}
         />
+        <Route
+          exact
+          path={`${match.path}${ROUTE_PATH.mypage.destinationManage}`}
+          component={DestinationManage}
+        />
+
         <Route
           exact
           path={`${match.path}${ROUTE_PATH.mypage.cancel}`}

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { getUserInformation, updateUserInfomation } from 'apis/user';
 import BorderTitleContainer from 'components/container/BorderTitleContainer';
 import LabelWithChildren from 'components/Form/LabelWithChildren';
 import { Input as OriginInput } from 'components/styled/Form';
 import { MainButton as OriginMainButton } from 'components/styled/Button';
 import { BreakPoint } from 'configs/config';
+import { message } from 'antd';
 
 const Container = styled.div`
   padding: 4rem 2rem;
@@ -47,41 +49,140 @@ const SaveButton = styled(OriginMainButton)`
 `;
 
 const Myinfo = () => {
-  const [phone, setPhone] = useState();
-  const [nickName, setNickName] = useState();
-  const [password, setPassword] = useState();
-  const [newPassword, setNewPassword] = useState();
-  const [checkNewPassword, setCheckNewPassword] = useState();
+  const [phoneOld, setPhoneOld] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const [nickNameOld, setNickNameOld] = useState('');
+  const [nickName, setNickName] = useState('');
+
+  const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [checkNewPassword, setCheckNewPassword] = useState('');
+  const [email, setEmail] = useState('');
+
+  const userInfo = async () => {
+    try {
+      const user = await getUserInformation();
+      if (user && user.data && user.data.data) {
+        const {
+          created_at,
+          default_address_main,
+          default_address_sub,
+          default_zip_code,
+          email,
+          id,
+          nickname,
+          phone,
+          type,
+        } = user.data.data;
+        setNickNameOld(nickname);
+        setPhoneOld(phone);
+        setEmail(email);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    userInfo();
+  }, []);
+
+  const initData = () => {
+    setNewPassword('');
+    setPassword('');
+    setCheckNewPassword('');
+    setPhone('');
+    setNickName('');
+  };
+
+  const updateUserInfo = async () => {
+    if (nickName.length === 0 && phone.length === 0 && password.length === 0) {
+      message.error('변경 사항이 없습니다.');
+      return;
+    }
+
+    if (
+      nickName === nickNameOld &&
+      phone === phoneOld &&
+      password.length === 0
+    ) {
+      message.error('변경 사항이 없습니다.');
+      return;
+    }
+
+    if (
+      password.length === 0 ||
+      checkNewPassword.length === 0 ||
+      newPassword.length === 0
+    ) {
+      message.error('비밀번호를 입력해주세요.');
+      return;
+    }
+
+    if (nickName !== nickNameOld || phone !== phoneOld) {
+      const userdata = {
+        old_password: password,
+        password: newPassword,
+        nickName: nickName,
+        phone: phone,
+      };
+      try {
+        const response = await updateUserInfomation(userdata);
+        console.log('response', response.data.message);
+        if (response.data && response.data.message === 'success') {
+          message.info('정보가 변경되었습니다.');
+          initData();
+          return;
+        }
+      } catch (e) {
+        console.log(e.response);
+        if (e.response) {
+          message.error(e.response.data.description);
+          initData();
+        }
+      }
+    }
+  };
+
+  const renderPasswordCheck = () => {
+    if (newPassword.length > 4 && checkNewPassword.length > 4) {
+      if (newPassword === checkNewPassword) {
+        return <div>패스워드가 일치합니다.</div>;
+      } else {
+        return <div>패스워드가 일치하지 않습니다.</div>;
+      }
+    } else {
+      <div></div>;
+    }
+  };
 
   return (
     <div>
       {/* 개인 정보 수정 */}
       <BorderTitleContainer>
         <Container>
-          <LabelWithChildren label="이름">
-            <Label>김애용</Label>
-          </LabelWithChildren>
-          <LabelWithChildren label="생년월일">
-            <Label>1996.19.22</Label>
-          </LabelWithChildren>
           <LabelWithChildren label="연락처">
             <ActionContainer>
               <Input
-                placeholder="연락처 "
+                placeholder={phoneOld}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
-              <MainButton reverse>수정</MainButton>
             </ActionContainer>
           </LabelWithChildren>
-          <LabelWithChildren label="아이디">
+          <LabelWithChildren label="닉네임">
             <ActionContainer>
               <Input
-                placeholder="닉네임 "
+                placeholder={nickNameOld}
                 value={nickName}
                 onChange={(e) => setNickName(e.target.value)}
               />
-              <MainButton reverse>수정</MainButton>
+            </ActionContainer>
+          </LabelWithChildren>
+          <LabelWithChildren label="이메일">
+            <ActionContainer>
+              <Input placeholder="이메일 " value={email} />
             </ActionContainer>
           </LabelWithChildren>
           <LabelWithChildren label="기존 비밀번호">
@@ -106,12 +207,10 @@ const Myinfo = () => {
                 value={checkNewPassword}
                 onChange={(e) => setCheckNewPassword(e.target.value)}
               />
-              <MainButton disabled reverse>
-                수정
-              </MainButton>
             </ActionContainer>
+            {renderPasswordCheck()}
           </LabelWithChildren>
-
+          {/* 
           <LabelWithChildren label="주소정보">
             <ActionContainer>
               <Input
@@ -123,7 +222,7 @@ const Myinfo = () => {
             <WrapContainer>
               <Input
                 placeholder="주소 입력"
-                value={nickName}
+                value={mainAddress}
                 onChange={(e) => setNickName(e.target.value)}
               />
             </WrapContainer>
@@ -131,12 +230,12 @@ const Myinfo = () => {
             <WrapContainer>
               <Input
                 placeholder="상세주소입력"
-                value={nickName}
+                value={subAddress}
                 onChange={(e) => setNickName(e.target.value)}
               />
             </WrapContainer>
-          </LabelWithChildren>
-          <SaveButton>저장하기</SaveButton>
+          </LabelWithChildren> */}
+          <SaveButton onClick={updateUserInfo}>저장하기</SaveButton>
         </Container>
       </BorderTitleContainer>
     </div>

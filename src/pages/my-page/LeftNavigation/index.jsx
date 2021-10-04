@@ -26,6 +26,7 @@ const Label = styled.div`
     props.select ? props.theme.TEXT_MAIN : props.theme.TEXT_INFORMATION};
   font-size: 1.5rem;
   margin-bottom: 2rem;
+  cursor: ${(props) => (props.title ? 'unset' : 'pointer')};
 `;
 
 const LeftNavigation = () => {
@@ -41,7 +42,9 @@ const LeftNavigation = () => {
     <Container>
       <Title>마이페이지</Title>
       <PageContainer>
-        <Label select>쇼핑 정보</Label>
+        <Label title select>
+          쇼핑 정보
+        </Label>
         <Border />
         <Label
           select={select === `${ROUTE_PATH.mypage.destination}`}
@@ -56,6 +59,14 @@ const LeftNavigation = () => {
           취소 교환 반품 조회
         </Label>
         <Label
+          select={select === `${ROUTE_PATH.mypage.destinationManage}`}
+          onClick={() =>
+            handleMovePage(`${ROUTE_PATH.mypage.destinationManage}`)
+          }
+        >
+          배송지 관리
+        </Label>
+        <Label
           select={select === `${ROUTE_PATH.mypage.review}`}
           onClick={() => handleMovePage(`${ROUTE_PATH.mypage.review}`)}
         >
@@ -64,7 +75,9 @@ const LeftNavigation = () => {
       </PageContainer>
 
       <PageContainer>
-        <Label select>계정 설정</Label>
+        <Label title select>
+          계정 설정
+        </Label>
         <Border />
         <Label
           select={select === `${ROUTE_PATH.mypage.myInformation}`}
@@ -75,7 +88,9 @@ const LeftNavigation = () => {
       </PageContainer>
 
       <PageContainer>
-        <Label select>고객센터</Label>
+        <Label title select>
+          고객센터
+        </Label>
         <Border />
 
         <Label

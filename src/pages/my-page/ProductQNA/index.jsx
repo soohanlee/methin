@@ -8,7 +8,7 @@ const Container = styled.div``;
 const ProductQNA = () => {
   return (
     <Container>
-      <BorderTitleContainer title="QNA" titleComponent={<div>전체 필터</div>}>
+      <BorderTitleContainer title="QNA">
         <CollapseList list={list} />
       </BorderTitleContainer>
     </Container>

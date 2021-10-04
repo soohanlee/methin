@@ -19,5 +19,6 @@ const list = [
     price: '39,000',
     deliveryState: true,
     deliveryNumber: 'CJ대한통운 543213121',
+    button: '리뷰쓰기',
   },
 ];

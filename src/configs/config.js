@@ -17,6 +17,7 @@ export const ROUTE_PATH = {
     ask: '/ask',
     qna: '/qna',
     faq: '/faq',
+    destinationManage: '/destination-manage',
     mobileMenu: '/menu',
   },
   serviceCenter: {

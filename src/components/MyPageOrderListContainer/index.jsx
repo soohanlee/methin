@@ -96,6 +96,7 @@ const MyPageOrderListContainer = ({ list, title }) => {
           price,
           deliveryState,
           deliveryNumber,
+          button,
         }) => {
           return (
             <ListContainer>
@@ -114,7 +115,7 @@ const MyPageOrderListContainer = ({ list, title }) => {
                   </ProductItemTextContainer>
                 </ProductItemContainer>
                 <ProductItemButtonContainer>
-                  <SubButton>리뷰쓰기</SubButton>
+                  <SubButton>{button}</SubButton>
                 </ProductItemButtonContainer>
               </ProductItemLine>
               <OrderMessageContainer>
