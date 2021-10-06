@@ -56,7 +56,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
         );
       } else {
         alert(
-          '선택하신 주문 건은 취소 거부(취소철회)처리가 불가합니다.\n취소 처리상태가 "취소요청"인 주문건만 취소거부(취소철회) 처리 가능합니다.\n취소 처리상태를 확인해 주세요.',
+          '선택하신 주문 건은 취소 완료처리가 불가합니다.\n취소 처리상태가 "취소요청"인 주문건만 취소 완료처리 가능합니다.\n취소 처리상태를 확인해 주세요.',
         );
       }
     } else {
@@ -67,16 +67,23 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
   const handleRejectCancelProcessBtn = () => {
     let length = selectedTableRowsState.length;
 
-    if (length <= 0) {
-      alert('주문 건을 한 건 선택해주세요.');
-    } else if (length > 1) {
-      alert('주문 건을 한 건만 선택해주세요.');
-    } else {
-      if (selectedTableRowsState[0].status !== '취소완료') {
+    if (length > 0) {
+      let result = 1;
+      selectedTableRowsState.forEach((item) => {
+        if (item.status === '취소완료') {
+          result = -1;
+        }
+      });
+
+      if (result === 1) {
+        setReturnRefusalVisibleState(true);
+      } else {
         alert(
-          '선택하신 주문 건은 취소 거부(취소철회)처리가 불가합니다.\n취소 처리상태가 "취소요청"인 주문건만 취소거부(취소철회) 처리 가능합니다.\n취소 처리상태를 확인해 주세요.',
+          '선택하신 주문 건은 취소거부(취소철회)처리가 불가합니다.\n취소 처리상태가 "취소요청"인 주문건만 취소거부(취소철회) 처리 가능합니다.\n취소 처리상태를 확인해 주세요.',
         );
-      } else setReturnRefusalVisibleState(true);
+      }
+    } else {
+      alert('주문 건을 선택해주세요.');
     }
   };
   const handleChange = (selectedRowKeys, selectedRows) => {

@@ -29,12 +29,6 @@ const BasicTransferStyled = styled(Transfer)``;
 const QueryItemModal = (property) => {
   const mockData = [];
 
-  useEffect(() => {
-    if (property.visible === true) {
-      resetData();
-    }
-  }, [property.visible]);
-
   for (let i = 0; i < itemNames.length; i++) {
     mockData.push({
       key: i.toString(),
@@ -42,21 +36,28 @@ const QueryItemModal = (property) => {
       description: itemNames[i].description,
     });
   }
-  const [targetKeys, setTargetKeys] = useState([]);
-  const [selectedKeys, setSelectedKeys] = useState([]);
+
+  useEffect(() => {
+    if (property.visible === true) {
+      resetData();
+    }
+  }, [property.visible]);
+
+  const [targetKeysState, setTargetKeysState] = useState([]);
+  const [selectedKeysState, setSelectedKeysState] = useState([]);
 
   const onChange = (nextTargetKeys, direction, moveKeys) => {
-    console.log('targetKeys:', nextTargetKeys);
+    console.log('targetKeys:', targetKeysState);
     console.log('direction:', direction);
     console.log('moveKeys:', moveKeys);
     var _targetKeys = [...nextTargetKeys];
-    setTargetKeys(_targetKeys);
+    setTargetKeysState(_targetKeys);
   };
 
   const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
     console.log('sourceSelectedKeys:', sourceSelectedKeys);
     console.log('targetSelectedKeys:', targetSelectedKeys);
-    setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
+    setSelectedKeysState([...sourceSelectedKeys, ...targetSelectedKeys]);
   };
 
   const onScroll = (direction, e) => {
@@ -67,7 +68,7 @@ const QueryItemModal = (property) => {
   const resetData = () => {
     if (getTargetCookie() !== null) {
       var key = getTargetCookie();
-      setTargetKeys([...key]);
+      setTargetKeysState([...key]);
     }
   };
 
@@ -104,8 +105,8 @@ const QueryItemModal = (property) => {
           <Button
             key="init"
             onClick={() => {
-              setSelectedKeys([]);
-              setTargetKeys([]);
+              setSelectedKeysState([]);
+              setTargetKeysState([]);
             }}
           >
             초기화
@@ -114,7 +115,7 @@ const QueryItemModal = (property) => {
           <Button
             key="setting"
             onClick={() => {
-              setTargetKeyCookie(targetKeys);
+              setTargetKeyCookie(targetKeysState);
               property.setVisible(false);
             }}
           >
@@ -136,8 +137,8 @@ const QueryItemModal = (property) => {
             <BasicTransferStyled
               dataSource={mockData}
               titles={['선택 가능 목록', '그리드 노출 목록']}
-              targetKeys={targetKeys}
-              selectedKeys={selectedKeys}
+              targetKeys={targetKeysState}
+              selectedKeys={selectedKeysState}
               onChange={onChange}
               onSelectChange={onSelectChange}
               onScroll={onScroll}

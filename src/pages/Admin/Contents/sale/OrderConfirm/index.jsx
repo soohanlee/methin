@@ -26,17 +26,17 @@ const OrderConfirm = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getApiDeliveryData(productOffset);
+    getApiOrderConfirmData(productOffset);
   }, [productOffset]);
 
   useEffect(() => {
     async function fetchAndSetUser() {
-      await getApiDeliveryData();
+      await getApiOrderConfirmData();
     }
     fetchAndSetUser();
   }, []);
 
-  const getApiDeliveryData = async (offset = 0) => {
+  const getApiOrderConfirmData = async (offset = 0) => {
     try {
       setLoading(true);
       const result = await getPaidWithPaymentConfirmedList(offset);
@@ -54,25 +54,22 @@ const OrderConfirm = () => {
         } = item;
         switch (status) {
           case 0:
-            status = '결제대기';
+            status = '신규주문지연';
             break;
           case 1:
-            status = '결제완료';
+            status = '배송준비지연';
             break;
           case 2:
-            status = '상품준비';
+            status = '발송전 취소요청';
             break;
           case 3:
-            status = '배송중';
+            status = '발송전 배송지변경';
             break;
           case 4:
-            status = '배송완료';
+            status = '신규주문';
             break;
           case 5:
-            status = '취소완료';
-            break;
-          case 6:
-            status = '반품완료';
+            status = '발주확인완료';
             break;
           default:
             break;
@@ -90,133 +87,6 @@ const OrderConfirm = () => {
           key: index,
         };
       });
-
-      newResult = [
-        {
-          id: 0,
-          buyer_name: '김범희',
-          buyer_id: 'kog3312',
-          recipient_name: '김범희',
-          status: '판매중',
-          product_id: 12830127432,
-          product_name: '갤럭시 flip3',
-          option_name: '옵션',
-          count: 2,
-          option_add_price: 10000,
-          price: 100000,
-          total_price: 200000,
-          ship_pay_type: '신용카드',
-          ship_category: '신용카드',
-          total_ship_amount: 200000,
-          ship_discount_amount: 0,
-          recipient_phone: '010-9479-1485',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          ship_category: '무료',
-          buyer_phone: '010-9479-1485',
-          released_zip_code: '000-0000',
-          ship_message: '경비실에 맡겨주세요',
-          released_address_main: '서울 쿠팡 창고',
-          ship_pay_type: '선불',
-          status: '반품완료',
-          created_at: '1995-12-19',
-          order_confirmed_at: '1995-12-19',
-          paid_at: '1995-12-19',
-          key: 0,
-        },
-        {
-          id: 0,
-          buyer_name: '김범희',
-          buyer_id: 'kog3312',
-          recipient_name: '김범희',
-          status: '판매중',
-          product_id: 12830127432,
-          product_name: '갤럭시 flip3',
-          option_name: '옵션',
-          count: 2,
-          option_add_price: 10000,
-          price: 100000,
-          total_price: 200000,
-          ship_pay_type: '신용카드',
-          ship_category: '신용카드',
-          total_ship_amount: 200000,
-          ship_discount_amount: 0,
-          recipient_phone: '010-9479-1485',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          ship_category: '무료',
-          buyer_phone: '010-9479-1485',
-          released_zip_code: '000-0000',
-          ship_message: '경비실에 맡겨주세요',
-          released_address_main: '서울 쿠팡 창고',
-          ship_pay_type: '선불',
-          status: '반품완료',
-          created_at: '1995-12-19',
-          order_confirmed_at: '1995-12-19',
-          paid_at: '1995-12-19',
-          key: 1,
-        },
-        {
-          id: 0,
-          buyer_name: '김범희',
-          buyer_id: 'kog3312',
-          recipient_name: '김범희',
-          status: '판매중',
-          product_id: 12830127432,
-          product_name: '갤럭시 flip3',
-          option_name: '옵션',
-          count: 2,
-          option_add_price: 10000,
-          price: 100000,
-          total_price: 200000,
-          ship_pay_type: '신용카드',
-          ship_category: '신용카드',
-          total_ship_amount: 200000,
-          ship_discount_amount: 0,
-          recipient_phone: '010-9479-1485',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          ship_category: '무료',
-          buyer_phone: '010-9479-1485',
-          released_zip_code: '000-0000',
-          ship_message: '경비실에 맡겨주세요',
-          released_address_main: '서울 쿠팡 창고',
-          ship_pay_type: '선불',
-          status: '반품완료',
-          created_at: '1995-12-19',
-          order_confirmed_at: '1995-12-19',
-          paid_at: '1995-12-19',
-          key: 2,
-        },
-        {
-          id: 0,
-          buyer_name: '김범희',
-          buyer_id: 'kog3312',
-          recipient_name: '김범희',
-          status: '판매중',
-          product_id: 12830127432,
-          product_name: '갤럭시 flip3',
-          option_name: '옵션',
-          count: 2,
-          option_add_price: 10000,
-          price: 100000,
-          total_price: 200000,
-          ship_pay_type: '신용카드',
-          ship_category: '신용카드',
-          total_ship_amount: 200000,
-          ship_discount_amount: 0,
-          recipient_phone: '010-9479-1485',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          ship_category: '무료',
-          buyer_phone: '010-9479-1485',
-          released_zip_code: '000-0000',
-          ship_message: '경비실에 맡겨주세요',
-          released_address_main: '서울 쿠팡 창고',
-          ship_pay_type: '선불',
-          status: '반품완료',
-          created_at: '1995-12-19',
-          order_confirmed_at: '1995-12-19',
-          paid_at: '1995-12-19',
-          key: 3,
-        },
-      ];
 
       setTableDataState(newResult);
       setTableCountState(count);
@@ -270,8 +140,8 @@ const OrderConfirm = () => {
   };
 
   const SetCategoryCount = (tableList) => {
-    let confirmNewOrder = 0;
-    let deliveryPrepare = 0;
+    let confirmNewOrderWait = 0;
+    let deliveryPrepareWait = 0;
     let deliveryCancle = 0;
     let deliveryChange = 0;
     let checkNewOrder = 0;
@@ -279,13 +149,13 @@ const OrderConfirm = () => {
 
     tableList.forEach((element) => {
       switch (element.status) {
-        case '신규주문':
-          confirmNewOrder++;
+        case '신규주문지연':
+          confirmNewOrderWait++;
           break;
-        case '배송준비':
-          deliveryPrepare++;
+        case '배송준비지연':
+          deliveryPrepareWait++;
           break;
-        case '발송전 취소':
+        case '발송전 취소요청':
           deliveryCancle++;
           break;
         case '발송전 배송지변경':
@@ -302,14 +172,13 @@ const OrderConfirm = () => {
       }
     });
     setCategoryCountArrayState([
-      confirmNewOrder,
-      deliveryPrepare,
+      confirmNewOrderWait,
+      deliveryPrepareWait,
       deliveryCancle,
       deliveryChange,
       checkNewOrder,
       orderConfirm,
     ]);
-    console.log(categoryCountArrayState[0]);
   };
 
   const list = [
@@ -362,7 +231,7 @@ const OrderConfirm = () => {
   return (
     <div>
       <BoardHeader list={list} onClick={handleClick} />
-      <Filter getApiDeliveryData={getApiDeliveryData} />
+      <Filter getApiOrderConfirmData={getApiOrderConfirmData} />
       <Table
         count={tableCountState}
         tableData={tableDataState}

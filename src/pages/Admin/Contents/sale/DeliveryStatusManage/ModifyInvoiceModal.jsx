@@ -13,10 +13,16 @@ const SelectBoxLabelContainer = styled.div`
 `;
 
 const ModifyInvoiceModal = (property) => {
-  const [deliveryTypeState, setDeliveryTypeState] = useState();
-  const [deliveryType2State, setDeliveryType2State] = useState();
-  const [deliveryTypeInputState, setDeliveryTypeInputState] = useState();
-  const deliveryTypeInputRef = useRef();
+  const [tableDataState, setTableDataState] = useState();
+  const [shipTypeState, setShipTypeState] = useState();
+  const [shipCompanyState, setShipCompanyState] = useState();
+  const [invoiceNumberState, setInvoiceNumberState] = useState();
+
+  const [dataShipTypeState, setDataShipTypeState] = useState([]);
+  const [dataShipCompanyState, setDataShipCompanyState] = useState([]);
+  const [dataInvoiceNumberState, setDataInvoiceNumberState] = useState([]);
+
+  const inputRef = useRef();
 
   const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
   const [selectedTableRowsState, setSelectedTableRowsState] = useState([]);
@@ -24,29 +30,45 @@ const ModifyInvoiceModal = (property) => {
   let limit = 3;
 
   useEffect(() => {
+    setTableDataState(property.selectedTableRowsState);
     resetData();
   }, [property.visible === true]);
 
-  const handleDeliveryType = (value) => {
-    setDeliveryTypeState(value);
-  };
-  const handleDeliveryType2 = (value) => {
-    setDeliveryType2State(value);
-  };
-  const handleDeliveryTypeInput = (value) => {
-    setDeliveryTypeInputState(value.target.value);
+  const handleColumnsSetData = (value, index, state, setState) => {
+    let _array = [...state];
+
+    if (_array.length <= index) {
+      _array = [..._array, value];
+    } else {
+      _array[index] = value;
+    }
+    setState(_array);
   };
 
   const handleOkClick = () => {
-    console.log(deliveryTypeState);
-    console.log(deliveryType2State);
-    console.log(deliveryTypeInputRef.current.state.value);
     property.onOk();
+  };
+
+  const handleApplyClick = () => {
+    let shipType = [...dataShipTypeState];
+    let shipCompany = [...dataShipCompanyState];
+    let invoiceNumber = [...dataInvoiceNumberState];
+
+    selectedTableRowsState.map((item, index) => {
+      let { key } = item;
+      shipType[item.key] = shipTypeState;
+      shipCompany[item.key] = shipCompanyState;
+      invoiceNumber[item.key] = invoiceNumberState;
+    });
+
+    setDataShipTypeState(shipType);
+    setDataShipCompanyState(shipCompany);
+    setDataInvoiceNumberState(invoiceNumber);
   };
 
   const columns = [
     {
-      title: '상품주문번호',
+      title: '상품번호',
       dataIndex: 'product_id',
       align: 'center',
     },
@@ -69,12 +91,24 @@ const ModifyInvoiceModal = (property) => {
   };
 
   const resetData = () => {
-    setDeliveryTypeState('선택');
-    setDeliveryType2State('선택');
-    setDeliveryTypeInputState('');
+    setShipTypeState('select');
+    setShipCompanyState('select');
+    setInvoiceNumberState('');
 
     setSelectedTableKeysState([]);
     setSelectedTableRowsState([]);
+  };
+
+  const handleDeliveryTypeSelect = (value) => {
+    setShipTypeState(value);
+  };
+
+  const handleDeliveryCompanySelect = (value) => {
+    setShipCompanyState(value);
+  };
+
+  const handleInvoiceNumberInput = (value) => {
+    setInvoiceNumberState(value.target.value);
   };
 
   return (
@@ -91,19 +125,27 @@ const ModifyInvoiceModal = (property) => {
       >
         <SelectBoxLabelContainer>
           <BasicSelectBox
-            value={deliveryTypeState}
-            onChange={handleDeliveryType}
-            list={waySelect}
+            value={shipTypeState}
+            onChange={handleDeliveryTypeSelect}
+            list={deliveryTypeList}
           />
           <BasicSelectBox
-            value={deliveryType2State}
-            onChange={handleDeliveryType2}
-            list={companySelect}
+            value={shipCompanyState}
+            onChange={handleDeliveryCompanySelect}
+            list={deliveryCompanyList}
+            disabled={shipTypeState === 'delivery' ? '' : 'disabled'}
           />
           <BasicTextInputBox
-            value={deliveryTypeInputState}
-            onChange={handleDeliveryTypeInput}
-            ref={deliveryTypeInputRef}
+            value={invoiceNumberState}
+            onChange={handleInvoiceNumberInput}
+            ref={inputRef}
+            disabled={
+              shipTypeState !== 'delivery' ||
+              shipCompanyState === 'select' ||
+              shipCompanyState === undefined
+                ? 'disabled'
+                : ''
+            }
           />
         </SelectBoxLabelContainer>
         <BasicTable
@@ -121,16 +163,15 @@ const ModifyInvoiceModal = (property) => {
 };
 export default ModifyInvoiceModal;
 
-const waySelect = [
-  { value: '0', label: '택배,등기,소포' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+const deliveryTypeList = [
+  { label: '선택', value: 'select' },
+  { label: '택배,등기,소포', value: 'delivery' },
+  { label: '퀵서비스', value: 'quick' },
+  { label: '방문수령', value: 'visit' },
+  { label: '직접전달', value: 'direct' },
 ];
 
-const companySelect = [
-  { value: '0', label: '뭐들어가지' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+const deliveryCompanyList = [
+  { label: '선택', value: 'select' },
+  { label: 'CJ 대한통운', value: 'cj' },
 ];

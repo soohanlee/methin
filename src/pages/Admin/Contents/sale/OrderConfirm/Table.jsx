@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
 
@@ -8,7 +8,7 @@ import BasicTable from 'pages/Admin/components/Table/Table';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 
 import OrderSheetPrintModal from './OrderSheetPrintModal';
-import AdressModifyModal from './AddressModifyModal';
+import AddressModifyModal from './AddressModifyModal';
 import SaleCancelModal from './SaleCancelModal';
 
 const Container = styled.div`
@@ -40,13 +40,16 @@ const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
   width: 40rem;
 `;
 
+const BasicTextInputBoxStyled2 = styled(BasicTextInputBox)`
+  padding: 0px;
+  margin: 0px;
+`;
+
 const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
 const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
-  const allShipSearchInputRef = useRef(null);
-
   //Visible
   const [orderSheetPrintVisible, setOrderSheetPrintVisible] = useState(false); //선택건 주문서 출력
   const [adressModifyVisible, setAdressModifyVisible] = useState(false); //고객 배송지 정보수정
@@ -57,13 +60,18 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
   const [selectedTableRowsState, setSelectedTableRowsState] = useState([]);
 
   //Table Data SelectBox Data Array
-  const [shipTypeState, setShipTypeState] = useState([]); //배송방법
-  const [shipcompanyState, setShipCompanyState] = useState([]); //택배사
-  const [invoiceNumberState, setInvoiceNumberState] = useState([]); //송장번호
+  const [shipTypeState, setShipTypeState] = useState('선택'); //배송방법
+  const [shipCompanyState, setShipCompanyState] = useState('select'); //택배사
+  const [invoiceNumberState, setInvoiceNumberState] = useState(); //송장번호
 
-  //배송정보 한번에 입력
-  const [allShipTypeState, setAllShipTypeState] = useState(); //배송방법
-  const [allShipCompanyState, setAllShipCompanyState] = useState(); //배송회사
+  const [dataShipTypeState, setDataShipTypeState] = useState([]);
+  const [dataShipCompanyState, setDataShipCompanyState] = useState([]);
+  const [dataInvoiceNumberState, setDataInvoiceNumberState] = useState([]);
+  const [tableDataState, setTableDataState] = useState();
+
+  useEffect(() => {
+    setTableDataState(tableData);
+  }, [tableData]);
 
   const handleColumnsSetData = (value, index, state, setState) => {
     let _array = [...state];
@@ -85,61 +93,63 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '배송방법',
-      dataIndex: 'ship_type',
+      dataIndex: 'shiptype',
       render: (_, record) => (
         <BasicSelectBox
-          value={shipTypeState[record.key]}
+          value={dataShipTypeState[record.key]}
           onChange={(value) => {
             handleColumnsSetData(
               value,
               record.key,
-              shipTypeState,
-              setShipTypeState,
+              dataShipTypeState,
+              setDataShipTypeState,
             );
           }}
           list={deliveryTypeList}
         />
       ),
       align: 'center',
+      width: 200,
     },
     {
       title: '택배사',
-      dataIndex: 'ship_company_name',
+      dataIndex: 'shipcompany',
       render: (_, record) => (
         <BasicSelectBox
-          list={deliveryCompanyList}
-          value={shipcompanyState[record.key]}
+          value={dataShipCompanyState[record.key]}
           onChange={(value) => {
             handleColumnsSetData(
               value,
               record.key,
-              shipcompanyState,
-              setShipCompanyState,
+              dataShipCompanyState,
+              setDataShipCompanyState,
             );
           }}
-          disabled={shipTypeState[record.key] === 'delivery' ? '' : 'disabled'}
+          disabled={dataShipTypeState[record.key] !== 'delivery'}
+          list={deliveryCompanyList}
         />
       ),
       align: 'center',
+      width: 200,
     },
     {
       title: '송장번호',
-      dataIndex: 'ship_number',
+      dataIndex: 'invoiceNumber',
       render: (_, record) => (
         <BasicTextInputBox
-          value={invoiceNumberState[record.key]}
+          value={dataInvoiceNumberState[record.key]}
           onChange={(value) => {
             handleColumnsSetData(
               value.target.value,
               record.key,
-              invoiceNumberState,
-              setInvoiceNumberState,
+              dataInvoiceNumberState,
+              setDataInvoiceNumberState,
             );
           }}
           disabled={
-            shipTypeState[record.key] !== 'delivery' ||
-            shipcompanyState[record.key] === 'select' ||
-            shipcompanyState[record.key] === undefined
+            dataShipTypeState[record.key] !== 'delivery' ||
+            dataShipCompanyState[record.key] === 'select' ||
+            dataShipCompanyState[record.key] === undefined
               ? 'disabled'
               : ''
           }
@@ -157,6 +167,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
       title: '구매자ID',
       dataIndex: 'buyer_id',
       align: 'center',
+      width: 150,
     },
     {
       title: '수취인명',
@@ -168,22 +179,25 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
       title: '주문상태',
       dataIndex: 'status',
       align: 'center',
-      width: 100,
+      width: 150,
     },
     {
       title: '결제일',
       dataIndex: 'paid_at',
       align: 'center',
+      width: 150,
     },
     {
       title: '상품번호',
       dataIndex: 'product_id',
       align: 'center',
+      width: 100,
     },
     {
       title: '상품명',
       dataIndex: 'product_name',
       align: 'center',
+      width: 150,
     },
     {
       title: '옵션정보',
@@ -219,6 +233,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
       title: '발주확인일',
       dataIndex: 'order_confirmed_at',
       align: 'center',
+      width: 150,
     },
     {
       title: '배송비 형태',
@@ -248,36 +263,43 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
       title: '수취인 연락처',
       dataIndex: 'recipient_phone',
       align: 'center',
+      width: 150,
     },
     {
       title: '배송지',
       dataIndex: 'ship_address_main',
       align: 'center',
+      width: 200,
     },
     {
       title: '구매자 연락처',
       dataIndex: 'buyer_phone',
       align: 'center',
+      width: 150,
     },
     {
       title: '우편번호',
       dataIndex: 'released_zip_code',
       align: 'center',
+      width: 200,
     },
     {
       title: '배송메세지',
       dataIndex: 'ship_message',
       align: 'center',
+      width: 250,
     },
     {
       title: '출고지',
       dataIndex: 'released_address_main',
       align: 'center',
+      width: 200,
     },
     {
       title: '주문일시',
       dataIndex: 'created_at',
       align: 'center',
+      width: 150,
     },
   ];
 
@@ -341,12 +363,33 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     }
   };
 
-  const handleAllShipTypeSelectOnChange = (value) => {
-    setAllShipTypeState(value);
+  const handleShipTypeSelectOnChange = (value) => {
+    setShipTypeState(value);
   };
 
-  const handleAllShipCompanySelectBoxOnChange = (value) => {
-    setAllShipCompanyState(value);
+  const handleShipCompanySelectBoxOnChange = (value) => {
+    setShipCompanyState(value);
+  };
+
+  const handleApplyClick = () => {
+    let shipType = [...dataShipTypeState];
+    let shipCompany = [...dataShipCompanyState];
+    let invoiceNumber = [...dataInvoiceNumberState];
+
+    selectedTableRowsState.map((item, index) => {
+      let { key } = item;
+      shipType[item.key] = shipTypeState;
+      shipCompany[item.key] = shipCompanyState;
+      invoiceNumber[item.key] = invoiceNumberState;
+    });
+
+    setDataShipTypeState(shipType);
+    setDataShipCompanyState(shipCompany);
+    setDataInvoiceNumberState(invoiceNumber);
+  };
+
+  const handleInvoiceNumChange = (value) => {
+    setInvoiceNumberState(value.target.value);
   };
 
   return (
@@ -354,24 +397,34 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
       <SearchContainer>
         <LabelContents title="배송정보 한번에 입력하기">
           <PeirodSelectBox
-            value={allShipTypeState}
-            onChange={handleAllShipTypeSelectOnChange}
+            value={shipTypeState}
+            onChange={handleShipTypeSelectOnChange}
             list={deliveryTypeList}
           />
           <PeirodSelectBox
-            value={allShipCompanyState}
-            onChange={handleAllShipCompanySelectBoxOnChange}
+            value={shipCompanyState}
+            onChange={handleShipCompanySelectBoxOnChange}
             list={deliveryCompanyList}
-            disabled={allShipTypeState === 'delivery' ? '' : 'disabled'}
+            disabled={shipTypeState === 'delivery' ? '' : 'disabled'}
           />
-          <BasicTextInputBoxStyled ref={allShipSearchInputRef} />
-          <Button>검색</Button>
+          <BasicTextInputBoxStyled
+            value={invoiceNumberState}
+            onChange={handleInvoiceNumChange}
+            disabled={
+              shipTypeState !== 'delivery' ||
+              shipCompanyState === 'select' ||
+              shipCompanyState === undefined
+                ? 'disabled'
+                : ''
+            }
+          />
+          <Button onClick={handleApplyClick}>적용</Button>
         </LabelContents>
       </SearchContainer>
 
       <BasicTable
         scroll={{ x: 'max-content', y: '20vw' }}
-        data={tableData}
+        data={tableDataState}
         columns={columns}
         selectionType="checkbox"
         onChange={handleChange}
@@ -429,7 +482,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
         selectedTableRowsState={selectedTableRowsState}
       ></OrderSheetPrintModal>
 
-      <AdressModifyModal
+      <AddressModifyModal
         centered
         title="고객 배송지 정보수정"
         visible={adressModifyVisible}
@@ -443,7 +496,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
         okText="확인"
         cancelText="취소"
         selectedTableRowsState={selectedTableRowsState}
-      ></AdressModifyModal>
+      ></AddressModifyModal>
 
       <SaleCancelModal
         centered
@@ -464,14 +517,6 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
 };
 
 export default Table;
-
-// const deliveryTypeList = [
-//   { label: '선택', value: 'select' },
-//   { label: '택배,등기,소포', value: 'delivery' },
-//   { label: '퀵서비스', value: 'quick' },
-//   { label: '방문수령', value: 'visit' },
-//   { label: '직접전달', value: 'direct' },
-// ];
 
 const deliveryTypeList = [
   { label: '선택', value: 'select' },

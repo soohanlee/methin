@@ -62,20 +62,12 @@ const Category = ({ tableList, categoryCountArray }) => {
   ];
 
   //숫자데이터를 문자로변경
-
-  const handleCategoryType = (value) => {
-    alert(value);
-  };
-
   const renderSetCaterogy = () => {
     const result = [];
     for (let i = 0; i < 6; i++) {
       result.push(
         <>
-          <CategoryTypeSyled
-            key={i}
-            onClick={() => handleCategoryType(categoryTextArray[i])}
-          >
+          <CategoryTypeSyled key={i}>
             {categoryTypeArray[i]}
             <div>
               <div>{categoryTextArray[i]}</div>

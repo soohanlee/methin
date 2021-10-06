@@ -31,7 +31,7 @@ const Input = styled(OriginInput)`
   width: 200px;
 `;
 
-const Filter = ({ getApiDeliveryData, categoryCountArrayState }) => {
+const Filter = ({ getApiOrderConfirmData, categoryCountArrayState }) => {
   const [searchTypeState, setSearchTypeState] = useState(); //조회기간 타입
   const [datePeriodState, setdatePeriodState] = useState('today'); //조회기간 기간
   const [startDateState, setStartDateState] = useState(moment()); //시작날짜
@@ -90,7 +90,7 @@ const Filter = ({ getApiDeliveryData, categoryCountArrayState }) => {
     console.log(paymentLocalState);
     console.log(detailTypeState);
     console.log(detailInputRef.current.state.value);
-    getApiDeliveryData();
+    getApiOrderConfirmData();
   };
 
   return (

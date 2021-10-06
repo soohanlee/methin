@@ -78,8 +78,6 @@ const ProductSearch = () => {
         };
       });
 
-      console.log(newResult);
-
       setAllTableDataState(newResult);
       setTableDataState(newResult);
       setTableCountState(count);
@@ -177,10 +175,14 @@ const ProductSearch = () => {
     },
   ];
 
-  const categoryTypeClick = (value) => {
-    let data = allTableDataState.filter((item) => {
-      return item.status === value;
-    });
+  const handleCategoryBtn = (value) => {
+    let data = allTableDataState;
+    if (value !== '전체') {
+      data = allTableDataState.filter((item) => {
+        return item.status === value;
+      });
+    }
+
     setTableDataState(data);
     setTableCountState(data.length);
   };
@@ -188,7 +190,7 @@ const ProductSearch = () => {
   return (
     <>
       <Title />
-      <BoardHeader onClick={categoryTypeClick} list={list} />
+      <BoardHeader onClick={handleCategoryBtn} list={list} />
 
       <Setting
         getApiProductData={getApiProductData}

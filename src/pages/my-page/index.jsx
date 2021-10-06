@@ -48,7 +48,6 @@ const MyPage = () => {
   return (
     <Container>
       {userState.viewType === 'MOBILE' ? null : <LeftNavigation />}
-
       <Contents>
         {userState.viewType === 'MOBILE' ? null : <UserInfomation />}
 

@@ -17,7 +17,7 @@ const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
 const PackingModal = (property) => {
   const [tableDataState, setTableDataState] = useState();
   const [shipTypeState, setShipTypeState] = useState();
-  const [shipcompanyState, setShipcompanyState] = useState();
+  const [shipCompanyState, setShipCompanyState] = useState();
   const [invoiceNumberState, setInvoiceNumberState] = useState();
 
   const [dataShipTypeState, setDataShipTypeState] = useState([]);
@@ -59,7 +59,7 @@ const PackingModal = (property) => {
     selectedTableRowsState.map((item, index) => {
       let { key } = item;
       shipType[item.key] = shipTypeState;
-      shipCompany[item.key] = shipcompanyState;
+      shipCompany[item.key] = shipCompanyState;
       invoiceNumber[item.key] = invoiceNumberState;
     });
 
@@ -158,7 +158,7 @@ const PackingModal = (property) => {
 
   const resetData = () => {
     setShipTypeState('select');
-    setShipcompanyState('select');
+    setShipCompanyState('select');
     setInvoiceNumberState('');
 
     var dataTypes = dataShipTypeState.map((element) => {
@@ -181,6 +181,18 @@ const PackingModal = (property) => {
     setSelectedTableRowsState([]);
   };
 
+  const handleDeliveryTypeSelect = (value) => {
+    setShipTypeState(value);
+  };
+
+  const handleDeliveryCompanySelect = (value) => {
+    setShipCompanyState(value);
+  };
+
+  const handleInvoiceNumberInput = (value) => {
+    setInvoiceNumberState(value.target.value);
+  };
+
   return (
     <>
       <BasicModal
@@ -197,28 +209,22 @@ const PackingModal = (property) => {
           <BasicSelectBox
             list={property.deliveryTypeList}
             value={shipTypeState}
-            onChange={(value) => {
-              setShipTypeState(value);
-            }}
+            onChange={handleDeliveryTypeSelect}
           />
           <BasicSelectBox
             list={property.deliveryCompanyList}
-            value={shipcompanyState}
-            onChange={(value) => {
-              setShipcompanyState(value);
-            }}
+            value={shipCompanyState}
+            onChange={handleDeliveryCompanySelect}
             disabled={shipTypeState === 'delivery' ? '' : 'disabled'}
           />
           <BasicTextInputBoxStyled
             value={invoiceNumberState}
-            onChange={(value) => {
-              setInvoiceNumberState(value.target.value);
-            }}
+            onChange={handleInvoiceNumberInput}
             ref={inputRef}
             disabled={
               shipTypeState !== 'delivery' ||
-              shipcompanyState === 'select' ||
-              shipcompanyState === undefined
+              shipCompanyState === 'select' ||
+              shipCompanyState === undefined
                 ? 'disabled'
                 : ''
             }

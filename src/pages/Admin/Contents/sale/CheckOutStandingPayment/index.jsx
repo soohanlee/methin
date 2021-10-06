@@ -7,9 +7,9 @@ import QueryItemModal from './QueryItemModal';
 import { getPaymentUnpaidList } from 'apis/payment';
 import { notification } from 'utils/notification';
 import moment from 'moment';
-import { DateFormat } from 'configs/config';
+import { DateFormat, COOKIE_KEYS } from 'configs/config';
 import { CSVLink } from 'react-csv';
-
+import { get } from 'js-cookie';
 // 미결제 확인
 
 const Container = styled.div`
@@ -42,6 +42,7 @@ const CheckOutStandingPayment = () => {
   const [productOffset, setProductOffset] = useState(0);
   const [loading, setLoading] = useState(false);
   const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
+  const [selectColumnState, setSelectColumnState] = useState([]);
   const [columnFixedCountState, setColumnFixedCountState] = useState(0);
 
   useEffect(() => {
@@ -87,6 +88,12 @@ const CheckOutStandingPayment = () => {
     console.log('selectedRowKeys', selectedRowKeys);
     setSelectedTableKeysState(selectedRowKeys);
   };
+
+  const selectColumn = () => {
+    console.log(COOKIE_KEYS.CheckOutStandingPaymentTargetKeys);
+    setSelectColumnState(get(COOKIE_KEYS.CheckOutStandingPaymentTargetKeys));
+  };
+
   return (
     <Container>
       <QueryItemModal
@@ -102,6 +109,7 @@ const CheckOutStandingPayment = () => {
           setColumnFixedCountState(value);
         }}
         gridCount={columnFixedCountState}
+        selectColumn={selectColumn}
       />
       <TitleContainer>
         <Title>목록 (총 {tableCountState}개)</Title>

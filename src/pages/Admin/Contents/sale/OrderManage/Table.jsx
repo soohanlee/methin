@@ -57,9 +57,19 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
   const [selectedTableRowsState, setSelectedTableRowsState] = useState([]);
 
   //Table Data SelectBox Data Array
-  const [shipTypeState, setShipTypeState] = useState([]); //배송방법
-  const [shipcompanyState, setShipCompanyState] = useState([]); //택배사
+  const [shipTypeState, setShipTypeState] = useState('select'); //배송방법
+  const [shipCompanyState, setShipCompanyState] = useState('select'); //택배사
   const [invoiceNumberState, setInvoiceNumberState] = useState([]); //송장번호
+
+  const [dataShipTypeState, setDataShipTypeState] = useState([]);
+  const [dataShipCompanyState, setDataShipCompanyState] = useState([]);
+  const [dataInvoiceNumberState, setDataInvoiceNumberState] = useState([]);
+  const [tableDataState, setTableDataState] = useState();
+
+  useEffect(() => {
+    setTableDataState(tableData);
+    resetData();
+  }, [tableData]);
 
   const handleColumnsSetData = (value, index, state, setState) => {
     let _array = [...state];
@@ -72,12 +82,6 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
     setState(_array);
   };
 
-  const handleChange = (selectedRowKeys, selectedRows) => {
-    console.log('selectedRowKeys', selectedRowKeys);
-    setSelectedTableKeysState(selectedRowKeys);
-    setSelectedTableRowsState(selectedRows);
-  };
-
   const columns = [
     {
       title: '주문번호',
@@ -87,63 +91,63 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
     },
     {
       title: '배송방법',
-      dataIndex: 'ship_type',
+      dataIndex: 'shiptype',
       render: (_, record) => (
         <BasicSelectBox
-          value={shipTypeState[record.key]}
+          value={dataShipTypeState[record.key]}
           onChange={(value) => {
             handleColumnsSetData(
               value,
               record.key,
-              shipTypeState,
-              setShipTypeState,
+              dataShipTypeState,
+              setDataShipTypeState,
             );
           }}
           list={deliveryTypeList}
         />
       ),
       align: 'center',
-      width: 130,
+      width: 200,
     },
     {
       title: '택배사',
-      dataIndex: 'ship_company_name',
+      dataIndex: 'shipcompany',
       render: (_, record) => (
         <BasicSelectBox
-          list={deliveryCompanyList}
-          value={shipcompanyState[record.key]}
+          value={dataShipCompanyState[record.key]}
           onChange={(value) => {
             handleColumnsSetData(
               value,
               record.key,
-              shipcompanyState,
-              setShipCompanyState,
+              dataShipCompanyState,
+              setDataShipCompanyState,
             );
           }}
-          disabled={shipTypeState[record.key] === 'delivery' ? '' : 'disabled'}
+          disabled={dataShipTypeState[record.key] !== 'delivery'}
+          list={deliveryCompanyList}
         />
       ),
       align: 'center',
-      width: 130,
+      width: 200,
     },
     {
       title: '송장번호',
-      dataIndex: 'ship_number',
+      dataIndex: 'invoiceNumber',
       render: (_, record) => (
         <BasicTextInputBox
-          value={invoiceNumberState[record.key]}
+          value={dataInvoiceNumberState[record.key]}
           onChange={(value) => {
             handleColumnsSetData(
               value.target.value,
               record.key,
-              invoiceNumberState,
-              setInvoiceNumberState,
+              dataInvoiceNumberState,
+              setDataInvoiceNumberState,
             );
           }}
           disabled={
-            shipTypeState[record.key] !== 'delivery' ||
-            shipcompanyState[record.key] === 'select' ||
-            shipcompanyState[record.key] === undefined
+            dataShipTypeState[record.key] !== 'delivery' ||
+            dataShipCompanyState[record.key] === 'select' ||
+            dataShipCompanyState[record.key] === undefined
               ? 'disabled'
               : ''
           }
@@ -161,6 +165,7 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
       title: '구매자ID',
       dataIndex: 'buyer_id',
       align: 'center',
+      width: 130,
     },
     {
       title: '수취인명',
@@ -355,12 +360,56 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
     }
   };
 
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRowKeys', selectedRowKeys);
+    setSelectedTableKeysState(selectedRowKeys);
+    setSelectedTableRowsState(selectedRows);
+  };
+
   const handleOrderSheetPrint = () => {
     if (selectedTableRowsState.length > 0) {
       setOrderSheetPrintVisualState(true);
     } else {
       alert('배송정보를 선택해주세요');
     }
+  };
+
+  const handleShipTypeSelectOnChange = (value) => {
+    setShipTypeState(value);
+  };
+
+  const handleShipCompanySelectOnChange = (value) => {
+    setShipCompanyState(value);
+  };
+
+  const handleApplyClick = () => {
+    let shipType = [...dataShipTypeState];
+    let shipCompany = [...dataShipCompanyState];
+    let invoiceNumber = [...dataInvoiceNumberState];
+
+    selectedTableRowsState.map((item, index) => {
+      let { key } = item;
+      shipType[item.key] = shipTypeState;
+      shipCompany[item.key] = shipCompanyState;
+      invoiceNumber[item.key] = invoiceNumberState;
+    });
+
+    setDataShipTypeState(shipType);
+    setDataShipCompanyState(shipCompany);
+    setDataInvoiceNumberState(invoiceNumber);
+  };
+
+  const handleInvoiceNumChange = (value) => {
+    setInvoiceNumberState(value.target.value);
+  };
+
+  const resetData = () => {
+    setShipTypeState('select');
+    setShipCompanyState('select');
+    setInvoiceNumberState('');
+
+    setSelectedTableKeysState([]);
+    setSelectedTableRowsState([]);
   };
 
   return (
@@ -430,10 +479,29 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
 
       <SearchContainer>
         <LabelContents title="배송정보 한번에 입력하기">
-          <PeirodSelectBox list={deliveryTypeList} />
-          <PeirodSelectBox list={deliveryCompanyList} />
-          <BasicTextInputBoxStyled ref={invoiceNumber} />
-          <Button>검색</Button>
+          <PeirodSelectBox
+            value={shipTypeState}
+            onChange={handleShipTypeSelectOnChange}
+            list={deliveryTypeList}
+          />
+          <PeirodSelectBox
+            value={shipCompanyState}
+            onChange={handleShipCompanySelectOnChange}
+            list={deliveryCompanyList}
+            disabled={shipTypeState === 'delivery' ? '' : 'disabled'}
+          />
+          <BasicTextInputBoxStyled
+            value={invoiceNumberState}
+            onChange={handleInvoiceNumChange}
+            disabled={
+              shipTypeState !== 'delivery' ||
+              shipCompanyState === 'select' ||
+              shipCompanyState === undefined
+                ? 'disabled'
+                : ''
+            }
+          />
+          <Button onClick={handleApplyClick}>적용</Button>
         </LabelContents>
       </SearchContainer>
 
