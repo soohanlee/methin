@@ -9,7 +9,9 @@ import FAQ from 'pages/service-center/FAQ';
 
 const Container = styled.div`
   display: flex;
-  padding: 10rem 10%;
+  padding: 10rem 0;
+  max-width: 1050px;
+  margin: auto;
   @media screen and (max-width: ${BreakPoint.xl}px) {
     padding: 4rem 5%;
   }

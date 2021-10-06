@@ -18,7 +18,9 @@ import { UserContext } from 'store/user-context';
 
 const Container = styled.div`
   display: flex;
-  padding: 10rem 10%;
+  padding: 10rem 0;
+  max-width: 1050px;
+  margin: auto;
   @media screen and (max-width: ${BreakPoint.xl}px) {
     padding: 4rem 5%;
   }
@@ -28,7 +30,10 @@ const Container = styled.div`
 `;
 
 const Contents = styled.div`
-  padding: 0 10rem;
+  padding: 0 2rem;
+  min-width: 820px;
+  width: 820px;
+  margin: 0 auto;
   flex: 1;
   @media screen and (max-width: ${BreakPoint.s}px) {
     padding: 0;

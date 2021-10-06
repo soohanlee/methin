@@ -60,6 +60,8 @@ export const PageTitle = styled.div`
 
 export const Checkbox = styled.input.attrs({ type: 'checkbox' })``;
 
+export const RadioButton = styled.input.attrs({ type: 'radio' })``;
+
 export const Select = styled(ReactSelect)`
   width: 100%;
 `;

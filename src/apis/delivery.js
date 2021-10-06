@@ -45,3 +45,7 @@ export const updateUserAddress = (id, data) => {
 export const deleteUserAddress = (id) => {
   return axios.delete(`/api/address/${id}`);
 };
+
+export const patchDefaultAddress = (id) => {
+  return axios.patch(`/api/address/${id}/default`);
+};
