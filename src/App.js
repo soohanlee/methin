@@ -55,6 +55,7 @@ import DeliveryTrackingPage from 'pages/DeliveryTracking/DeliveryTrackingPage';
 import MobileMyPageMain from 'pages/my-page/MobileMyPageMain/MobileMyPageMain';
 import Private from 'pages/Private';
 import InformationGuide from 'pages/information-guide/InformationGuide';
+import NoticeDetail from 'pages/service-center/Notice/NoticeDetail/NoticeDetail';
 
 const { Content } = Layout;
 
@@ -243,6 +244,10 @@ function App() {
                       <Route
                         path={ROUTE_PATH.serviceCenter.main}
                         component={ServiceCenter}
+                      />
+                      <Route
+                        path={`${ROUTE_PATH.serviceCenter.notice}/:id`}
+                        component={NoticeDetail}
                       />
                       <Route path={ROUTE_PATH.order} component={Order} />
                       <Route path={ROUTE_PATH.cart} component={Cart} />

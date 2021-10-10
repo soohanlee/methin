@@ -17,7 +17,7 @@ export const patchNotice = async (id, data) => {
 };
 
 export const deleteNotice = async (id) => {
-  console.log("api/admin/notice/"+id)
+  console.log('api/admin/notice/' + id);
   return await axios.delete(`api/admin/notice/${id}`);
 };
 ///////////////////////////////////////////////////////////////////
@@ -41,6 +41,10 @@ export const getClientPageNotice = async (offset, limit, category) => {
   return await axios.get(
     `api/notice?offset=${offset}?limit=${limit}?category=${category}`,
   );
+};
+
+export const getClientPageNoticeDetail = async (id) => {
+  return await axios.get(`api/notice/${id}`);
 };
 
 export const getClientPageFaq = async (offset, limit) => {
