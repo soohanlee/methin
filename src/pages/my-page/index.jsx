@@ -10,6 +10,7 @@ import Destination from 'pages/my-page/Destination';
 import DestinationManage from 'pages/my-page/DestinationManage/DestinationManage';
 
 import Review from 'pages/my-page/Review';
+import Coupon from 'pages/my-page/Coupon';
 import CancelOrderList from 'pages/my-page/CancelOrderList';
 import Myinfo from 'pages/my-page/MyInfomation';
 import ProductQNA from 'pages/my-page/ProductQNA';
@@ -81,6 +82,12 @@ const MyPage = () => {
           exact
           path={`${match.path}${ROUTE_PATH.mypage.review}`}
           component={Review}
+        />
+
+        <Route
+          exact
+          path={`${match.path}${ROUTE_PATH.mypage.coupon}`}
+          component={Coupon}
         />
 
         <Route

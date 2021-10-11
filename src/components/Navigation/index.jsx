@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
 
@@ -13,6 +13,7 @@ import { Label } from 'components/styled/Form';
 
 import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import MobileNavigation from 'components/Navigation/mobile';
+import { getMenuList } from 'apis/menu';
 
 const Container = styled.div`
   display: flex;
@@ -116,9 +117,18 @@ const Navigation = () => {
   const history = useHistory();
   const userState = useContext(UserContext);
 
-  const handleSearchClick = () => {
-    console.log('클릭');
+  const getMenu = async () => {
+    const response = await getMenuList();
+    console.log(response.data.data);
   };
+
+  useEffect(() => {
+    getMenu();
+  }, []);
+
+  // const handleSearchClick = () => {
+  //   console.log('클릭');
+  // };
 
   const handleMoveLoginPage = () => {
     history.push(`${ROUTE_PATH.login}`);

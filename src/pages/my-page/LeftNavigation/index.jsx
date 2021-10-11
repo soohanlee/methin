@@ -72,6 +72,12 @@ const LeftNavigation = () => {
         >
           상품 리뷰
         </Label>
+        <Label
+          select={select === `${ROUTE_PATH.mypage.coupon}`}
+          onClick={() => handleMovePage(`${ROUTE_PATH.mypage.coupon}`)}
+        >
+          쿠폰
+        </Label>
       </PageContainer>
 
       <PageContainer>
