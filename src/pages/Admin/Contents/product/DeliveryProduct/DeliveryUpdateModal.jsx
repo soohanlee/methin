@@ -53,15 +53,13 @@ const DeliveryUpdateModal = ({
 }) => {
   //테이블데이터
   const groupNamesRef = useRef(null);
-  const [useStatusState, setUseStatusState] = useState('use');
-  const [calculationWayState, setCalculationWayState] = useState('min');
-  const [addPriceState, setAddPriceState] = useState('notuse');
+  const [useStatusState, setUseStatusState] = useState(0);
+  const [calculationWayState, setCalculationWayState] = useState(0);
+  const [addPriceState, setAddPriceState] = useState(1);
   const [groupNameState, setGroupNameState] = useState('');
   const [territoriesInput2State, setTerritoriesInput2State] = useState('');
   const [territoriesInput3State, setTerritoriesInput3State] = useState('');
-  const [territoriesSelectState, setTerritoriesSelectState] = useState(
-    '배송권역',
-  );
+  const [territoriesSelectState, setTerritoriesSelectState] = useState(0);
   let data;
 
   useEffect(() => {
@@ -119,7 +117,7 @@ const DeliveryUpdateModal = ({
 
   const handleAddPriceBtn = (e) => {
     setAddPriceState(e.target.value);
-    setTerritoriesSelectState('배송권역');
+    setTerritoriesSelectState(0);
     setTerritoriesInput2State('');
     setTerritoriesInput3State('');
   };
@@ -137,17 +135,17 @@ const DeliveryUpdateModal = ({
   };
   const resetData = () => {
     setGroupNameState('');
-    setCalculationWayState('min');
-    setAddPriceState('notuse');
-    setUseStatusState('use');
-    setTerritoriesSelectState('배송권역');
+    setCalculationWayState(0);
+    setAddPriceState(1);
+    setUseStatusState(0);
+    setTerritoriesSelectState(0);
     setTerritoriesInput2State('');
     setTerritoriesInput3State('');
   };
 
   //배송권역
   const deliveryTerritories = () => {
-    if (addPriceState === 'use') {
+    if (addPriceState === 0) {
       return (
         <>
           <TitleText>배송권역</TitleText>
@@ -163,35 +161,36 @@ const DeliveryUpdateModal = ({
 
   //제주 추가배송비
   const AddPriceType1 = () => {
-    if (territoriesSelectState === '3territories') {
-      return (
-        <>
-          <TitleText>제주 추가배송비</TitleText>
-          <BasicInputBoxStyle
-            onChange={handleTerritoriesInput2Box}
-            value={territoriesInput2State}
-          ></BasicInputBoxStyle>
-        </>
-      );
+    if (addPriceState === 0) {
+      if (territoriesSelectState === 1) {
+        return (
+          <>
+            <TitleText>제주 추가배송비</TitleText>
+            <BasicInputBoxStyle
+              onChange={handleTerritoriesInput2Box}
+              value={territoriesInput2State}
+            ></BasicInputBoxStyle>
+          </>
+        );
+      }
     }
   };
 
   //제주 외 도서산간 추가배송비
   const AddPriceType2 = () => {
-    if (
-      territoriesSelectState === '2territories' ||
-      territoriesSelectState === '3territories'
-    ) {
-      return (
-        <>
-          {' '}
-          <TitleText>제주 외 도서산간 추가배송비</TitleText>
-          <BasicInputBoxStyle
-            onChange={handleTerritoriesInput3Box}
-            value={territoriesInput3State}
-          ></BasicInputBoxStyle>
-        </>
-      );
+    if (addPriceState === 0) {
+      if (territoriesSelectState === 0 || territoriesSelectState === 1) {
+        return (
+          <>
+            {' '}
+            <TitleText>제주 외 도서산간 추가배송비</TitleText>
+            <BasicInputBoxStyle
+              onChange={handleTerritoriesInput3Box}
+              value={territoriesInput3State}
+            ></BasicInputBoxStyle>
+          </>
+        );
+      }
     }
   };
 
@@ -226,8 +225,8 @@ const DeliveryUpdateModal = ({
           <DeliveryModalContent>
             <ContentTitle>사용여부</ContentTitle>
             <Radio.Group value={useStatusState} onChange={handleUseBtn}>
-              <Radio value="use">사용</Radio>
-              <Radio value="notuse">사용안함</Radio>
+              <Radio value={0}>사용</Radio>
+              <Radio value={1}>사용안함</Radio>
             </Radio.Group>
             <Checkbox>기본 그룹으로 설정</Checkbox>
           </DeliveryModalContent>
@@ -238,8 +237,8 @@ const DeliveryUpdateModal = ({
               value={calculationWayState}
               onChange={handleCalculationWayBtn}
             >
-              <Radio value="min">묶음 그룹에서 가장 작은 배송비로 부가</Radio>
-              <Radio value="max">묶음 그룹에서 가장 큰 배송비로 부가</Radio>
+              <Radio value={0}>묶음 그룹에서 가장 작은 배송비로 부가</Radio>
+              <Radio value={1}>묶음 그룹에서 가장 큰 배송비로 부가</Radio>
             </Radio.Group>
           </DeliveryModalContent>
 
@@ -247,8 +246,8 @@ const DeliveryUpdateModal = ({
             <ContentTitle>제주/도서산간 추가배송비</ContentTitle>
             <BlockContent>
               <Radio.Group value={addPriceState} onChange={handleAddPriceBtn}>
-                <Radio value="use">설정함</Radio>
-                <Radio value="notuse">설정안함</Radio>
+                <Radio value={0}>설정함</Radio>
+                <Radio value={1}>설정안함</Radio>
               </Radio.Group>
               {deliveryTerritories()}
               {AddPriceType1()}
@@ -263,6 +262,6 @@ const DeliveryUpdateModal = ({
 export default DeliveryUpdateModal;
 
 const territoriesData = [
-  { value: '2territories', label: '2권역' },
-  { value: '3territories', label: '3권역' },
+  { value: 0, label: '2권역' },
+  { value: 1, label: '3권역' },
 ];

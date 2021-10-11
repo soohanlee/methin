@@ -6,6 +6,7 @@ import { useHistory } from 'react-router';
 import { ROUTE_PATH } from 'configs/config';
 import { deleteNotice } from 'apis/notice';
 import { notification } from 'utils/notification';
+import BasicModal from 'pages/Admin/components/Modal/BasicModal';
 
 const Container = styled.div`
   background: #fff;
@@ -42,8 +43,11 @@ const List = ({
 }) => {
   const [tableState, setTableState] = useState([]);
   const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
+  const [selectedTableRowsState, setSelectedTableRowsState] = useState([]);
   const [selectTableKeyState, setSelectTableKeyState] = useState([]);
-  const [selectionTypeState, setSelectionTypeState] = useState('checkbox');
+  const [selectedNoticeState, setSelectedNoticeState] = useState('');
+  const [isDeleteModalOpenState, setisDeleteModalOpenState] = useState(false);
+
   const history = useHistory();
 
   const rowSelection = {
@@ -57,26 +61,41 @@ const List = ({
     }),
   };
 
-  //여러개 선택삭제
-  const handleSelectDeleteBtn = () => {
-    async function fetchAndSetUser(num) {
-      try {
-        await deleteNotice(num);
-        notification.success('상품삭제');
-        getApiNoticeData();
-      } catch (e) {
-        notification.error('상품을 삭제하지 못했습니다.');
-      }
-    }
+  const handleSelectDelete = () => {
+    let ids = selectedTableRowsState.map((item) => {
+      return item.id;
+    });
+    handleDeleteModalOpen(ids);
+  };
 
-    for (var i = 0; i < selectTableKeyState.length; i++) {
-      if (i === selectTableKeyState.length - 1) {
-        console.log(tableData[i].id);
-        fetchAndSetUser(tableData[i].id);
-      } else {
-        console.log(tableData[i].id);
-        deleteNotice(tableData[i].id);
-      }
+  const handleDeleteModalOpen = (id) => {
+    setSelectedNoticeState(id);
+    setisDeleteModalOpenState(true);
+  };
+
+  //여러개 선택삭제
+  const handleDeleteNotice = async () => {
+    try {
+      let result = selectedNoticeState.map((item) => {
+        try {
+          console.log(item);
+          const result = deleteNotice(item);
+          if (result.status === 404) {
+            notification.error('이미 삭제되었습니다.');
+          }
+        } catch (e) {
+          if (e.response && e.response.status === 404) {
+            notification.error('이미 삭제되었습니다.');
+          }
+        }
+      });
+      await Promise.all(result);
+      notification.success('데이터를 삭제했습니다.');
+      handleChange([], []);
+      getApiNoticeData();
+      setisDeleteModalOpenState(false);
+    } catch (e) {
+      notification.error('상품을 삭제하지 못했습니다.');
     }
   };
 
@@ -136,6 +155,11 @@ const List = ({
   const handleChange = (selectedRowKeys, selectedRows) => {
     console.log('selectedRowKeys', selectedRowKeys);
     setSelectedTableKeysState(selectedRowKeys);
+    setSelectedTableRowsState(selectedRows);
+  };
+  const handleDeleteModalClose = () => {
+    setisDeleteModalOpenState(false);
+    setSelectedNoticeState('');
   };
   return (
     <Container>
@@ -144,13 +168,7 @@ const List = ({
       </TitleContainer>
       <BodyContainer>
         <ButtonContainer>
-          <Button
-            onClick={() => {
-              handleSelectDeleteBtn();
-            }}
-          >
-            선택삭제
-          </Button>
+          <Button onClick={handleSelectDelete}>선택삭제</Button>
         </ButtonContainer>
         <Table
           scroll={{ x: 'max-content', y: '20vw' }}
@@ -162,12 +180,20 @@ const List = ({
           loading={loading}
           total={count}
           pageSize={limit}
-          rowSelection={{
-            type: selectionTypeState,
-            ...rowSelection,
-          }}
+          selectedRowKeys={selectedTableKeysState}
+          // rowSelection={{
+          //   type: selectionTypeState,
+          //   ...rowSelection,
+          // }}
         />
       </BodyContainer>
+      <BasicModal
+        visible={isDeleteModalOpenState}
+        onOk={handleDeleteNotice}
+        onCancel={handleDeleteModalClose}
+      >
+        정말 삭제하시겠습니까?
+      </BasicModal>
     </Container>
   );
 };

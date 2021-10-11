@@ -55,9 +55,7 @@ const Setting = ({
   getApiDeliveryData,
   initDeliveryData,
 }) => {
-  const [searchValueState, setSearchValueState] = useState(
-    'deliveryPriceNames',
-  );
+  const [searchValueState, setSearchValueState] = useState(0);
   const [groupNameInputBoxState, setGroupNameInputBoxState] = useState('');
   const groupNameInputBoxRef = useRef(null); //배송비 묶음그룹 명 인풋박스
   const searchBtnRef = useRef(null); //검색
@@ -81,8 +79,8 @@ const Setting = ({
           onChange={handleSelectChange}
           value={searchValueState}
           list={[
-            { value: 'deliveryPriceNames', label: '배송비 묶음그룹명' },
-            { value: 'deliveryPriceNumbers', label: '배송비 묶음그룹번호' },
+            { value: 0, label: '배송비 묶음그룹명' },
+            { value: 1, label: '배송비 묶음그룹번호' },
           ]}
         />
         <BasicTextInputBoxStyled
@@ -109,7 +107,7 @@ const Setting = ({
     };
 
     const handleResetBtn = () => {
-      handleSelectChange('deliveryPriceNames');
+      handleSelectChange(0);
     };
 
     return (

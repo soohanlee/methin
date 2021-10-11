@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicTable from 'pages/Admin/components/Table/Table';
+import BasicButton from 'pages/Admin/components/Form/BasicButton';
+
 const SelectBoxLabelContainer = styled.div`
   display: flex;
   align-items: center;
@@ -14,8 +16,8 @@ const SelectBoxLabelContainer = styled.div`
 
 const ModifyInvoiceModal = (property) => {
   const [tableDataState, setTableDataState] = useState();
-  const [shipTypeState, setShipTypeState] = useState();
-  const [shipCompanyState, setShipCompanyState] = useState();
+  const [shipTypeState, setShipTypeState] = useState(0);
+  const [shipCompanyState, setShipCompanyState] = useState(0);
   const [invoiceNumberState, setInvoiceNumberState] = useState();
 
   const [dataShipTypeState, setDataShipTypeState] = useState([]);
@@ -57,8 +59,11 @@ const ModifyInvoiceModal = (property) => {
     selectedTableRowsState.map((item, index) => {
       let { key } = item;
       shipType[item.key] = shipTypeState;
-      shipCompany[item.key] = shipCompanyState;
-      invoiceNumber[item.key] = invoiceNumberState;
+
+      shipCompany[item.key] = shipTypeState !== 1 ? 0 : shipCompanyState;
+
+      invoiceNumber[item.key] =
+        shipCompany[item.key] === 0 ? '' : invoiceNumberState;
     });
 
     setDataShipTypeState(shipType);
@@ -68,9 +73,78 @@ const ModifyInvoiceModal = (property) => {
 
   const columns = [
     {
+      title: '배송방법',
+      dataIndex: 'shipType',
+      render: (_, record) => (
+        <BasicSelectBox
+          value={dataShipTypeState[record.key]}
+          onChange={(value) => {
+            handleColumnsSetData(
+              value,
+              record.key,
+              dataShipTypeState,
+              setDataShipTypeState,
+            );
+          }}
+          list={deliveryTypeList}
+        />
+      ),
+      align: 'center',
+      width: 200,
+    },
+
+    {
+      title: '배송사',
+      dataIndex: 'shipCompany',
+      render: (_, record) => (
+        <BasicSelectBox
+          value={dataShipCompanyState[record.key]}
+          onChange={(value) => {
+            handleColumnsSetData(
+              value,
+              record.key,
+              dataShipCompanyState,
+              setDataShipCompanyState,
+            );
+          }}
+          disabled={dataShipTypeState[record.key] !== 1}
+          list={deliveryCompanyList}
+        />
+      ),
+      align: 'center',
+      width: 200,
+    },
+
+    {
+      title: '송장번호',
+      dataIndex: 'invoiceNumber',
+      render: (_, record) => (
+        <BasicTextInputBox
+          value={dataInvoiceNumberState[record.key]}
+          onChange={(value) => {
+            handleColumnsSetData(
+              value.target.value,
+              record.key,
+              dataInvoiceNumberState,
+              setDataInvoiceNumberState,
+            );
+          }}
+          disabled={
+            dataShipTypeState[record.key] !== 1 ||
+            dataShipCompanyState[record.key] === 0 ||
+            dataShipCompanyState[record.key] === undefined
+              ? 'disabled'
+              : ''
+          }
+        />
+      ),
+      align: 'center',
+    },
+    {
       title: '상품번호',
       dataIndex: 'product_id',
       align: 'center',
+      width: 100,
     },
     {
       title: '상품명',
@@ -81,6 +155,7 @@ const ModifyInvoiceModal = (property) => {
       title: '판매가',
       dataIndex: 'price',
       align: 'center',
+      width: 100,
     },
   ];
 
@@ -91,8 +166,8 @@ const ModifyInvoiceModal = (property) => {
   };
 
   const resetData = () => {
-    setShipTypeState('select');
-    setShipCompanyState('select');
+    setShipTypeState(0);
+    setShipCompanyState(0);
     setInvoiceNumberState('');
 
     setSelectedTableKeysState([]);
@@ -101,6 +176,10 @@ const ModifyInvoiceModal = (property) => {
 
   const handleDeliveryTypeSelect = (value) => {
     setShipTypeState(value);
+    if (value !== 1) {
+      setShipCompanyState(0);
+      setInvoiceNumberState('');
+    }
   };
 
   const handleDeliveryCompanySelect = (value) => {
@@ -133,19 +212,24 @@ const ModifyInvoiceModal = (property) => {
             value={shipCompanyState}
             onChange={handleDeliveryCompanySelect}
             list={deliveryCompanyList}
-            disabled={shipTypeState === 'delivery' ? '' : 'disabled'}
+            disabled={shipTypeState === 1 ? '' : 'disabled'}
           />
           <BasicTextInputBox
             value={invoiceNumberState}
             onChange={handleInvoiceNumberInput}
             ref={inputRef}
             disabled={
-              shipTypeState !== 'delivery' ||
-              shipCompanyState === 'select' ||
+              shipTypeState !== 1 ||
+              shipCompanyState === 0 ||
               shipCompanyState === undefined
                 ? 'disabled'
                 : ''
             }
+          />
+          <BasicButton
+            selectionType="checkbox"
+            onClick={handleApplyClick}
+            label="적용"
           />
         </SelectBoxLabelContainer>
         <BasicTable
@@ -164,14 +248,14 @@ const ModifyInvoiceModal = (property) => {
 export default ModifyInvoiceModal;
 
 const deliveryTypeList = [
-  { label: '선택', value: 'select' },
-  { label: '택배,등기,소포', value: 'delivery' },
-  { label: '퀵서비스', value: 'quick' },
-  { label: '방문수령', value: 'visit' },
-  { label: '직접전달', value: 'direct' },
+  { label: '선택', value: 0 },
+  { label: '택배,등기,소포', value: 1 },
+  { label: '퀵서비스', value: 2 },
+  { label: '방문수령', value: 3 },
+  { label: '직접전달', value: 4 },
 ];
 
 const deliveryCompanyList = [
-  { label: '선택', value: 'select' },
-  { label: 'CJ 대한통운', value: 'cj' },
+  { label: '선택', value: 0 },
+  { label: 'CJ 대한통운', value: 1 },
 ];

@@ -26,7 +26,17 @@ const BasicSelectBoxContainer = styled(BasicSelectBox)`
 `;
 
 const ReturnHoldModal = (property) => {
+  const [holdingReasonState, setHoldingReasonState] = useState(0);
+  const [returnResasonState, setReturnResasonState] = useState(0);
+
   const onChange = (pagination, filters, sorter, extra) => {};
+
+  const handleHoldingReasonChange = (value) => {
+    setHoldingReasonState(value);
+  };
+  const handleReturnResasonChange = (value) => {
+    setReturnResasonState(value);
+  };
 
   const okClick = () => {
     property.onOk();
@@ -74,6 +84,8 @@ const ReturnHoldModal = (property) => {
         <LabelBoxContainer>
           <div>보류사유 선택</div>
           <BasicSelectBoxContainer
+            value={returnResasonState}
+            onChange={handleReturnResasonChange}
             list={ReturnResasonSelect}
             width="60rem"
             left="6rem"
@@ -86,6 +98,8 @@ const ReturnHoldModal = (property) => {
         <LabelBoxContainer>
           <div>기타 반품비용 금액</div>
           <BasicSelectBoxContainer
+            value={holdingReasonState}
+            onChange={handleHoldingReasonChange}
             list={holdingReasonSelect}
             width="60rem"
             left="2.7rem"
@@ -102,15 +116,15 @@ const ReturnHoldModal = (property) => {
 export default ReturnHoldModal;
 
 const ReturnResasonSelect = [
-  { value: '0', label: '환불보류 사유' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+  { value: 0, label: '환불보류 사유' },
+  { value: 1, label: '뭐들어가지' },
+  { value: 2, label: '뭐들어가지2' },
+  { value: 3, label: '뭐들어가지3' },
 ];
 
 const holdingReasonSelect = [
-  { value: '0', label: '보류사유 선택' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+  { value: 0, label: '보류사유 선택' },
+  { value: 1, label: '뭐들어가지' },
+  { value: 2, label: '뭐들어가지2' },
+  { value: 3, label: '뭐들어가지3' },
 ];

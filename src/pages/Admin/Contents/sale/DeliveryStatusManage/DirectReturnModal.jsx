@@ -29,11 +29,11 @@ const SelectBoxLabelContainer = styled.div`
 const DirectReturnModal = (property) => {
   const limit = 3;
 
-  const [tradeReasonTypeState, setTradeReasonTypeState] = useState();
+  const [tradeReasonTypeState, setTradeReasonTypeState] = useState(0);
   const [tradeReasonInputState, setTradeReasonInputState] = useState();
   const tradeReasonInputRef = useRef();
-  const [tradecollectionTypeState, setTradecollectionTypeState] = useState();
-  const [tradePostTypeState, setTradePostTypeState] = useState();
+  const [tradecollectionTypeState, setTradecollectionTypeState] = useState(0);
+  const [tradePostTypeState, setTradePostTypeState] = useState(0);
   const [tradePostcodeInputState, setTradePostcodeInputState] = useState();
   const tradePostcodeInputRef = useRef();
 
@@ -53,6 +53,7 @@ const DirectReturnModal = (property) => {
 
   const handleTradecollectionType = (value) => {
     setTradecollectionTypeState(value);
+    setTradePostTypeState(0);
   };
 
   const handleTradePostType = (value) => {
@@ -95,9 +96,9 @@ const DirectReturnModal = (property) => {
   ];
 
   const resetData = () => {
-    setTradeReasonTypeState('선택');
-    setTradecollectionTypeState('선택');
-    setTradePostTypeState('선택');
+    setTradeReasonTypeState(0);
+    setTradecollectionTypeState(0);
+    setTradePostTypeState(0);
     setTradeReasonInputState('');
     setTradePostcodeInputState('');
 
@@ -151,11 +152,9 @@ const DirectReturnModal = (property) => {
           <div>교환 수거방법</div>
           <BasicSelectBoxStyled
             value={tradecollectionTypeState}
-            onChange={(value) => {
-              handleTradecollectionType(value);
-            }}
+            onChange={handleTradecollectionType}
             left="8rem"
-            list={companySelect}
+            list={collectSelect}
           />
         </SelectBoxLabelContainer>
 
@@ -165,7 +164,12 @@ const DirectReturnModal = (property) => {
             value={tradePostTypeState}
             onChange={handleTradePostType}
             left="9.4rem"
-            list={pickupWaySelect}
+            list={
+              tradecollectionTypeState === 1
+                ? autoPickupWaySelect
+                : pickupWaySelect
+            }
+            disabled={tradecollectionTypeState === 0 ? 'disabled' : ''}
           />
         </SelectBoxLabelContainer>
         <SelectBoxLabelContainer>
@@ -175,6 +179,7 @@ const DirectReturnModal = (property) => {
             onChange={handleTradePostcodeInput}
             ref={tradePostcodeInputRef}
             left="7rem"
+            disabled={tradecollectionTypeState !== 2 ? 'disabled' : ''}
           />
         </SelectBoxLabelContainer>
       </Modal>
@@ -184,22 +189,33 @@ const DirectReturnModal = (property) => {
 export default DirectReturnModal;
 
 const ReasonSelect = [
-  { value: '0', label: '선택' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+  { value: 0, label: '선택' },
+  { value: 1, label: '색상 및 사이즈 변경' },
+  { value: 3, label: '다른 상품 잘못 주문' },
+  { value: 4, label: '서비스 불만족' },
+  { value: 5, label: '배송지연' },
+  { value: 6, label: '상품품절' },
+  { value: 7, label: '배송누락' },
+  { value: 8, label: '상품파손' },
+  { value: 9, label: '상품정보 상이' },
+  { value: 10, label: '오배송' },
+  { value: 11, label: '색상 등 다른상품 잘못 배송' },
+  { value: 12, label: '기타' },
+];
+
+const collectSelect = [
+  { value: 0, label: '수거방법 선택' },
+  { value: 1, label: '자동수거요청' },
+  { value: 2, label: '수거요청안함' },
+];
+
+const autoPickupWaySelect = [
+  { value: 0, label: '택배사명 선택' },
+  { value: 1, label: '우체국택배' },
 ];
 
 const pickupWaySelect = [
-  { value: '0', label: '택배명' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
-];
-
-const companySelect = [
-  { value: '0', label: '택배방법' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+  { value: 0, label: '택배사명 선택' },
+  { value: 1, label: 'cj 대한' },
+  { value: 2, label: 'GS 편의점' },
 ];

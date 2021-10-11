@@ -45,31 +45,35 @@ const QueryItemModal = (property) => {
 
   const [targetKeysState, setTargetKeysState] = useState([]);
   const [selectedKeysState, setSelectedKeysState] = useState([]);
+  const [gridCount, setGridCount] = useState([]);
 
   const onChange = (nextTargetKeys, direction, moveKeys) => {
-    console.log('targetKeys:', targetKeysState);
-    console.log('direction:', direction);
-    console.log('moveKeys:', moveKeys);
     var _targetKeys = [...nextTargetKeys];
     setTargetKeysState(_targetKeys);
   };
 
   const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
-    console.log('sourceSelectedKeys:', sourceSelectedKeys);
-    console.log('targetSelectedKeys:', targetSelectedKeys);
     setSelectedKeysState([...sourceSelectedKeys, ...targetSelectedKeys]);
   };
 
-  const onScroll = (direction, e) => {
-    console.log('direction:', direction);
-    console.log('target:', e.target);
-  };
+  const onScroll = (direction, e) => {};
 
   const resetData = () => {
-    if (getTargetCookie() !== null) {
-      var key = getTargetCookie();
+    if (getTargetKeyCookie() !== null) {
+      var key = getTargetKeyCookie();
       setTargetKeysState([...key]);
     }
+
+    if (getGridCountCookie() !== null) {
+      var count = getGridCountCookie();
+      console.log(count);
+
+      setGridCount(count);
+    }
+  };
+
+  const handleGridCountChange = (value) => {
+    setGridCount(value);
   };
 
   function setTargetKeyCookie(keys) {
@@ -77,9 +81,18 @@ const QueryItemModal = (property) => {
     set(COOKIE_KEYS.CheckOutStandingPaymentTargetKeys, _keys);
   }
 
-  function getTargetCookie() {
+  function getTargetKeyCookie() {
     const key = get(COOKIE_KEYS.CheckOutStandingPaymentTargetKeys);
     return key || null;
+  }
+
+  function setGridCountCookie(value) {
+    COOKIE_KEYS.CheckOutStandingPaymentGridCount = value;
+  }
+
+  function getGridCountCookie() {
+    const key = COOKIE_KEYS.CheckOutStandingPaymentGridCount;
+    return key;
   }
 
   return (
@@ -116,6 +129,7 @@ const QueryItemModal = (property) => {
             key="setting"
             onClick={() => {
               setTargetKeyCookie(targetKeysState);
+              setGridCountCookie(gridCount);
               property.setVisible(false);
             }}
           >
@@ -127,8 +141,8 @@ const QueryItemModal = (property) => {
           <CategoryModalContent>
             <ContentTitle>그리드 틀고정</ContentTitle>
             <BasicSelectBox
-              value={property.gridCount === 0 ? '설정안함' : property.gridCount}
-              onChange={property.setGridCount}
+              value={gridCount}
+              onChange={handleGridCountChange}
               list={list}
             />
           </CategoryModalContent>
@@ -157,11 +171,11 @@ const QueryItemModal = (property) => {
 export default QueryItemModal;
 
 const list = [
-  { value: '0', label: '설정안함' },
-  { value: '1', label: '1' },
-  { value: '2', label: '2' },
-  { value: '3', label: '3' },
-  { value: '4', label: '4' },
+  { value: 0, label: '설정안함' },
+  { value: 1, label: '1' },
+  { value: 2, label: '2' },
+  { value: 3, label: '3' },
+  { value: 4, label: '4' },
 ];
 
 const itemNames = [
@@ -178,29 +192,3 @@ const itemNames = [
   { id: '옵션가격', description: '설명' },
   { id: '총 주문금액', description: '설명' },
 ];
-
-// const itemNames = [
-//   { id: '상품주문번호(필수)', description: '설명' },
-//   { id: '주문번호(필수)', description: '설명' },
-//   { id: '주문일시', description: '설명' },
-//   { id: '구매자명', description: '설명' },
-//   { id: '구매자ID', description: '설명' },
-//   { id: '판매채널', description: '설명' },
-//   { id: '수취인명', description: '설명' },
-//   { id: '결제/입금기한', description: '설명' },
-//   { id: '상품번호', description: '설명' },
-//   { id: '상품평', description: '설명' },
-//   { id: '상품종류', description: '설명' },
-//   { id: '옵션정보', description: '설명' },
-//   { id: '수량', description: '설명' },
-//   { id: '상품가격', description: '설명' },
-//   { id: '옵션가격', description: '설명' },
-//   { id: '상품별 할인액', description: '설명' },
-//   { id: '상품별 총 주문금액', description: '설명' },
-//   { id: '배송비 형태', description: '설명' },
-//   { id: '배송비 묶음번호', description: '설명' },
-//   { id: '배송비 유형', description: '설명' },
-//   { id: '배송비 합계', description: '설명' },
-//   { id: '배송비 할인액', description: '설명' },
-//   { id: '결제수단', description: '설명' },
-// ];

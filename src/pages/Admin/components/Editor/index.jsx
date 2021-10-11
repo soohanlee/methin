@@ -1,13 +1,19 @@
-import React, { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 
 const Editor = (props, ref) => {
-  const [isInitialized, setIsInitialized] = useState(false)
-  const editorDivRef = useRef(null)
-  const editorRef = useRef(null)
+  const [isInitialized, setIsInitialized] = useState(false);
+  const editorDivRef = useRef(null);
+  const editorRef = useRef(null);
 
   useEffect(() => {
     if (!isInitialized && window.ClassicEditor && editorDivRef.current) {
-      setIsInitialized(true)
+      setIsInitialized(true);
 
       window.ClassicEditor.create(editorDivRef.current, {
         toolbar: {
@@ -27,8 +33,8 @@ const Editor = (props, ref) => {
             'mediaEmbed',
             '|',
             'undo',
-            'redo'
-          ]
+            'redo',
+          ],
         },
         language: 'ko',
         image: {
@@ -37,15 +43,19 @@ const Editor = (props, ref) => {
             'imageStyle:inline',
             'imageStyle:block',
             'imageStyle:side',
-            'linkImage'
-          ]
+            'linkImage',
+          ],
         },
-        licenseKey: ''
+        fontFamily: {
+          options: ['default', 'Arial', '궁서체', '바탕', '돋움'],
+          supportAllValues: true,
+        },
+        licenseKey: '',
       })
-        .then(editor => {
-          editorRef.current = editor
+        .then((editor) => {
+          editorRef.current = editor;
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     }
@@ -54,27 +64,24 @@ const Editor = (props, ref) => {
         // 이 시점에 DIV ref 날라가서 호출하면 에러남. 나중에 재확인 필요
         // editorRef.current.destroy()
       }
-    }
-  }, [isInitialized, editorDivRef, window.ClassicEditor])
+    };
+  }, [isInitialized, editorDivRef, window.ClassicEditor]);
 
   useImperativeHandle(ref, () => ({
     getData() {
       if (editorRef.current instanceof window.ClassicEditor) {
-        return editorRef.current.getData()
-      }
-      else return null
+        return editorRef.current.getData();
+      } else return null;
     },
 
     setData(data) {
       if (editorRef.current instanceof window.ClassicEditor) {
-        editorRef.current.setData(data)
+        editorRef.current.setData(data);
       }
-    }
-  }))
+    },
+  }));
 
-  return (
-    <div ref={editorDivRef} />
-  )
+  return <div ref={editorDivRef} />;
 };
 
 export default forwardRef(Editor);

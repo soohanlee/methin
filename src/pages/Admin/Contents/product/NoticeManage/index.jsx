@@ -35,12 +35,27 @@ const NoticeManage = () => {
       const count = result.data.data.list.length;
 
       const newResult = list.map((item, index) => {
-        let { preview_status, created_at } = item;
+        let { preview_status, created_at, category } = item;
+        switch (category) {
+          case 0:
+            category = '일반';
+            break;
+          case 1:
+            category = '이벤트';
+            break;
+          case 2:
+            category = '배송지연';
+            break;
+          case 3:
+            category = '상품';
+            break;
+        }
         return {
           ...item,
           preview_status: preview_status === 0 ? '미리보기' : '노출',
           created_at: moment(created_at).format(DateFormat.Default),
           key: index,
+          category: category,
         };
       });
 

@@ -61,6 +61,8 @@ export const COOKIE_KEYS = {
   UserAccessToken: '__user_access_token__',
   cart: 'CART',
   CheckOutStandingPaymentTargetKeys: '1',
+  CheckOutStandingPaymentGridCount: 0,
+  test: '0',
 };
 
 export const DateFormat = {

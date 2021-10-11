@@ -5,6 +5,8 @@ import Table from './Table';
 import BoardHeader from 'pages/Admin/components/BoardHeader';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
 import { notification } from 'utils/notification';
+import moment from 'moment';
+import { DateFormat } from 'configs/config';
 import { getPaidWithPaymentConfirmedList } from 'apis/payment';
 
 const Icon = css`
@@ -43,35 +45,46 @@ const OrderManage = () => {
       const count = result.data.data.list.length;
 
       let newResult = list.map((item, index) => {
-        let { status, ship_pay_type, ship_ship_category } = item;
+        let {
+          status,
+          ship_pay_type,
+          ship_category,
+          paid_at,
+          order_confirmed_at,
+          created_at,
+        } = item;
         switch (status) {
           case 0:
-            status = '결제대기';
+            status = '신규주문지연';
             break;
           case 1:
-            status = '결제완료';
+            status = '배송준비지연';
             break;
           case 2:
-            status = '상품준비';
+            status = '발송전 취소요청';
             break;
           case 3:
-            status = '배송중';
+            status = '발송전 배송지변경';
             break;
           case 4:
-            status = '배송완료';
+            status = '신규주문';
             break;
           case 5:
-            status = '취소완료';
+            status = '발주확인완료';
             break;
-          case 6:
-            status = '반품완료';
+          default:
             break;
         }
         return {
           ...item,
-
+          ship_category: ship_category === 0 ? '무료' : '유료',
           ship_pay_type: ship_pay_type === 0 ? '선불' : '착불',
-          ship_ship_category: ship_ship_category === 0 ? '무료' : '유료',
+          status: status,
+          paid_at: moment(paid_at).format(DateFormat.Default),
+          order_confirmed_at: moment(order_confirmed_at).format(
+            DateFormat.Default,
+          ),
+          created_at: moment(created_at).format(DateFormat.Default),
           key: index,
         };
       });

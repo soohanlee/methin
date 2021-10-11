@@ -9,7 +9,7 @@ import { notification } from 'utils/notification';
 import moment from 'moment';
 import { DateFormat, COOKIE_KEYS } from 'configs/config';
 import { CSVLink } from 'react-csv';
-import { get } from 'js-cookie';
+import { get, set } from 'js-cookie';
 // 미결제 확인
 
 const Container = styled.div`
@@ -44,6 +44,10 @@ const CheckOutStandingPayment = () => {
   const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
   const [selectColumnState, setSelectColumnState] = useState([]);
   const [columnFixedCountState, setColumnFixedCountState] = useState(0);
+
+  useEffect(() => {
+    setColumnFixedCountState(getGridCountCookie());
+  }, []);
 
   useEffect(() => {
     getPaymentUnpaidListData(productOffset);
@@ -94,6 +98,16 @@ const CheckOutStandingPayment = () => {
     setSelectColumnState(get(COOKIE_KEYS.CheckOutStandingPaymentTargetKeys));
   };
 
+  function getGridCountCookie() {
+    const key = get(COOKIE_KEYS.CheckOutStandingPaymentGridCount);
+    return key || null;
+  }
+
+  const handleQueryItemVisibleClick = () => {
+    setQueryItemVisibleState(true);
+    setColumnFixedCountState(getGridCountCookie());
+  };
+
   return (
     <Container>
       <QueryItemModal
@@ -105,22 +119,12 @@ const CheckOutStandingPayment = () => {
           setQueryItemVisibleState(false);
         }}
         title="조회항목 설정(미결제확인)"
-        setGridCount={(value) => {
-          setColumnFixedCountState(value);
-        }}
-        gridCount={columnFixedCountState}
         selectColumn={selectColumn}
       />
       <TitleContainer>
         <Title>목록 (총 {tableCountState}개)</Title>
         <ButtonContainer>
-          <Button
-            onClick={() => {
-              setQueryItemVisibleState(true);
-            }}
-          >
-            조회항목 설정
-          </Button>
+          <Button onClick={handleQueryItemVisibleClick}>조회항목 설정</Button>
           <CSVLink
             data={tableDataState}
             headers={columns}
@@ -135,7 +139,6 @@ const CheckOutStandingPayment = () => {
         scroll={{ x: 'max-content', y: '35vw' }}
         data={tableDataState}
         columns={columns}
-        selectionType="checkbox"
         onChange={handleChange}
         onTableChange={handleTableChange}
         loading={loading}
@@ -143,6 +146,22 @@ const CheckOutStandingPayment = () => {
         pageSize={limit}
         fixedCount={columnFixedCountState}
       />
+
+      <Button
+        onClick={() => {
+          set(COOKIE_KEYS.test, '1');
+        }}
+      >
+        Save
+      </Button>
+      <Button
+        onClick={() => {
+          const getCount = get(COOKIE_KEYS.test);
+          console.log(getCount);
+        }}
+      >
+        Load
+      </Button>
     </Container>
   );
 };

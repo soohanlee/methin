@@ -35,9 +35,7 @@ const Category = () => {
   const categoryTextArray = ['배송비 묶음그룹 관리'];
 
   const renderSetCaterogy = () => {
-    const handleCategoryBtn = (e) => {
-      alert(e.target.innerText);
-    };
+    const handleCategoryBtn = (e) => {};
 
     const result = [];
     for (let i = 0; i < 5; i++) {

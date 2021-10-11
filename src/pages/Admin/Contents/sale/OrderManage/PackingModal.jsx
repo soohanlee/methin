@@ -59,8 +59,11 @@ const PackingModal = (property) => {
     selectedTableRowsState.map((item, index) => {
       let { key } = item;
       shipType[item.key] = shipTypeState;
-      shipCompany[item.key] = shipCompanyState;
-      invoiceNumber[item.key] = invoiceNumberState;
+
+      shipCompany[item.key] = shipTypeState !== 1 ? 0 : shipCompanyState;
+
+      invoiceNumber[item.key] =
+        shipCompany[item.key] === 0 ? '' : invoiceNumberState;
     });
 
     setDataShipTypeState(shipType);
@@ -116,7 +119,7 @@ const PackingModal = (property) => {
               setDataShipCompanyState,
             );
           }}
-          disabled={dataShipTypeState[record.key] !== 'delivery'}
+          disabled={dataShipTypeState[record.key] !== 1}
           list={property.deliveryCompanyList}
         />
       ),
@@ -139,8 +142,8 @@ const PackingModal = (property) => {
             );
           }}
           disabled={
-            dataShipTypeState[record.key] !== 'delivery' ||
-            dataShipCompanyState[record.key] === 'select' ||
+            dataShipTypeState[record.key] !== 1 ||
+            dataShipCompanyState[record.key] === 0 ||
             dataShipCompanyState[record.key] === undefined
               ? 'disabled'
               : ''
@@ -157,16 +160,16 @@ const PackingModal = (property) => {
   };
 
   const resetData = () => {
-    setShipTypeState('select');
-    setShipCompanyState('select');
+    setShipTypeState(0);
+    setShipCompanyState(0);
     setInvoiceNumberState('');
 
     var dataTypes = dataShipTypeState.map((element) => {
-      return (element = 'select');
+      return (element = 0);
     });
 
     var dataCompanys = dataShipCompanyState.map((element) => {
-      return (element = 'select');
+      return (element = 0);
     });
 
     var invoices = dataInvoiceNumberState.map((element) => {
@@ -181,15 +184,19 @@ const PackingModal = (property) => {
     setSelectedTableRowsState([]);
   };
 
-  const handleDeliveryTypeSelect = (value) => {
+  const handleShipTypeSelectOnChange = (value) => {
     setShipTypeState(value);
+    if (value !== 1) {
+      setShipCompanyState(0);
+      setInvoiceNumberState('');
+    }
   };
 
-  const handleDeliveryCompanySelect = (value) => {
+  const handleShipCompanySelectOnChange = (value) => {
     setShipCompanyState(value);
   };
 
-  const handleInvoiceNumberInput = (value) => {
+  const handleInvoiceNumChange = (value) => {
     setInvoiceNumberState(value.target.value);
   };
 
@@ -209,21 +216,21 @@ const PackingModal = (property) => {
           <BasicSelectBox
             list={property.deliveryTypeList}
             value={shipTypeState}
-            onChange={handleDeliveryTypeSelect}
+            onChange={handleShipTypeSelectOnChange}
           />
           <BasicSelectBox
             list={property.deliveryCompanyList}
             value={shipCompanyState}
-            onChange={handleDeliveryCompanySelect}
-            disabled={shipTypeState === 'delivery' ? '' : 'disabled'}
+            onChange={handleShipCompanySelectOnChange}
+            disabled={shipTypeState === 1 ? '' : 'disabled'}
           />
           <BasicTextInputBoxStyled
             value={invoiceNumberState}
-            onChange={handleInvoiceNumberInput}
+            onChange={handleInvoiceNumChange}
             ref={inputRef}
             disabled={
-              shipTypeState !== 'delivery' ||
-              shipCompanyState === 'select' ||
+              shipTypeState !== 1 ||
+              shipCompanyState === 0 ||
               shipCompanyState === undefined
                 ? 'disabled'
                 : ''
@@ -232,7 +239,7 @@ const PackingModal = (property) => {
           <BasicButton
             selectionType="checkbox"
             onClick={handleApplyClick}
-            label="선택건적용"
+            label="적용"
           />
         </SelectBoxContainer>
         <BasicTable

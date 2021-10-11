@@ -30,8 +30,8 @@ const ReturnRefusalModal = (property) => {
   const [productShipDateState, setProductShipDateState] = useState();
   const productShipDateInputRef = useRef();
 
-  const [shipTypeState, setShipTypeState] = useState('select'); //배송방법
-  const [shipCompanyState, setShipCompanyState] = useState('select'); //택배사
+  const [shipTypeState, setShipTypeState] = useState(0); //배송방법
+  const [shipCompanyState, setShipCompanyState] = useState(0); //택배사
   const [invoiceNumberState, setInvoiceNumberState] = useState([]); //송장번호
 
   const productShipInfoInputRef = useRef();
@@ -62,8 +62,8 @@ const ReturnRefusalModal = (property) => {
 
   const resetData = () => {
     setProductShipDateState(moment());
-    setShipTypeState('select');
-    setShipCompanyState('select');
+    setShipTypeState(0);
+    setShipCompanyState(0);
     setInvoiceNumberState('');
   };
 
@@ -106,15 +106,15 @@ const ReturnRefusalModal = (property) => {
             onChange={handleShipCompanySelectOnChange}
             left="8rem"
             list={deliveryCompanyList}
-            disabled={shipTypeState === 'delivery' ? '' : 'disabled'}
+            disabled={shipTypeState === 1 ? '' : 'disabled'}
           />
           <BasicTextInputBoxStyled
             value={invoiceNumberState}
             onChange={handleInvoiceNumChange}
             ref={productShipInfoInputRef}
             disabled={
-              shipTypeState !== 'delivery' ||
-              shipCompanyState === 'select' ||
+              shipTypeState !== 1 ||
+              shipCompanyState === 0 ||
               shipCompanyState === undefined
                 ? 'disabled'
                 : ''
@@ -128,14 +128,14 @@ const ReturnRefusalModal = (property) => {
 export default ReturnRefusalModal;
 
 const deliveryTypeList = [
-  { label: '선택', value: 'select' },
-  { label: '택배,등기,소포', value: 'delivery' },
-  { label: '퀵서비스', value: 'quick' },
-  { label: '방문수령', value: 'visit' },
-  { label: '직접전달', value: 'direct' },
+  { label: '선택', value: 0 },
+  { label: '택배,등기,소포', value: 1 },
+  { label: '퀵서비스', value: 2 },
+  { label: '방문수령', value: 3 },
+  { label: '직접전달', value: 4 },
 ];
 
 const deliveryCompanyList = [
-  { label: '선택', value: 'select' },
-  { label: 'CJ 대한통운', value: 'cj' },
+  { label: '선택', value: 0 },
+  { label: 'CJ 대한통운', value: 1 },
 ];
