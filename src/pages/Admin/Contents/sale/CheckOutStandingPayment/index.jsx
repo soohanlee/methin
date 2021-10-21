@@ -34,6 +34,10 @@ const Title = styled.div`
   font-size: 2rem;
 `;
 
+const BasicTableStyled = styled(BasicTable)`
+  width: 98%;
+`;
+
 const CheckOutStandingPayment = () => {
   const limit = 16;
   const [QueryItemVisibleState, setQueryItemVisibleState] = useState(false);
@@ -100,7 +104,7 @@ const CheckOutStandingPayment = () => {
 
   function getGridCountCookie() {
     const key = get(COOKIE_KEYS.CheckOutStandingPaymentGridCount);
-    return key || null;
+    return key || 0;
   }
 
   const handleQueryItemVisibleClick = () => {
@@ -126,7 +130,7 @@ const CheckOutStandingPayment = () => {
         <ButtonContainer>
           <Button onClick={handleQueryItemVisibleClick}>조회항목 설정</Button>
           <CSVLink
-            data={tableDataState}
+            data={[]}
             headers={columns}
             filename={'미결제 상품 목록.csv'}
           >
@@ -135,7 +139,7 @@ const CheckOutStandingPayment = () => {
         </ButtonContainer>
       </TitleContainer>
 
-      <BasicTable
+      <BasicTableStyled
         scroll={{ x: 'max-content', y: '35vw' }}
         data={tableDataState}
         columns={columns}
@@ -146,22 +150,6 @@ const CheckOutStandingPayment = () => {
         pageSize={limit}
         fixedCount={columnFixedCountState}
       />
-
-      <Button
-        onClick={() => {
-          set(COOKIE_KEYS.test, '1');
-        }}
-      >
-        Save
-      </Button>
-      <Button
-        onClick={() => {
-          const getCount = get(COOKIE_KEYS.test);
-          console.log(getCount);
-        }}
-      >
-        Load
-      </Button>
     </Container>
   );
 };
@@ -237,7 +225,7 @@ const columns = [
   },
   {
     label: '수량',
-    key: 'count',
+    key: 'total_product_count',
     title: '수량',
     dataIndex: 'count',
     align: 'center',
@@ -245,23 +233,31 @@ const columns = [
   },
   {
     label: '상품가격',
-    key: 'price',
+    key: 'final_paid_amount',
     title: '상품가격',
     dataIndex: 'price',
     align: 'center',
-    width: 150,
+    width: 130,
   },
   {
-    label: '옵션가격',
-    key: 'option_add_price',
+    label: '배송비',
+    key: 'ship_amount',
     title: '옵션가격',
     dataIndex: 'option_add_price',
     align: 'center',
-    width: 150,
+    width: 130,
+  },
+  {
+    label: '제주/산간 추가배송비',
+    key: 'ship_add_amount',
+    title: '옵션가격',
+    dataIndex: 'option_add_price',
+    align: 'center',
+    width: 200,
   },
   {
     label: '총 주문금액',
-    key: 'total_price',
+    key: 'final_paid_amount',
     title: '총 주문금액',
     dataIndex: 'total_price',
     align: 'center',

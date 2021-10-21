@@ -51,7 +51,25 @@ const OrderConfirm = () => {
           paid_at,
           order_confirmed_at,
           created_at,
+          ship_type,
         } = item;
+        switch (ship_type) {
+          case 0:
+            ship_type = '택배,등기,소포';
+            break;
+          case 1:
+            ship_type = '퀵서비스';
+            break;
+          case 2:
+            ship_type = '방문수령';
+            break;
+          case 3:
+            ship_type = '직접전달';
+            break;
+          default:
+            ship_type = '택배,등기,소포';
+            break;
+        }
         switch (status) {
           case 0:
             status = '신규주문지연';
@@ -76,6 +94,7 @@ const OrderConfirm = () => {
         }
         return {
           ...item,
+          ship_type: ship_type,
           ship_category: ship_category === 0 ? '무료' : '유료',
           ship_pay_type: ship_pay_type === 0 ? '선불' : '착불',
           status: status,

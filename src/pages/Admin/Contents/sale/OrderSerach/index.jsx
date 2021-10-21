@@ -297,7 +297,7 @@ const columns = [
   },
   {
     title: '수량',
-    dataIndex: 'count',
+    dataIndex: 'total_product_count',
     align: 'center',
     width: 100,
   },

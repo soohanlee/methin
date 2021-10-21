@@ -32,7 +32,6 @@ const ModifyInvoiceModal = (property) => {
   let limit = 3;
 
   useEffect(() => {
-    setTableDataState(property.selectedTableRowsState);
     resetData();
   }, [property.visible === true]);
 
@@ -74,7 +73,7 @@ const ModifyInvoiceModal = (property) => {
   const columns = [
     {
       title: '배송방법',
-      dataIndex: 'shipType',
+      dataIndex: 'ship_type',
       render: (_, record) => (
         <BasicSelectBox
           value={dataShipTypeState[record.key]}
@@ -95,7 +94,7 @@ const ModifyInvoiceModal = (property) => {
 
     {
       title: '배송사',
-      dataIndex: 'shipCompany',
+      dataIndex: 'ship_company_name',
       render: (_, record) => (
         <BasicSelectBox
           value={dataShipCompanyState[record.key]}
@@ -117,7 +116,7 @@ const ModifyInvoiceModal = (property) => {
 
     {
       title: '송장번호',
-      dataIndex: 'invoiceNumber',
+      dataIndex: 'ship_zip_code',
       render: (_, record) => (
         <BasicTextInputBox
           value={dataInvoiceNumberState[record.key]}
@@ -166,6 +165,26 @@ const ModifyInvoiceModal = (property) => {
   };
 
   const resetData = () => {
+    let datas = [...property.selectedTableRowsState];
+    let resultTpyeDatas = datas.map((item) => {
+      switch (item.ship_type) {
+        case '택배':
+          return 1;
+      }
+    });
+    let resultCompanyDatas = datas.map((item) => {
+      return item.ship_company_name;
+    });
+    let resultCodeDatas = datas.map((item) => {
+      return item.ship_zip_code;
+    });
+
+    setDataShipTypeState(resultTpyeDatas);
+    setDataShipCompanyState(resultCompanyDatas);
+    setDataInvoiceNumberState(resultCodeDatas);
+
+    setTableDataState(datas);
+
     setShipTypeState(0);
     setShipCompanyState(0);
     setInvoiceNumberState('');

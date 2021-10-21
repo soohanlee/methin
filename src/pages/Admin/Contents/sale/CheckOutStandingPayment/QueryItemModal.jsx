@@ -59,16 +59,22 @@ const QueryItemModal = (property) => {
   const onScroll = (direction, e) => {};
 
   const resetData = () => {
-    if (getTargetKeyCookie() !== null) {
-      var key = getTargetKeyCookie();
-      setTargetKeysState([...key]);
-    }
+    try {
+      if (getTargetKeyCookie() !== null) {
+        var key = getTargetKeyCookie();
+        setTargetKeysState([...key]);
+      }
 
-    if (getGridCountCookie() !== null) {
-      var count = getGridCountCookie();
-      console.log(count);
+      if (getGridCountCookie() !== null) {
+        var count = getGridCountCookie();
+        console.log(count);
 
-      setGridCount(count);
+        setGridCount(count);
+      }
+    } catch (e) {
+      console.log(e);
+      setTargetKeysState([]);
+      setGridCount(0);
     }
   };
 
@@ -87,12 +93,12 @@ const QueryItemModal = (property) => {
   }
 
   function setGridCountCookie(value) {
-    COOKIE_KEYS.CheckOutStandingPaymentGridCount = value;
+    set(COOKIE_KEYS.CheckOutStandingPaymentGridCount, value);
   }
 
   function getGridCountCookie() {
-    const key = COOKIE_KEYS.CheckOutStandingPaymentGridCount;
-    return key;
+    const key = get(COOKIE_KEYS.CheckOutStandingPaymentGridCount);
+    return key || 0;
   }
 
   return (

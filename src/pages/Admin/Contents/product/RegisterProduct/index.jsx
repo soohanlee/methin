@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Button } from 'antd';
 import styled from 'styled-components';
+import { COOKIE_KEYS } from 'configs/config';
 
 import {
   AS,

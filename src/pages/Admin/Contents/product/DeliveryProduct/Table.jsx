@@ -40,7 +40,9 @@ const TitleText = styled.div`
   font-size: 15px;
 `;
 
-const TableStyled = styled(BasicTable)``;
+const TableStyled = styled(BasicTable)`
+  width: 98%;
+`;
 
 const BasicSelectBoxStyled = styled(BasicSelectBox)`
   width: ${(props) => props.width};

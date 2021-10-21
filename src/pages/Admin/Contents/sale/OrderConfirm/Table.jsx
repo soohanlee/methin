@@ -75,8 +75,36 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
   const [tableDataState, setTableDataState] = useState();
 
   useEffect(() => {
-    setTableDataState(tableData);
+    resetData();
   }, [tableData]);
+
+  const resetData = () => {
+    let datas = [...tableData];
+    let resultTpyeDatas = datas.map((item) => {
+      switch (item.ship_type) {
+        case '택배,등기,소포':
+          return 1;
+        case '퀵서비스':
+          return 2;
+        case '방문수령':
+          return 3;
+        case '직접전달':
+          return 4;
+      }
+    });
+    let resultCompanyDatas = datas.map((item) => {
+      return item.ship_company_name;
+    });
+    let resultCodeDatas = datas.map((item) => {
+      return item.ship_zip_code;
+    });
+
+    setDataShipTypeState(resultTpyeDatas);
+    setDataShipCompanyState(resultCompanyDatas);
+    setDataInvoiceNumberState(resultCodeDatas);
+
+    setTableDataState(datas);
+  };
 
   const handleColumnsSetData = (value, index, state, setState) => {
     let _array = [...state];
@@ -98,7 +126,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '배송방법',
-      dataIndex: 'shiptype',
+      dataIndex: 'ship_type',
       render: (_, record) => (
         <BasicSelectBox
           value={dataShipTypeState[record.key]}
@@ -118,7 +146,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '택배사',
-      dataIndex: 'shipcompany',
+      dataIndex: 'ship_company_name',
       render: (_, record) => (
         <BasicSelectBox
           value={dataShipCompanyState[record.key]}
@@ -139,7 +167,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '송장번호',
-      dataIndex: 'invoiceNumber',
+      dataIndex: 'ship_zip_code',
       render: (_, record) => (
         <BasicTextInputBox
           value={dataInvoiceNumberState[record.key]}
@@ -212,13 +240,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '수량',
-      dataIndex: 'count',
-      align: 'center',
-      width: 100,
-    },
-    {
-      title: '옵션가격',
-      dataIndex: 'option_add_price',
+      dataIndex: 'total_product_count',
       align: 'center',
       width: 100,
     },
@@ -230,7 +252,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '총 주문금액',
-      dataIndex: 'total_price',
+      dataIndex: 'final_paid_amount',
       align: 'center',
       width: 130,
     },
@@ -284,7 +306,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '우편번호',
-      dataIndex: 'released_zip_code',
+      dataIndex: 'ship_zip_code',
       align: 'center',
       width: 200,
     },
@@ -296,7 +318,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '출고지',
-      dataIndex: 'released_address_main',
+      dataIndex: 'released_zip_code',
       align: 'center',
       width: 200,
     },
