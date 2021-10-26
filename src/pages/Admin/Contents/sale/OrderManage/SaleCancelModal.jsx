@@ -31,7 +31,7 @@ const SaleCancelModal = (property) => {
   };
 
   const resetData = () => {
-    setTypeState('선택');
+    setTypeState(0);
     setInputState('');
   };
 
@@ -74,11 +74,11 @@ const SaleCancelModal = (property) => {
 export default SaleCancelModal;
 
 const SortViewList = [
-  { label: '상품품절', value: 'soldOut' },
-  { label: '배송지연', value: 'lateDelivery' },
-  { label: '서비스 불만족', value: 'unsatisfactory' },
-  { label: '구매의사취소', value: 'intentionCancel' },
-  { label: '색상 및 사이즈 변경', value: 'color&Size' },
-  { label: '다른 상품 잘못 주문', value: 'mistake' },
-  { label: '상품정보 상이', value: 'infoDifferent' },
+  { label: '상품품절', value: 0 },
+  { label: '배송지연', value: 1 },
+  { label: '서비스 불만족', value: 2 },
+  { label: '구매의사취소', value: 3 },
+  { label: '색상 및 사이즈 변경', value: 4 },
+  { label: '다른 상품 잘못 주문', value: 5 },
+  { label: '상품정보 상이', value: 6 },
 ];

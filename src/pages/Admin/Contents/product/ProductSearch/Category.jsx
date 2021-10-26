@@ -9,6 +9,8 @@ import WarningTwoTone from '@ant-design/icons/WarningTwoTone';
 import CloseCircleTwoTone from '@ant-design/icons/CloseCircleTwoTone';
 import CheckCircleTwoTone from '@ant-design/icons/CheckCircleTwoTone';
 
+///사용안하는 jsx
+
 const CategorysSyled = styled.div`
   width: 100%;
   height: 12rem;
@@ -60,20 +62,12 @@ const Category = ({ tableList, categoryCountArray }) => {
   ];
 
   //숫자데이터를 문자로변경
-
-  const handleCategoryType = (value) => {
-    alert(value);
-  };
-
   const renderSetCaterogy = () => {
     const result = [];
     for (let i = 0; i < 6; i++) {
       result.push(
         <>
-          <CategoryTypeSyled
-            key={i}
-            onClick={() => handleCategoryType(categoryTextArray[i])}
-          >
+          <CategoryTypeSyled key={i}>
             {categoryTypeArray[i]}
             <div>
               <div>{categoryTextArray[i]}</div>

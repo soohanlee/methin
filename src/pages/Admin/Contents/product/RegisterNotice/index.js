@@ -27,7 +27,7 @@ const RegisterNotice = () => {
   const [titleState, setTitleState] = useState('');
   const [categoryState, setCategoryState] = useState(0);
   const [preview_statusState, setPreview_statusState] = useState(0);
-  const editorRef = useRef(null)
+  const editorRef = useRef(null);
 
   // const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [uploadedImagesState, setUploadedImagesState] = useState([]);
@@ -67,24 +67,16 @@ const RegisterNotice = () => {
         console.log(customData);
 
         if (editorRef.current) {
-          editorRef.current.setData(customData.body)
+          editorRef.current.setData(customData.body);
         }
-        // setEditorState(
-        //   EditorState.createWithContent(
-        //     ContentState.createFromBlockArray(convertFromHTML(customData.body)),
-        //   ),
-        // );
       }
     } catch (e) {}
   };
 
   const handleTypeChange = (value) => {
+    setCategoryState(value);
     console.log(value);
   };
-
-  // const handleEditorStateChange = (editorState) => {
-  //   setEditorState(editorState);
-  // };
 
   const handlestartDisplayDateSelect = (value) => {
     setStartDisplayDateState(value);
@@ -104,28 +96,11 @@ const RegisterNotice = () => {
     setEndDisplayDateState(value);
   };
 
-  // const uploadImageCallBack = (file) => {
-  //   let newUploadedImages = uploadedImagesState;
-
-  //   const imageObject = {
-  //     file: file,
-  //     localSrc: URL.createObjectURL(file),
-  //   };
-
-  //   newUploadedImages.concat(imageObject);
-
-  //   setUploadedImagesState(newUploadedImages);
-
-  //   return new Promise((resolve, reject) => {
-  //     resolve({ data: { link: imageObject.localSrc } });
-  //   });
-  // };
-
   const handleRegistNoticeBtn = () => {
     const data = {
       title: titleState,
       category: categoryState,
-      body: editorRef.current ? editorRef.current.getData() : null,// editorState.getCurrentContent().getPlainText(),
+      body: editorRef.current ? editorRef.current.getData() : null, // editorState.getCurrentContent().getPlainText(),
       preview_status: preview_statusState,
     };
     if (history.location.id) {
@@ -169,7 +144,11 @@ const RegisterNotice = () => {
   return (
     <ContainerStyled>
       <LabelContents title="분류">
-        <BasicSelectBox list={searchNameList} onChange={handleTypeChange} />
+        <BasicSelectBox
+          list={searchNameList}
+          value={categoryState}
+          onChange={handleTypeChange}
+        />
       </LabelContents>
       <LabelContents title="제목">
         <Input
@@ -208,8 +187,8 @@ const RegisterNotice = () => {
 export default RegisterNotice;
 
 const searchNameList = [
-  { label: '일반', value: 'normal' },
-  { label: '이벤트', value: 'event' },
-  { label: '배송지연', value: 'late' },
-  { label: '상품', value: 'product' },
+  { label: '일반', value: 0 },
+  { label: '이벤트', value: 1 },
+  { label: '배송지연', value: 2 },
+  { label: '상품', value: 3 },
 ];

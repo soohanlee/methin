@@ -62,13 +62,27 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
         break;
       case 'modifyInvoice':
         if (selectedTableRowsState.length > 0) {
-          setModifyInvoiceVisibleState(true);
+          let isShipping = true;
+          selectedTableRowsState.forEach((item) => {
+            if (item.status !== '배송중') {
+              isShipping = false;
+            }
+          });
+
+          if (isShipping === true) {
+            setModifyInvoiceVisibleState(true);
+          } else {
+            alert(
+              "송장수정은 주문상태가 '배송중'인 경우에만 가능합니다.\n 선택하신 주문 건은 '배송중' 상태가 아니므로 송장수정이 불가능 합니다.",
+            );
+          }
           return;
         }
         break;
       default:
         break;
     }
+
     alert('데이터를 선택해주세요');
   };
 
@@ -213,7 +227,7 @@ const columns = [
     title: '배송방법',
     dataIndex: 'ship_type',
     align: 'center',
-    width: 130,
+    width: 150,
   },
   {
     label: '택배사',
@@ -285,12 +299,13 @@ const columns = [
     title: '옵션정보',
     dataIndex: 'option_name',
     align: 'center',
+    width: 130,
   },
   {
     label: '수량',
-    key: 'count',
+    key: 'total_product_count',
     title: '수량',
-    dataIndex: 'count',
+    dataIndex: 'total_product_count',
     align: 'center',
     width: 130,
   },
@@ -303,18 +318,10 @@ const columns = [
     width: 130,
   },
   {
-    label: '옵션가격',
-    key: 'option_add_price',
-    title: '옵션가격',
-    dataIndex: 'option_add_price',
-    align: 'center',
-    width: 130,
-  },
-  {
     label: '총 주문금액',
-    key: 'total_price',
+    key: 'final_paid_amount',
     title: '총 주문금액',
-    dataIndex: 'total_price',
+    dataIndex: 'final_paid_amount',
     align: 'center',
     width: 130,
   },

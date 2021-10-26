@@ -2,6 +2,7 @@ import 'antd/dist/antd.css';
 import { Radio, Modal } from 'antd';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
+import BasicAutoComplete from 'pages/Admin/components/Form/BasicAutoComplete';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { useEffect, useState, useRef } from 'react';
 
@@ -44,7 +45,7 @@ const TitleTextStyled = styled.div`
   margin-right: 3rem;
 `;
 
-const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
+const BasicAutoCompleteStyled = styled(BasicAutoComplete)`
   width: 58rem;
   margin-bottom: 1rem;
 `;
@@ -52,16 +53,19 @@ const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
 const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
   const categoryRef = useRef();
   const [categoryTypeState, setCategoryTypeState] = useState(0);
+  const [categoryInputState, setCategoryInputState] = useState(0);
   const [classificationdataState, setClassificationdataState] = useState({});
-  const [selectedFirstItemState, setSelectedFirstItemState] = useState('축산');
-  const [selectdSecondItemState, setSelectedSecondItemState] = useState('축산');
+  const [selectedFirstItemState, setSelectedFirstItemState] = useState(0);
+  const [selectdSecondItemState, setSelectedSecondItemState] = useState(0);
   const dataKey = Object.keys(classificationdataState);
 
   const [selectCategoryState, setSelectCategoryState] = useState();
   const [selectCategoryCodeState, setSelectCategoryCodeState] = useState();
-  const [categoryTapSelectState, setCategoryTapSelectState] = useState(
-    'search',
-  );
+  const [categoryTapSelectState, setCategoryTapSelectState] = useState(0);
+
+  useEffect(() => {
+    resetData();
+  }, [visible === true]);
 
   useEffect(() => {
     setClassificationdataState(categoryList);
@@ -107,14 +111,21 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
     }
   };
 
+  const handleCategoryInputChnage = (value) => {
+    setCategoryInputState(value);
+  };
+
   const renderCategorySearch = () => {
     return (
       <>
         <_ContainerStyled>
-          <BasicTextInputBoxStyled
+          <BasicAutoCompleteStyled
+            value={categoryInputState}
+            onChange={handleCategoryInputChnage}
             placeholder="카테고리명 입력"
             ref={categoryRef}
-          ></BasicTextInputBoxStyled>
+            options={[{ value: 'text 1' }, { value: 'text 2' }]}
+          ></BasicAutoCompleteStyled>
           <BasicButton onClick={handleSearchBtn} label="검색"></BasicButton>
         </_ContainerStyled>
 
@@ -176,6 +187,13 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
     setCategoryTapSelectState(e.target.value);
   };
 
+  const resetData = () => {
+    setCategoryTapSelectState(0);
+    setCategoryInputState('');
+    setSelectCategoryState('');
+    setSelectCategoryCodeState('');
+  };
+
   return (
     <>
       <Modal
@@ -197,10 +215,10 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
             <Radio.Group
               onChange={handleCategorySelect}
               value={categoryTapSelectState}
-              defaultValue={'search'}
+              defaultValue={0}
             >
               <Radio.Button
-                value="search"
+                value={0}
                 onClick={() => {
                   setCategoryTypeState(0);
                 }}
@@ -208,7 +226,7 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
                 카테고리명 검색
               </Radio.Button>
               <Radio.Button
-                value="select"
+                value={1}
                 onClick={() => {
                   setCategoryTypeState(1);
                 }}

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const CustomTable = styled(BasicTable)`
   margin-bottom: 1rem;
+  width: 98%;
 `;
 
 const Table = ({ count, tableList, limit, handleTableChange, loading }) => {

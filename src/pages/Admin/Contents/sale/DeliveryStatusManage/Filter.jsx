@@ -33,13 +33,13 @@ const Input = styled(OriginInput)`
 `;
 
 const Filter = ({ getApiDeliveryStatusData }) => {
-  const [searchTypeState, setSearchTypeState] = useState('선택'); //조회기간 타입
-  const [datePeriodState, setDatePeriodState] = useState('today'); //조회기간 기간
+  const [searchTypeState, setSearchTypeState] = useState(0); //조회기간 타입
+  const [datePeriodState, setDatePeriodState] = useState(0); //조회기간 기간
   const [startDateState, setStartDateState] = useState(moment()); //시작날짜
   const [endDateState, setEndDateState] = useState(moment()); //종료날짜
-  const [orderState, setOrderState] = useState('선택'); //주문상태타입
-  const [order2State, setOrder2State] = useState('선택'); //주문상태타입2
-  const [detailTypeState, setDetailTypeState] = useState('선택'); //상세조건 타입
+  const [orderState, setOrderState] = useState(0); //주문상태타입
+  const [order2State, setOrder2State] = useState(0); //주문상태타입2
+  const [detailTypeState, setDetailTypeState] = useState(0); //상세조건 타입
   const [detailInputState, setDetailInputState] = useState(''); //상세조건 인풋
 
   const handleSearchPeriodChange = (value) => {
@@ -94,10 +94,10 @@ const Filter = ({ getApiDeliveryStatusData }) => {
         />
         <RadioGroupContainer>
           <Radio.Group value={datePeriodState} onChange={handleDatePeriodBtn}>
-            <Radio.Button value="today">오늘</Radio.Button>
-            <Radio.Button value="1week">1주일</Radio.Button>
-            <Radio.Button value="1month">1개월</Radio.Button>
-            <Radio.Button value="3month">3개월</Radio.Button>
+            <Radio.Button value={0}>오늘</Radio.Button>
+            <Radio.Button value={1}>1주일</Radio.Button>
+            <Radio.Button value={2}>1개월</Radio.Button>
+            <Radio.Button value={3}>3개월</Radio.Button>
           </Radio.Group>
         </RadioGroupContainer>
 
@@ -141,33 +141,33 @@ const Filter = ({ getApiDeliveryStatusData }) => {
 export default Filter;
 
 const searchPeriodList = [
-  { label: '결제일', value: 'paymentDate' },
-  { label: '발주확인일', value: 'orderConfirmationDate' },
-  { label: '발송처리일', value: 'shipmentProcessingDate' },
+  { label: '결제일', value: 0 },
+  { label: '발주확인일', value: 1 },
+  { label: '발송처리일', value: 2 },
 ];
 
 const detailList = [
-  { label: '전체', value: 'all' },
-  { label: '수취인명', value: 'nameOfRecipient' },
-  { label: '구매자명', value: 'buyerName' },
-  { label: '구매자연락처', value: 'buyerPhone' },
-  { label: '구매자ID', value: 'buyerID' },
-  { label: '주문번호', value: 'orderNumber' },
-  { label: '상품주문번호', value: 'productOrderNumber' },
-  { label: '상품번호', value: 'productNumber' },
-  { label: '송장번호', value: 'invoiceNumber' },
+  { label: '전체', value: 0 },
+  { label: '수취인명', value: 1 },
+  { label: '구매자명', value: 2 },
+  { label: '구매자연락처', value: 3 },
+  { label: '구매자ID', value: 4 },
+  { label: '주문번호', value: 5 },
+  { label: '상품주문번호', value: 6 },
+  { label: '상품번호', value: 7 },
+  { label: '송장번호', value: 8 },
 ];
 
 const orderStateList = [
-  { label: '전체', value: 'all' },
-  { label: '발송대기', value: 'waitingForShipment' },
-  { label: '배송중', value: 'shipping' },
-  { label: '배송완료', value: 'deliveryCompleted' },
+  { label: '전체', value: 0 },
+  { label: '발송대기', value: 1 },
+  { label: '배송중', value: 2 },
+  { label: '배송완료', value: 3 },
 ];
 
 const waitingForShipmentList = [
-  { label: '전체', value: 'all' },
-  { label: '신규주문', value: 'newOrder' },
-  { label: '발주확인', value: 'confirmOfOrder' },
-  { label: '발주확인 해제', value: 'cancelOrderConfirm' },
+  { label: '전체', value: 0 },
+  { label: '신규주문', value: 1 },
+  { label: '발주확인', value: 2 },
+  { label: '발주확인 해제', value: 3 },
 ];

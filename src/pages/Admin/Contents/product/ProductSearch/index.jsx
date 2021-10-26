@@ -8,9 +8,20 @@ import { notification } from 'utils/notification';
 import { getProductList, getProductDetail } from 'apis/product';
 import moment from 'moment';
 import { DateFormat } from 'configs/config';
+import BoardHeader from 'pages/Admin/components/BoardHeader';
+import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
+import styled, { css } from 'styled-components';
+const Icon = css`
+  font-size: 4rem;
+  margin-right: 1rem;
+`;
+
+const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
+  ${Icon}
+`;
 
 const ProductSearch = () => {
-  const limit = 16;
+  const [allTableDataState, setAllTableDataState] = useState([]);
   const [tableDataState, setTableDataState] = useState([]);
   const [tableCountState, setTableCountState] = useState(0);
   const [categoryCountArrayState, setCategoryCountArrayState] = useState([]);
@@ -67,8 +78,7 @@ const ProductSearch = () => {
         };
       });
 
-      console.log(newResult);
-
+      setAllTableDataState(newResult);
       setTableDataState(newResult);
       setTableCountState(count);
       SetCategoryCount(newResult);
@@ -127,13 +137,61 @@ const ProductSearch = () => {
   const handleTableChange = (pagination, filter, sort) => {
     setProductOffset(pagination.current - 1);
   };
+
+  const list = [
+    {
+      itemList: [
+        {
+          label: '전체',
+          value: categoryCountArrayState[0],
+          img: <AppstoreTwoToneIcon />,
+        },
+        {
+          label: '판매준비',
+          value: categoryCountArrayState[1],
+          img: <AppstoreTwoToneIcon />,
+        },
+        {
+          label: '판매중',
+          value: categoryCountArrayState[2],
+          img: <AppstoreTwoToneIcon />,
+        },
+        {
+          label: '품절',
+          value: categoryCountArrayState[3],
+          img: <AppstoreTwoToneIcon />,
+        },
+        {
+          label: '판매중지',
+          value: categoryCountArrayState[4],
+          img: <AppstoreTwoToneIcon />,
+        },
+        {
+          label: '판매종료',
+          value: categoryCountArrayState[5],
+          img: <AppstoreTwoToneIcon />,
+        },
+      ],
+    },
+  ];
+
+  const handleCategoryBtn = (value) => {
+    let data = allTableDataState;
+    if (value !== '전체') {
+      data = allTableDataState.filter((item) => {
+        return item.status === value;
+      });
+    }
+
+    setTableDataState(data);
+    setTableCountState(data.length);
+  };
+
   return (
     <>
       <Title />
-      <Category
-        tableList={tableDataState}
-        categoryCountArray={categoryCountArrayState}
-      />
+      <BoardHeader onClick={handleCategoryBtn} list={list} />
+
       <Setting
         getApiProductData={getApiProductData}
         getSearchProductData={getSearchProductData}
@@ -143,7 +201,6 @@ const ProductSearch = () => {
         setTableDataState={setTableDataState}
         count={tableCountState}
         tableList={tableDataState}
-        limit={limit}
         loading={loading}
         handleTableChange={handleTableChange}
         getApiProductData={getApiProductData}

@@ -6,6 +6,7 @@ import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicModal from 'pages/Admin/components/Modal/BasicModal';
 import BasicTable from 'pages/Admin/components/Table/Table';
+import { Button } from 'antd';
 
 const SelectBoxContainer = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
 const PackingModal = (property) => {
   const [tableDataState, setTableDataState] = useState();
   const [shipTypeState, setShipTypeState] = useState();
-  const [shipcompanyState, setShipcompanyState] = useState();
+  const [shipCompanyState, setShipCompanyState] = useState();
   const [invoiceNumberState, setInvoiceNumberState] = useState();
 
   const [dataShipTypeState, setDataShipTypeState] = useState([]);
@@ -32,7 +33,6 @@ const PackingModal = (property) => {
   let limit = 3;
 
   useEffect(() => {
-    setTableDataState(property.selectedTableRowsState);
     resetData();
   }, [property.visible === true]);
 
@@ -59,8 +59,11 @@ const PackingModal = (property) => {
     selectedTableRowsState.map((item, index) => {
       let { key } = item;
       shipType[item.key] = shipTypeState;
-      shipCompany[item.key] = shipcompanyState;
-      invoiceNumber[item.key] = invoiceNumberState;
+
+      shipCompany[item.key] = shipTypeState !== 1 ? 0 : shipCompanyState;
+
+      invoiceNumber[item.key] =
+        shipCompany[item.key] === 0 ? '' : invoiceNumberState;
     });
 
     setDataShipTypeState(shipType);
@@ -83,7 +86,7 @@ const PackingModal = (property) => {
     },
     {
       title: '배송방법',
-      dataIndex: 'shipType',
+      dataIndex: 'ship_type',
       render: (_, record) => (
         <BasicSelectBox
           value={dataShipTypeState[record.key]}
@@ -104,7 +107,7 @@ const PackingModal = (property) => {
 
     {
       title: '배송사',
-      dataIndex: 'shipCompany',
+      dataIndex: 'ship_company_name',
       render: (_, record) => (
         <BasicSelectBox
           value={dataShipCompanyState[record.key]}
@@ -116,7 +119,7 @@ const PackingModal = (property) => {
               setDataShipCompanyState,
             );
           }}
-          disabled={dataShipTypeState[record.key] !== 'delivery'}
+          disabled={dataShipTypeState[record.key] !== 1}
           list={property.deliveryCompanyList}
         />
       ),
@@ -126,7 +129,7 @@ const PackingModal = (property) => {
 
     {
       title: '송장번호',
-      dataIndex: 'invoiceNumber',
+      dataIndex: 'ship_zip_code',
       render: (_, record) => (
         <BasicTextInputBox
           value={dataInvoiceNumberState[record.key]}
@@ -139,8 +142,8 @@ const PackingModal = (property) => {
             );
           }}
           disabled={
-            dataShipTypeState[record.key] !== 'delivery' ||
-            dataShipCompanyState[record.key] === 'select' ||
+            dataShipTypeState[record.key] !== 1 ||
+            dataShipCompanyState[record.key] === 0 ||
             dataShipCompanyState[record.key] === undefined
               ? 'disabled'
               : ''
@@ -151,34 +154,61 @@ const PackingModal = (property) => {
     },
   ];
   const handleChange = (selectedRowKeys, selectedRows) => {
-    console.log('selectedRowKeys', selectedRowKeys);
     setSelectedTableKeysState(selectedRowKeys);
     setSelectedTableRowsState(selectedRows);
   };
 
   const resetData = () => {
-    setShipTypeState('select');
-    setShipcompanyState('select');
+    let datas = [...property.selectedTableRowsState];
+    let resultTpyeDatas = datas.map((item) => {
+      switch (item.ship_type) {
+        case '택배,등기,소포':
+          return 1;
+        case '퀵서비스':
+          return 2;
+        case '방문수령':
+          return 3;
+        case '직접전달':
+          return 4;
+      }
+    });
+    let resultCompanyDatas = datas.map((item) => {
+      return item.ship_company_name;
+    });
+    let resultCodeDatas = datas.map((item) => {
+      return item.ship_zip_code;
+    });
+
+    setDataShipTypeState(resultTpyeDatas);
+    setDataShipCompanyState(resultCompanyDatas);
+    setDataInvoiceNumberState(resultCodeDatas);
+
+    setTableDataState(datas);
+
+    setShipTypeState(0);
+    setShipCompanyState(0);
     setInvoiceNumberState('');
 
-    var dataTypes = dataShipTypeState.map((element) => {
-      return (element = 'select');
-    });
-
-    var dataCompanys = dataShipCompanyState.map((element) => {
-      return (element = 'select');
-    });
-
-    var invoices = dataInvoiceNumberState.map((element) => {
-      return (element = '');
-    });
-
-    setDataShipTypeState(dataTypes);
-    setDataShipCompanyState(dataCompanys);
-    setDataInvoiceNumberState(invoices);
+    console.log(property.selectedTableRowsState);
 
     setSelectedTableKeysState([]);
     setSelectedTableRowsState([]);
+  };
+
+  const handleShipTypeSelectOnChange = (value) => {
+    setShipTypeState(value);
+    if (value !== 1) {
+      setShipCompanyState(0);
+      setInvoiceNumberState('');
+    }
+  };
+
+  const handleShipCompanySelectOnChange = (value) => {
+    setShipCompanyState(value);
+  };
+
+  const handleInvoiceNumChange = (value) => {
+    setInvoiceNumberState(value.target.value);
   };
 
   return (
@@ -197,28 +227,22 @@ const PackingModal = (property) => {
           <BasicSelectBox
             list={property.deliveryTypeList}
             value={shipTypeState}
-            onChange={(value) => {
-              setShipTypeState(value);
-            }}
+            onChange={handleShipTypeSelectOnChange}
           />
           <BasicSelectBox
             list={property.deliveryCompanyList}
-            value={shipcompanyState}
-            onChange={(value) => {
-              setShipcompanyState(value);
-            }}
-            disabled={shipTypeState === 'delivery' ? '' : 'disabled'}
+            value={shipCompanyState}
+            onChange={handleShipCompanySelectOnChange}
+            disabled={shipTypeState === 1 ? '' : 'disabled'}
           />
           <BasicTextInputBoxStyled
             value={invoiceNumberState}
-            onChange={(value) => {
-              setInvoiceNumberState(value.target.value);
-            }}
+            onChange={handleInvoiceNumChange}
             ref={inputRef}
             disabled={
-              shipTypeState !== 'delivery' ||
-              shipcompanyState === 'select' ||
-              shipcompanyState === undefined
+              shipTypeState !== 1 ||
+              shipCompanyState === 0 ||
+              shipCompanyState === undefined
                 ? 'disabled'
                 : ''
             }
@@ -226,7 +250,7 @@ const PackingModal = (property) => {
           <BasicButton
             selectionType="checkbox"
             onClick={handleApplyClick}
-            label="선택건적용"
+            label="적용"
           />
         </SelectBoxContainer>
         <BasicTable

@@ -18,7 +18,6 @@ import moment, { defaultFormat } from 'moment';
 import { DateFormat } from 'configs/config';
 
 const DeliveryProduct = () => {
-  const limit = 16;
   const [tableDataState, setTableDataState] = useState([]);
   const [tableCountState, setTableCountState] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -128,7 +127,6 @@ const DeliveryProduct = () => {
         updateDeliveryData={updateDeliveryData}
         count={tableCountState}
         tableList={tableDataState}
-        limit={limit}
         loading={loading}
         handleTableChange={handleTableChange}
         updateDeliveryDetailData={updateDeliveryDetailData}

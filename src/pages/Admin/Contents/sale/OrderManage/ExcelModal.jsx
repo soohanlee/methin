@@ -1,18 +1,21 @@
+import React, { useState } from 'react';
 import { Modal, Upload, message } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 
-const ExcelModal = (property) => {
-  const InputBox = styled.div`
-    display: flex;
-    margin-top: 2rem;
-  `;
+const InputBox = styled.div`
+  display: flex;
+  margin-top: 2rem;
+`;
 
-  const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
-    width: 30rem;
-  `;
+const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
+  width: 30rem;
+  height: 3.3rem;
+`;
+const ExcelModal = (property) => {
+  const [nameState, setNameState] = useState([]);
 
   const okClick = () => {
     property.onOk();
@@ -20,12 +23,13 @@ const ExcelModal = (property) => {
 
   const props = {
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    listType: 'picture',
     beforeUpload(file) {
       if (file.name.indexOf('xls') === -1) {
         message.error(`${file.name} is not a xml`);
+        setNameState('');
       } else {
         message.success(`${file.name} is xml`);
+        setNameState(file.name);
         // return new Promise((resolve) => {
         //   const reader = new FileReader();
         //   reader.readAsDataURL(file);
@@ -64,7 +68,7 @@ const ExcelModal = (property) => {
       >
         <div>엑셀 파일을 업로드해 주세요.</div>
         <InputBox>
-          <BasicTextInputBoxStyled />
+          <BasicTextInputBoxStyled value={nameState} />
           <Upload {...props}>
             <BasicButton label="찾아보기" />
           </Upload>

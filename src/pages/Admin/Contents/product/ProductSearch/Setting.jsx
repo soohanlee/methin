@@ -111,6 +111,9 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
   const [productNumCheckBox, setProductNumCheckBox] = useState(true);
   const [productNumTextArea, setProductNumTextArea] = useState();
   const [productNameInput, setProductNameInput] = useState();
+  const [largeGroupState, setLargeGroupState] = useState(0); //대분류
+  const [middleGroupState, setMiddleGroupState] = useState(0); //중분류
+  const [saleTypeCheckState, setSaleTypeCheckState] = useState(1);
 
   const renderSearchInputBox = () => {
     return (
@@ -149,8 +152,6 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
     );
   };
 
-  const [saleTypeCheckState, setSaleTypeCheckState] = useState(1);
-
   const handleSaleStatus = (e) => {
     setSaleTypeCheckState(e.target.value);
   };
@@ -175,13 +176,6 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
       </SalesStatusTapContainerStyled>
     );
   };
-
-  const [largeGroupState, setLargeGroupState] = useState(
-    largeCategory[0].value,
-  ); //대분류
-  const [middleGroupState, setMiddleGroupState] = useState(
-    middleCategory[0].value,
-  ); //중분류
 
   const renderCategory = () => {
     return (
@@ -212,14 +206,10 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
   const [periodCategorySelectState, setPeriodCategorySelectState] = useState(
     periodCategory[0].value,
   ); //상품등록일
-  const [periodBtnState, setPeriodBtnState] = useState('today'); //상품 기간 버튼
+  const [periodBtnState, setPeriodBtnState] = useState(0); //상품 기간 버튼
   const [startDateState, setStartDateState] = useState(moment()); //상품 등록 시작일
   const [endDateState, setEndDateState] = useState(moment()); //상품 등록 정지일
   const renderDateTerm = () => {
-    const handlePeriodBtnClick = (value) => {
-      setPeriodBtnState(value);
-    };
-
     return (
       <DateTermTapContainerStyled>
         <TitleTextStyled>기간</TitleTextStyled>
@@ -233,16 +223,16 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
             }}
           />
           <Radio.Group
-            defaultValue={'today'}
+            defaultValue={0}
             onChange={(e) => setPeriodBtnState(e.target.value)}
             value={periodBtnState}
           >
-            <Radio.Button value="today">오늘</Radio.Button>
-            <Radio.Button value="week">1주일</Radio.Button>
-            <Radio.Button value="month">1개월</Radio.Button>
-            <Radio.Button value="3month">3개월</Radio.Button>
-            <Radio.Button value="6month">6개월</Radio.Button>
-            <Radio.Button value="year">1년</Radio.Button>
+            <Radio.Button value={0}>오늘</Radio.Button>
+            <Radio.Button value={1}>1주일</Radio.Button>
+            <Radio.Button value={2}>1개월</Radio.Button>
+            <Radio.Button value={3}>3개월</Radio.Button>
+            <Radio.Button value={4}>6개월</Radio.Button>
+            <Radio.Button value={5}>1년</Radio.Button>
           </Radio.Group>
           <BasicDatePickerStyled
             defaultValue={moment()}
@@ -299,7 +289,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
       setLargeGroupState(largeCategory[0].value);
       setMiddleGroupState(middleCategory[0].value);
       setPeriodCategorySelectState(periodCategory[0].value);
-      setPeriodBtnState('today');
+      setPeriodBtnState(0);
       var nowDate = moment();
       setStartDateState(nowDate);
       setEndDateState(nowDate);
@@ -347,22 +337,20 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
 
 export default Setting;
 const largeCategory = [
-  { value: '0', label: '대분류' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+  { value: 0, label: '대분류' },
+  { value: 1, label: '식품' },
 ];
 
 const middleCategory = [
-  { value: '0', label: '중분류' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+  { value: 0, label: '중분류' },
+  { value: 1, label: '가공식품' },
+  { value: 2, label: '냉동/간편조리식품' },
+  { value: 3, label: '다이어트식품' },
 ];
 
 const periodCategory = [
-  { value: '0', label: '상품등록일' },
-  { value: '1', label: '판매시작일' },
-  { value: '2', label: '판매종료일' },
-  { value: '3', label: '최종수정일' },
+  { value: 0, label: '상품등록일' },
+  { value: 1, label: '판매시작일' },
+  { value: 2, label: '판매종료일' },
+  { value: 3, label: '최종수정일' },
 ];

@@ -22,10 +22,14 @@ import MenuManager from 'pages/Admin/Contents/menu/menuManagement';
 import DisplayManager from 'pages/Admin/Contents/menu/displayManagement';
 
 const Container = styled.div`
-  width: 100%;
+  width: 88%;
   min-width: 150rem;
   padding: 3rem;
   overflow-y: scroll;
+  position: absolute;
+  left: 256px;
+  border-left: 1px solid #f0f0f0;
+  height: 100%;
 `;
 
 const Contents = () => {

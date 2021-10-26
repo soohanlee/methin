@@ -60,7 +60,8 @@ export const COOKIE_KEYS = {
   UserRefreshToken: '__user_refresh_token__',
   UserAccessToken: '__user_access_token__',
   cart: 'CART',
-  CheckOutStandingPaymentTargetKeys: '1',
+  CheckOutStandingPaymentTargetKeys: 'CheckOutStandingPaymentTargetKeys',
+  CheckOutStandingPaymentGridCount: 'CheckOutStandingPaymentGridCount',
 };
 
 export const DateFormat = {

@@ -40,20 +40,20 @@ const Table = ({
   setTableDataState,
   tableList,
   count,
-  limit,
   handleTableChange,
   loading,
   getApiProductData,
 }) => {
-  // const [productSortSelectState, setProductSortSelectState] = React.useState(
-  //   [],
-  // );
   const [productCountSelectState, setProductCountSelectState] = React.useState(
-    [],
+    50,
   );
   const [selectedTableKeysState, setSelectedTableKeysState] = React.useState(
     [],
   );
+  const [selectedTableRowsState, setSelectedTableRowsState] = React.useState(
+    [],
+  );
+
   const [isDeleteModalOpenState, setisDeleteModalOpenState] = React.useState(
     false,
   );
@@ -83,7 +83,7 @@ const Table = ({
       dataIndex: 'delete',
       render: (_, record) => (
         <BasicButton
-          onClick={() => handleDeleteModalOpen(record.id)}
+          onClick={() => handleDeleteModalOpen([record.id])}
           label="삭제"
         ></BasicButton>
       ),
@@ -255,8 +255,8 @@ const Table = ({
   };
 
   const handleChange = (selectedRowKeys, selectedRows) => {
-    console.log('selectedRowKeys', selectedRowKeys);
     setSelectedTableKeysState(selectedRowKeys);
+    setSelectedTableRowsState(selectedRows);
   };
 
   const handleDeleteModalOpen = (id) => {
@@ -265,28 +265,35 @@ const Table = ({
   };
 
   const handleSelectDelete = () => {
-    alert('선택삭제 준비중');
+    let ids = selectedTableRowsState.map((item) => {
+      return item.id;
+    });
+    handleDeleteModalOpen(ids);
   };
 
   const handleDeleteProduct = async () => {
-    try {
-      const result = await deleteProduct(selectedProductState);
-      if (result.status === 200) {
-        const newTable = tableList.filter((item) => {
-          return item.id !== selectedProductState;
-        });
+    // const newTable = [...tableList];
 
-        setTableDataState(newTable);
-        getApiProductData();
-      } else if (result.status === 404) {
-        notification.error('이미 삭제되었습니다.');
-      }
+    try {
+      let result = selectedProductState.map((item) => {
+        try {
+          const result = deleteProduct(item);
+          if (result.status === 404) {
+            notification.error('이미 삭제되었습니다.');
+          }
+        } catch (e) {
+          if (e.response && e.response.status === 404) {
+            notification.error('이미 삭제되었습니다.');
+          }
+        }
+      });
+      await Promise.all(result);
+      notification.success('데이터를 삭제했습니다.');
+      getApiProductData();
+      handleChange([], []);
       setisDeleteModalOpenState(false);
     } catch (e) {
-      if (e.response && e.response.status === 404) {
-        notification.error('이미 삭제되었습니다.');
-      }
-      setisDeleteModalOpenState(false);
+      notification.error('데이터 삭제에 실패했습니다.');
     }
   };
 
@@ -295,15 +302,18 @@ const Table = ({
     setSelectedProductState('');
   };
 
+  const handleProductSelectChange = (value) => {
+    console.log(value);
+    setProductCountSelectState(value);
+  };
+
   return (
     <ContainerStyled>
       <HeaderContainerStyled>
         <div>상품목록(총 {count}개)</div>
         <ButtonContainerStyled>
           <BasicSelectBoxStyled
-            onChange={(value) => {
-              setProductCountSelectState(value);
-            }}
+            onChange={handleProductSelectChange}
             list={CountList}
           ></BasicSelectBoxStyled>
           <CSVLink
@@ -322,7 +332,7 @@ const Table = ({
       </HeaderContainerStyled>
 
       <BasicTable
-        scroll={{ x: 'max-content', y: '20vw' }}
+        scroll={{ x: 'max-content', y: '33vw' }}
         data={tableList}
         columns={columns}
         selectionType="checkbox"
@@ -330,7 +340,8 @@ const Table = ({
         onTableChange={handleTableChange}
         loading={loading}
         total={count}
-        pageSize={limit}
+        pageSize={productCountSelectState}
+        selectedRowKeys={selectedTableKeysState}
       />
       <BasicModal
         visible={isDeleteModalOpenState}
@@ -344,16 +355,10 @@ const Table = ({
 };
 
 export default Table;
-// const SortViewList = [
-//   { label: '연관상품 ID순', value: 'associatedProductID' },
-//   { label: '대표 상품명순', value: 'representativeProduct' },
-//   { label: '등록일순', value: 'registrationDate' },
-//   { label: '최종수정일순', value: 'lastModifiedDate' },
-// ];
 
 const CountList = [
-  { label: '50개씩', value: 'fiftyCount' },
-  { label: '100개씩', value: 'hundredCount' },
-  { label: '300개씩', value: 'threeHundredCount' },
-  { label: '500개씩', value: 'fiveHundredCount' },
+  { label: '50개씩', value: 50 },
+  { label: '100개씩', value: 100 },
+  { label: '300개씩', value: 200 },
+  { label: '500개씩', value: 300 },
 ];

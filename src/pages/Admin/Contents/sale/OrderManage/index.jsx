@@ -5,6 +5,8 @@ import Table from './Table';
 import BoardHeader from 'pages/Admin/components/BoardHeader';
 import AppstoreTwoTone from '@ant-design/icons/AppstoreTwoTone';
 import { notification } from 'utils/notification';
+import moment from 'moment';
+import { DateFormat } from 'configs/config';
 import { getPaidWithPaymentConfirmedList } from 'apis/payment';
 
 const Icon = css`
@@ -43,196 +45,68 @@ const OrderManage = () => {
       const count = result.data.data.list.length;
 
       let newResult = list.map((item, index) => {
-        let { status, ship_pay_type, ship_ship_category } = item;
-        switch (status) {
+        let {
+          status,
+          ship_pay_type,
+          ship_category,
+          paid_at,
+          order_confirmed_at,
+          created_at,
+          ship_type,
+        } = item;
+        switch (ship_type) {
           case 0:
-            status = '결제대기';
+            ship_type = '택배,등기,소포';
             break;
           case 1:
-            status = '결제완료';
+            ship_type = '퀵서비스';
             break;
           case 2:
-            status = '상품준비';
+            ship_type = '방문수령';
             break;
           case 3:
-            status = '배송중';
+            ship_type = '직접전달';
+            break;
+          default:
+            ship_type = '택배,등기,소포';
+            break;
+        }
+        switch (status) {
+          case 0:
+            status = '신규주문지연';
+            break;
+          case 1:
+            status = '배송준비지연';
+            break;
+          case 2:
+            status = '발송전 취소요청';
+            break;
+          case 3:
+            status = '발송전 배송지변경';
             break;
           case 4:
-            status = '배송완료';
+            status = '신규주문';
             break;
           case 5:
-            status = '취소완료';
+            status = '발주확인완료';
             break;
-          case 6:
-            status = '반품완료';
+          default:
             break;
         }
         return {
           ...item,
-
+          ship_type: ship_type,
+          ship_category: ship_category === 0 ? '무료' : '유료',
           ship_pay_type: ship_pay_type === 0 ? '선불' : '착불',
-          ship_ship_category: ship_ship_category === 0 ? '무료' : '유료',
+          status: status,
+          paid_at: moment(paid_at).format(DateFormat.Default),
+          order_confirmed_at: moment(order_confirmed_at).format(
+            DateFormat.Default,
+          ),
+          created_at: moment(created_at).format(DateFormat.Default),
           key: index,
         };
       });
-
-      newResult = [
-        {
-          id: 0,
-          ship_type: '택배',
-          ship_company_name: 'kog3312',
-          ship_number: '24135243534635',
-          buyer_name: '김범희',
-          buyer_id: 128301274332,
-          recipient_name: '김태훈',
-          status: '배송중',
-          paid_at: '2020-06-07',
-          product_id: '231',
-          product_name: '생리대',
-          option_name: '뭐들어가는지몰라',
-          count: '321',
-          price: '321322',
-          total_price: 312411,
-          order_confirmed_at: '2020-06-07',
-          ship_pay_type: '신용카드',
-          ship_category: '택배',
-          total_ship_amount: '3000',
-          ship_discount_amount: '0',
-          ship_message: '경비실에 맡겨주세요 ^^',
-          recipient_phone: '000-0000-0000',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          released_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          buyer_phone: '010-8691-0169',
-          released_zip_code: '07263',
-          released_address_main: '쿠팡창고',
-          created_at: '1995-12-19',
-          key: 0,
-        },
-        {
-          id: 0,
-          ship_type: '택배',
-          ship_company_name: 'kog3312',
-          ship_number: '24135243534635',
-          buyer_name: '김범희',
-          buyer_id: 128301274332,
-          recipient_name: '김태훈',
-          status: '배송중',
-          paid_at: '2020-06-07',
-          product_id: '231',
-          product_name: '생리대',
-          option_name: '뭐들어가는지몰라',
-          count: '321',
-          price: '321322',
-          total_price: 312411,
-          order_confirmed_at: '2020-06-07',
-          ship_pay_type: '신용카드',
-          ship_category: '택배',
-          total_ship_amount: '3000',
-          ship_discount_amount: '0',
-          ship_message: '경비실에 맡겨주세요 ^^',
-          recipient_phone: '000-0000-0000',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          released_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          buyer_phone: '010-8691-0169',
-          released_zip_code: '07263',
-          released_address_main: '쿠팡창고',
-          created_at: '1995-12-19',
-          key: 1,
-        },
-        {
-          id: 0,
-          ship_type: '택배',
-          ship_company_name: 'kog3312',
-          ship_number: '24135243534635',
-          buyer_name: '김범희',
-          buyer_id: 128301274332,
-          recipient_name: '김태훈',
-          status: '배송중',
-          paid_at: '2020-06-07',
-          product_id: '231',
-          product_name: '생리대',
-          option_name: '뭐들어가는지몰라',
-          count: '321',
-          price: '321322',
-          total_price: 312411,
-          order_confirmed_at: '2020-06-07',
-          ship_pay_type: '신용카드',
-          ship_category: '택배',
-          total_ship_amount: '3000',
-          ship_discount_amount: '0',
-          ship_message: '경비실에 맡겨주세요 ^^',
-          recipient_phone: '000-0000-0000',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          released_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          buyer_phone: '010-8691-0169',
-          released_zip_code: '07263',
-          released_address_main: '쿠팡창고',
-          created_at: '1995-12-19',
-          key: 2,
-        },
-        {
-          id: 0,
-          ship_type: '택배',
-          ship_company_name: 'kog3312',
-          ship_number: '24135243534635',
-          buyer_name: '김범희',
-          buyer_id: 128301274332,
-          recipient_name: '김태훈',
-          status: '배송중',
-          paid_at: '2020-06-07',
-          product_id: '231',
-          product_name: '생리대',
-          option_name: '뭐들어가는지몰라',
-          count: '321',
-          price: '321322',
-          total_price: 312411,
-          order_confirmed_at: '2020-06-07',
-          ship_pay_type: '신용카드',
-          ship_category: '택배',
-          total_ship_amount: '3000',
-          ship_discount_amount: '0',
-          ship_message: '경비실에 맡겨주세요 ^^',
-          recipient_phone: '000-0000-0000',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          released_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          buyer_phone: '010-8691-0169',
-          released_zip_code: '07263',
-          released_address_main: '쿠팡창고',
-          created_at: '1995-12-19',
-          key: 3,
-        },
-        {
-          id: 0,
-          ship_type: '택배',
-          ship_company_name: 'kog3312',
-          ship_number: '24135243534635',
-          buyer_name: '김범희',
-          buyer_id: 128301274332,
-          recipient_name: '김태훈',
-          status: '배송중',
-          paid_at: '2020-06-07',
-          product_id: '231',
-          product_name: '생리대',
-          option_name: '뭐들어가는지몰라',
-          count: '321',
-          price: '321322',
-          total_price: 312411,
-          order_confirmed_at: '2020-06-07',
-          ship_pay_type: '신용카드',
-          ship_category: '택배',
-          total_ship_amount: '3000',
-          ship_discount_amount: '0',
-          ship_message: '경비실에 맡겨주세요 ^^',
-          recipient_phone: '000-0000-0000',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          released_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          buyer_phone: '010-8691-0169',
-          released_zip_code: '07263',
-          released_address_main: '쿠팡창고',
-          created_at: '1995-12-19',
-          key: 4,
-        },
-      ];
 
       setTableDataState(newResult);
       setTableCountState(count);

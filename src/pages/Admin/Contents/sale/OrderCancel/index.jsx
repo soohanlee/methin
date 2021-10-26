@@ -108,7 +108,7 @@ const OrderCancel = () => {
           img: <AppstoreTwoToneIcon />,
         },
         {
-          label: '취소완료(최근 3일)',
+          label: '취소완료',
           value: categoryCountArrayState[1],
           img: <AppstoreTwoToneIcon />,
         },
@@ -121,10 +121,8 @@ const OrderCancel = () => {
   };
 
   const categoryTypeClick = (value) => {
-    let status = value === 0 ? '취소요청' : '취소완료';
-
     let data = allTableDataState.filter((item) => {
-      return item.status === status;
+      return item.status === value;
     });
     setTableDataState(data);
     setTableCountState(data.length);

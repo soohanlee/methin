@@ -9,6 +9,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 2rem;
+  width: 98%;
 `;
 
 const ButtonContainer = styled.div`
@@ -97,11 +98,7 @@ const Title = ({ categoryList, dataList }) => {
         </ButtonContainer>
 
         <ButtonContainer>
-          <CSVLink
-            data={[]}
-            headers={columns}
-            filename={'상품 일괄 등록.csv'}
-          >
+          <CSVLink data={[]} headers={columns} filename={'상품 일괄 등록.csv'}>
             <Button>엑셀양식다운로드</Button>
           </CSVLink>
           <Button onClick={handleImageClick}>이미지업로드</Button>

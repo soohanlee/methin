@@ -42,6 +42,7 @@ const RegisterProductAll = () => {
       });
       setTableDataState(newResult);
       setTableCountState(count);
+      console.log(result);
     } catch (e) {
       notification.error('상품 정보를 가져오지 못했습니다.');
     }

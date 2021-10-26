@@ -103,7 +103,7 @@ const OrderDisturb = () => {
   const [productOffset, setProductOffset] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const [registTypeState, setRegistTypeState] = useState('선택'); //등록조건
+  const [registTypeState, setRegistTypeState] = useState(0); //등록조건
   const [registTypeInputState, setRegistTypeInputState] = useState(''); //등록조건인풋박스
   const [restrictionInputState, setRestrictionInputState] = useState(''); //제한사유인풋박스
   const [repeatedCheckBoxState, setRepeatedCheckBoxState] = useState(); //반복구매
@@ -118,21 +118,21 @@ const OrderDisturb = () => {
   const violenceCheckBoxRef = useRef(); //언어폭력
   const obstructionCheckBoxRef = useRef(); //영업방해
   const etcCheckBoxRef = useRef(); //기타
-  const [searchTypeState, setSearchTypeState] = useState('선택'); //조회조건 타입
+  const [searchTypeState, setSearchTypeState] = useState(0); //조회조건 타입
   const searchTypeInputRef = useRef(); //조회조건인풋
 
   useEffect(() => {
-    getApiDeliveryData(productOffset);
+    getApiDisturbData(productOffset);
   }, [productOffset]);
 
   useEffect(() => {
     async function fetchAndSetUser() {
-      await getApiDeliveryData();
+      await getApiDisturbData();
     }
     fetchAndSetUser();
   }, []);
 
-  const getApiDeliveryData = async (offset = 0) => {
+  const getApiDisturbData = async (offset = 0) => {
     try {
       setLoading(true);
       const result = data;
@@ -350,13 +350,13 @@ const OrderDisturb = () => {
 
 export default OrderDisturb;
 const ResisterTypeList = [
-  { label: '구매자ID', value: 'buyerID' },
-  { label: '상품주문번호', value: 'productOrderNumber' },
+  { label: '구매자ID', value: 0 },
+  { label: '상품주문번호', value: 1 },
 ];
 const InquiryConditionsTypeList = [
-  { label: '전체', value: 'all' },
-  { label: '구매자ID', value: 'buyerID' },
-  { label: '상품주문번호', value: 'productOrderNumber' },
+  { label: '전체', value: 0 },
+  { label: '구매자ID', value: 1 },
+  { label: '상품주문번호', value: 2 },
 ];
 
 const data = [

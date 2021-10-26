@@ -23,6 +23,7 @@ const Container = styled.div``;
 // 배송 현황 관리
 const DeliveryStatusManage = () => {
   const limit = 16;
+  const [allTableDataState, setAllTableDataState] = useState([]);
   const [tableDataState, setTableDataState] = useState([]);
   const [tableCountState, setTableCountState] = useState(0);
   const [productOffset, setProductOffset] = useState(0);
@@ -53,8 +54,9 @@ const DeliveryStatusManage = () => {
           ship_confirmed_at,
           ship_confirmedProcess_at,
           status,
+          ship_type,
           ship_pay_type,
-          ship_ship_category,
+          ship_category,
           paid_at,
         } = item;
 
@@ -81,11 +83,29 @@ const DeliveryStatusManage = () => {
             status = '반품완료';
             break;
         }
-
+        switch (ship_type) {
+          case 0:
+            ship_type = '택배,등기,소포';
+            break;
+          case 1:
+            ship_type = '퀵서비스';
+            break;
+          case 2:
+            ship_type = '방문수령';
+            break;
+          case 3:
+            ship_type = '직접전달';
+            break;
+          default:
+            ship_type = '택배,등기,소포';
+            break;
+        }
         return {
           ...item,
+          ship_type: ship_type,
+          status: status,
           ship_pay_type: ship_pay_type === 0 ? '선불' : '착불',
-          ship_ship_category: ship_ship_category === 0 ? '무료' : '유료',
+          ship_category: ship_category === 0 ? '무료' : '유료',
           ship_confirmed_at: moment(ship_confirmed_at).format(
             DateFormat.Default,
           ),
@@ -97,127 +117,7 @@ const DeliveryStatusManage = () => {
         };
       });
 
-      newResult = [
-        {
-          id: 0,
-          ship_confirmedProcess_at: '2019-05-05',
-          status: '배송중',
-          ship_type: '택배',
-          ship_company_name: 'kog3312',
-          ship_number: '24135243534635',
-          ship_confirmed_at: '2019-05-05',
-          buyer_name: '김범희',
-          buyer_id: 128301274332,
-          recipient_name: '김태훈',
-          product_id: '231',
-          product_name: '생리대',
-          option_name: '뭐들어가는지몰라',
-          count: '321',
-          price: '321322',
-          option_add_price: 32312,
-          total_price: 312411,
-          paid_at: '2019-05-05',
-          ship_pay_type: '신용카드',
-          ship_category: '택배',
-          total_ship_amount: '3000',
-          ship_add_amount: '3000',
-          recipient_phone: '000-0000-0000',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          buyer_phone: '010-8691-0169',
-          ship_zip_code: '07263',
-          key: 0,
-        },
-        {
-          id: 0,
-          ship_confirmedProcess_at: '2019-05-05',
-          status: '배송중',
-          ship_type: '택배',
-          ship_company_name: 'kog3312',
-          ship_number: '24135243534635',
-          ship_confirmed_at: '2019-05-05',
-          buyer_name: '김범희',
-          buyer_id: 128301274332,
-          recipient_name: '김태훈',
-          product_id: '231',
-          product_name: '생리대',
-          option_name: '뭐들어가는지몰라',
-          count: '321',
-          price: '321322',
-          option_add_price: 32312,
-          total_price: 312411,
-          paid_at: '2019-05-05',
-          ship_pay_type: '신용카드',
-          ship_category: '택배',
-          total_ship_amount: '3000',
-          ship_add_amount: '3000',
-          recipient_phone: '000-0000-0000',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          buyer_phone: '010-8691-0169',
-          ship_zip_code: '07263',
-          key: 1,
-        },
-
-        {
-          id: 0,
-          ship_confirmedProcess_at: '2019-05-05',
-          status: '배송중',
-          ship_type: '택배',
-          ship_company_name: 'kog3312',
-          ship_number: '24135243534635',
-          ship_confirmed_at: '2019-05-05',
-          buyer_name: '김범희',
-          buyer_id: 128301274332,
-          recipient_name: '김태훈',
-          product_id: '231',
-          product_name: '생리대',
-          option_name: '뭐들어가는지몰라',
-          count: '321',
-          price: '321322',
-          option_add_price: 32312,
-          total_price: 312411,
-          paid_at: '2019-05-05',
-          ship_pay_type: '신용카드',
-          ship_category: '택배',
-          total_ship_amount: '3000',
-          ship_add_amount: '3000',
-          recipient_phone: '000-0000-0000',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          buyer_phone: '010-8691-0169',
-          ship_zip_code: '07263',
-          key: 2,
-        },
-
-        {
-          id: 0,
-          ship_confirmedProcess_at: '2019-05-05',
-          status: '배송중',
-          ship_type: '택배',
-          ship_company_name: 'kog3312',
-          ship_number: '24135243534635',
-          ship_confirmed_at: '2019-05-05',
-          buyer_name: '김범희',
-          buyer_id: 128301274332,
-          recipient_name: '김태훈',
-          product_id: '231',
-          product_name: '생리대',
-          option_name: '뭐들어가는지몰라',
-          count: '321',
-          price: '321322',
-          option_add_price: 32312,
-          total_price: 312411,
-          paid_at: '2019-05-05',
-          ship_pay_type: '신용카드',
-          ship_category: '택배',
-          total_ship_amount: '3000',
-          ship_add_amount: '3000',
-          recipient_phone: '000-0000-0000',
-          ship_address_main: '서울특별시 마포구 월드컵로7길 57-5 201호',
-          buyer_phone: '010-8691-0169',
-          ship_zip_code: '07263',
-          key: 3,
-        },
-      ];
-
+      setAllTableDataState(newResult);
       setTableDataState(newResult);
       setTableCountState(count);
       SetCategoryCount(newResult);
@@ -229,6 +129,7 @@ const DeliveryStatusManage = () => {
   };
 
   const SetCategoryCount = (tableList) => {
+    let all = 0;
     let shipping = 0;
     let deliveryCompleted = 0;
 
@@ -244,7 +145,9 @@ const DeliveryStatusManage = () => {
           break;
       }
     });
-    setCategoryCountArrayState([shipping, deliveryCompleted]);
+    all = tableList.length;
+
+    setCategoryCountArrayState([all, shipping, deliveryCompleted]);
   };
 
   const list = [
@@ -252,13 +155,18 @@ const DeliveryStatusManage = () => {
       title: '배송중, 배송완료 주문건을 확인해 주세요!',
       itemList: [
         {
-          label: '배송중',
+          label: '전체',
           value: categoryCountArrayState[0],
           img: <AppstoreTwoToneIcon />,
         },
         {
-          label: '배송완료',
+          label: '배송중',
           value: categoryCountArrayState[1],
+          img: <AppstoreTwoToneIcon />,
+        },
+        {
+          label: '배송완료',
+          value: categoryCountArrayState[2],
           img: <AppstoreTwoToneIcon />,
         },
       ],
@@ -269,8 +177,16 @@ const DeliveryStatusManage = () => {
     setProductOffset(pagination.current - 1);
   };
 
-  const handleCategoryBtn = (e) => {
-    alert(e);
+  const handleCategoryBtn = (value) => {
+    let data = allTableDataState;
+    if (value !== '전체') {
+      data = allTableDataState.filter((item) => {
+        return item.status === value;
+      });
+    }
+
+    setTableDataState(data);
+    setTableCountState(data.length);
   };
 
   return (
@@ -289,13 +205,3 @@ const DeliveryStatusManage = () => {
 };
 
 export default DeliveryStatusManage;
-
-const list = [
-  {
-    title: '배송중, 배송완료 주문건을 확인해 주세요!',
-    itemList: [
-      { label: '배송중', value: 'todayStart', img: <AppstoreTwoToneIcon /> },
-      { label: '배송완료', value: 'prePurchase', img: <AppstoreTwoToneIcon /> },
-    ],
-  },
-];

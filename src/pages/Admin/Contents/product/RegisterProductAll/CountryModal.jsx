@@ -63,7 +63,7 @@ const CountryModal = ({ title, visible, setVisible }) => {
   };
 
   const resetAllValue = () => {
-    setConturySelectState('korea');
+    setConturySelectState(0);
     setDistrictSelectState(dataykey[0]);
     setRegionSelectState(districtList[dataykey[0]][0]);
     setCountryInput('');
@@ -98,10 +98,10 @@ const CountryModal = ({ title, visible, setVisible }) => {
               value={conturySelectState}
               onChange={handleCountryCheck}
             >
-              <Radio value="korea">국산</Radio>
-              <Radio value="oceanic">원양산</Radio>
-              <Radio value="Income">수입산</Radio>
-              <Radio value="etc">기타</Radio>
+              <Radio value={0}>국산</Radio>
+              <Radio value={1}>원양산</Radio>
+              <Radio value={2}>수입산</Radio>
+              <Radio value={3}>기타</Radio>
             </Radio.Group>
           </SubContainerStyled>
 
