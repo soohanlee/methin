@@ -110,11 +110,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
       <HeaderContainer>
         <Title>목록(총 {count}개)</Title>
         <ButtonContainer>
-          <CSVLink
-            data={tableData}
-            headers={columns}
-            filename={'원산지 전체코드.csv'}
-          >
+          <CSVLink data={tableData} headers={columns} filename={'취소목록.csv'}>
             <Button>엑셀다운</Button>
           </CSVLink>
         </ButtonContainer>
