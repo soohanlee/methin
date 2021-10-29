@@ -8,7 +8,9 @@ import BasicTextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
 import BasicTable from 'pages/Admin/components/Table/Table';
 
 const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
-  width: 20rem;
+  margin-left: ${(props) => props.left};
+
+  width: 90rem;
 `;
 
 const BasicTextAreaBoxStyled = styled(BasicTextAreaBox)`
@@ -17,7 +19,7 @@ const BasicTextAreaBoxStyled = styled(BasicTextAreaBox)`
 `;
 const BasicSelectBoxStyled = styled(BasicSelectBox)`
   margin-left: ${(props) => props.left};
-  width: 20rem;
+  width: 90rem;
 `;
 
 const SelectBoxLabelContainer = styled.div`
@@ -26,6 +28,7 @@ const SelectBoxLabelContainer = styled.div`
   margin-left: ${(props) => props.left};
   margin-top: 1rem;
 `;
+
 const DirectReturnModal = (property) => {
   const limit = 3;
 
@@ -75,23 +78,28 @@ const DirectReturnModal = (property) => {
   const columns = [
     {
       title: '상품번호',
-      dataIndex: 'ProductNum',
+      dataIndex: 'product_id',
+      align: 'center',
     },
     {
       title: '상품주문번호',
-      dataIndex: 'delete',
+      dataIndex: 'id',
+      align: 'center',
     },
     {
       title: '배송방법',
-      dataIndex: 'id',
+      dataIndex: 'ship_type',
+      align: 'center',
     },
     {
       title: '택배사',
-      dataIndex: 'id',
+      dataIndex: 'ship_company_name',
+      align: 'center',
     },
     {
       title: '송장번호',
-      dataIndex: 'id',
+      dataIndex: 'ship_number',
+      align: 'center',
     },
   ];
 
@@ -122,8 +130,7 @@ const DirectReturnModal = (property) => {
           scroll={{ x: 'max-content', y: '20vw' }}
           data={property.selectedTableRowsState}
           columns={columns}
-          selectionType="checkbox"
-          onChange={handleChange}
+          // onChange={handleChange}
           pageSize={limit}
           selectedRowKeys={selectedTableKeysState}
         />

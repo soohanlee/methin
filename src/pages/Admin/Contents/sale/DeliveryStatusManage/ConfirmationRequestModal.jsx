@@ -3,7 +3,6 @@ import 'antd/dist/antd.css';
 import styled from 'styled-components';
 
 const ConfirmationRequestModal = (property) => {
-
   const handleOkClick = () => {
     property.onOk();
   };
@@ -15,7 +14,7 @@ const ConfirmationRequestModal = (property) => {
     },
     {
       title: '상품주문번호',
-      dataIndex: 'delete',
+      dataIndex: 'id',
     },
     {
       title: '발송처리일',

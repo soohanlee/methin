@@ -70,18 +70,13 @@ const DirectExchangeModal = (property) => {
   };
 
   const handleOkClick = () => {
-    console.log(tradeReasonTypeState);
-    console.log(tradeReasonInputRef.current.resizableTextArea.props.value);
-    console.log(tradecollectionTypeState);
-    console.log(tradePostTypeState);
-    console.log(tradePostcodeInputRef.current.state.value);
     property.onOk();
   };
 
   const columns = [
     {
       title: '상품주문번호',
-      dataIndex: 'product_id',
+      dataIndex: 'id',
       align: 'center',
     },
     {
@@ -91,7 +86,7 @@ const DirectExchangeModal = (property) => {
     },
     {
       title: '판매가',
-      dataIndex: 'price',
+      dataIndex: 'final_paid_amount',
       align: 'center',
     },
   ];
@@ -129,7 +124,6 @@ const DirectExchangeModal = (property) => {
           scroll={{ x: 'max-content', y: '20vw' }}
           data={property.selectedTableRowsState}
           columns={columns}
-          selectionType="checkbox"
           onChange={handleChange}
           pageSize={limit}
           selectedRowKeys={selectedTableKeysState}

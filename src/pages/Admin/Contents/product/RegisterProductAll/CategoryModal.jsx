@@ -1,7 +1,6 @@
 import 'antd/dist/antd.css';
 import { Radio, Modal } from 'antd';
 import styled from 'styled-components';
-import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicAutoComplete from 'pages/Admin/components/Form/BasicAutoComplete';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { useEffect, useState, useRef } from 'react';
@@ -96,7 +95,7 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
   };
 
   const handleSearchBtn = () => {
-    setSelectCategoryState(categoryRef.current.state.value);
+    setSelectCategoryState(categoryInputState);
     setSelectCategoryCodeState('Code??');
   };
 
