@@ -20,6 +20,7 @@ const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
 // 발주 확인/발송관리
 const OrderManage = () => {
   const limit = 16;
+  const [allTableDataState, setAllTableDataState] = useState([]);
   const [tableDataState, setTableDataState] = useState([]);
   const [tableCountState, setTableCountState] = useState(0);
   const [productOffset, setProductOffset] = useState(0);
@@ -73,10 +74,10 @@ const OrderManage = () => {
         }
         switch (status) {
           case 0:
-            status = '신규주문지연';
+            status = '신규주문 지연';
             break;
           case 1:
-            status = '배송준비지연';
+            status = '배송준비 지연';
             break;
           case 2:
             status = '발송전 취소요청';
@@ -108,6 +109,7 @@ const OrderManage = () => {
         };
       });
 
+      setAllTableDataState(newResult);
       setTableDataState(newResult);
       setTableCountState(count);
       SetCategoryCount(newResult);
@@ -119,45 +121,14 @@ const OrderManage = () => {
     setLoading(false);
   };
 
-  const handleClick = (value) => {
-    switch (value) {
-      case 'todayDelay':
-        console.log('todayDelay');
-        break;
-      case 'preOrderDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'newOrderDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'deliveryPreparationDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'cancleRequest':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'changeDelivery':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'autoProcessing':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'todayStart':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'prePurchase':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'newOrder':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'confirmOrderCheck':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-
-      default:
-        console.log(`Sorry, we are out of .`);
-    }
+  const categoryTypeClick = (value) => {
+    let data = allTableDataState.filter((item) => {
+      console.log(item.status);
+      console.log(value);
+      return item.status === value;
+    });
+    setTableDataState(data);
+    setTableCountState(data.length);
   };
 
   const data = [{ value: 1 }, { value: 2 }, { value: 3 }];
@@ -167,8 +138,8 @@ const OrderManage = () => {
   };
 
   const SetCategoryCount = (tableList) => {
-    let confirmNewOrder = 0;
-    let deliveryPrepare = 0;
+    let confirmNewOrderWait = 0;
+    let deliveryPrepareWait = 0;
     let deliveryCancle = 0;
     let deliveryChange = 0;
     let checkNewOrder = 0;
@@ -176,13 +147,13 @@ const OrderManage = () => {
 
     tableList.forEach((element) => {
       switch (element.status) {
-        case '신규주문':
-          confirmNewOrder++;
+        case '신규주문 지연':
+          confirmNewOrderWait++;
           break;
-        case '배송준비':
-          deliveryPrepare++;
+        case '배송준비 지연':
+          deliveryPrepareWait++;
           break;
-        case '발송전 취소':
+        case '발송전 취소요청':
           deliveryCancle++;
           break;
         case '발송전 배송지변경':
@@ -198,15 +169,15 @@ const OrderManage = () => {
           break;
       }
     });
+
     setCategoryCountArrayState([
-      confirmNewOrder,
-      deliveryPrepare,
+      confirmNewOrderWait,
+      deliveryPrepareWait,
       deliveryCancle,
       deliveryChange,
       checkNewOrder,
       orderConfirm,
     ]);
-    console.log(categoryCountArrayState[0]);
   };
 
   const list = [
@@ -254,7 +225,7 @@ const OrderManage = () => {
 
   return (
     <div>
-      <BoardHeader list={list} onClick={handleClick} />
+      <BoardHeader list={list} onClick={categoryTypeClick} />
       <Filter getApiDeliveryData={getApiDeliveryData} />
       <Table
         count={tableCountState}

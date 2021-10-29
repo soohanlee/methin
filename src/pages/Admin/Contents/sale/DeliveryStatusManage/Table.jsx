@@ -4,7 +4,7 @@ import { Button as OriginButton } from 'antd';
 
 import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import BasicTable from 'pages/Admin/components/Table/Table';
-import DirectReturnModal from './DirectExchangeModal';
+import DirectReturnModal from './DirectReturnModal';
 import DirectExchangeModal from './DirectExchangeModal';
 import ModifyInvoiceModal from './ModifyInvoiceModal';
 import { CSVLink } from 'react-csv';
@@ -49,15 +49,21 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
   const handleButtonClick = (type) => {
     switch (type) {
       case 'directReturn':
-        if (selectedTableRowsState.length > 0) {
+        if (selectedTableRowsState.length < 1) {
+          alert('배송정보를 선택해주세요.');
+        } else if (selectedTableRowsState.length > 1) {
+          alert('배송정보를 하나만 선택해주세요.');
+        } else {
           setDirectReturnVisibleState(true);
-          return;
         }
         break;
       case 'directExchange':
-        if (selectedTableRowsState.length > 0) {
+        if (selectedTableRowsState.length < 1) {
+          alert('배송정보를 선택해주세요.');
+        } else if (selectedTableRowsState.length > 1) {
+          alert('배송정보를 하나만 선택해주세요.');
+        } else {
           setDirectExchangeVisibleState(true);
-          return;
         }
         break;
       case 'modifyInvoice':
@@ -82,8 +88,6 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
       default:
         break;
     }
-
-    alert('데이터를 선택해주세요');
   };
 
   const handleChange = (selectedRowKeys, selectedRows) => {
@@ -311,9 +315,9 @@ const columns = [
   },
   {
     label: '상품가격',
-    key: 'price',
+    key: 'final_paid_amount',
     title: '상품가격',
-    dataIndex: 'price',
+    dataIndex: 'final_paid_amount',
     align: 'center',
     width: 130,
   },
@@ -351,9 +355,9 @@ const columns = [
   },
   {
     label: '배송비 합계',
-    key: 'total_ship_amount',
+    key: 'ship_amount',
     title: '배송비 합계',
-    dataIndex: 'total_ship_amount',
+    dataIndex: 'ship_amount',
     align: 'center',
     width: 130,
   },

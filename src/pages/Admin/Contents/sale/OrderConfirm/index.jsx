@@ -19,6 +19,7 @@ const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
 // 발주 확인/발송관리
 const OrderConfirm = () => {
   const limit = 16;
+  const [allTableDataState, setAllTableDataState] = useState([]);
   const [tableDataState, setTableDataState] = useState([]);
   const [tableCountState, setTableCountState] = useState(0);
   const [categoryCountArrayState, setCategoryCountArrayState] = useState([]);
@@ -75,7 +76,7 @@ const OrderConfirm = () => {
             status = '신규주문지연';
             break;
           case 1:
-            status = '배송준비지연';
+            status = '배송준비 지연';
             break;
           case 2:
             status = '발송전 취소요청';
@@ -107,6 +108,7 @@ const OrderConfirm = () => {
         };
       });
 
+      setAllTableDataState(newResult);
       setTableDataState(newResult);
       setTableCountState(count);
       SetCategoryCount(newResult);
@@ -117,45 +119,14 @@ const OrderConfirm = () => {
     setLoading(false);
   };
 
-  const handleClick = (value) => {
-    switch (value) {
-      case 'todayDelay':
-        console.log('todayDelay');
-        break;
-      case 'preOrderDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'newOrderDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'deliveryPreparationDelay':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'cancleRequest':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'changeDelivery':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'autoProcessing':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'todayStart':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'prePurchase':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'newOrder':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-      case 'confirmOrderCheck':
-        console.log('Mangoes and papayas are $2.79 a pound.');
-        break;
-
-      default:
-        console.log(`Sorry, we are out of .`);
-    }
+  const categoryTypeClick = (value) => {
+    let data = allTableDataState.filter((item) => {
+      console.log(item.status);
+      console.log(value);
+      return item.status === value;
+    });
+    setTableDataState(data);
+    setTableCountState(data.length);
   };
 
   const SetCategoryCount = (tableList) => {
@@ -171,7 +142,7 @@ const OrderConfirm = () => {
         case '신규주문지연':
           confirmNewOrderWait++;
           break;
-        case '배송준비지연':
+        case '배송준비 지연':
           deliveryPrepareWait++;
           break;
         case '발송전 취소요청':
@@ -190,6 +161,7 @@ const OrderConfirm = () => {
           break;
       }
     });
+
     setCategoryCountArrayState([
       confirmNewOrderWait,
       deliveryPrepareWait,
@@ -249,7 +221,7 @@ const OrderConfirm = () => {
 
   return (
     <div>
-      <BoardHeader list={list} onClick={handleClick} />
+      <BoardHeader list={list} onClick={categoryTypeClick} />
       <Filter getApiOrderConfirmData={getApiOrderConfirmData} />
       <Table
         count={tableCountState}

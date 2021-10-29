@@ -152,7 +152,7 @@ const ModifyInvoiceModal = (property) => {
     },
     {
       title: '판매가',
-      dataIndex: 'price',
+      dataIndex: 'final_paid_amount',
       align: 'center',
       width: 100,
     },
@@ -168,8 +168,14 @@ const ModifyInvoiceModal = (property) => {
     let datas = [...property.selectedTableRowsState];
     let resultTpyeDatas = datas.map((item) => {
       switch (item.ship_type) {
-        case '택배':
+        case '택배,등기,소포':
           return 1;
+        case '퀵서비스':
+          return 2;
+        case '방문수령':
+          return 3;
+        case '직접전달':
+          return 4;
       }
     });
     let resultCompanyDatas = datas.map((item) => {

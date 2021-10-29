@@ -246,7 +246,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '상품가격',
-      dataIndex: 'price',
+      dataIndex: 'final_paid_amount',
       align: 'center',
       width: 100,
     },
@@ -276,7 +276,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '배송비 합계',
-      dataIndex: 'total_ship_amount',
+      dataIndex: 'ship_amount',
       align: 'center',
       width: 130,
     },
@@ -318,7 +318,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     },
     {
       title: '출고지',
-      dataIndex: 'released_zip_code',
+      dataIndex: 'released_address_main',
       align: 'center',
       width: 200,
     },

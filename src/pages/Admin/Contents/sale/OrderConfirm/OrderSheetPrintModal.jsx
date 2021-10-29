@@ -78,8 +78,8 @@ const OrderSheetPrintModal = ({
           option_name,
           ship_address_main,
           ship_message,
-          price,
-          count,
+          final_paid_amount,
+          total_product_count,
           ship_pay_type,
           recipient_phone,
           buyer_phone,
@@ -103,9 +103,9 @@ const OrderSheetPrintModal = ({
                   <br />({option_name})
                 </ContentProperty>
                 <ContentProperty fontSize="13px" width="12rem">
-                  {price} 원
+                  {final_paid_amount} 원
                   <br />
-                  <br />({count})
+                  <br />({total_product_count})
                 </ContentProperty>
                 <ContentProperty fontSize="13px" width="12rem">
                   {ship_pay_type}
