@@ -18,7 +18,7 @@ const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
   ${Icon}
 `;
 // 발주 확인/발송관리
-const OrderManage = () => {
+const OrderManage = ({ shipCompanyDataState }) => {
   const limit = 16;
   const [allTableDataState, setAllTableDataState] = useState([]);
   const [tableDataState, setTableDataState] = useState([]);
@@ -233,6 +233,7 @@ const OrderManage = () => {
         loading={loading}
         handleTableChange={handleTableChange}
         tableData={tableDataState}
+        shipCompanyDataState={shipCompanyDataState}
       />
     </div>
   );

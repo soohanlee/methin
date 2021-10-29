@@ -67,6 +67,16 @@ const ReturnRefusalModal = (property) => {
     setInvoiceNumberState('');
   };
 
+  const deliveryCompanyList =
+    property.shipCompanyDataState.length > 0
+      ? property.shipCompanyDataState.map((item) => {
+          return { label: item.name, value: item.id };
+        })
+      : [
+          { label: '선택', value: 0 },
+          { label: 'CJ 대한통운', value: 1 },
+        ];
+
   return (
     <>
       <Modal
@@ -133,9 +143,4 @@ const deliveryTypeList = [
   { label: '퀵서비스', value: 2 },
   { label: '방문수령', value: 3 },
   { label: '직접전달', value: 4 },
-];
-
-const deliveryCompanyList = [
-  { label: '선택', value: 0 },
-  { label: 'CJ 대한통운', value: 1 },
 ];

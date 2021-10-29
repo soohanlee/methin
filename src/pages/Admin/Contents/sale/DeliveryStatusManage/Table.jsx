@@ -33,7 +33,14 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
+const Table = ({
+  shipCompanyDataState,
+  tableData,
+  count,
+  limit,
+  handleTableChange,
+  loading,
+}) => {
   const [directReturnVisibleState, setDirectReturnVisibleState] = useState(
     false,
   );
@@ -138,6 +145,7 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
         }}
         width={500}
         selectedTableRowsState={selectedTableRowsState}
+        shipCompanyDataState={shipCompanyDataState}
       ></ModifyInvoiceModal>
 
       <HeaderContainer>

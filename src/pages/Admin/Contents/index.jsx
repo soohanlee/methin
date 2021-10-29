@@ -1,7 +1,10 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { notification } from 'utils/notification';
 import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
 import { ROUTE_PATH } from 'configs/config';
+import { getShipCompanyList } from 'apis/payment';
 
 import RegisterProduct from 'pages/Admin/Contents/product/RegisterProduct';
 import ProductSearch from 'pages/Admin/Contents/product/ProductSearch';
@@ -31,8 +34,28 @@ const Container = styled.div`
   border-left: 1px solid #f0f0f0;
   height: 100%;
 `;
-
 const Contents = () => {
+  const [shipCompanyDataState, setShipCompanyDataState] = useState([]);
+
+  useEffect(() => {
+    async function fetchAndSetUser() {
+      await getShipCompanyData();
+    }
+    fetchAndSetUser();
+  }, []);
+
+  const getShipCompanyData = async (offset = 0) => {
+    try {
+      const result = await getShipCompanyList(offset);
+      const list = result.data.data.list;
+      setShipCompanyDataState(list);
+      notification.success('택배 정보를 가져왔습니다.');
+    } catch (e) {
+      console.log('e', e);
+      notification.error('택배 정보를 가져오지 못했습니다.');
+    }
+  };
+
   const prePath = ROUTE_PATH.admin.main;
   return (
     <Container>
@@ -80,17 +103,26 @@ const Contents = () => {
         <Route
           exact
           path={`${prePath}${ROUTE_PATH.admin.orderConfirm}`}
-          component={OrderConfirm}
+          // component={OrderConfirm}
+          render={() => (
+            <OrderConfirm shipCompanyDataState={shipCompanyDataState} />
+          )}
         />
         <Route
           exact
           path={`${prePath}${ROUTE_PATH.admin.orderManage}`}
-          component={OrderManage}
+          // component={OrderManage}
+          render={() => (
+            <OrderManage shipCompanyDataState={shipCompanyDataState} />
+          )}
         />
         <Route
           exact
           path={`${prePath}${ROUTE_PATH.admin.orderCancel}`}
-          component={OrderCancel}
+          // component={OrderCancel}
+          render={() => (
+            <OrderCancel shipCompanyDataState={shipCompanyDataState} />
+          )}
         />
         <Route
           exact
@@ -100,7 +132,10 @@ const Contents = () => {
         <Route
           exact
           path={`${prePath}${ROUTE_PATH.admin.deliveryStatusManage}`}
-          component={DeliveryStatusManage}
+          // component={DeliveryStatusManage}
+          render={() => (
+            <DeliveryStatusManage shipCompanyDataState={shipCompanyDataState} />
+          )}
         />
         <Route
           exact
