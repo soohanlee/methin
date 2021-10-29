@@ -1,32 +1,70 @@
+import { useRef, useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
+import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import moment from 'moment';
 
+const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
+  margin-left: ${(props) => props.left};
+  width: 20rem;
+`;
+const BasicDatePickerStyled = styled(BasicDatePicker)`
+  margin-left: ${(props) => props.left};
+  width: 20rem;
+`;
+const BasicSelectBoxStyled = styled(BasicSelectBox)`
+  margin-left: ${(props) => props.left};
+  width: 20rem;
+`;
+
+const SelectBoxLabelContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: ${(props) => props.left};
+  margin-top: 1rem;
+`;
 const ReturnRefusalModal = (property) => {
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
+  const [productShipDateState, setProductShipDateState] = useState();
+  const productShipDateInputRef = useRef();
+
+  const [shipTypeState, setShipTypeState] = useState(0); //배송방법
+  const [shipCompanyState, setShipCompanyState] = useState(0); //택배사
+  const [invoiceNumberState, setInvoiceNumberState] = useState([]); //송장번호
+
+  const productShipInfoInputRef = useRef();
+
+  useEffect(() => {
+    resetData();
+  }, [property.visible === true]);
+
+  const handleproductShipDate = (value) => {
+    setProductShipDateState(value);
   };
 
-  const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
-    margin-left: ${(props) => props.left};
-    width: 20rem;
-  `;
-  const BasicSelectBoxStyled = styled(BasicSelectBox)`
-    margin-left: ${(props) => props.left};
-    width: 20rem;
-  `;
+  const handleShipTypeSelectOnChange = (value) => {
+    setShipTypeState(value);
+  };
 
-  const SelectBoxLabelContainer = styled.div`
-    display: flex;
-    align-items: center;
-    margin-left: ${(props) => props.left};
-    margin-top: 1rem;
-  `;
+  const handleShipCompanySelectOnChange = (value) => {
+    setShipCompanyState(value);
+  };
 
-  const okClick = () => {
+  const handleInvoiceNumChange = (value) => {
+    setInvoiceNumberState(value.target.value);
+  };
+
+  const handleOkClick = () => {
     property.onOk();
+  };
+
+  const resetData = () => {
+    setProductShipDateState(moment());
+    setShipTypeState(0);
+    setShipCompanyState(0);
+    setInvoiceNumberState('');
   };
 
   return (
@@ -35,7 +73,7 @@ const ReturnRefusalModal = (property) => {
         title={property.title}
         centered
         visible={property.visible}
-        onOk={okClick}
+        onOk={handleOkClick}
         onCancel={property.onCancel}
         width={700}
         okText="발송처리"
@@ -43,18 +81,45 @@ const ReturnRefusalModal = (property) => {
       >
         <SelectBoxLabelContainer>
           <div>상품 발송일</div>
-          <BasicTextInputBoxStyled left="8.5rem" />
+          <BasicDatePickerStyled
+            value={productShipDateState}
+            onChange={handleproductShipDate}
+            ref={productShipDateInputRef}
+            left="9.3rem"
+          />
         </SelectBoxLabelContainer>
 
         <SelectBoxLabelContainer>
           <div>배송방법 선택</div>
-          <BasicSelectBoxStyled left="8rem" list={WaySelect} />
+          <BasicSelectBoxStyled
+            value={shipTypeState}
+            onChange={handleShipTypeSelectOnChange}
+            left="8rem"
+            list={deliveryTypeList}
+          />
         </SelectBoxLabelContainer>
 
         <SelectBoxLabelContainer>
           <div>배송정보 입력</div>
-          <BasicSelectBoxStyled left="8rem" list={companySelect} />
-          <BasicTextInputBoxStyled />
+          <BasicSelectBoxStyled
+            value={shipCompanyState}
+            onChange={handleShipCompanySelectOnChange}
+            left="8rem"
+            list={deliveryCompanyList}
+            disabled={shipTypeState === 1 ? '' : 'disabled'}
+          />
+          <BasicTextInputBoxStyled
+            value={invoiceNumberState}
+            onChange={handleInvoiceNumChange}
+            ref={productShipInfoInputRef}
+            disabled={
+              shipTypeState !== 1 ||
+              shipCompanyState === 0 ||
+              shipCompanyState === undefined
+                ? 'disabled'
+                : ''
+            }
+          />
         </SelectBoxLabelContainer>
       </Modal>
     </>
@@ -62,16 +127,15 @@ const ReturnRefusalModal = (property) => {
 };
 export default ReturnRefusalModal;
 
-const WaySelect = [
-  { value: '0', label: '택배,등기,소포' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+const deliveryTypeList = [
+  { label: '선택', value: 0 },
+  { label: '택배,등기,소포', value: 1 },
+  { label: '퀵서비스', value: 2 },
+  { label: '방문수령', value: 3 },
+  { label: '직접전달', value: 4 },
 ];
 
-const companySelect = [
-  { value: '0', label: '택배사 선택' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+const deliveryCompanyList = [
+  { label: '선택', value: 0 },
+  { label: 'CJ 대한통운', value: 1 },
 ];

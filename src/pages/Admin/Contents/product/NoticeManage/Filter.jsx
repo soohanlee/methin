@@ -9,6 +9,7 @@ import LabelContents from 'pages/Admin/components/Label/LabelContents';
 import { Input as OriginInput } from 'pages/Admin/components/styled/Input';
 
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import moment from 'moment';
 
 const Container = styled.div`
   padding: 2rem;
@@ -47,40 +48,64 @@ const ItemWrap = styled.div`
 `;
 
 const Filter = ({ getApiNoticeData }) => {
-  const titleRef = useRef(null);
-  const [dateRangeState, setDateRangeState] = useState('today');
+  const [searchTypeState, setSearchTypeState] = useState(0); //검색어 드랍박스
+  const searchRef = useRef(''); //검색어 인풋
+  const [searchInputState, setsearchInputState] = useState(''); //검색어 인풋박스
+  const [classificationState, setClassificationState] = useState(0); //분류 드랍박스
+  const [classification2State, setClassification2State] = useState(0); //전시상태 드랍박스
+  const [startDateState, setStarttDateState] = useState(moment()); //시작날짜
+  const [endDateState, setEndDateState] = useState(moment()); //끝날짜
+  const [dateRangeState, setDateRangeState] = useState(0); //기간버튼
   const history = useHistory();
 
   const handleSearchNameChange = (value) => {
-    console.log('value', value);
+    setSearchTypeState(value);
   };
 
   const handleTypeListChange = (value) => {
-    console.log('value', value);
+    setClassificationState(value);
   };
 
   const handleDisplayChange = (value) => {
-    console.log('value', value);
+    setClassification2State(value);
   };
 
   const handleStartDateChange = (value) => {
-    console.log(value);
+    setStarttDateState(value);
   };
 
   const handleEndDateChange = (value) => {
-    console.log(value);
+    setEndDateState(value);
+  };
+
+  const handleSearchInputChange = (value) => {
+    setsearchInputState(value.target.value);
   };
 
   const handleRegisterNotice = () => {
-    console.log(history);
     history.push(`${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.registerNotice}`);
   };
 
   const handleSearchOnClick = () => {
+    console.log(searchTypeState);
+    console.log(searchRef.current.state.value);
+    console.log(classificationState);
+    console.log(classification2State);
+    console.log(dateRangeState);
+    console.log(startDateState._d);
+    console.log(endDateState._d);
     getApiNoticeData();
   };
+
   const handleResetOnClick = () => {
-    getApiNoticeData();
+    setSearchTypeState(0);
+    setsearchInputState('');
+    setClassificationState(0);
+    setClassification2State(0);
+    var nowDate = moment();
+    setStarttDateState(nowDate);
+    setEndDateState(nowDate);
+    setDateRangeState(0);
   };
 
   return (
@@ -91,16 +116,27 @@ const Filter = ({ getApiNoticeData }) => {
       <LabelContents title="검색어">
         <BasicSelectBox
           list={searchNameList}
+          value={searchTypeState}
           onChange={handleSearchNameChange}
         />
-        <Input ref={titleRef} placeholder={'제목을 입력하세요'} />
+        <Input
+          value={searchInputState}
+          onChange={handleSearchInputChange}
+          ref={searchRef}
+          placeholder={'제목을 입력하세요'}
+        />
       </LabelContents>
       <LabelContents title="상세검색">
         <ItemContainer>
           <ItemWrap>
-            <BasicSelectBox list={typeList} onChange={handleTypeListChange} />
+            <BasicSelectBox
+              value={classificationState}
+              list={typeList}
+              onChange={handleTypeListChange}
+            />
             <DisplaySelectBox
               list={displayList}
+              value={classification2State}
               onChange={handleDisplayChange}
             />
           </ItemWrap>
@@ -109,18 +145,28 @@ const Filter = ({ getApiNoticeData }) => {
               value={dateRangeState}
               onChange={(e) => setDateRangeState(e.target.value)}
             >
-              <Radio.Button value="today">오늘</Radio.Button>
-              <Radio.Button value="week">1주일</Radio.Button>
-              <Radio.Button value="month">1개월</Radio.Button>
-              <Radio.Button value="3month">3개월</Radio.Button>
-              <Radio.Button value="6month">6개월</Radio.Button>
-              <Radio.Button value="year">1년</Radio.Button>
+              <Radio.Button value={0}>오늘</Radio.Button>
+              <Radio.Button value={1}>1주일</Radio.Button>
+              <Radio.Button value={2}>1개월</Radio.Button>
+              <Radio.Button value={3}>3개월</Radio.Button>
+              <Radio.Button value={4}>6개월</Radio.Button>
+              <Radio.Button value={5}>1년</Radio.Button>
             </Radio.Group>
           </ItemWrap>
           <ItemWrap>
-            <BasicDatePicker onChange={handleStartDateChange} />
+            <BasicDatePicker
+              value={startDateState}
+              onChange={(value) => {
+                handleStartDateChange(value);
+              }}
+            />
             {`　~　`}
-            <BasicDatePicker onChange={handleEndDateChange} />
+            <BasicDatePicker
+              value={endDateState}
+              onChange={(value) => {
+                handleEndDateChange(value);
+              }}
+            />
           </ItemWrap>
         </ItemContainer>
       </LabelContents>
@@ -135,21 +181,21 @@ const Filter = ({ getApiNoticeData }) => {
 export default Filter;
 
 const searchNameList = [
-  { label: '제목', value: 'title' },
-  { label: '번호', value: 'number' },
+  { label: '제목', value: 0 },
+  { label: '번호', value: 1 },
 ];
 
 const typeList = [
-  { label: '분류 전체', value: 'all' },
-  { label: '일반', value: 'normal' },
-  { label: '이벤트', value: 'event' },
-  { label: '배송지연', value: 'delivery' },
-  { label: '상품', value: 'product' },
+  { label: '분류 전체', value: 0 },
+  { label: '일반', value: 1 },
+  { label: '이벤트', value: 2 },
+  { label: '배송지연', value: 3 },
+  { label: '상품', value: 4 },
 ];
 
 const displayList = [
-  { label: '전시상태 전체', value: 'all' },
-  { label: '전시대기', value: 'wait' },
-  { label: '전시중', value: 'ing' },
-  { label: '전시중지', value: 'stop' },
+  { label: '전시상태 전체', value: 0 },
+  { label: '전시대기', value: 1 },
+  { label: '전시중', value: 2 },
+  { label: '전시중지', value: 3 },
 ];

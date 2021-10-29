@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
+import { Radio } from 'antd';
 import { css } from 'styled-components';
 import BasicCheckBox from 'pages/Admin/components/Form/BasicCheckBox';
 import BasicTextArea from 'pages/Admin/components/Form/BasicTextArea';
@@ -8,6 +9,7 @@ import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicBasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
+import moment from 'moment';
 
 const SettingsStyled = styled.div`
   width: 100%;
@@ -74,6 +76,7 @@ const BasicCheckBoxStyled = styled(BasicCheckBox)`
 
 const BasicTextAreaStyled = styled(BasicTextArea)`
   width: 20rem;
+  margin-right: 10rem;
 `;
 
 const BasicTextInputBoxStyled = styled(BasicTextInputBox)``;
@@ -105,19 +108,41 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
   const productNumberRef = useRef(null); //상품 번호
   const productMultiSearchRef = useRef(null); //상품 복수 검색
   const productNameRef = useRef(null); //상품명
+  const [productNumCheckBox, setProductNumCheckBox] = useState(true);
+  const [productNumTextArea, setProductNumTextArea] = useState();
+  const [productNameInput, setProductNameInput] = useState();
+  const [largeGroupState, setLargeGroupState] = useState(0); //대분류
+  const [middleGroupState, setMiddleGroupState] = useState(0); //중분류
+  const [saleTypeCheckState, setSaleTypeCheckState] = useState(1);
 
   const renderSearchInputBox = () => {
     return (
       <SearchTapInputContainerStyled>
         <TitleTextStyled>검색어</TitleTextStyled>
         <SubContainerStyled>
-          <BasicCheckBoxStyled label="상품번호" ref={productNumberRef} />
+          <BasicCheckBoxStyled
+            defaultChecked={true}
+            checked={productNumCheckBox}
+            onChange={(value) => {
+              setProductNumCheckBox(value.target.checked);
+            }}
+            label="상품번호"
+            ref={productNumberRef}
+          />
           <BasicTextAreaStyled
+            value={productNumTextArea}
+            onChange={(value) => {
+              setProductNumTextArea(value.target.value);
+            }}
             label="복수 검색
           (enter 또는 &#34;,&#34;로 구분)"
             ref={productMultiSearchRef}
           />
           <BasicTextInputBoxStyled
+            value={productNameInput}
+            onChange={(value) => {
+              setProductNameInput(value.target.value);
+            }}
             textSize="10rem"
             label="상품명"
             ref={productNameRef}
@@ -127,29 +152,30 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
     );
   };
 
-  const allCheckRef = useRef(null); //전체체크
-  const saleNowCheckRef = useRef(null); //판매중 체크
-  const soldOutCheckRef = useRef(null); //품절 체크
-  const stopSaleCheckRef = useRef(null); //판매중지 체크
-  const endSaleCheckRef = useRef(null); //판매종료 체크
+  const handleSaleStatus = (e) => {
+    setSaleTypeCheckState(e.target.value);
+  };
 
   const renderSalesStatus = () => {
     return (
       <SalesStatusTapContainerStyled>
         <TitleTextStyled>판매상태</TitleTextStyled>
         <SubContainerStyled>
-          <BasicCheckBoxStyled label="전체" ref={allCheckRef} />
-          <BasicCheckBoxStyled label="판매중" ref={saleNowCheckRef} />
-          <BasicCheckBoxStyled label="품절" ref={soldOutCheckRef} />
-          <BasicCheckBoxStyled label="판매중지" ref={stopSaleCheckRef} />
-          <BasicCheckBoxStyled label="판매종료" ref={endSaleCheckRef} />
+          <Radio.Group
+            defaultValue={1}
+            onChange={handleSaleStatus}
+            value={saleTypeCheckState}
+          >
+            <Radio value={1}>전체</Radio>
+            <Radio value={2}>판매중</Radio>
+            <Radio value={3}>품절</Radio>
+            <Radio value={4}>판매중지</Radio>
+            <Radio value={5}>판매종료</Radio>
+          </Radio.Group>
         </SubContainerStyled>
       </SalesStatusTapContainerStyled>
     );
   };
-
-  const [largeGroupState, setLargeGroupState] = useState(''); //대분류
-  const [middleGroupState, setMiddleGroupState] = useState(''); //중분류
 
   const renderCategory = () => {
     return (
@@ -157,6 +183,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
         <TitleTextStyled>카테고리</TitleTextStyled>
         <SubContainerStyled>
           <BasicSelectBoxStyled
+            value={largeGroupState}
             list={largeCategory}
             width="20rem"
             onChange={(e) => {
@@ -164,6 +191,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
             }}
           />
           <BasicSelectBoxStyled
+            value={middleGroupState}
             list={middleCategory}
             width="20rem"
             onChange={(e) => {
@@ -176,82 +204,49 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
   };
 
   const [periodCategorySelectState, setPeriodCategorySelectState] = useState(
-    '',
+    periodCategory[0].value,
   ); //상품등록일
-  const [periodBtnState, setPeriodBtnState] = useState(''); //상품 기간 버튼
-  const [startDateState, setStartDateState] = useState(''); //상품 등록 시작일
-  const [endDateState, setEndDateState] = useState(''); //상품 등록 정지일
+  const [periodBtnState, setPeriodBtnState] = useState(0); //상품 기간 버튼
+  const [startDateState, setStartDateState] = useState(moment()); //상품 등록 시작일
+  const [endDateState, setEndDateState] = useState(moment()); //상품 등록 정지일
   const renderDateTerm = () => {
-    const periodBtnClick = (value) => {
-      setPeriodBtnState(value);
-    };
-
     return (
       <DateTermTapContainerStyled>
         <TitleTextStyled>기간</TitleTextStyled>
         <SubContainerStyled>
           <BasicSelectBoxStyled
+            value={periodCategorySelectState}
             list={periodCategory}
             width="13rem"
             onChange={(e) => {
               setPeriodCategorySelectState(e);
             }}
           />
-          <BasicButtonStyled
-            label="오늘"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('day');
-            }}
-          />
-          <BasicButtonStyled
-            label="1주일"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('week');
-            }}
-          />
-          <BasicButtonStyled
-            label="1개월"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('month');
-            }}
-          />
-          <BasicButtonStyled
-            label="3개월"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('threeMonth');
-            }}
-          />
-          <BasicButtonStyled
-            label="6개월"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('sixMonth');
-            }}
-          />
-          <BasicButtonStyled
-            label="1년"
-            width="8rem"
-            height="4rem"
-            onClick={() => {
-              periodBtnClick('year');
-            }}
-          />
+          <Radio.Group
+            defaultValue={0}
+            onChange={(e) => setPeriodBtnState(e.target.value)}
+            value={periodBtnState}
+          >
+            <Radio.Button value={0}>오늘</Radio.Button>
+            <Radio.Button value={1}>1주일</Radio.Button>
+            <Radio.Button value={2}>1개월</Radio.Button>
+            <Radio.Button value={3}>3개월</Radio.Button>
+            <Radio.Button value={4}>6개월</Radio.Button>
+            <Radio.Button value={5}>1년</Radio.Button>
+          </Radio.Group>
           <BasicDatePickerStyled
+            defaultValue={moment()}
+            format={'YYYY/MM/DD'}
+            value={startDateState}
             onChange={(value) => {
               setStartDateState(value);
             }}
           />
           ~
           <BasicDatePickerStyled
+            defaultValue={moment()}
+            format={'YYYY/MM/DD'}
+            value={endDateState}
             onChange={(value) => {
               setEndDateState(value);
             }}
@@ -263,17 +258,41 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
 
   const searchBtn = useRef(null); //검색
   const renderSearchButton = () => {
-    //검색 값들어가야함
-    const setSearchBtn = (value) => {
-      if (value != undefined) {
+    const handleSearchBtn = (value) => {
+      //검색 값들어가야함
+
+      console.log('------ProductSearch--------');
+      console.log(productNumberRef.current.state.checked); //상품번호체크박스
+      console.log(productMultiSearchRef.current.resizableTextArea.props.value); //TextArea
+      console.log(productNameRef.current.state.value); //상품명
+      console.log(saleTypeCheckState); //판매상태
+      console.log(largeGroupState); //카테고리 드랍박스
+      console.log(middleGroupState); //카테고리 드랍박스
+      console.log(periodCategorySelectState); //기간 드랍박스
+      console.log(periodBtnState); //기간버튼
+      console.log(startDateState._d); //
+      console.log(endDateState._d);
+      console.log('------ProductSearch--------');
+
+      if (value !== undefined) {
         getSearchProductData();
       } else {
         getApiProductData();
       }
     };
 
-    const setResetBtn = () => {
-      getApiProductData();
+    const handleResetBtn = () => {
+      setProductNumCheckBox(true);
+      setProductNumTextArea('');
+      setProductNameInput('');
+      setSaleTypeCheckState(1);
+      setLargeGroupState(largeCategory[0].value);
+      setMiddleGroupState(middleCategory[0].value);
+      setPeriodCategorySelectState(periodCategory[0].value);
+      setPeriodBtnState(0);
+      var nowDate = moment();
+      setStartDateState(nowDate);
+      setEndDateState(nowDate);
     };
 
     return (
@@ -287,7 +306,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
               type="primary"
               ref={searchBtn}
               margintop="5rem"
-              onClick={setSearchBtn}
+              onClick={handleSearchBtn}
             />
             <BasicButtonStyled
               label="초기화"
@@ -295,7 +314,7 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
               height="5rem"
               marginleft="2rem"
               margintop="5rem"
-              onClick={setResetBtn}
+              onClick={handleResetBtn}
             />
           </LineStyled>
         </SubContainerStyled>
@@ -318,22 +337,20 @@ const Setting = ({ getApiProductData, getSearchProductData }) => {
 
 export default Setting;
 const largeCategory = [
-  { value: '0', label: '대분류' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+  { value: 0, label: '대분류' },
+  { value: 1, label: '식품' },
 ];
 
 const middleCategory = [
-  { value: '0', label: '중분류' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+  { value: 0, label: '중분류' },
+  { value: 1, label: '가공식품' },
+  { value: 2, label: '냉동/간편조리식품' },
+  { value: 3, label: '다이어트식품' },
 ];
 
 const periodCategory = [
-  { value: '0', label: '상품등록일' },
-  { value: '1', label: '판매시작일' },
-  { value: '2', label: '판매종료일' },
-  { value: '3', label: '최종수정일' },
+  { value: 0, label: '상품등록일' },
+  { value: 1, label: '판매시작일' },
+  { value: 2, label: '판매종료일' },
+  { value: 3, label: '최종수정일' },
 ];

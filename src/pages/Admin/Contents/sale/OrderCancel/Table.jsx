@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button as OriginButton } from 'antd';
-import OriginTable from 'pages/Admin/components/Table/Table';
-import ReturnRefusalModal from 'pages/Admin/Contents/sale/OrderCancel/ReturnRefusalModal';
+import BasicTable from 'pages/Admin/components/Table/Table';
+import ReturnRefusalModal from './ReturnRefusalModal';
+import { CSVLink } from 'react-csv';
 
 const Container = styled.div`
   background: #fff;
@@ -29,54 +30,66 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ tableData, count }) => {
-  const [returnRefusalVisible, setReturnRefusalVisible] = useState(false);
+const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
+  //Table Select Key/ Data
+  const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
+  const [selectedTableRowsState, setSelectedTableRowsState] = useState([]);
 
-  //주문상태
-  for (var i = 0; i < tableData.length; i++) {
-    switch (tableData[i].status) {
-      case 0:
-        tableData[i].status = '결제대기';
-        break;
-      case 1:
-        tableData[i].status = '결제완료';
-        break;
-      case 2:
-        tableData[i].status = '상품준비';
-        break;
-      case 3:
-        tableData[i].status = '배송중';
-        break;
-      case 4:
-        tableData[i].status = '배송완료';
-        break;
-      case 5:
-        tableData[i].status = '취소완료';
-        break;
-      case 6:
-        tableData[i].status = '반품완료';
-        break;
+  const [returnRefusalVisibleState, setReturnRefusalVisibleState] = useState(
+    false,
+  );
+
+  const handleSuccessCancelProcessBtn = () => {
+    let length = selectedTableRowsState.length;
+
+    if (length > 0) {
+      let result = 1;
+      selectedTableRowsState.forEach((item) => {
+        if (item.status === '취소완료') {
+          result = -1;
+        }
+      });
+
+      if (result === 1) {
+        window.confirm(
+          `${count}건 중 ${length}건 환불처리 가능합니다. 환불 처리 진행하시겠습니까`,
+        );
+      } else {
+        alert(
+          '선택하신 주문 건은 취소 완료처리가 불가합니다.\n취소 처리상태가 "취소요청"인 주문건만 취소 완료처리 가능합니다.\n취소 처리상태를 확인해 주세요.',
+        );
+      }
+    } else {
+      alert('주문 건을 선택해주세요.');
     }
-
-    switch (tableData[i].cancel_status) {
-      case 0:
-        tableData[i].cancel_status = '취소';
-        break;
-    }
-  }
-
-  const setExcelDown = () => {
-    alert('엑셀다운');
   };
 
-  const setSuccessCancelProcess = () => {
-    window.confirm(
-      '1건 중 1건 환불처리 가능합니다. 환불 처리 진행하시겠습니까',
-    );
-  };
+  const handleRejectCancelProcessBtn = () => {
+    let length = selectedTableRowsState.length;
 
-  const setRejectCancelProcess = () => {
-    setReturnRefusalVisible(true);
+    if (length > 0) {
+      let result = 1;
+      selectedTableRowsState.forEach((item) => {
+        if (item.status === '취소완료') {
+          result = -1;
+        }
+      });
+
+      if (result === 1) {
+        setReturnRefusalVisibleState(true);
+      } else {
+        alert(
+          '선택하신 주문 건은 취소거부(취소철회)처리가 불가합니다.\n취소 처리상태가 "취소요청"인 주문건만 취소거부(취소철회) 처리 가능합니다.\n취소 처리상태를 확인해 주세요.',
+        );
+      }
+    } else {
+      alert('주문 건을 선택해주세요.');
+    }
+  };
+  const handleChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRows', selectedRows);
+    setSelectedTableKeysState(selectedRowKeys);
+    setSelectedTableRowsState(selectedRows);
   };
 
   return (
@@ -84,12 +97,12 @@ const Table = ({ tableData, count }) => {
       <ReturnRefusalModal
         centered
         title="취소건발송처리"
-        visible={returnRefusalVisible}
+        visible={returnRefusalVisibleState}
         onOk={() => {
-          setReturnRefusalVisible(false);
+          setReturnRefusalVisibleState(false);
         }}
         onCancel={() => {
-          setReturnRefusalVisible(false);
+          setReturnRefusalVisibleState(false);
         }}
         width={500}
       ></ReturnRefusalModal>
@@ -97,21 +110,32 @@ const Table = ({ tableData, count }) => {
       <HeaderContainer>
         <Title>목록(총 {count}개)</Title>
         <ButtonContainer>
-          <Button onClick={setExcelDown}>엑셀다운</Button>
+          <CSVLink data={tableData} headers={columns} filename={'취소목록.csv'}>
+            <Button>엑셀다운</Button>
+          </CSVLink>
         </ButtonContainer>
       </HeaderContainer>
 
-      <OriginTable
-        scroll={{ x: '50vw', y: 500 }}
+      <BasicTable
+        scroll={{ x: 'max-content', y: '20vw' }}
         data={tableData}
         columns={columns}
         selectionType="checkbox"
-        onChange={() => {}}
+        onChange={handleChange}
+        onTableChange={handleTableChange}
+        loading={loading}
+        total={count}
+        pageSize={limit}
       />
 
       <ButtomContainer>
-        <Button onClick={setSuccessCancelProcess}>취소 완료처리</Button>
-        <Button onClick={setRejectCancelProcess}>취소 거부처리</Button>
+        <Button onClick={handleSuccessCancelProcessBtn}>취소 완료처리</Button>
+        <Button
+          selectedTableRowsState={selectedTableRowsState}
+          onClick={handleRejectCancelProcessBtn}
+        >
+          취소 거부처리
+        </Button>
       </ButtomContainer>
     </Container>
   );
@@ -121,27 +145,50 @@ export default Table;
 
 const columns = [
   {
+    label: '주문번호',
+    key: 'id',
     title: '주문번호',
     dataIndex: 'id',
+    align: 'center',
+    width: 100,
   },
   {
+    label: '주문상태',
+    key: 'status',
     title: '주문상태',
     dataIndex: 'status',
+    align: 'center',
+    width: 150,
   },
   {
+    label: '취소 처리상태',
+    key: 'cancel_status',
     title: '취소 처리상태',
     dataIndex: 'cancel_status',
+    align: 'center',
+    width: 150,
   },
   {
+    label: '결제일',
+    key: 'paid_at',
     title: '결제일',
     dataIndex: 'paid_at',
+    align: 'center',
+    width: 200,
   },
   {
+    label: '취소요청일',
+    key: 'canceled_at',
     title: '취소요청일',
     dataIndex: 'canceled_at',
+    align: 'center',
+    width: 200,
   },
   {
+    label: '취소사유',
+    key: 'cancel_reason',
     title: '취소사유',
     dataIndex: 'cancel_reason',
+    align: 'center',
   },
 ];

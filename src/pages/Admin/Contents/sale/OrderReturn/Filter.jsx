@@ -32,19 +32,25 @@ const Input = styled(OriginInput)`
 `;
 
 const Filter = () => {
-  const [datePeriod, setDatePeriod] = useState('');
+  const [datePeriodState, setDatePeriodState] = useState(0);
+  const [periodTypeState, setPeriodTypeState] = useState(0);
+  const [detailTypeState, setDetailTypeState] = useState(0);
+  const [otherTypeState, setOtherTypeStateState] = useState(0);
 
   const detailRef = useRef(null);
 
   const handleSearchPeriodChange = (value) => {
+    setPeriodTypeState(value);
     console.log(value);
   };
 
   const handledetailChange = (value) => {
+    setDetailTypeState(value);
     console.log(value);
   };
 
   const handleOrderStateChange = (value) => {
+    setOtherTypeStateState(value);
     console.log(value);
   };
 
@@ -66,16 +72,17 @@ const Filter = () => {
         <SelectBox
           list={searchPeriodList}
           onChange={handleSearchPeriodChange}
+          value={periodTypeState}
         />
         <RadioGroupContainer>
           <Radio.Group
-            value={datePeriod}
-            onChange={(e) => setDatePeriod(e.target.value)}
+            value={datePeriodState}
+            onChange={(e) => setDatePeriodState(e.target.value)}
           >
-            <Radio.Button value="today">오늘</Radio.Button>
-            <Radio.Button value="1week">1주일</Radio.Button>
-            <Radio.Button value="1month">1개월</Radio.Button>
-            <Radio.Button value="3month">3개월</Radio.Button>
+            <Radio.Button value={0}>오늘</Radio.Button>
+            <Radio.Button value={1}>1주일</Radio.Button>
+            <Radio.Button value={2}>1개월</Radio.Button>
+            <Radio.Button value={3}>3개월</Radio.Button>
           </Radio.Group>
         </RadioGroupContainer>
 
@@ -85,12 +92,20 @@ const Filter = () => {
       </LabelContents>
 
       <LabelContents title="상세조건">
-        <SelectBox list={detailList} onChange={handledetailChange} />
+        <SelectBox
+          value={detailTypeState}
+          list={detailList}
+          onChange={handledetailChange}
+        />
         <Input ref={detailRef} />
       </LabelContents>
 
       <LabelContents title="처리상태">
-        <SelectBox list={orderStateList} onChange={handleOrderStateChange} />
+        <SelectBox
+          value={otherTypeState}
+          list={orderStateList}
+          onChange={handleOrderStateChange}
+        />
       </LabelContents>
 
       <ButtonContainer>
@@ -103,25 +118,25 @@ const Filter = () => {
 export default Filter;
 
 const searchPeriodList = [
-  { label: '반품 요청일', value: 'returnDate' },
-  { label: '결제일', value: 'settlementDay' },
+  { label: '반품 요청일', value: 0 },
+  { label: '결제일', value: 1 },
 ];
 
 const detailList = [
-  { label: '전체', value: 'all' },
-  { label: '수취인명', value: 'nameOfRecipient' },
-  { label: '구매자명', value: 'buyerName' },
-  { label: '구매자ID', value: 'buyerID' },
-  { label: '주문번호', value: 'orderNumber' },
-  { label: '상품주문번호', value: 'productOrderNumber' },
-  { label: '상품번호', value: 'productNumber' },
+  { label: '전체', value: 0 },
+  { label: '수취인명', value: 1 },
+  { label: '구매자명', value: 2 },
+  { label: '구매자ID', value: 3 },
+  { label: '주문번호', value: 4 },
+  { label: '상품주문번호', value: 5 },
+  { label: '상품번호', value: 6 },
 ];
 
 const orderStateList = [
-  { label: '전체', value: 'all' },
-  { label: '반품요청', value: 'orderReturnRequest' },
-  { label: '수거중', value: 'orderCollecting' },
-  { label: '수거완료', value: 'orderCollectSuccess' },
-  { label: '반품완료', value: 'orderReturnSuccess' },
-  { label: '반품철회', value: 'orderReturnWithdrawal' },
+  { label: '전체', value: 0 },
+  { label: '반품요청', value: 1 },
+  { label: '수거중', value: 2 },
+  { label: '수거완료', value: 3 },
+  { label: '반품완료', value: 4 },
+  { label: '반품철회', value: 5 },
 ];

@@ -3,11 +3,7 @@ import 'antd/dist/antd.css';
 import styled from 'styled-components';
 
 const ConfirmationRequestModal = (property) => {
-  const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
-
-  const okClick = () => {
+  const handleOkClick = () => {
     property.onOk();
   };
 
@@ -18,7 +14,7 @@ const ConfirmationRequestModal = (property) => {
     },
     {
       title: '상품주문번호',
-      dataIndex: 'delete',
+      dataIndex: 'id',
     },
     {
       title: '발송처리일',
@@ -36,7 +32,7 @@ const ConfirmationRequestModal = (property) => {
         title={property.title}
         centered
         visible={property.visible}
-        onOk={okClick}
+        onOk={handleOkClick}
         onCancel={property.onCancel}
         width={1200}
         okText="구매확정 요청"

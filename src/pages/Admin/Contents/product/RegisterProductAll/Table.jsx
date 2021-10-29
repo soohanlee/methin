@@ -1,30 +1,25 @@
 import React from 'react';
-
-import OriginTable from 'pages/Admin/components/Table/Table';
+import BasicTable from 'pages/Admin/components/Table/Table';
 import styled from 'styled-components';
 
-const CustomTable = styled(OriginTable)`
+const CustomTable = styled(BasicTable)`
   margin-bottom: 1rem;
+  width: 98%;
 `;
 
-const Table = ({ data }) => {
-  const wordData = ['핀매준비', '판매중', '판매종료'];
-
-  const NumDataToWord = () => {
-    //판매상태
-    for (var i = 0; i < data.length; i++) {
-      data[i].status = wordData[i];
-    }
-  };
-  NumDataToWord();
-
+const Table = ({ count, tableList, limit, handleTableChange, loading }) => {
   return (
     <>
       <CustomTable
-        scroll={{ x: '50vw', y: 500 }}
+        scroll={{ x: 'max-content', y: '28vw' }}
+        data={tableList}
         columns={columns}
-        data={data}
+        selectionType="checkbox"
         onChange={() => {}}
+        onTableChange={handleTableChange}
+        loading={loading}
+        total={count}
+        pageSize={limit}
       />
     </>
   );
@@ -37,33 +32,49 @@ const columns = [
     title: '처리상태',
     dataIndex: 'status',
     render: (text) => <a href={'www.naver.com'}>{text}</a>,
+    align: 'center',
+    width: 130,
   },
   {
     title: '실패사유',
     dataIndex: 'fail',
+    align: 'center',
+    width: 200,
   },
   {
     title: '상품번호',
     dataIndex: 'id',
+    align: 'center',
+    width: 100,
   },
   {
     title: '판매상태',
     dataIndex: 'status',
+    align: 'center',
+    width: 130,
   },
   {
     title: '카테고리',
     dataIndex: 'category',
+    align: 'center',
+    width: 130,
   },
   {
     title: '상품명',
     dataIndex: 'name',
+    align: 'center',
+    width: 150,
   },
   {
     title: '판매가',
     dataIndex: 'actual_price',
+    align: 'center',
+    width: 130,
   },
   {
     title: '재고수량',
     dataIndex: 'count',
+    align: 'center',
+    width: 100,
   },
 ];

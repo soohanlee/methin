@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const productUrl = `/api/admin/product`;
+const userProductUrl = `/api/product`;
 
 export const getProductList = async (offset) => {
   return await axios.get(`${productUrl}?offset=${offset}`);
@@ -35,7 +36,6 @@ export const registerProduct = async (data) => {
   //     - 0: 미리보기
   //     - 1: 노출
 
-  console.log(data);
   return await axios.post(`${productUrl}`, data);
 };
 
@@ -64,9 +64,7 @@ export const updateProductDetail = async (id, data) => {
 export const answerQNA = async (id, qna_id, data) => {
   //   - **answer_title**: string ⇒ 답변 제목
   // - **answer_body**: string ⇒ 답변 내용
-  console.log(id);
-  console.log(qna_id);
-  console.log(data);
+
   return await axios.patch(`${productUrl}/${id}/qna/${qna_id}/answer`, data);
 };
 
@@ -78,4 +76,39 @@ export const deleteRelatedProduct = async (id, related_product_id) => {
   return await axios.delete(
     `${productUrl}/${id}/related/${related_product_id}`,
   );
+};
+
+export const uploadImg = async (data) => {
+  return await axios.post(`/api/admin/image`, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export const getUserProductList = async (menu_id, data) => {
+  //   - **menu_id: number ⇒ 메뉴ID**
+  // - offset: number (default: 0, optional) ⇒ 페이지 번호
+  // - limit: number (default: 16, optional) ⇒ 페이지별 개수
+  return await axios.get(`${userProductUrl}?menu_id=${menu_id}`, data);
+};
+
+export const getUserProductDetail = async (id) => {
+  return await axios.get(`${userProductUrl}/${id}`);
+};
+
+export const getProductReviewDetail = async (id, data) => {
+  return await axios.get(`${userProductUrl}/${id}/review`, data);
+};
+
+export const getProductDetailQNA = async (id, data) => {
+  return await axios.get(`${userProductUrl}/${id}/qna`, data);
+};
+
+export const registerUserProductQna = async (id, data) => {
+  return await axios.post(`${userProductUrl}/${id}/qna`, data);
+};
+
+export const registerUserProductReview = async (id, data) => {
+  return await axios.post(`${userProductUrl}/${id}/review`, data);
 };

@@ -25,3 +25,19 @@ export const updateDeliveryDetail = async (id, data) => {
 export const deleteDeliveryDetail = async (id) => {
   return await axios.delete(`api/admin/ship/${id}`);
 };
+
+export const getUserAddressList = (data) => {
+  return axios.get(`/api/address`, data);
+};
+
+export const addUserAddress = (data) => {
+  return axios.post(`/api/address`, data);
+};
+
+export const updateUserAddress = (id, data) => {
+  return axios.patch(`/api/address/${id}`, data);
+};
+
+export const deleteUserAddress = (id) => {
+  return axios.delete(`/api/address/${id}`);
+};

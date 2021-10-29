@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { SelectableLabel } from 'components/styled/Form';
 import { ListContainer } from 'components/styled/Container';
@@ -25,7 +25,7 @@ const Selectbox = ({ list, selectedItem, onSelectedItem }) => {
     return list.map(({ value, key }) => {
       return (
         <SelectableLabel
-          seleted={key === selectedItem.key}
+          selected={key === selectedItem.key}
           onClick={() => handleClickItem(key, value)}
           key={key}
         >

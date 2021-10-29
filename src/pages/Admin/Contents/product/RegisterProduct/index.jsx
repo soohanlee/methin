@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Button } from 'antd';
 import styled from 'styled-components';
+import { COOKIE_KEYS } from 'configs/config';
 
 import {
   AS,
@@ -26,8 +27,11 @@ import {
 } from 'apis/product';
 import { removeRest } from 'utils/common';
 import { notification } from 'utils/notification';
+import { ROUTE_PATH } from 'configs/config';
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 70vw;
+`;
 
 const RegisterProduct = ({ history }) => {
   // 재고 수량
@@ -35,6 +39,8 @@ const RegisterProduct = ({ history }) => {
 
   // 상품명
   const [productName, setProductName] = useState('');
+  // 카테고리
+  const [category, setCategory] = useState({});
 
   // 판매가
   const [price, setPrice] = useState(0);
@@ -43,6 +49,7 @@ const RegisterProduct = ({ history }) => {
   const [saleType, setSaleType] = useState('won'); // won, percentage
   const [saleTypePrice, setSaleTypePrice] = useState(''); //할인 얼마 할 건지 가격
   const [VAT, setVAT] = useState(0); //0과세 1 면세 2 영세
+  const [stauts, setStatus] = useState(0); //0 미설정 1판매중 2 판매종료
 
   // 배송
   const [isDelivery, setIsDelivery] = useState('yes');
@@ -66,6 +73,12 @@ const RegisterProduct = ({ history }) => {
   // 구매혜택조건
   const [minPurchase, setMinPurchase] = useState(0);
   const [maxPurchase, setMaxPurchase] = useState(0);
+
+  //특이사항
+  const [specialMatters, setSpecialMatters] = useState();
+
+  // 옵션
+  const [option, setOption] = useState();
 
   const initState = () => {
     setPrice('');
@@ -135,7 +148,21 @@ const RegisterProduct = ({ history }) => {
 
     fetchData();
   }, []);
-
+  const addCategory = (primary, secondary) => {
+    if (!primary) return;
+    if (!secondary) {
+      //set only primary category
+      var newData = { ...category };
+      newData[primary] = [];
+      setCategory(newData);
+    } else {
+      let newData = { ...category };
+      if (newData[primary]) {
+        newData[primary] = newData[primary].concat(secondary);
+        setCategory(newData);
+      }
+    }
+  };
   const handleRegisterProductButtonClick = async () => {
     if (productName === '' || price === '') {
       notification.error('필수 입력사항을 입력해주세요.');
@@ -144,7 +171,7 @@ const RegisterProduct = ({ history }) => {
     try {
       const data = {
         name: productName, //상품이름
-        status: 0, // 0 미설정, 1: 판매중 , 2 판매종료 상품 판매상태
+        status: stauts, // 0 미설정, 1: 판매중 , 2 판매종료 상품 판매상태
         count: availableStock, // 상품재고수량
         main_image_id: null, // 이미지 ID
         // ship_info_id: 123,
@@ -165,14 +192,16 @@ const RegisterProduct = ({ history }) => {
         ship_free_cond_amount: deliveryFeeCondition, // 배송비 조건 n원이상 무료
         preview_status: 0, //전시상태 0 : no, 1yes
         jsondata: null, //stringified json data
-        description: 'df', //특이사항
-        Option: null,
+        description: specialMatters, //특이사항
+        option: option,
       };
       if (history.location.state) {
         const result = await updateProductDetail(history.location.state, data);
         if (result.status === 200) {
           notification.success('상품수정을 완료했습니다.');
-          history.push('/admin/edit-product');
+          history.push({
+            pathname: `${ROUTE_PATH.admin.main}${ROUTE_PATH.admin.productSearch}`,
+          });
         } else if (result.status === 400) {
           notification.error('상품명 혹은 가격을 입력해주세요.');
         } else {
@@ -196,7 +225,7 @@ const RegisterProduct = ({ history }) => {
 
   return (
     <Container>
-      <Category />
+      <Category category={category} addCategory={addCategory} />
       <ProductName value={productName} setValue={setProductName} />
       <Price
         price={price}
@@ -208,9 +237,11 @@ const RegisterProduct = ({ history }) => {
         saleTypePrice={saleTypePrice}
         saleType={saleType}
         VAT={VAT}
+        stauts={stauts}
         setSaleTypePrice={setSaleTypePrice}
         setSaleType={setSaleType}
         setVAT={setVAT}
+        setStatus={setStatus}
       />
       <AvailableStock
         setAvailableStock={setAvailableStock}
@@ -252,7 +283,10 @@ const RegisterProduct = ({ history }) => {
         setShipment={setShipment}
       />
       <ReturnExchange />
-      <AS />
+      <AS
+        specialMatters={specialMatters}
+        setSpecialMatters={setSpecialMatters}
+      />
       <PruchaseBenefitConditions
         minPurchase={minPurchase}
         maxPurchase={maxPurchase}

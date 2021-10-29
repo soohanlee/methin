@@ -61,17 +61,26 @@ const Table = ({
   data,
   scroll,
   x,
+  total,
+  pageSize,
+  onTableChange,
+  loading,
+  fixedCount,
+  selectedRowKeys,
   ...props
 }) => {
   // selectionType = 'checkbox' | 'radio' 타입은 둘중 하나로 들어와야합니다.
 
   const customColumns =
     columns &&
-    columns.map((item) => {
-      return { ...item, width: 100 };
+    columns.map((item, index) => {
+      let fixedType = index < fixedCount ? 'left' : '';
+
+      return { fixed: fixedType, ...item };
     });
 
   const rowSelection = {
+    selectedRowKeys,
     onChange: (selectedRowKeys, selectedRows) => {
       onChange(selectedRowKeys, selectedRows);
     },
@@ -95,7 +104,10 @@ const Table = ({
       }
       columns={customColumns}
       dataSource={data}
+      loading={loading}
       bordered
+      onChange={onTableChange}
+      pagination={{ total, pageSize }}
       scroll={scroll}
       {...props}
     />

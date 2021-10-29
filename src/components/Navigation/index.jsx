@@ -11,12 +11,15 @@ import { notification } from 'utils/notification';
 import { ListContainer as OriginListContainer } from 'components/styled/Container';
 import { Label } from 'components/styled/Form';
 
+import ResponsiveTemplate from 'template/ResponsiveTemplate';
+import MobileNavigation from 'components/Navigation/mobile';
+
 const Container = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  background: ${(props) => props.theme.SIGNITURE_MAIN};
+  background: ${(props) => props.theme.MAIN};
   padding: 2rem 6rem;
 `;
 
@@ -37,18 +40,20 @@ const ListContainer = styled(OriginListContainer)`
   width: 150px;
   right: 0;
   display: none;
-  top: 4.5rem;
+  top: 5.5rem;
+  flex-direction: column;
 `;
 
 const Icon = styled.div`
   position: relative;
+  cursor: pointer;
 `;
 
 const InfoContainer = styled.div`
   position: relative;
   padding: 2rem;
-  &:hover ${ListContainer} {
-    display: block;
+  &:hover > ${ListContainer} {
+    display: flex;
   }
 `;
 
@@ -67,8 +72,8 @@ const ItemLabel = styled(Label)`
   }
 
   &:hover {
-    color: ${(props) => props.theme.SIGNITURE_MAIN};
-    border-bottom: 0.1rem solid ${(props) => props.theme.SIGNITURE_MAIN};
+    color: ${(props) => props.theme.MAIN};
+    border-bottom: 0.1rem solid ${(props) => props.theme.MAIN};
   }
 `;
 
@@ -84,6 +89,27 @@ const MenuContainer = styled.div`
 
 const MenuItem = styled.div`
   padding: 0 2rem;
+  cursor: pointer;
+`;
+
+const LogoImg = styled.img`
+  width: 110px;
+`;
+
+const Img = styled.img`
+  width: 25px;
+  height: 25px;
+`;
+
+const LoginButton = styled.div`
+  color: ${(props) => props.theme.BACKGROUND};
+  font-weight: 500;
+  cursor: pointer;
+`;
+
+const LoginContainer = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Navigation = () => {
@@ -102,6 +128,17 @@ const Navigation = () => {
     history.push(`${ROUTE_PATH.main}`);
   };
 
+  const handleMovePage = (path, menuId) => {
+    history.push({
+      pathname: `${path}`,
+      state: menuId,
+    });
+  };
+
+  const handleMoveCartPage = () => {
+    history.push(ROUTE_PATH.cart);
+  };
+
   const handleLogout = async () => {
     try {
       cleanToken();
@@ -111,43 +148,106 @@ const Navigation = () => {
     }
   };
 
+  const handleMoveMyPage = () => {
+    history.push(`${ROUTE_PATH.mypage.main}${ROUTE_PATH.mypage.destination}`);
+  };
+
+  const handleMoveServiceCenter = () => {
+    history.push(
+      `${ROUTE_PATH.serviceCenter.main}${ROUTE_PATH.serviceCenter.notice}`,
+    );
+  };
+
   return (
-    <>
-      <Container>
-        <Logo onClick={handleMoveMainPage}>methin</Logo>
-        <SearchInput
-          onClick={handleSearchClick}
-          placeholder={'이 달의 베스트! 프로 다이어터를 위한 식품 대전'}
-        />{' '}
-        <UserContainer>
-          {userState.loginState === LOGGED_IN ? (
-            <UserContainer>
-              <IconContainer>
-                <Icon>장바구니</Icon>
+    <ResponsiveTemplate NonPCContents={<MobileNavigation isLogo />}>
+      <>
+        <Container>
+          <Logo onClick={handleMoveMainPage}>
+            <LogoImg
+              src={process.env.PUBLIC_URL + '/assets/images/logo-icon.svg'}
+            />
+          </Logo>
+          {/* <SearchInput
+            onClick={handleSearchClick}
+            placeholder={'이 달의 베스트! 프로 다이어터를 위한 식품 대전'}
+          /> */}
+          <UserContainer>
+            {userState.loginState === LOGGED_IN ? (
+              <UserContainer>
+                <IconContainer>
+                  <InfoContainer>
+                    <Icon>
+                      <Img
+                        src={
+                          process.env.PUBLIC_URL +
+                          '/assets/images/top-white-like-icon.svg'
+                        }
+                      />
+                    </Icon>
+                  </InfoContainer>
+
+                  <InfoContainer>
+                    <Icon onClick={handleMoveCartPage}>
+                      <Img
+                        src={
+                          process.env.PUBLIC_URL +
+                          '/assets/images/top-white-cart-icon.svg'
+                        }
+                      />
+                    </Icon>
+                  </InfoContainer>
+
+                  <InfoContainer>
+                    <Icon>
+                      <Img
+                        src={
+                          process.env.PUBLIC_URL +
+                          '/assets/images/top-white-mypage-icon.svg'
+                        }
+                      />
+                    </Icon>
+
+                    <ListContainer>
+                      <ItemLabel onClick={handleMoveMyPage}>
+                        마이페이지
+                      </ItemLabel>
+                      <ItemLabel onClick={handleMoveServiceCenter}>
+                        고객센터
+                      </ItemLabel>
+                      <ItemLabel onClick={handleLogout}>로그아웃</ItemLabel>
+                    </ListContainer>
+                  </InfoContainer>
+                </IconContainer>
+              </UserContainer>
+            ) : (
+              <LoginContainer>
                 <InfoContainer>
-                  <Icon>정보</Icon>
-                  <ListContainer>
-                    <ItemLabel>마이페이지</ItemLabel>
-                    <ItemLabel>개인정보수정</ItemLabel>
-                    <ItemLabel onClick={handleLogout}>로그아웃</ItemLabel>
-                  </ListContainer>
+                  <Icon onClick={handleMoveCartPage}>
+                    <Img
+                      src={
+                        process.env.PUBLIC_URL +
+                        '/assets/images/top-white-cart-icon.svg'
+                      }
+                    />
+                  </Icon>
                 </InfoContainer>
-              </IconContainer>
-            </UserContainer>
-          ) : (
-            <button onClick={handleMoveLoginPage}>Login</button>
-          )}
-        </UserContainer>
-      </Container>
-      <MenuContainer>
-        <MenuItem>전체보기</MenuItem>
-        <MenuItem>신상품</MenuItem>
-        <MenuItem>베스트</MenuItem>
-        <MenuItem>알뜰쇼핑</MenuItem>
-        <MenuItem>금주혜택</MenuItem>
-        <MenuItem>브랜드스토리</MenuItem>
-      </MenuContainer>
-    </>
+                <LoginButton onClick={handleMoveLoginPage}>로그인</LoginButton>
+              </LoginContainer>
+            )}
+          </UserContainer>
+        </Container>
+        <MenuContainer>
+          <MenuItem>전체보기</MenuItem>
+          <MenuItem onClick={() => handleMovePage(ROUTE_PATH.product, 1)}>
+            신상품
+          </MenuItem>
+          <MenuItem>베스트</MenuItem>
+          <MenuItem>알뜰쇼핑</MenuItem>
+          <MenuItem>금주혜택</MenuItem>
+          <MenuItem>브랜드스토리</MenuItem>
+        </MenuContainer>
+      </>
+    </ResponsiveTemplate>
   );
 };
 

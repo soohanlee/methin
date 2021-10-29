@@ -21,6 +21,8 @@ const BasicSelectBoxContainer = styled(BasicSelectBox)`
 `;
 
 const ReturnReasonModifyMadal = (property) => {
+  const [returnResasonState, setReturnResasonState] = useState(0);
+
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
@@ -44,6 +46,10 @@ const ReturnReasonModifyMadal = (property) => {
     },
   ];
 
+  const handleReturnResasonChange = (value) => {
+    setReturnResasonState(value);
+  };
+
   return (
     <>
       <Modal
@@ -59,7 +65,11 @@ const ReturnReasonModifyMadal = (property) => {
         <Table columns={columns} />
         <LabelBoxContainer>
           <div>반품사유 선택</div>
-          <BasicSelectBoxContainer list={ReturnResasonSelect} />
+          <BasicSelectBoxContainer
+            value={returnResasonState}
+            onChange={handleReturnResasonChange}
+            list={ReturnResasonSelect}
+          />
         </LabelBoxContainer>
         <LabelBoxContainer>
           <div>상세사유입력</div>
@@ -71,8 +81,8 @@ const ReturnReasonModifyMadal = (property) => {
 };
 export default ReturnReasonModifyMadal;
 const ReturnResasonSelect = [
-  { value: '0', label: '파손 및 불량' },
-  { value: '1', label: '뭐들어가지' },
-  { value: '2', label: '뭐들어가지2' },
-  { value: '3', label: '뭐들어가지3' },
+  { value: 0, label: '파손 및 불량' },
+  { value: 1, label: '뭐들어가지' },
+  { value: 2, label: '뭐들어가지2' },
+  { value: 3, label: '뭐들어가지3' },
 ];
