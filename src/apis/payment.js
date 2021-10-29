@@ -20,7 +20,9 @@ export const getPaymentUnpaidList = async (offset) => {
 export const getPaidWithPaymentConfirmedList = async (offset) => {
   // - offset: number (default: 0, optional) ⇒ 페이지 번호
   // - limit: number (default: 16, optional) ⇒ 페이지별 개수
-  return await axios.get(`${baseUrl}/paid-or-payment-confirmed?offset=${offset}`);
+  return await axios.get(
+    `${baseUrl}/paid-or-payment-confirmed?offset=${offset}`,
+  );
 };
 
 // 배송중 주문목록 => 배송현황 탭
@@ -40,4 +42,11 @@ export const getRefundedPaymentList = async (offset) => {
   // - offset: number (default: 0, optional) ⇒ 페이지 번호
   // - limit: number (default: 16, optional) ⇒ 페이지별 개수
   return await axios.get(`${baseUrl}/refunded?offset=${offset}`);
+};
+
+// 전체주문목록
+export const getShipCompanyList = async () => {
+  // offset: number
+  // limit number
+  return await axios.get(`${baseUrl}/ship-company`);
 };

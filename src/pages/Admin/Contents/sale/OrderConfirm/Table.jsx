@@ -49,7 +49,14 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
+const Table = ({
+  count,
+  tableData,
+  limit,
+  handleTableChange,
+  loading,
+  shipCompanyDataState,
+}) => {
   //Visible
   const [
     orderSheetPrintVisibleState,
@@ -93,7 +100,8 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
       }
     });
     let resultCompanyDatas = datas.map((item) => {
-      return item.ship_company_name;
+      console.log(item);
+      return 0;
     });
     let resultCodeDatas = datas.map((item) => {
       return item.ship_zip_code;
@@ -181,7 +189,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
           }}
           disabled={
             dataShipTypeState[record.key] !== 1 ||
-            dataShipCompanyState[record.key] === 0 ||
+            // dataShipCompanyState[record.key] === 0 ||
             dataShipCompanyState[record.key] === undefined
               ? 'disabled'
               : ''
@@ -426,6 +434,16 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
     setDataInvoiceNumberState(invoiceNumber);
   };
 
+  const deliveryCompanyList =
+    shipCompanyDataState.length > 0
+      ? shipCompanyDataState.map((item) => {
+          return { label: item.name, value: item.id };
+        })
+      : [
+          { label: '선택', value: 0 },
+          { label: 'CJ 대한통운', value: 1 },
+        ];
+
   return (
     <Container>
       <SearchContainer>
@@ -558,9 +576,4 @@ const deliveryTypeList = [
   { label: '퀵서비스', value: 2 },
   { label: '방문수령', value: 3 },
   { label: '직접전달', value: 4 },
-];
-
-const deliveryCompanyList = [
-  { label: '선택', value: 0 },
-  { label: 'CJ 대한통운', value: 1 },
 ];

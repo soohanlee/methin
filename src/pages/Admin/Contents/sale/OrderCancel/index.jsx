@@ -21,7 +21,7 @@ const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
 const Container = styled.div``;
 
 // 배송 현황 관리
-const OrderCancel = () => {
+const OrderCancel = ({ shipCompanyDataState }) => {
   const limit = 16;
   const [allTableDataState, setAllTableDataState] = useState([]);
   const [tableDataState, setTableDataState] = useState([]);
@@ -138,6 +138,7 @@ const OrderCancel = () => {
         limit={limit}
         handleTableChange={handleTableChange}
         loading={loading}
+        shipCompanyDataState={shipCompanyDataState}
       />
     </Container>
   );

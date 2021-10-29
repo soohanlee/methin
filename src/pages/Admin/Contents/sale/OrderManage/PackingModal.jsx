@@ -173,7 +173,7 @@ const PackingModal = (property) => {
       }
     });
     let resultCompanyDatas = datas.map((item) => {
-      return item.ship_company_name;
+      return 0;
     });
     let resultCodeDatas = datas.map((item) => {
       return item.ship_zip_code;

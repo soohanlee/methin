@@ -21,7 +21,7 @@ const AppstoreTwoToneIcon = styled(AppstoreTwoTone)`
 const Container = styled.div``;
 
 // 배송 현황 관리
-const DeliveryStatusManage = () => {
+const DeliveryStatusManage = ({ shipCompanyDataState }) => {
   const limit = 16;
   const [allTableDataState, setAllTableDataState] = useState([]);
   const [tableDataState, setTableDataState] = useState([]);
@@ -199,6 +199,7 @@ const DeliveryStatusManage = () => {
         limit={limit}
         loading={loading}
         handleTableChange={handleTableChange}
+        shipCompanyDataState={shipCompanyDataState}
       />
     </Container>
   );

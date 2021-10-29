@@ -43,7 +43,14 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
+const Table = ({
+  shipCompanyDataState,
+  tableData,
+  count,
+  limit,
+  handleTableChange,
+  loading,
+}) => {
   const invoiceNumber = useRef(null);
 
   const [
@@ -348,6 +355,16 @@ const Table = ({ tableData, count, limit, handleTableChange, loading }) => {
     setSelectedTableRowsState([]);
   };
 
+  const deliveryCompanyList =
+    shipCompanyDataState.length > 0
+      ? shipCompanyDataState.map((item) => {
+          return { label: item.name, value: item.id };
+        })
+      : [
+          { label: '선택', value: 0 },
+          { label: 'CJ 대한통운', value: 1 },
+        ];
+
   return (
     <Container>
       <ExcelModal
@@ -489,9 +506,4 @@ const deliveryTypeList = [
   { label: '퀵서비스', value: 2 },
   { label: '방문수령', value: 3 },
   { label: '직접전달', value: 4 },
-];
-
-const deliveryCompanyList = [
-  { label: '선택', value: 0 },
-  { label: 'CJ 대한통운', value: 1 },
 ];

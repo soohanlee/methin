@@ -30,7 +30,14 @@ const ButtomContainer = styled.div`
   margin-top: 4rem;
 `;
 
-const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
+const Table = ({
+  shipCompanyDataState,
+  count,
+  tableData,
+  limit,
+  handleTableChange,
+  loading,
+}) => {
   //Table Select Key/ Data
   const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
   const [selectedTableRowsState, setSelectedTableRowsState] = useState([]);
@@ -105,6 +112,7 @@ const Table = ({ count, tableData, limit, handleTableChange, loading }) => {
           setReturnRefusalVisibleState(false);
         }}
         width={500}
+        shipCompanyDataState={shipCompanyDataState}
       ></ReturnRefusalModal>
 
       <HeaderContainer>
