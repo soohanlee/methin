@@ -86,7 +86,7 @@ const InquiryConditionsBox = styled.div`
 `;
 
 const InquiryConditions = styled.div`
-  width: 60rem;
+  width: 65rem;
   height: 100%;
 
   display: flex;
@@ -118,7 +118,7 @@ const OrderDisturb = () => {
   const violenceCheckBoxRef = useRef(); //언어폭력
   const obstructionCheckBoxRef = useRef(); //영업방해
   const etcCheckBoxRef = useRef(); //기타
-  const [searchTypeState, setSearchTypeState] = useState(0); //조회조건 타입
+  const [searchTypeState, setSearchTypeState] = useState('all'); //조회조건 타입
   const searchTypeInputRef = useRef(); //조회조건인풋
 
   useEffect(() => {
@@ -276,9 +276,36 @@ const OrderDisturb = () => {
     );
   };
 
+  //검색글자를 포함하고있는 데이터를 조회
   const handleSearchBtn = () => {
-    console.log(searchTypeState);
-    console.log(searchTypeInputRef.current.state.value);
+    let tableData = [];
+
+    switch (searchTypeState) {
+      case 'all':
+        tableData = allTableDataState;
+        break;
+      case 'buyerId':
+        tableData = allTableDataState.filter((element) => {
+          return element.buyerID.includes(searchTypeInputState);
+        });
+        break;
+      case 'productOrderNumber':
+        tableData = allTableDataState.filter((element) => {
+          return element.productOrderNumber === searchTypeInputState;
+        });
+        break;
+      case 'registerDate':
+        tableData = allTableDataState.filter((element) => {
+          return element.registerDate === searchTypeInputState;
+        });
+        break;
+      case 'registerWhy':
+        tableData = allTableDataState.filter((element) => {
+          return element.registerWhy === searchTypeInputState;
+        });
+        break;
+    }
+    setTableDataState(tableData);
   };
   const renderDisturbSales = () => {
     const handleSearchType = (value) => {
@@ -298,7 +325,7 @@ const OrderDisturb = () => {
             <SelectBox
               value={searchTypeState}
               onChange={handleSearchType}
-              width="10rem"
+              width="15rem"
               list={InquiryConditionsTypeList}
             />
             <InputBox
@@ -354,20 +381,22 @@ const ResisterTypeList = [
   { label: '상품주문번호', value: 1 },
 ];
 const InquiryConditionsTypeList = [
-  { label: '전체', value: 0 },
-  { label: '구매자ID', value: 1 },
-  { label: '상품주문번호', value: 2 },
+  { label: '전체', value: 'all' },
+  { label: '구매자ID', value: 'buyerId' },
+  { label: '상품주문번호', value: 'productOrderNumber' },
+  { label: '등록일자', value: 'registerDate' },
+  { label: '등록사유', value: 'registerWhy' },
 ];
 
 const data = [
   {
-    buyerID: 'ㅁㅁ',
+    buyerID: 'fl',
     productOrderNumber: '123456789',
     registerDate: '2019-05-05',
     registerWhy: '심심해서',
   },
   {
-    buyerID: 'ㅁㅁ',
+    buyerID: 'ff',
     productOrderNumber: '123456789',
     registerDate: '2019-05-05',
     registerWhy: '심심해서',
