@@ -563,6 +563,7 @@ const Table = ({
         width={500}
         okText="확인"
         cancelText="취소"
+        selectedTableRowsState={selectedTableRowsState}
       ></SaleCancelModal>
     </Container>
   );
