@@ -3,6 +3,7 @@ import { Modal } from 'antd';
 import 'antd/dist/antd.css';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import TextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
+import { patchShipCancelConfirm } from 'apis/payment';
 
 const SaleCancelModal = (property) => {
   const [typeState, setTypeState] = useState(0);
@@ -25,6 +26,8 @@ const SaleCancelModal = (property) => {
     );
 
     if (resultValue) {
+      patchShipCancelConfirm(property.selectedTableRowsState[0].id);
+      property.onOk();
       alert('1건 중 1건의 취소 처리가 완료되었습니다.');
     }
   };
@@ -39,10 +42,7 @@ const SaleCancelModal = (property) => {
         title={property.title}
         centered
         visible={property.visible}
-        onOk={() => {
-          property.onOk();
-          handleOkClick();
-        }}
+        onOk={handleOkClick}
         onCancel={property.onCancel}
         width={500}
         okText="변경"

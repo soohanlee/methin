@@ -44,9 +44,17 @@ export const getRefundedPaymentList = async (offset) => {
   return await axios.get(`${baseUrl}/refunded?offset=${offset}`);
 };
 
-// 전체주문목록
+// 택배사 목록조회
 export const getShipCompanyList = async () => {
   // offset: number
   // limit number
   return await axios.get(`${baseUrl}/ship-company`);
+};
+
+// 발송 취소완료
+export const patchShipCancelConfirm = async (id) => {
+  // offset: number
+  // limit number
+  console.log(`${baseUrl}/${id}/cancel/confirm`);
+  return await axios.patch(`${baseUrl}/${id}/cancel/confirm`);
 };
