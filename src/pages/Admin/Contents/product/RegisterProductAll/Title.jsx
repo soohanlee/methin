@@ -44,7 +44,7 @@ const Title = ({ categoryList, dataList }) => {
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     listType: 'picture',
     beforeUpload(file) {
-      if (file.name.indexOf('xls') === -1) {
+      if (file.name.indexOf('xls') === -1 && file.name.indexOf('csv') === -1) {
         message.error(`${file.name} is not a xml`);
       } else {
         message.success(`${file.name} is xml`);
