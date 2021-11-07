@@ -93,6 +93,20 @@ const MenuItem = styled.div`
   cursor: pointer;
 `;
 
+const CategoryContainer = styled.div`
+  position: absolute;
+  min-width: 240px;
+`;
+
+const CategoryItem = styled(MenuItem)`
+  position: relative;
+  :hover {
+    ${CategoryContainer} {
+      background: red;
+    }
+  }
+`;
+
 const LogoImg = styled.img`
   width: 110px;
 `;
@@ -116,10 +130,35 @@ const LoginContainer = styled.div`
 const Navigation = () => {
   const history = useHistory();
   const userState = useContext(UserContext);
+  // const [menuList, setMenuList] = useState([]);
 
   const getMenu = async () => {
     const response = await getMenuList();
     console.log(response.data.data);
+    if (response && response.data && response.data.data) {
+      const list = response.data.data;
+      const maxDepth = 2;
+      const frontDepth = [];
+      for (const item of list) {
+        if (item.depth === 0) {
+          frontDepth.push(item);
+        } else if (item.depth === 1) {
+          for (const secondItem of frontDepth) {
+            if (secondItem.depth === item.parent_id) {
+              frontDepth.children.push(secondItem);
+            }
+          }
+        } else if (item.depth === 2) {
+          for (const secondItem of frontDepth) {
+            if (secondItem.depth === item.parent_id) {
+              frontDepth.children.push(secondItem);
+            }
+          }
+        }
+      }
+
+      const changeList = list.map((item) => {});
+    }
   };
 
   useEffect(() => {
@@ -169,6 +208,10 @@ const Navigation = () => {
   };
   console.log('history.location.pathname', history);
   const isHideNavigation = history.location.pathname === '/mobile/mypage';
+
+  const renderCategoryMenu = () => {
+    return <CategoryContainer>테스트</CategoryContainer>;
+  };
 
   return (
     <ResponsiveTemplate
@@ -251,7 +294,7 @@ const Navigation = () => {
           </UserContainer>
         </Container>
         <MenuContainer>
-          <MenuItem>전체보기</MenuItem>
+          <CategoryItem>전체 카테고리{renderCategoryMenu()}</CategoryItem>
           <MenuItem onClick={() => handleMovePage(ROUTE_PATH.product, 1)}>
             신상품
           </MenuItem>

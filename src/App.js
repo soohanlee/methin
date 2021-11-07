@@ -57,6 +57,8 @@ import Private from 'pages/Private';
 import InformationGuide from 'pages/information-guide/InformationGuide';
 import NoticeDetail from 'pages/service-center/Notice/NoticeDetail/NoticeDetail';
 
+import InitGoogle from 'google/init';
+
 const { Content } = Layout;
 
 const UserContainer = styled(Layout).attrs({ id: 'UserContainer' })`
@@ -189,7 +191,7 @@ function App() {
   return (
     <ThemeProvider theme={THEME}>
       <GlobalStyle theme={THEME} />
-
+      <InitGoogle />
       <Container>
         <UserContext.Provider value={state}>
           {location.pathname.includes(ROUTE_PATH.admin.main) ? (

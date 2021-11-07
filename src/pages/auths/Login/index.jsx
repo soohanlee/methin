@@ -32,6 +32,8 @@ import {
 import { AuthContainer } from 'pages/auths/styled';
 
 import { BreakPoint } from 'configs/config';
+
+import { user, registerGaEvent, action } from 'google/ga';
 // import MobileLogin from './mobile';
 
 const Container = styled(AuthContainer)`
@@ -161,6 +163,8 @@ const Login = () => {
     const id = watch('id');
     const password = watch('password');
     login.changeUserState(LOGGING_IN);
+    registerGaEvent(user, action.buy, '로그인');
+    console.log('클릭');
     try {
       const result = await logInWithCreds(id, password);
       const token = result.data.data.token;

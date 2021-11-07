@@ -117,8 +117,9 @@ export async function getIsAvalidAccessRefreshToken() {
 }
 
 export const getCartCookies = () => {
-  if (get(COOKIE_KEYS.cart)) {
-    return JSON.parse(get(COOKIE_KEYS.cart));
+  const getCart = get(COOKIE_KEYS.cart);
+  if (getCart) {
+    return JSON.parse(getCart);
   } else {
     return false;
   }
