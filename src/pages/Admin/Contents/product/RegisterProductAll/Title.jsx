@@ -5,6 +5,7 @@ import CategoryModal from './CategoryModal';
 import CountryModal from './CountryModal';
 import ImageModal from './ImageModal';
 import { CSVLink } from 'react-csv';
+
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -22,7 +23,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const Title = ({ categoryList, dataList }) => {
+const Title = ({ dataList }) => {
   const [categoryVisibleState, setCategoryVisibleState] = useState(false);
   const [countryVisibleState, setCountryVisibleState] = useState(false);
   const [imageVisibleState, setImageVisibleState] = useState(false);
@@ -48,25 +49,26 @@ const Title = ({ categoryList, dataList }) => {
         message.error(`${file.name} is not a xml`);
       } else {
         message.success(`${file.name} is xml`);
+        console.log(file);
+
         // return new Promise((resolve) => {
-        //   const reader = new FileReader();
-        //   reader.readAsDataURL(file);
-        //   reader.onload = () => {
-        //     const img = document.createElement('img');
-        //     img.src = reader.result;
-        //     img.onload = () => {
-        //       const canvas = document.createElement('canvas');
-        //       canvas.width = img.naturalWidth;
-        //       canvas.height = img.naturalHeight;
-        //       const ctx = canvas.getContext('2d');
-        //       ctx.drawImage(img, 0, 0);
-        //       ctx.fillStyle = 'red';
-        //       ctx.textBaseline = 'middle';
-        //       ctx.font = '33px Arial';
-        //       ctx.fillText('Ant Design', 20, 20);
-        //       canvas.toBlob(resolve);
-        //     };
+
+        // reader.onload = () => {
+        //   const img = document.createElement('img');
+        //   img.src = reader.result;
+        //   img.onload = () => {
+        //     const canvas = document.createElement('canvas');
+        //     canvas.width = img.naturalWidth;
+        //     canvas.height = img.naturalHeight;
+        //     const ctx = canvas.getContext('2d');
+        //     ctx.drawImage(img, 0, 0);
+        //     ctx.fillStyle = 'red';
+        //     ctx.textBaseline = 'middle';
+        //     ctx.font = '33px Arial';
+        //     ctx.fillText('Ant Design', 20, 20);
+        //     canvas.toBlob(resolve);
         //   };
+        // };
         // });
       }
     },
@@ -78,7 +80,6 @@ const Title = ({ categoryList, dataList }) => {
         title="카테고리 찾기"
         visible={categoryVisibleState}
         setVisible={setCategoryVisibleState}
-        categoryList={categoryList}
       />
       <CountryModal
         title="원산지 찾기"

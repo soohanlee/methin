@@ -36,12 +36,6 @@ const columns = [
     width: 130,
   },
   {
-    title: '실패사유',
-    dataIndex: 'fail',
-    align: 'center',
-    width: 200,
-  },
-  {
     title: '상품번호',
     dataIndex: 'id',
     align: 'center',
@@ -55,7 +49,7 @@ const columns = [
   },
   {
     title: '카테고리',
-    dataIndex: 'category',
+    dataIndex: 'menu',
     align: 'center',
     width: 130,
   },

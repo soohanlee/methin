@@ -42,7 +42,6 @@ const RegisterProductAll = () => {
       });
       setTableDataState(newResult);
       setTableCountState(count);
-      console.log(result);
     } catch (e) {
       notification.error('상품 정보를 가져오지 못했습니다.');
     }
@@ -55,7 +54,7 @@ const RegisterProductAll = () => {
 
   return (
     <div>
-      <Title categoryList={dataList} dataList={tableDataState} />
+      <Title dataList={tableDataState} />
       <Table
         tableList={tableDataState}
         limit={limit}
@@ -68,8 +67,3 @@ const RegisterProductAll = () => {
 };
 
 export default RegisterProductAll;
-
-const dataList = {
-  축산: ['닭가슴살', '돼지안심', '한우안심'],
-  곡물: ['오트밀'],
-};
