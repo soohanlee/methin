@@ -26,7 +26,11 @@ const SaleCancelModal = (property) => {
     );
 
     if (resultValue) {
-      patchShipCancelConfirm(property.selectedTableRowsState[0].id);
+      const data = {
+        from_admin: true,
+        cancel_reason: areaState,
+      };
+      patchShipCancelConfirm(property.selectedTableRowsState[0].id, data);
       property.onOk();
       alert('1건 중 1건의 취소 처리가 완료되었습니다.');
     }

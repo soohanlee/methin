@@ -8,6 +8,7 @@ import { notification } from 'utils/notification';
 import { getPaidWithPaymentConfirmedList } from 'apis/payment';
 import moment from 'moment';
 import { DateFormat } from 'configs/config';
+
 const Icon = css`
   font-size: 4rem;
   margin-right: 1rem;
@@ -121,8 +122,6 @@ const OrderConfirm = ({ shipCompanyDataState }) => {
 
   const categoryTypeClick = (value) => {
     let data = allTableDataState.filter((item) => {
-      console.log(item.status);
-      console.log(value);
       return item.status === value;
     });
     setTableDataState(data);
