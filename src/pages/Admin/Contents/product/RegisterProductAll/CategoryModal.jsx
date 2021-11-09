@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import BasicAutoComplete from 'pages/Admin/components/Form/BasicAutoComplete';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { useEffect, useState, useRef } from 'react';
+import { getMenu } from 'apis/menu';
+import { notification } from 'utils/notification';
 
 const ItemContainerStyled = styled.div`
   display: flex;
@@ -49,13 +51,15 @@ const BasicAutoCompleteStyled = styled(BasicAutoComplete)`
   margin-bottom: 1rem;
 `;
 
-const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
+const CategoryModal = ({ title, visible, setVisible }) => {
   const categoryRef = useRef();
   const [categoryTypeState, setCategoryTypeState] = useState(0);
   const [categoryInputState, setCategoryInputState] = useState(0);
   const [classificationdataState, setClassificationdataState] = useState({});
   const [selectedFirstItemState, setSelectedFirstItemState] = useState(0);
   const [selectdSecondItemState, setSelectedSecondItemState] = useState(0);
+  const [categoryDataState, setCategoryDataState] = useState([]);
+
   const dataKey = Object.keys(classificationdataState);
 
   const [selectCategoryState, setSelectCategoryState] = useState();
@@ -67,8 +71,54 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
   }, [visible === true]);
 
   useEffect(() => {
-    setClassificationdataState(categoryList);
+    async function fetchAndSetUser() {
+      await getApiProductData();
+    }
+    fetchAndSetUser();
   }, []);
+
+  const getApiProductData = async () => {
+    try {
+      let result = await getMenu();
+
+      result = result.data.data;
+      const newResult = result.map((item) => {
+        let { full_name } = item;
+        return { value: full_name };
+      });
+
+      let newResult2 = [];
+      let datas = [result[0].full_name];
+
+      result.forEach((item, count) => {
+        let { full_name, depth } = item;
+        if (count === 0) return;
+
+        if (depth === 0) {
+          let _datas = datas;
+          if (newResult2) {
+            newResult2 = [...newResult2, _datas];
+          } else {
+            newResult2 = [_datas];
+          }
+
+          datas = [full_name];
+          if (result.length - 1 === count) newResult2 = [...newResult2, datas];
+        } else {
+          datas = [...datas, full_name];
+        }
+      });
+
+      console.log(newResult2);
+      console.log(newResult2[0][0]);
+
+      setClassificationdataState(newResult2);
+      setCategoryDataState(newResult);
+      notification.success('카테고리 정보를 가져왔습니다.');
+    } catch (e) {
+      notification.error('카테고리 정보를 가져오지 못했습니다.');
+    }
+  };
 
   const handleFristItemClick = (value) => {
     setSelectedFirstItemState(value);
@@ -123,7 +173,7 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
             onChange={handleCategoryInputChnage}
             placeholder="카테고리명 입력"
             ref={categoryRef}
-            options={[{ value: 'text 1' }, { value: 'text 2' }]}
+            options={categoryDataState}
           ></BasicAutoCompleteStyled>
           <BasicButton onClick={handleSearchBtn} label="검색"></BasicButton>
         </_ContainerStyled>
@@ -150,15 +200,15 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
           <SubContainerStyled>
             <ItemTitleStyled>1차 분류</ItemTitleStyled>
             <SubItemContainerStyled>
-              {dataKey &&
-                dataKey.map((item) => (
-                  <div
-                    key={item}
-                    isClicked={item === selectedFirstItemState}
-                    onClick={() => handleFristItemClick(item)}
+              {classificationdataState &&
+                classificationdataState.map((item, count) => (
+                  <ItemStyled
+                    key={count}
+                    isClicked={count === selectedFirstItemState}
+                    onClick={() => handleFristItemClick(count)}
                   >
-                    {item}
-                  </div>
+                    {item[0][0]}
+                  </ItemStyled>
                 ))}
             </SubItemContainerStyled>
           </SubContainerStyled>
@@ -166,15 +216,17 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
             <ItemTitleStyled>2차 분류</ItemTitleStyled>
             <SubItemContainerStyled>
               {classificationdataState[selectedFirstItemState] &&
-                classificationdataState[selectedFirstItemState].map((item) => (
-                  <ItemStyled
-                    key={item}
-                    isClicked={item === selectdSecondItemState}
-                    onClick={() => handleSecondItemClick(item)}
-                  >
-                    {item}
-                  </ItemStyled>
-                ))}
+                classificationdataState[selectedFirstItemState].map(
+                  (item, count) => (
+                    <ItemStyled
+                      key={count}
+                      isClicked={count === selectdSecondItemState}
+                      onClick={() => handleSecondItemClick(count)}
+                    >
+                      {item}
+                    </ItemStyled>
+                  ),
+                )}
             </SubItemContainerStyled>
           </SubContainerStyled>
         </ItemContainerStyled>
@@ -241,3 +293,8 @@ const CategoryModal = ({ title, visible, setVisible, categoryList }) => {
   );
 };
 export default CategoryModal;
+
+const dataList = {
+  축산: ['닭가슴살', '돼지안심', '한우안심'],
+  곡물: ['오트밀'],
+};
