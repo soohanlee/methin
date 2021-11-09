@@ -11,6 +11,8 @@ import OrderSheetPrintModal from './OrderSheetPrintModal';
 import AddressModifyModal from './AddressModifyModal';
 import SaleCancelModal from './SaleCancelModal';
 
+import { patchConfirm } from 'apis/payment';
+
 const Container = styled.div`
   background: #fff;
   padding: 3rem;
@@ -100,7 +102,6 @@ const Table = ({
       }
     });
     let resultCompanyDatas = datas.map((item) => {
-      console.log(item);
       return 0;
     });
     let resultCodeDatas = datas.map((item) => {
@@ -338,7 +339,7 @@ const Table = ({
     },
   ];
 
-  const handleTableBtn = (id) => {
+  const handleTableBtn = async (id) => {
     switch (id) {
       case 'OrderConfirmation': {
         if (selectedTableRowsState.length > 0) {
@@ -352,8 +353,16 @@ const Table = ({
         }
 
         if (returnValue) {
+          const tempPromise = [];
+
+          selectedTableRowsState.forEach((item) => {
+            const promise = patchConfirm(item.id);
+            tempPromise.push(promise);
+          });
+
           let allOrder = selectedTableRowsState.length;
           let order = selectedTableRowsState.length;
+          await Promise.all(tempPromise);
           alert(
             `${allOrder}건 중 ${order}건의 발주확인 처리가 완료되었습니다.`,
           );
@@ -386,7 +395,6 @@ const Table = ({
     }
   };
   const handleChange = (selectedRowKeys, selectedRows) => {
-    console.log('selectedRows', selectedRows);
     setSelectedTableKeysState(selectedRowKeys);
     setSelectedTableRowsState(selectedRows);
   };

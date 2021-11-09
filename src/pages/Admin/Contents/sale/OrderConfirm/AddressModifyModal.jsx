@@ -5,6 +5,9 @@ import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import styled from 'styled-components';
 import DaumPostcodeModal from './DaumPostcodeModal';
+
+import { patchAdress } from 'apis/payment';
+
 const BasicButtonStyled = styled(BasicButton)`
   margin-left: 1rem;
 `;
@@ -56,6 +59,7 @@ const AddressModifyModal = (property) => {
   const initInfoData = () => {
     if (property.visible === false) return;
     if (property.selectedTableRowsState.length > 0) {
+      console.log(property.selectedTableRowsState[0]);
       setNameState(property.selectedTableRowsState[0].recipient_name);
       setPhonNumState(property.selectedTableRowsState[0].recipient_phone);
       setPhonNum2State(property.selectedTableRowsState[0].recipient_phone);
@@ -65,23 +69,30 @@ const AddressModifyModal = (property) => {
       setPostalCodeState(property.selectedTableRowsState[0].released_zip_code);
       setaddressState(property.selectedTableRowsState[0].ship_address_main);
       setDetailaddressState(
-        property.selectedTableRowsState[0].ship_address_main,
+        property.selectedTableRowsState[0].ship_address_sub,
       );
     }
   };
 
   const handleOkClick = () => {
-    console.log(nameRef.current.state.value);
-    console.log(phonNumRef.current.state.value);
-    console.log(phonNum2Ref.current.state.value);
-    console.log(postalCodeRef.current.state.value);
-    console.log(addressRef.current.state.value);
-    console.log(detailaddressRef.current.state.value);
+    const data = {
+      recipient_name: nameState,
+      recipient_phone: phonNumState,
+      recipient_phone2: phonNum2State,
+      ship_zip_code: postalCodeState,
+      ship_address_main: deliveryaddressState,
+      ship_address_sub: detailaddressState,
+      ship_message: property.selectedTableRowsState[0].ship_message,
+      ship_company_id: 0, //<-택배사ID가뭐지??
+      ship_number: property.selectedTableRowsState[0].ship_zip_code,
+    };
+
+    patchAdress(property.selectedTableRowsState[0].id, data);
+
     property.onCancel();
   };
 
   const handleInputBoxOnChange = (value, setState) => {
-    console.log(value);
     setState(value.target.value);
   };
 

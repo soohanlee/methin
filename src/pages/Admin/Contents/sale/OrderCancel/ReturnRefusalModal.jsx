@@ -6,7 +6,6 @@ import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicDatePicker from 'pages/Admin/components/Form/BasicDatePicker';
 import moment from 'moment';
-import { patchShipCancelConfirm } from 'apis/payment';
 
 const BasicTextInputBoxStyled = styled(BasicTextInputBox)`
   margin-left: ${(props) => props.left};

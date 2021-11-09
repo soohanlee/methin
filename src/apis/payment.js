@@ -52,9 +52,30 @@ export const getShipCompanyList = async () => {
 };
 
 // 발송 취소완료
-export const patchShipCancelConfirm = async (id) => {
-  // offset: number
-  // limit number
-  console.log(`${baseUrl}/${id}/cancel/confirm`);
-  return await axios.patch(`${baseUrl}/${id}/cancel/confirm`);
+export const patchShipCancelConfirm = async (id,data) => {
+//   - from_admin: boolean (optional)
+//     - true ⇒ 판매자 직접취소
+// - cancel_reason: string (optional) ⇒ 취소사유
+//     - from_admin: true일 경우에만 사용
+  return await axios.patch(`${baseUrl}/${id}/cancel/confirm`,data);
 };
+
+// 발주
+export const patchConfirm = async (id) => {
+  return await axios.patch(`${baseUrl}/${id}/payment-confirm`);
+};
+
+//고객 배송지 정보수정
+export const patchAdress = async (id,data) => {
+  // - recipient_name: string (optional) ⇒ 수취인명
+  // - recipient_phone: string (optional) ⇒ 수취인연락처
+  // - recipient_phone2: string (optional) ⇒ 수취인연락처2
+  // - ship_zip_code: string (optional) ⇒ 배송지 우편번호
+  // - ship_address_main: string (optional) ⇒ 배송지
+  // - ship_address_sub: string (optional) ⇒ 배송지 추가정보
+  // - ship_message: string (optional) ⇒ 배송메시지
+  // - ship_company_id: number (optional) ⇒ 택배사ID
+  // - ship_number: string (optional) ⇒ 운송장번호
+  return await axios.patch(`${baseUrl}/${id}/ship-info`,data);
+};
+
