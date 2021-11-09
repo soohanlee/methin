@@ -168,8 +168,8 @@ const ProductItem = ({
             <BeforePrice>{changeNumberDigits(beforePrice)}</BeforePrice>
           </PriceWrap>
           <SalePercentage>
-            {changeNumberDigits(salePercentage)}
-            {won ? '원' : '%'}
+            {salePercentage &&
+              `${changeNumberDigits(salePercentage)} ${won ? '원' : '%'}`}
           </SalePercentage>
         </PriceContainer>
         <TagContainer>

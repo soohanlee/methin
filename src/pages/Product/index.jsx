@@ -180,29 +180,29 @@ const Product = () => {
   };
 
   const renderProductList = () => {
-    if (mocuupProductList.length === 0) {
+    if (productList.length === 0) {
       return <EmptyContainer />;
     } else {
-      return mocuupProductList.map(
+      return productList.map(
         ({
           id,
-          img,
+          main_image_url,
           catergory,
-          description,
-          beforePrice,
-          afterPrice,
-          salePercentage,
+          name,
+          actual_price,
+          price,
+          discount_amount,
         }) => {
           return (
             <ProductItem
               key={id}
               id={id}
-              img={img}
+              img={main_image_url}
               catergory={catergory}
-              description={description}
-              beforePrice={beforePrice}
-              afterPrice={afterPrice}
-              salePercentage={salePercentage}
+              description={name}
+              beforePrice={actual_price}
+              afterPrice={price}
+              salePercentage={discount_amount}
               span={4}
               onCartClick={handleCartClick}
               onClick={() => handleProductDetailClick(id)}
@@ -231,7 +231,7 @@ const Product = () => {
           />
         </ContentsHeader>
         <ContentsBody>
-          <Row justify="space-between" style={{ rowGap: '1.6rem' }}>
+          <Row style={{ rowGap: '1.6rem', columnGap: '1.4rem' }}>
             {renderProductList()}
           </Row>
         </ContentsBody>
