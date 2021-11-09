@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import BasicAutoComplete from 'pages/Admin/components/Form/BasicAutoComplete';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import { useEffect, useState, useRef } from 'react';
-import { getMenu } from 'apis/menu';
+import { getCategory } from 'apis/category';
 import { notification } from 'utils/notification';
 
 const ItemContainerStyled = styled.div`
@@ -79,7 +79,7 @@ const CategoryModal = ({ title, visible, setVisible }) => {
 
   const getApiProductData = async () => {
     try {
-      let result = await getMenu();
+      let result = await getCategory();
 
       result = result.data.data;
       const newResult = result.map((item) => {
