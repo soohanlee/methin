@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
+import BasicUpload from 'pages/Admin/components/Form/BasicUpload';
 
 const InputBox = styled.div`
   display: flex;
@@ -70,9 +71,7 @@ const ExcelModal = (property) => {
         <div>엑셀 파일을 업로드해 주세요.</div>
         <InputBox>
           <BasicTextInputBoxStyled value={nameState} />
-          <Upload {...props}>
-            <BasicButton label="찾아보기" />
-          </Upload>
+          <BasicUpload BtnLabel="찾아보기" props={props}></BasicUpload>
         </InputBox>
       </Modal>
     </>
