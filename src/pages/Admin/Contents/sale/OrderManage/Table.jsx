@@ -11,6 +11,10 @@ import ExcelModal from './ExcelModal';
 import PackingModal from './PackingModal';
 import SaleCancelModal from './SaleCancelModal';
 
+import { patchShipConfirm } from 'apis/payment';
+import { patchShipCancelConfirm } from 'apis/payment';
+import { PostMockupreset } from 'apis/payment';
+
 const Container = styled.div`
   background: #fff;
   padding: 3rem;
@@ -251,7 +255,7 @@ const Table = ({
     },
   ];
 
-  const handleTableBtn = (id) => {
+  const handleTableBtn = async (id) => {
     switch (id) {
       case 'order': {
         if (selectedTableRowsState.length > 0) {
@@ -261,6 +265,21 @@ const Table = ({
             `${allOrder}개의 주문 건을 발송요청 하시겠습니까?\n요청시 동일 송장번호 내 모든 주문건에 대해 발송 처리가 진행됩니다.`,
           );
           if (returnValue) {
+            const tempPromise = [];
+
+            selectedTableRowsState.forEach((item) => {
+              const data = {
+                ship_company_id: 0,
+                ship_number: item.ship_zip_code,
+              };
+              const promise = patchShipConfirm(item.id, data);
+              tempPromise.push(promise);
+            });
+
+            let allOrder = selectedTableRowsState.length;
+            let order = selectedTableRowsState.length;
+            await Promise.all(tempPromise);
+
             alert(
               `선택하신 ${allOrder}개의 주문 건 중 ${order}개를 발송처리했습니다.`,
             );
@@ -301,6 +320,17 @@ const Table = ({
             `${allOrder}개 송장 출력건에 대해 택배사에 집하취소 요청을 하시겠습니까?\n요청시 동일 송장번호 내 모든 주문건에 대해 집하 취소 처리가 진행됩니다.`,
           );
           if (returnValue) {
+            const tempPromise = [];
+
+            selectedTableRowsState.forEach((item) => {
+              const promise = patchShipCancelConfirm(item.id);
+              tempPromise.push(promise);
+            });
+
+            let allOrder = selectedTableRowsState.length;
+            let order = selectedTableRowsState.length;
+            await Promise.all(tempPromise);
+
             alert(
               `${allOrder}건 중 ${order}건의 집하취소 처리가 완료되었습니다.`,
             );
@@ -428,6 +458,7 @@ const Table = ({
         width={500}
         okText="확인"
         cancelText="취소"
+        selectedTableRowsState={selectedTableRowsState}
       ></SaleCancelModal>
 
       <BasicTable
@@ -491,6 +522,13 @@ const Table = ({
             }}
           >
             집하취소
+          </Button>
+          <Button
+            onClick={() => {
+              PostMockupreset();
+            }}
+          >
+            목업리셋
           </Button>
         </LabelContents>
       </ButtomContainer>

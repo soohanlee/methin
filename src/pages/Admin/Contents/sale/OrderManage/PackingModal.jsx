@@ -6,7 +6,7 @@ import BasicButton from 'pages/Admin/components/Form/BasicButton';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicModal from 'pages/Admin/components/Modal/BasicModal';
 import BasicTable from 'pages/Admin/components/Table/Table';
-import { Button } from 'antd';
+import { patchShipConfirm } from 'apis/payment';
 
 const SelectBoxContainer = styled.div`
   display: flex;
@@ -47,11 +47,30 @@ const PackingModal = (property) => {
     setState(_array);
   };
 
-  const handleOkClick = () => {
+  const handleOkClick = async () => {
+    if (selectedTableRowsState.length != 0) {
+      const tempPromise = [];
+
+      selectedTableRowsState.forEach((item) => {
+        const data = {
+          ship_company_id: 0,
+          ship_number: item.ship_zip_code,
+        };
+        const promise = patchShipConfirm(item.id, data);
+        console.log(item.id);
+        console.log(data);
+        tempPromise.push(promise);
+      });
+
+      await Promise.all(tempPromise);
+    }
+
     property.onOk();
   };
 
   const handleApplyClick = () => {
+    console.log('apply');
+
     let shipType = [...dataShipTypeState];
     let shipCompany = [...dataShipCompanyState];
     let invoiceNumber = [...dataInvoiceNumberState];

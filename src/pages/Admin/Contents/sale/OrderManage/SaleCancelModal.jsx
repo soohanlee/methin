@@ -4,8 +4,10 @@ import 'antd/dist/antd.css';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import TextAreaBox from 'pages/Admin/components/Form/BasicTextArea';
 
+import { patchCancelConfirm } from 'apis/payment';
+
 const SaleCancelModal = (property) => {
-  const [typeState, setTypeState] = useState();
+  const [typeState, setTypeState] = useState(0);
   const [inputState, setInputState] = useState();
   const areaRef = useRef();
 
@@ -13,16 +15,20 @@ const SaleCancelModal = (property) => {
     setTypeState(value);
   };
 
-  const handleOkClick = () => {
-    console.log(typeState);
-    console.log(areaRef.current.resizableTextArea.props.value);
+  const handleOkClick = async () => {
+    const _category = SortViewList[typeState].label;
 
     var resultValue = window.confirm(
-      '총 1건 중 1개의 주문건을 상품품절 사유로 취소처리 하시겠습니까?\n상품품절 취소처리시 상품 품절처리도 동시 진행되며,\n구매자에게 추가배송비가 청구되지 않습니다.',
+      `주문건을 ${_category} 사유로 취소처리 하시겠습니까?\n상품품절 취소처리시 상품 품절처리도 동시 진행되며,\n구매자에게 추가배송비가 청구되지 않습니다.`,
     );
 
     if (resultValue) {
-      alert('1건 중 1건의 취소 처리가 완료되었습니다.');
+      const data = {
+        from_admin: false,
+        cancel_reason: inputState,
+      };
+      await patchCancelConfirm(property.selectedTableRowsState[0].id, data);
+      alert('주문건 취소 처리가 완료되었습니다.');
     }
   };
 
@@ -51,7 +57,7 @@ const SaleCancelModal = (property) => {
           resetData();
         }}
         width={500}
-        okText="변경"
+        okText="확인"
         cancelText="닫기"
       >
         <BasicSelectBox
