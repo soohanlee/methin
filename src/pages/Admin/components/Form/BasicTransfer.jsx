@@ -58,24 +58,24 @@ const CustomTransferCheckBoxParent = styled.div`
   margin-top: 1rem;
 `;
 
-const selectOptions = [
-  'Apple',
-  'Pear',
-  'Orange',
-  'Apple',
-  'Pear',
-  'Orange',
-  'Apple',
-  'Pear',
-  'Orange',
-  'Apple',
-  'Pear',
-  'Orange',
-  'Apple',
-  'Pear',
-  'Orange',
+let selectOptionsData = [
+  'Apple1',
+  'Pear2',
+  'Orange3',
+  'Apple4',
+  'Pear5',
+  'Orange6',
+  'Apple7',
+  'Pear8',
+  'Orange9',
+  'Apple10',
+  'Pear11',
+  'Orange12',
+  'Apple13',
+  'Pear14',
+  'Orange15',
 ];
-const applyOptions = ['Apple', 'Pear', 'Orange'];
+let applyOptionsData = ['Apple', 'Pear', 'Orange'];
 const CheckboxGroup = Checkbox.Group;
 
 const CustomCheckboxGroup = styled(Checkbox.Group)`
@@ -107,8 +107,10 @@ const BasicTransfer = ({ label }) => {
   const [selectCheckAll, setSelectCheckAll] = React.useState(false);
   const [applyCheckAll, setApplyCheckAll] = React.useState(false);
 
+  const [selectOptions, setSelectOptions] = React.useState(selectOptionsData);
+  const [applyOptions, setApplyOptions] = React.useState(applyOptionsData);
+
   const onSelectCheckAllChange = (e) => {
-    console.log(selectOptions);
     setSelectTransferCheckedList(e.target.checked ? selectOptions : []);
     setSelectTransferIndeterminate(false);
     setSelectCheckAll(e.target.checked);
@@ -126,6 +128,9 @@ const BasicTransfer = ({ label }) => {
       !!list.length && list.length < selectOptions.length,
     );
     setSelectCheckAll(list.length === selectOptions.length);
+
+    console.log(list);
+    console.log(selectOptions.length);
   };
 
   const onApplyTransferCheckChange = (list) => {
@@ -134,6 +139,38 @@ const BasicTransfer = ({ label }) => {
       !!list.length && list.length < applyOptions.length,
     );
     setApplyCheckAll(list.length === applyOptions.length);
+  };
+
+  const selectToApplyData = () => {
+    let filterData = selectOptions.filter((item) => {
+      let data = item;
+
+      for (let i = 0; i < selectTransferCheckedList.length; i++) {
+        if (item != selectTransferCheckedList[i]) {
+          //똑같지않음
+        } else {
+          //똑같으면 넘어가기
+          data = null;
+          break;
+        }
+      }
+      return data != null;
+    });
+    setSelectOptions([...filterData]);
+    const addApplyData = [...applyOptions, ...selectTransferCheckedList];
+    setApplyOptions([...addApplyData]);
+    setSelectTransferCheckedList([]);
+  };
+
+  const applyToSelectData = () => {
+    console.log(selectOptions);
+    console.log(applyOptions);
+  };
+
+  const createCheckbox = (Options) => {
+    return Options.map((item) => {
+      return <Checkbox value={item}>{item}</Checkbox>;
+    });
   };
 
   return (
@@ -157,17 +194,20 @@ const BasicTransfer = ({ label }) => {
           <CustomTransfer>
             <CustomTransferCheckBoxParent>
               <CustomCheckboxGroup
-                options={selectOptions}
                 value={selectTransferCheckedList}
                 onChange={onSelectTransferCheckChange}
-              ></CustomCheckboxGroup>
+              >
+                {createCheckbox(selectOptions)}
+              </CustomCheckboxGroup>
             </CustomTransferCheckBoxParent>
           </CustomTransfer>
         </CustomTransferTitle>
 
         <CustomButtonParent>
-          <CustomButton marginbottom="1rem">{'>'}</CustomButton>
-          <CustomButton>{'<'}</CustomButton>
+          <CustomButton onClick={selectToApplyData} marginbottom="1rem">
+            {'>'}
+          </CustomButton>
+          <CustomButton onClick={applyToSelectData}>{'<'}</CustomButton>
         </CustomButtonParent>
         <CustomTransferTitle>
           <CustomTransferTitleParent>
@@ -186,10 +226,11 @@ const BasicTransfer = ({ label }) => {
           <CustomTransfer>
             <CustomTransferCheckBoxParent>
               <CustomCheckboxGroup
-                options={applyOptions}
                 value={applyTransferCheckedList}
                 onChange={onApplyTransferCheckChange}
-              />
+              >
+                {createCheckbox(applyOptions)}
+              </CustomCheckboxGroup>
             </CustomTransferCheckBoxParent>
           </CustomTransfer>
         </CustomTransferTitle>
