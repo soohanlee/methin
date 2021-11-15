@@ -49,7 +49,7 @@ const InputBox = styled(Input)`
 
 const Registert = styled.div`
   margin-top: 2rem;
-  display: felx;
+  display: flex;
   width: 100%;
   height: 20rem;
   background-color: white;

@@ -4,8 +4,9 @@ import 'antd/dist/antd.css';
 import { Modal, Transfer, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import BasicTransfer from 'pages/Admin/components/Form/BasicTransfer';
 import { COOKIE_KEYS } from 'configs/config';
-import { get, set, remove } from 'js-cookie';
+import { get, set } from 'js-cookie';
 
 const CategoryModalBox = styled.div`
   padding: 2rem;
@@ -169,6 +170,7 @@ const QueryItemModal = (property) => {
               }}
             />
           </CategoryModalContent>
+          <BasicTransfer />
         </CategoryModalBox>
       </Modal>
     </>
