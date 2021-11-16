@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Button, PageHeader, Space, List, Form, Input, Select, Typography, Tree } from 'antd';
 import { DeleteFilled, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import { getMenu } from 'apis/menu';
+import { getCategoryAsTreeArray } from 'apis/category';
 import MenuItem from './menuItem';
-import { makeTreeToLinear, compareMenuItem } from './menuController.js';
+import { makeTreeToLinear, compareMenuItem } from './categoryController.js';
 
-function MenuManagementPage(props) {
+function CategoryManagementPage(props) {
     const [menuList, setMenuList] = useState([]);
     const [expandedKey, setExpandedKey] = useState(['test']);
 
@@ -22,7 +22,8 @@ function MenuManagementPage(props) {
     }, [menuList]);
 
     useEffect(async () => {
-        let menu = await getMenu();
+        let menu = await getCategoryAsTreeArray();
+        console.log(menu);
 
         initData.current = menu;
         setMenuList(menu);
@@ -61,20 +62,8 @@ function MenuManagementPage(props) {
         item.title = (
             <MenuItem
                 id={item.key}
-                title={item.name}
-                isDisplay={item.isDisplay}
-                setVisibility={setVisiblityMenuItem}>
+                title={item.name}>
             </MenuItem>);
-    }
-    function setVisiblityMenuItem(id, isVisible) {
-        let newState = [...menuList];
-
-        let item = findObjectById(newState, id);
-        if (item) {
-            item.isDisplay = isVisible;
-            setMenuList(newState);
-        }
-
     }
 
     const findObjectById = (root, id) => {
@@ -167,27 +156,10 @@ function MenuManagementPage(props) {
 
     return (
         <div>
-            <PageHeader title="메뉴 관리" subTitle="상품 판매 메뉴를 관리합니다." />
+            <PageHeader title="카테고리 관리" subTitle="상품 카테고리를 관리합니다." />
             <Space direction='vertical' align='end'>
                 <Space>
-                    <div style={{ height: 500, border: '1px solid #f0f0f0', padding: 20 }}>
-                        <Form name="menu" onFinish={addMenu}>
-                            <Form.Item label="메뉴명" name="name" rules={[{ required: true, message: '메뉴 이름은 필수입니다!' }, { max: 20, message: '최대 길이는 20자입니다.' }]}>
-                                <Input />
-                            </Form.Item>
-                            <Form.Item label="속성" name="option" rules={[{ required: true, message: '메뉴 속성은 필수입니다.' }]}>
-                                <Select>
-                                    <Select.Option value='product'>상품</Select.Option>
-                                    <Select.Option value='event'>이벤트</Select.Option>
-                                </Select>
-                            </Form.Item>
-                            <Form.Item>
-                                <Button type='primary' htmlType='submit'>추가</Button>
-                            </Form.Item>
-                        </Form>
-                    </div>
                     <div style={{ width: 500, height: 500, border: '1px solid #f0f0f0', padding: 20, overflow: 'auto' }}>
-
                         <Tree
                             draggable
                             blockNode
@@ -197,10 +169,21 @@ function MenuManagementPage(props) {
                         </Tree>
                     </div>
                 </Space>
+                <Space>
+                    <Form name="menu" onFinish={addMenu} layout='inline'>
+                        <Form.Item label="카테고리 명" name="name" rules={[{ required: true, message: '메뉴 이름은 필수입니다!' }, { max: 20, message: '최대 길이는 20자입니다.' }]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button type='primary' htmlType='submit'>추가</Button>
+                        </Form.Item>
+                    </Form>
+                </Space>
+
                 {
                     checkDiff(menuList).isChanged === true && (
                         <Space>
-                            <Button type='primary' onClick={setVisiblityMenuItem.bind(this, 6, true)}> 저장 </Button>
+                            <Button type='primary' onClick={()=>{}}> 저장 </Button>
                             <Button type='ghost'> 취소 </Button>
                         </Space>
                     )
@@ -212,4 +195,4 @@ function MenuManagementPage(props) {
     );
 }
 
-export default MenuManagementPage;
+export default CategoryManagementPage;

@@ -44,6 +44,7 @@ export const ROUTE_PATH = {
     reviewManage: '/review-manage',
     registerNotice: '/register-notice',
     menuManage: '/menu-manage',
+    categoryManage: '/category-manage',
     displayManage: '/display-manage',
   },
 

@@ -4,7 +4,7 @@ export const leftNavigationMenuTitle = {
   manageProduct: '상품관리',
   manageSale: '판매관리',
   reviewManage: '리뷰/문의 관리',
-  manageMenu : '메뉴관리'
+  manageMenu : '메뉴/카테고리 관리'
 };
 
 export const leftNavigationMenu = [
@@ -41,6 +41,7 @@ export const leftNavigationMenu = [
     title: leftNavigationMenuTitle.manageMenu,
     submenuList: [
       { title: '메뉴관리', path: ROUTE_PATH.admin.menuManage},
+      { title: '카테고리 관리', path: ROUTE_PATH.admin.categoryManage},
       { title: '진열관리', path: ROUTE_PATH.admin.displayManage}
     ]
   }

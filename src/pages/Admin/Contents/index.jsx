@@ -22,6 +22,8 @@ import QNAManager from 'pages/Admin/Contents/Review/ReviewManage/QNAManager';
 import ReviewManager from 'pages/Admin/Contents/Review/ReviewManage/ReviewManager';
 import RegisterNotice from 'pages/Admin/Contents/product/RegisterNotice';
 import MenuManager from 'pages/Admin/Contents/menu/menuManagement';
+import CategoryManager from 'pages/Admin/Contents/menu/categoryManagement';
+
 import DisplayManager from 'pages/Admin/Contents/menu/displayManagement';
 
 const Container = styled.div`
@@ -152,6 +154,12 @@ const Contents = () => {
           path={`${prePath}${ROUTE_PATH.admin.menuManage}`}
           component={MenuManager}
         />
+        <Route
+          exact
+          path={`${prePath}${ROUTE_PATH.admin.categoryManage}`}
+          component={CategoryManager}
+        />
+        
         <Route
           exact
           path={`${prePath}${ROUTE_PATH.admin.displayManage}`}
