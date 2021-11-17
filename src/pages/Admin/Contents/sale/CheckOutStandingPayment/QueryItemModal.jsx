@@ -31,11 +31,7 @@ const QueryItemModal = (property) => {
   const mockData = [];
 
   for (let i = 0; i < itemNames.length; i++) {
-    mockData.push({
-      key: i.toString(),
-      title: itemNames[i].id,
-      description: itemNames[i].description,
-    });
+    mockData.push([itemNames[i].id]);
   }
 
   useEffect(() => {
@@ -68,12 +64,10 @@ const QueryItemModal = (property) => {
 
       if (getGridCountCookie() !== null) {
         var count = getGridCountCookie();
-        console.log(count);
 
         setGridCount(count);
       }
     } catch (e) {
-      console.log(e);
       setTargetKeysState([]);
       setGridCount(0);
     }
@@ -153,24 +147,13 @@ const QueryItemModal = (property) => {
               list={list}
             />
           </CategoryModalContent>
-          <CategoryModalContent>
-            <ContentTitle>그리드 항목설정</ContentTitle>
-            <BasicTransferStyled
-              dataSource={mockData}
-              titles={['선택 가능 목록', '그리드 노출 목록']}
-              targetKeys={targetKeysState}
-              selectedKeys={selectedKeysState}
-              onChange={onChange}
-              onSelectChange={onSelectChange}
-              onScroll={onScroll}
-              render={(item) => item.title}
-              listStyle={{
-                width: 300,
-                height: 350,
-              }}
-            />
-          </CategoryModalContent>
-          <BasicTransfer />
+
+          <BasicTransfer
+            TitleLabel={'그리드 항목설정'}
+            SelectedLabel={'선택 가능 목록'}
+            TargetLabel={'그리드 노출 목록'}
+            SelectedDataSource={mockData}
+          />
         </CategoryModalBox>
       </Modal>
     </>

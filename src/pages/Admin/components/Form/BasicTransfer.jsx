@@ -20,7 +20,8 @@ const CustomTransfer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
-  border: 1px solid #000000;
+  border: 1px solid #d0d0d0;
+  border-top: 0px;
   width: 30rem;
   height: 35rem;
   padding-right: 1rem;
@@ -44,7 +45,7 @@ const CustomTransferTitleParent = styled.div`
   height: 4rem;
   display: flex;
   align-items: center;
-  border: 1px solid #000000;
+  border: 2px solid #d0d0d0;
   padding-right: 1rem;
   padding-left: 1rem;
 `;
@@ -57,58 +58,49 @@ const CustomTransferTitleLabel = styled.div`
 const CustomTransferCheckBoxParent = styled.div`
   margin-top: 1rem;
 `;
-
-let selectOptionsData = [
-  'Apple1',
-  'Pear2',
-  'Orange3',
-  'Apple4',
-  'Pear5',
-  'Orange6',
-  'Apple7',
-  'Pear8',
-  'Orange9',
-  'Apple10',
-  'Pear11',
-  'Orange12',
-  'Apple13',
-  'Pear14',
-  'Orange15',
-];
-let applyOptionsData = ['Apple', 'Pear', 'Orange'];
 const CheckboxGroup = Checkbox.Group;
 
 const CustomCheckboxGroup = styled(Checkbox.Group)`
-  .ant-checkbox-group-item {
-    display: flex;
-    margin-bottom: 0.5rem;
+  flex-direction: column;
+  display: flex;
+
+  .ant-checkbox-wrapper {
+    margin: 0px;
+    margin-bottom: 5px;
   }
 `;
 
-const BasicTransfer = ({ label }) => {
+const BasicTransfer = ({
+  TitleLabel,
+  SelectedLabel,
+  TargetLabel,
+  SelectedDataSource,
+}) => {
   const [
     selectTransferCheckedList,
     setSelectTransferCheckedList,
-  ] = React.useState();
+  ] = React.useState([]);
   const [
-    applyTransferCheckedList,
-    setApplyTransferCheckedList,
-  ] = React.useState();
+    targetTransferCheckedList,
+    setTargetTransferCheckedList,
+  ] = React.useState([]);
 
   const [
     selectTransferIndeterminate,
     setSelectTransferIndeterminate,
-  ] = React.useState(true);
+  ] = React.useState(false);
   const [
-    applyTransferIndeterminate,
-    setApplyTransferIndeterminate,
-  ] = React.useState(true);
+    targetTransferIndeterminate,
+    setTargetTransferIndeterminate,
+  ] = React.useState(false);
 
   const [selectCheckAll, setSelectCheckAll] = React.useState(false);
-  const [applyCheckAll, setApplyCheckAll] = React.useState(false);
+  const [targetCheckAll, setTargetCheckAll] = React.useState(false);
 
-  const [selectOptions, setSelectOptions] = React.useState(selectOptionsData);
-  const [applyOptions, setApplyOptions] = React.useState(applyOptionsData);
+  const [selectOptions, setSelectOptions] = React.useState(
+    SelectedDataSource ? SelectedDataSource : [],
+  );
+  const [targetOptions, setTargetOptions] = React.useState([]);
 
   const onSelectCheckAllChange = (e) => {
     setSelectTransferCheckedList(e.target.checked ? selectOptions : []);
@@ -116,37 +108,99 @@ const BasicTransfer = ({ label }) => {
     setSelectCheckAll(e.target.checked);
   };
 
-  const onApplyCheckAllChange = (e) => {
-    setApplyTransferCheckedList(e.target.checked ? applyOptions : []);
-    setApplyTransferIndeterminate(false);
-    setApplyCheckAll(e.target.checked);
+  const onTargetCheckAllChange = (e) => {
+    setTargetTransferCheckedList(e.target.checked ? targetOptions : []);
+    setTargetTransferIndeterminate(false);
+    setTargetCheckAll(e.target.checked);
   };
 
-  const onSelectTransferCheckChange = (list) => {
-    setSelectTransferCheckedList(list);
-    setSelectTransferIndeterminate(
-      !!list.length && list.length < selectOptions.length,
-    );
-    setSelectCheckAll(list.length === selectOptions.length);
+  const onSelectTransferCheckChange = (e) => {
+    if (e.target.checked == true) {
+      setSelectTransferCheckedList([
+        ...selectTransferCheckedList,
+        e.target.value,
+      ]);
+    } else {
+      const datas = selectTransferCheckedList.filter((item) => {
+        return item !== e.target.value;
+      });
+      setSelectTransferCheckedList(datas);
+    }
 
-    console.log(list);
-    console.log(selectOptions.length);
+    let _indeterminate = false;
+    let _all = false;
+    if (selectTransferCheckedList.length < selectOptions.length - 1) {
+      if (selectTransferCheckedList.length <= 0) {
+        if (e.target.checked) {
+          _indeterminate = true;
+        }
+      } else {
+        if (selectTransferCheckedList.length <= 1) {
+          if (e.target.checked) {
+            _indeterminate = true;
+          }
+        } else {
+          _indeterminate = true;
+        }
+      }
+    } else {
+      if (e.target.checked) {
+        _all = true;
+      } else {
+        _indeterminate = true;
+      }
+    }
+
+    setSelectTransferIndeterminate(_indeterminate);
+    setSelectCheckAll(_all);
   };
 
-  const onApplyTransferCheckChange = (list) => {
-    setApplyTransferCheckedList(list);
-    setApplyTransferIndeterminate(
-      !!list.length && list.length < applyOptions.length,
-    );
-    setApplyCheckAll(list.length === applyOptions.length);
+  const onTargetTransferCheckChange = (e) => {
+    if (e.target.checked == true) {
+      setTargetTransferCheckedList([
+        ...targetTransferCheckedList,
+        e.target.value,
+      ]);
+    } else {
+      const datas = targetTransferCheckedList.filter((item) => {
+        return item !== e.target.value;
+      });
+      setTargetTransferCheckedList(datas);
+    }
+
+    let _indeterminate = false;
+    let _all = false;
+    if (targetTransferCheckedList.length < targetOptions.length - 1) {
+      if (targetTransferCheckedList.length <= 0) {
+        if (e.target.checked) {
+          _indeterminate = true;
+        }
+      } else {
+        if (targetTransferCheckedList.length <= 1) {
+          if (e.target.checked) {
+            _indeterminate = true;
+          }
+        } else {
+          _indeterminate = true;
+        }
+      }
+    } else {
+      if (e.target.checked) {
+        _all = true;
+      } else {
+        _indeterminate = true;
+      }
+    }
+
+    setTargetTransferIndeterminate(_indeterminate);
+    setTargetCheckAll(_all);
   };
 
-  const selectToApplyData = () => {
+  const selectTotargetData = () => {
     let filterData = selectOptions.filter((item) => {
       let data = item;
-
       for (let i = 0; i < selectTransferCheckedList.length; i++) {
-        if (item != selectTransferCheckedList[i]) {
+        if (data != selectTransferCheckedList[i]) {
           //똑같지않음
         } else {
           //똑같으면 넘어가기
@@ -157,25 +211,45 @@ const BasicTransfer = ({ label }) => {
       return data != null;
     });
     setSelectOptions([...filterData]);
-    const addApplyData = [...applyOptions, ...selectTransferCheckedList];
-    setApplyOptions([...addApplyData]);
+    const addtargetData = [...targetOptions, ...selectTransferCheckedList];
+    setTargetOptions([...addtargetData]);
     setSelectTransferCheckedList([]);
   };
 
-  const applyToSelectData = () => {
-    console.log(selectOptions);
-    console.log(applyOptions);
+  const targetToSelectData = () => {
+    let filterData = targetOptions.filter((item) => {
+      let data = item;
+      for (let i = 0; i < targetTransferCheckedList.length; i++) {
+        if (data != targetTransferCheckedList[i]) {
+          //똑같지않음
+        } else {
+          //똑같으면 넘어가기
+          data = null;
+          break;
+        }
+      }
+      return data != null;
+    });
+    setTargetOptions([...filterData]);
+    const addSelectData = [...selectOptions, ...targetTransferCheckedList];
+    setSelectOptions([...addSelectData]);
+    setTargetTransferCheckedList([]);
   };
 
-  const createCheckbox = (Options) => {
-    return Options.map((item) => {
-      return <Checkbox value={item}>{item}</Checkbox>;
+  const createCheckbox = (Options, onChange) => {
+    console.log(Options);
+    return Options.map((item, index) => {
+      return (
+        <Checkbox onChange={onChange} value={item}>
+          {item}
+        </Checkbox>
+      );
     });
   };
 
   return (
     <CustomTransferParent>
-      <CustomLabel>그리드 항목설정</CustomLabel>
+      <CustomLabel>{TitleLabel}</CustomLabel>
       <CustomTransferSet>
         <CustomTransferTitle>
           <CustomTransferTitleParent>
@@ -186,50 +260,46 @@ const BasicTransfer = ({ label }) => {
                   onChange={onSelectCheckAllChange}
                   checked={selectCheckAll}
                 />{' '}
-                12 items
+                {selectTransferCheckedList.length} / {selectOptions.length}{' '}
+                items
               </div>
-              <div>선택가능목록</div>
+              <div>{SelectedLabel}</div>
             </CustomTransferTitleLabel>
           </CustomTransferTitleParent>
           <CustomTransfer>
             <CustomTransferCheckBoxParent>
-              <CustomCheckboxGroup
-                value={selectTransferCheckedList}
-                onChange={onSelectTransferCheckChange}
-              >
-                {createCheckbox(selectOptions)}
+              <CustomCheckboxGroup value={selectTransferCheckedList}>
+                {createCheckbox(selectOptions, onSelectTransferCheckChange)}
               </CustomCheckboxGroup>
             </CustomTransferCheckBoxParent>
           </CustomTransfer>
         </CustomTransferTitle>
 
         <CustomButtonParent>
-          <CustomButton onClick={selectToApplyData} marginbottom="1rem">
+          <CustomButton onClick={selectTotargetData} marginbottom="1rem">
             {'>'}
           </CustomButton>
-          <CustomButton onClick={applyToSelectData}>{'<'}</CustomButton>
+          <CustomButton onClick={targetToSelectData}>{'<'}</CustomButton>
         </CustomButtonParent>
         <CustomTransferTitle>
           <CustomTransferTitleParent>
             <CustomTransferTitleLabel>
               <div>
                 <Checkbox
-                  indeterminate={applyTransferIndeterminate}
-                  onChange={onApplyCheckAllChange}
-                  checked={applyCheckAll}
+                  indeterminate={targetTransferIndeterminate}
+                  onChange={onTargetCheckAllChange}
+                  checked={targetCheckAll}
                 />{' '}
-                12 items
+                {targetTransferCheckedList.length} / {targetOptions.length}{' '}
+                items
               </div>
-              <div>그리드 노출 목록</div>
+              <div>{TargetLabel}</div>
             </CustomTransferTitleLabel>
           </CustomTransferTitleParent>
           <CustomTransfer>
             <CustomTransferCheckBoxParent>
-              <CustomCheckboxGroup
-                value={applyTransferCheckedList}
-                onChange={onApplyTransferCheckChange}
-              >
-                {createCheckbox(applyOptions)}
+              <CustomCheckboxGroup value={targetTransferCheckedList}>
+                {createCheckbox(targetOptions, onTargetTransferCheckChange)}
               </CustomCheckboxGroup>
             </CustomTransferCheckBoxParent>
           </CustomTransfer>
