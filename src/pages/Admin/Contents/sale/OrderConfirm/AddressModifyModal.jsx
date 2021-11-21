@@ -59,7 +59,6 @@ const AddressModifyModal = (property) => {
   const initInfoData = () => {
     if (property.visible === false) return;
     if (property.selectedTableRowsState.length > 0) {
-      console.log(property.selectedTableRowsState[0]);
       setNameState(property.selectedTableRowsState[0].recipient_name);
       setPhonNumState(property.selectedTableRowsState[0].recipient_phone);
       setPhonNum2State(property.selectedTableRowsState[0].recipient_phone);

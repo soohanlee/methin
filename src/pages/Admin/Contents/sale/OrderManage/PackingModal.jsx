@@ -57,8 +57,6 @@ const PackingModal = (property) => {
           ship_number: item.ship_zip_code,
         };
         const promise = patchShipConfirm(item.id, data);
-        console.log(item.id);
-        console.log(data);
         tempPromise.push(promise);
       });
 
@@ -69,8 +67,6 @@ const PackingModal = (property) => {
   };
 
   const handleApplyClick = () => {
-    console.log('apply');
-
     let shipType = [...dataShipTypeState];
     let shipCompany = [...dataShipCompanyState];
     let invoiceNumber = [...dataInvoiceNumberState];

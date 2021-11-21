@@ -50,10 +50,6 @@ const CheckOutStandingPayment = () => {
   const [columnFixedCountState, setColumnFixedCountState] = useState(0);
 
   useEffect(() => {
-    setColumnFixedCountState(getGridCountCookie());
-  }, []);
-
-  useEffect(() => {
     getPaymentUnpaidListData(productOffset);
   }, [productOffset]);
 
@@ -62,6 +58,9 @@ const CheckOutStandingPayment = () => {
       await getPaymentUnpaidListData();
     }
     fetchAndSetUser();
+
+    setColumnFixedCountState(getGridCountCookie());
+    selectColumn();
   }, []);
 
   const getPaymentUnpaidListData = async (offset = 0) => {
@@ -93,13 +92,30 @@ const CheckOutStandingPayment = () => {
   };
 
   const handleChange = (selectedRowKeys, selectedRows) => {
-    console.log('selectedRowKeys', selectedRowKeys);
     setSelectedTableKeysState(selectedRowKeys);
   };
 
   const selectColumn = () => {
-    console.log(COOKIE_KEYS.CheckOutStandingPaymentTargetKeys);
-    setSelectColumnState(get(COOKIE_KEYS.CheckOutStandingPaymentTargetKeys));
+    const gridCount = get(COOKIE_KEYS.CheckOutStandingPaymentGridCount);
+    const targetData = get(COOKIE_KEYS.CheckOutStandingPaymentTargetData);
+    const selectData = get(COOKIE_KEYS.CheckOutStandingPaymentSelectData);
+
+    if (targetData) {
+      const selectDataArray = JSON.parse(selectData);
+      const _columns = columns.filter((columnsItem) => {
+        let isCompare = false;
+        selectDataArray.forEach((selectItem) => {
+          if (columnsItem.label == selectItem) {
+            isCompare = true;
+          }
+        });
+        return isCompare == false;
+      });
+      setSelectColumnState(_columns);
+      setColumnFixedCountState(JSON.parse(gridCount));
+    } else {
+      setSelectColumnState(columns);
+    }
   };
 
   function getGridCountCookie() {
@@ -109,7 +125,6 @@ const CheckOutStandingPayment = () => {
 
   const handleQueryItemVisibleClick = () => {
     setQueryItemVisibleState(true);
-    setColumnFixedCountState(getGridCountCookie());
   };
 
   return (
@@ -121,6 +136,7 @@ const CheckOutStandingPayment = () => {
         }}
         onClick={() => {
           setQueryItemVisibleState(false);
+          selectColumn();
         }}
         title="조회항목 설정(미결제확인)"
         selectColumn={selectColumn}
@@ -142,7 +158,7 @@ const CheckOutStandingPayment = () => {
       <BasicTableStyled
         scroll={{ x: 'max-content', y: '35vw' }}
         data={tableDataState}
-        columns={columns}
+        columns={selectColumnState}
         onChange={handleChange}
         onTableChange={handleTableChange}
         loading={loading}
