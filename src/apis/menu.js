@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-export const getMenuList = async () => {
+export const getCategoryList = async () => {
   return await axios.get(`api/category`);
 };
