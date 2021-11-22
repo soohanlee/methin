@@ -327,6 +327,8 @@ const ProductDetail = () => {
     console.log(value);
   };
 
+  console.log('productDetail', productDetail);
+
   if (!productDetail && !productDetail.id) {
     return '로딩중';
   } else {
@@ -352,7 +354,7 @@ const ProductDetail = () => {
             </MainImgContainer>
 
             <TextInfoContainer>
-              <ProductCategory>샐러드-채식</ProductCategory>
+              <ProductCategory>{productDetail.description}</ProductCategory>
               <ProductName>{productDetail.name}</ProductName>
               <PriceContainer>
                 {productDetail.discount_amount && (
@@ -370,17 +372,26 @@ const ProductDetail = () => {
                 <ProductSubTitle info>중량/용량</ProductSubTitle>
                 <ProductSubTitle>200g</ProductSubTitle>
               </ProductSubInfoContainer>
+              <ProductSubInfoContainer>
+                <ProductSubTitle info>판매 수량</ProductSubTitle>
+                <ProductSubTitle>{productDetail.count}</ProductSubTitle>
+              </ProductSubInfoContainer>
 
               <ProductSubInfoContainer>
+                <ProductSubTitle info>공지 사항</ProductSubTitle>
+                <ProductSubTitle>{productDetail.description}</ProductSubTitle>
+              </ProductSubInfoContainer>
+
+              {/* <ProductSubInfoContainer>
                 <ProductSubTitle info>알레르기 정보</ProductSubTitle>
                 <ProductSubTitle>
                   달고기 토마토 난류 대두 잣 함유
                 </ProductSubTitle>
-              </ProductSubInfoContainer>
-              <ProductSubInfoContainer>
+              </ProductSubInfoContainer> */}
+              {/* <ProductSubInfoContainer>
                 <ProductSubTitle info>유통기한</ProductSubTitle>
                 <ProductSubTitle>수령일 포함 최소 3일</ProductSubTitle>
-              </ProductSubInfoContainer>
+              </ProductSubInfoContainer> */}
               <Border />
               <ProductInfoTitle>배송 정보</ProductInfoTitle>
 
@@ -392,7 +403,9 @@ const ProductDetail = () => {
               </ProductSubInfoContainer>
               <ProductSubInfoContainer>
                 <ProductSubTitle info>포장타입</ProductSubTitle>
-                <ProductSubTitle>냉장 종이포장</ProductSubTitle>
+                <ProductSubTitle>
+                  {productDetail.ship_type === 0 ? '택배' : '직접배송'}
+                </ProductSubTitle>
               </ProductSubInfoContainer>
               <Border />
               <ProductSubInfoContainer>
@@ -424,7 +437,7 @@ const ProductDetail = () => {
           <Border />
 
           {/* <RelatedProducts list={[{}, {}]} /> */}
-          <Descriptions />
+          <Descriptions jsondata={productDetail.jsondata} />
 
           <ReviewContainer
             onClickReviewButtonClick={handleClickReviewButtonClick}

@@ -112,3 +112,11 @@ export const registerUserProductQna = async (id, data) => {
 export const registerUserProductReview = async (id, data) => {
   return await axios.post(`${userProductUrl}/${id}/review`, data);
 };
+
+export const deleteUserProductReview = async (id, review_id) => {
+  return await axios.delete(`${userProductUrl}/${id}/review/${review_id}`);
+};
+
+export const deleteUserProductQna = async (id, qna_id) => {
+  return await axios.delete(`${userProductUrl}/${id}/qna/${qna_id}`);
+};

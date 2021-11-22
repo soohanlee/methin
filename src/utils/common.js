@@ -15,7 +15,11 @@ export function getLocalStorageData(name) {
 }
 
 export function changeNumberDigits(value) {
-  return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
+  if (value) {
+    return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
+  } else {
+    return value;
+  }
 }
 
 export function removeRest(value) {
