@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
 
@@ -13,7 +13,8 @@ import { Label } from 'components/styled/Form';
 
 import ResponsiveTemplate from 'template/ResponsiveTemplate';
 import MobileNavigation from 'components/Navigation/mobile';
-import { getMenuList } from 'apis/menu';
+import { getCategoryList } from 'apis/menu';
+import SubMenuContainer from './SubMenuContainer';
 
 const Container = styled.div`
   display: flex;
@@ -84,25 +85,39 @@ const MenuContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: ${(props) => props.theme.BACKGROUND};
-  padding: 3rem 6rem;
+  height: 10rem;
   border-bottom: 0.1rem solid ${(props) => props.theme.TEXT_DISABLE};
 `;
 
 const MenuItem = styled.div`
   padding: 0 2rem;
   cursor: pointer;
+  line-height: 20rem;
+`;
+
+const DepthContainer = styled.div`
+  position: absolute;
+  left: ${(props) => props.depth * 200}px;
+  min-width: 200px;
+  height: 100%;
+  z-index: 99;
 `;
 
 const CategoryContainer = styled.div`
   position: absolute;
-  min-width: 240px;
+  min-width: 200px;
+  height: 100%;
+  z-index: 99;
+  display: none;
+  top: 30px;
+  width: 200px;
 `;
 
-const CategoryItem = styled(MenuItem)`
+const AllCategoryMenu = styled(MenuItem)`
   position: relative;
   :hover {
     ${CategoryContainer} {
-      background: red;
+      display: block;
     }
   }
 `;
@@ -130,40 +145,65 @@ const LoginContainer = styled.div`
 const Navigation = () => {
   const history = useHistory();
   const userState = useContext(UserContext);
-  // const [menuList, setMenuList] = useState([]);
+  const [menuList, setMenuList] = React.useState([]);
 
-  const getMenu = async () => {
-    const response = await getMenuList();
-    console.log(response.data.data);
+  const [currentHoverCategoryId, setCurrentHoverCategoryId] = React.useState(
+    '',
+  );
+
+  const findNode = (nodeArray, pKey) => {
+    return nodeArray.find((item) => item.id === pKey);
+  };
+
+  const getMenu = useCallback(async () => {
+    const response = await getCategoryList();
     if (response && response.data && response.data.data) {
       const list = response.data.data;
-      const maxDepth = 2;
-      const frontDepth = [];
-      for (const item of list) {
-        if (item.depth === 0) {
-          frontDepth.push(item);
-        } else if (item.depth === 1) {
-          for (const secondItem of frontDepth) {
-            if (secondItem.depth === item.parent_id) {
-              frontDepth.children.push(secondItem);
-            }
-          }
-        } else if (item.depth === 2) {
-          for (const secondItem of frontDepth) {
-            if (secondItem.depth === item.parent_id) {
-              frontDepth.children.push(secondItem);
-            }
-          }
-        }
-      }
+      const diviedDepthArray = [[], [], []];
 
-      const changeList = list.map((item) => {});
+      //   {
+      //     "id": 1,
+      //     "short_name": "메뉴",
+      //     "full_name": "메뉴메뉴",
+      //     "depth": 0,
+      //     "parent_id": null,
+      //     "root_parent_id": null,
+      //     "preview_status": 0
+      // },
+      console.log(list);
+      list.forEach((node) => {
+        diviedDepthArray[node.depth].push(node);
+      });
+      // setMenuList(diviedDepthArray);
+      let treeArray = [];
+      diviedDepthArray.forEach((nodeArray, index) => {
+        nodeArray.forEach((node) => {
+          let target = treeArray;
+          if (index >= 2) {
+            target = findNode(target, node.root_parent_id).children;
+          }
+
+          if (index >= 1) {
+            target = findNode(target, node.parent_id).children;
+          }
+
+          target.push({
+            id: node.id,
+            short_name: node.short_name,
+            preview_status: node.preview_status,
+            depth: node.depth,
+            children: [],
+          });
+        });
+      });
+
+      setMenuList(treeArray);
     }
-  };
+  }, []);
 
   useEffect(() => {
     getMenu();
-  }, []);
+  }, [getMenu]);
 
   // const handleSearchClick = () => {
   //   console.log('클릭');
@@ -206,11 +246,15 @@ const Navigation = () => {
       `${ROUTE_PATH.serviceCenter.main}${ROUTE_PATH.serviceCenter.notice}`,
     );
   };
-  console.log('history.location.pathname', history);
+
   const isHideNavigation = history.location.pathname === '/mobile/mypage';
 
-  const renderCategoryMenu = () => {
-    return <CategoryContainer>테스트</CategoryContainer>;
+  const renderCategoryMenu = (menuList, index = 0) => {
+    const test = menuList.map((item, index) => {
+      const { short_name, id, depth, children } = item;
+      return short_name;
+    });
+    return <div depth={index}>{test}</div>;
   };
 
   return (
@@ -294,7 +338,12 @@ const Navigation = () => {
           </UserContainer>
         </Container>
         <MenuContainer>
-          <CategoryItem>전체 카테고리{renderCategoryMenu()}</CategoryItem>
+          <AllCategoryMenu>
+            전체 카테고리
+            <CategoryContainer>
+              <SubMenuContainer menuList={menuList} />
+            </CategoryContainer>
+          </AllCategoryMenu>
           <MenuItem onClick={() => handleMovePage(ROUTE_PATH.product, 1)}>
             신상품
           </MenuItem>

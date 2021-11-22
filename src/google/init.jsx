@@ -7,7 +7,6 @@ import { initGa } from './ga';
 const Init = () => {
   const history = useHistory();
   React.useEffect(() => {
-    console.log('실행됩니다.');
     initGa();
     history.listen((location, action) => {
       ReactGA.set({ page: location.pathname });
