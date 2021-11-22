@@ -1,9 +1,38 @@
 import { Space } from 'antd';
 import React from 'react';
+import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+
+const MenuContainer = styled.div`
+  background: white;
+`;
+
+const CustomSpace = styled(Space)`
+  .ant-space-item {
+    margin-right: 0 !important;
+    .ant-space-item {
+      div {
+        background: #eee;
+        .ant-space-item {
+          div {
+            background: #ddd;
+          }
+        }
+      }
+    }
+  }
+`;
+
+const MenuItem = styled.div`
+  min-width: 10rem;
+  width: 15rem;
+  padding: 1rem;
+  line-height: 1rem;
+`;
 
 const SubMenuContainer = ({ menuList }) => {
   const [hoverMenuId, setHoverMenuId] = React.useState(null);
-
+  const history = useHistory();
   function findItemById(id) {
     return menuList.find((item) => {
       return item.id === id;
@@ -16,30 +45,35 @@ const SubMenuContainer = ({ menuList }) => {
     if (hoverMenuId) {
       const item = findItemById(hoverMenuId);
       if (item) {
-        return (
-          <SubMenuContainer
-            key={hoverMenuId}
-            menuList={item.children}
-          ></SubMenuContainer>
-        );
+        return <SubMenuContainer key={hoverMenuId} menuList={item.children} />;
       }
     }
   }
+
+  const handleRouteMenu = (id) => {
+    history.push(`/${id}`);
+    setHoverMenuId(null);
+  };
+
   return (
-    <Space direction="horizontal" align="start">
-      <div>
+    <CustomSpace direction="horizontal" align="start">
+      <MenuContainer>
         {menuList &&
           menuList.map((item) => {
             return (
-              <div key={item.id} onMouseEnter={() => setHoverMenuId(item.id)}>
+              <MenuItem
+                key={item.id}
+                onMouseEnter={() => setHoverMenuId(item.id)}
+                onClick={() => handleRouteMenu(item.id)}
+              >
                 {item.short_name}
-              </div>
+              </MenuItem>
             );
           })}
-      </div>
+      </MenuContainer>
 
       {renderSubMenu()}
-    </Space>
+    </CustomSpace>
   );
 };
 

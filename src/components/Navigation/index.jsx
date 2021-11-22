@@ -92,24 +92,16 @@ const MenuContainer = styled.div`
 const MenuItem = styled.div`
   padding: 0 2rem;
   cursor: pointer;
-  line-height: 20rem;
-`;
-
-const DepthContainer = styled.div`
-  position: absolute;
-  left: ${(props) => props.depth * 200}px;
-  min-width: 200px;
-  height: 100%;
-  z-index: 99;
+  line-height: 10rem;
 `;
 
 const CategoryContainer = styled.div`
   position: absolute;
   min-width: 200px;
-  height: 100%;
+
   z-index: 99;
   display: none;
-  top: 30px;
+  top: 100px;
   width: 200px;
 `;
 
@@ -161,16 +153,6 @@ const Navigation = () => {
       const list = response.data.data;
       const diviedDepthArray = [[], [], []];
 
-      //   {
-      //     "id": 1,
-      //     "short_name": "메뉴",
-      //     "full_name": "메뉴메뉴",
-      //     "depth": 0,
-      //     "parent_id": null,
-      //     "root_parent_id": null,
-      //     "preview_status": 0
-      // },
-      console.log(list);
       list.forEach((node) => {
         diviedDepthArray[node.depth].push(node);
       });
@@ -204,10 +186,6 @@ const Navigation = () => {
   useEffect(() => {
     getMenu();
   }, [getMenu]);
-
-  // const handleSearchClick = () => {
-  //   console.log('클릭');
-  // };
 
   const handleMoveLoginPage = () => {
     history.push(`${ROUTE_PATH.login}`);
