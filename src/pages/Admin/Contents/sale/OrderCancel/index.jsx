@@ -52,16 +52,31 @@ const OrderCancel = ({ shipCompanyDataState }) => {
         let { status, cancel_status, paid_at, canceled_at } = item;
         switch (status) {
           case 0:
-            status = '취소요청';
+            status = '결제대기';
             break;
           case 1:
+            status = '결제완료';
+            break;
+          case 2:
+            status = '상품준비';
+            break;
+          case 3:
+            status = '배송중';
+            break;
+          case 4:
+            status = '배송완료';
+            break;
+          case 5:
             status = '취소완료';
+            break;
+          case 6:
+            status = '반품완료';
             break;
         }
         return {
           ...item,
-          status: status === 0 ? '취소요청' : '취소완료',
-          cancel_status: cancel_status === 0 ? '취소' : '',
+          status: status,
+          cancel_status: cancel_status === 0 ? '취소요청' : '취소완료',
           paid_at: moment(paid_at).format(DateFormat.Default),
           canceled_at: moment(canceled_at).format(DateFormat.Default),
           key: index,
@@ -83,7 +98,7 @@ const OrderCancel = ({ shipCompanyDataState }) => {
     let cancelSuccess = 0;
 
     tableList.forEach((element) => {
-      switch (element.status) {
+      switch (element.cancel_status) {
         case '취소요청':
           cancelRequest++;
           break;
@@ -122,7 +137,7 @@ const OrderCancel = ({ shipCompanyDataState }) => {
 
   const categoryTypeClick = (value) => {
     let data = allTableDataState.filter((item) => {
-      return item.status === value;
+      return item.cancel_status === value;
     });
     setTableDataState(data);
     setTableCountState(data.length);

@@ -4,6 +4,9 @@ import { Button as OriginButton } from 'antd';
 import BasicTable from 'pages/Admin/components/Table/Table';
 import ReturnRefusalModal from './ReturnRefusalModal';
 import { CSVLink } from 'react-csv';
+import { patchCancelConfirm } from 'apis/payment';
+import { notification } from 'utils/notification';
+import { PostMockupreset } from 'apis/payment';
 
 const Container = styled.div`
   background: #fff;
@@ -52,15 +55,34 @@ const Table = ({
     if (length > 0) {
       let result = 1;
       selectedTableRowsState.forEach((item) => {
-        if (item.status === '취소완료') {
+        if (item.cancel_status === '취소완료') {
           result = -1;
         }
       });
 
       if (result === 1) {
-        window.confirm(
+        var returnValue = window.confirm(
           `${count}건 중 ${length}건 환불처리 가능합니다. 환불 처리 진행하시겠습니까`,
         );
+        if (returnValue) {
+          const data = {
+            from_admin: false,
+            cancel_reason: '',
+          };
+          let result = selectedTableRowsState.map((item) => {
+            try {
+              const result = patchCancelConfirm(item.id);
+              if (result.cancel_status === 404) {
+                notification.error('이미 삭제되었습니다.');
+              }
+            } catch (e) {
+              if (e.response && e.response.cancel_status === 404) {
+                notification.error('이미 삭제되었습니다.');
+              }
+            }
+          });
+          Promise.all(result);
+        }
       } else {
         alert(
           '선택하신 주문 건은 취소 완료처리가 불가합니다.\n취소 처리상태가 "취소요청"인 주문건만 취소 완료처리 가능합니다.\n취소 처리상태를 확인해 주세요.',
@@ -74,10 +96,12 @@ const Table = ({
   const handleRejectCancelProcessBtn = () => {
     let length = selectedTableRowsState.length;
 
-    if (length > 0) {
+    if (length < 1) {
+      alert('취소정보를 선택해주세요.');
+    } else if (length == 1) {
       let result = 1;
       selectedTableRowsState.forEach((item) => {
-        if (item.status === '취소완료') {
+        if (item.cancel_status === '취소완료') {
           result = -1;
         }
       });
@@ -90,7 +114,7 @@ const Table = ({
         );
       }
     } else {
-      alert('주문 건을 선택해주세요.');
+      alert('취소정보를 하나만 선택해주세요.');
     }
   };
   const handleChange = (selectedRowKeys, selectedRows) => {
@@ -113,6 +137,7 @@ const Table = ({
         }}
         width={500}
         shipCompanyDataState={shipCompanyDataState}
+        selectedTableRowsState={selectedTableRowsState}
       ></ReturnRefusalModal>
 
       <HeaderContainer>
@@ -138,11 +163,13 @@ const Table = ({
 
       <ButtomContainer>
         <Button onClick={handleSuccessCancelProcessBtn}>취소 완료처리</Button>
+        <Button onClick={handleRejectCancelProcessBtn}>취소 거부처리</Button>
         <Button
-          selectedTableRowsState={selectedTableRowsState}
-          onClick={handleRejectCancelProcessBtn}
+          onClick={() => {
+            PostMockupreset();
+          }}
         >
-          취소 거부처리
+          목업리셋
         </Button>
       </ButtomContainer>
     </Container>
