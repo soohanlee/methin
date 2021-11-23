@@ -61,7 +61,8 @@ export const COOKIE_KEYS = {
   UserRefreshToken: '__user_refresh_token__',
   UserAccessToken: '__user_access_token__',
   cart: 'CART',
-  CheckOutStandingPaymentTargetKeys: 'CheckOutStandingPaymentTargetKeys',
+  CheckOutStandingPaymentSelectData: 'CheckOutStandingPaymentSelectData',
+  CheckOutStandingPaymentTargetData: 'CheckOutStandingPaymentTargetData',
   CheckOutStandingPaymentGridCount: 'CheckOutStandingPaymentGridCount',
 };
 

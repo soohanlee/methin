@@ -2,10 +2,11 @@ import 'antd/dist/antd.css';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import { Modal, Transfer, Button } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
+import BasicTransfer from 'pages/Admin/components/Form/BasicTransfer';
 import { COOKIE_KEYS } from 'configs/config';
-import { get, set, remove } from 'js-cookie';
+import { get, set } from 'js-cookie';
 
 const CategoryModalBox = styled.div`
   padding: 2rem;
@@ -27,69 +28,60 @@ const ContentTitle = styled.div`
 const BasicTransferStyled = styled(Transfer)``;
 
 const QueryItemModal = (property) => {
-  const mockData = [];
+  const [selectDataState, setSelectDataState] = useState([]);
+  const [targetDataState, setTargetDataState] = useState([]);
 
-  for (let i = 0; i < itemNames.length; i++) {
-    mockData.push({
-      key: i.toString(),
-      title: itemNames[i].id,
-      description: itemNames[i].description,
-    });
-  }
+  const [selectCheckRowState, setSelectCheckRowState] = useState([]);
+  const [targetCheckRowState, setTargetCheckRowState] = useState([]);
+
+  const mockData = useRef([]);
+
+  useEffect(() => {
+    for (let i = 0; i < itemNames.length; i++) {
+      mockData.current.push(itemNames[i].id);
+    }
+  }, []);
 
   useEffect(() => {
     if (property.visible === true) {
-      resetData();
+      initData();
     }
   }, [property.visible]);
 
-  const [targetKeysState, setTargetKeysState] = useState([]);
-  const [selectedKeysState, setSelectedKeysState] = useState([]);
   const [gridCount, setGridCount] = useState([]);
 
-  const onChange = (nextTargetKeys, direction, moveKeys) => {
-    var _targetKeys = [...nextTargetKeys];
-    setTargetKeysState(_targetKeys);
-  };
-
-  const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
-    setSelectedKeysState([...sourceSelectedKeys, ...targetSelectedKeys]);
-  };
-
   const onScroll = (direction, e) => {};
-
-  const resetData = () => {
-    try {
-      if (getTargetKeyCookie() !== null) {
-        var key = getTargetKeyCookie();
-        setTargetKeysState([...key]);
-      }
-
-      if (getGridCountCookie() !== null) {
-        var count = getGridCountCookie();
-        console.log(count);
-
-        setGridCount(count);
-      }
-    } catch (e) {
-      console.log(e);
-      setTargetKeysState([]);
-      setGridCount(0);
-    }
-  };
 
   const handleGridCountChange = (value) => {
     setGridCount(value);
   };
 
-  function setTargetKeyCookie(keys) {
-    var _keys = [...keys];
-    set(COOKIE_KEYS.CheckOutStandingPaymentTargetKeys, _keys);
+  function setDataCookie(selectData, targetData) {
+    set(
+      COOKIE_KEYS.CheckOutStandingPaymentSelectData,
+      JSON.stringify(selectData),
+    );
+    set(
+      COOKIE_KEYS.CheckOutStandingPaymentTargetData,
+      JSON.stringify(targetData),
+    );
   }
 
-  function getTargetKeyCookie() {
-    const key = get(COOKIE_KEYS.CheckOutStandingPaymentTargetKeys);
-    return key || null;
+  function getSelectDataCookie() {
+    let data = [];
+    if (get(COOKIE_KEYS.CheckOutStandingPaymentSelectData)) {
+      data = JSON.parse(get(COOKIE_KEYS.CheckOutStandingPaymentSelectData));
+    }
+    return data ? data : [];
+  }
+
+  function getTargetDataookie() {
+    let data = mockData.current;
+    console.log(get(COOKIE_KEYS.CheckOutStandingPaymentTargetData));
+    if (get(COOKIE_KEYS.CheckOutStandingPaymentTargetData)) {
+      data = JSON.parse(get(COOKIE_KEYS.CheckOutStandingPaymentTargetData));
+    }
+    return data ? data : mockData.current;
   }
 
   function setGridCountCookie(value) {
@@ -101,6 +93,26 @@ const QueryItemModal = (property) => {
     return key || 0;
   }
 
+  const resetData = () => {
+    var returnValue = window.confirm(
+      `해당 메뉴의 그리드 설정이 모두 초기화 됩니다. 초기화 하시겠습니까?`,
+    );
+    if (returnValue) {
+      setSelectDataState([]);
+      setTargetDataState(mockData.current);
+      setSelectCheckRowState([]);
+      setTargetCheckRowState([]);
+    }
+  };
+
+  const initData = () => {
+    setGridCount(getGridCountCookie());
+    setSelectDataState(getSelectDataCookie());
+    setTargetDataState(getTargetDataookie());
+    setSelectCheckRowState([]);
+    setTargetCheckRowState([]);
+  };
+
   return (
     <>
       <Modal
@@ -108,35 +120,24 @@ const QueryItemModal = (property) => {
         centered
         visible={property.visible}
         onCancel={() => {
-          property.setVisible(false);
+          property.setVisible();
         }}
         width={900}
         footer={[
-          <Button
-            key="back"
-            onClick={() => {
-              property.setVisible(false);
-            }}
-          >
+          <Button key="back" onClick={property.setVisible}>
             취소
           </Button>,
 
-          <Button
-            key="init"
-            onClick={() => {
-              setSelectedKeysState([]);
-              setTargetKeysState([]);
-            }}
-          >
+          <Button key="reset" onClick={resetData}>
             초기화
           </Button>,
 
           <Button
             key="setting"
             onClick={() => {
-              setTargetKeyCookie(targetKeysState);
+              setDataCookie(selectDataState, targetDataState);
               setGridCountCookie(gridCount);
-              property.setVisible(false);
+              property.onClick();
             }}
           >
             설정
@@ -152,23 +153,23 @@ const QueryItemModal = (property) => {
               list={list}
             />
           </CategoryModalContent>
-          <CategoryModalContent>
-            <ContentTitle>그리드 항목설정</ContentTitle>
-            <BasicTransferStyled
-              dataSource={mockData}
-              titles={['선택 가능 목록', '그리드 노출 목록']}
-              targetKeys={targetKeysState}
-              selectedKeys={selectedKeysState}
-              onChange={onChange}
-              onSelectChange={onSelectChange}
-              onScroll={onScroll}
-              render={(item) => item.title}
-              listStyle={{
-                width: 300,
-                height: 350,
-              }}
-            />
-          </CategoryModalContent>
+
+          <BasicTransfer
+            TitleLabel={'그리드 항목설정'}
+            SelectedLabel={'선택 가능 목록'}
+            TargetLabel={'그리드 노출 목록'}
+            mockUpData={mockData.current}
+            selectData={selectDataState}
+            targetData={targetDataState}
+            selectCheckRow={selectCheckRowState}
+            targetCheckRow={targetCheckRowState}
+            setSelectCheckedRow={setSelectCheckRowState}
+            setTargetCheckRow={setTargetCheckRowState}
+            onChange={(e) => {
+              setSelectDataState(e.localSelectData.current);
+              setTargetDataState(e.localTargetData.current);
+            }}
+          />
         </CategoryModalBox>
       </Modal>
     </>
