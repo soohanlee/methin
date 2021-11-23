@@ -24,7 +24,7 @@ const SaleCancelModal = (property) => {
 
     if (resultValue) {
       const data = {
-        from_admin: false,
+        from_admin: true,
         cancel_reason: inputState,
       };
       await patchCancelConfirm(property.selectedTableRowsState[0].id, data);
