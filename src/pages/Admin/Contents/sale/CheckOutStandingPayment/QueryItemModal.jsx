@@ -68,12 +68,19 @@ const QueryItemModal = (property) => {
   }
 
   function getSelectDataCookie() {
-    const data = JSON.parse(get(COOKIE_KEYS.CheckOutStandingPaymentSelectData));
+    let data = [];
+    if (get(COOKIE_KEYS.CheckOutStandingPaymentSelectData)) {
+      data = JSON.parse(get(COOKIE_KEYS.CheckOutStandingPaymentSelectData));
+    }
     return data ? data : [];
   }
 
   function getTargetDataookie() {
-    const data = JSON.parse(get(COOKIE_KEYS.CheckOutStandingPaymentTargetData));
+    let data = mockData.current;
+    console.log(get(COOKIE_KEYS.CheckOutStandingPaymentTargetData));
+    if (get(COOKIE_KEYS.CheckOutStandingPaymentTargetData)) {
+      data = JSON.parse(get(COOKIE_KEYS.CheckOutStandingPaymentTargetData));
+    }
     return data ? data : mockData.current;
   }
 
