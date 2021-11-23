@@ -8,6 +8,7 @@ import DirectReturnModal from './DirectReturnModal';
 import DirectExchangeModal from './DirectExchangeModal';
 import ModifyInvoiceModal from './ModifyInvoiceModal';
 import { CSVLink } from 'react-csv';
+
 const Container = styled.div`
   background: #fff;
   padding: 3rem;
@@ -74,14 +75,15 @@ const Table = ({
         }
         break;
       case 'modifyInvoice':
-        if (selectedTableRowsState.length > 0) {
+        if (selectedTableRowsState.length < 1) {
+          alert('배송정보를 선택해주세요.');
+        } else {
           let isShipping = true;
           selectedTableRowsState.forEach((item) => {
             if (item.status !== '배송중') {
               isShipping = false;
             }
           });
-
           if (isShipping === true) {
             setModifyInvoiceVisibleState(true);
           } else {
@@ -89,7 +91,6 @@ const Table = ({
               "송장수정은 주문상태가 '배송중'인 경우에만 가능합니다.\n 선택하신 주문 건은 '배송중' 상태가 아니므로 송장수정이 불가능 합니다.",
             );
           }
-          return;
         }
         break;
       default:

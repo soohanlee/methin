@@ -6,6 +6,7 @@ import BasicSelectBox from 'pages/Admin/components/Form/BasicSelectBox';
 import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import BasicTable from 'pages/Admin/components/Table/Table';
 import BasicButton from 'pages/Admin/components/Form/BasicButton';
+import { patchShipConfirm } from 'apis/payment';
 
 const SelectBoxLabelContainer = styled.div`
   display: flex;
@@ -46,7 +47,21 @@ const ModifyInvoiceModal = (property) => {
     setState(_array);
   };
 
-  const handleOkClick = () => {
+  const handleOkClick = async () => {
+    if (selectedTableRowsState.length != 0) {
+      const tempPromise = [];
+
+      selectedTableRowsState.forEach((item) => {
+        const data = {
+          ship_company_id: 0,
+          ship_number: item.ship_zip_code,
+        };
+        const promise = patchShipConfirm(item.id, data);
+        tempPromise.push(promise);
+      });
+
+      await Promise.all(tempPromise);
+    }
     property.onOk();
   };
 
