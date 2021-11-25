@@ -22,8 +22,6 @@ const CustomPagination = styled(OriginPagination)`
   }
 `;
 const Pagination = ({ total, onChange }) => {
-  console.log('total', total);
-
   if (total === 0) {
     return null;
   } else {

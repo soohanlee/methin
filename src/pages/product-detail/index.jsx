@@ -25,6 +25,7 @@ import QNAContainer from 'components/QNA/QNAContainer';
 import QnaModal from './Modal/QnaModal';
 import ReviewModal from 'pages/product-detail/Modal/ReviewModal';
 import { Select } from 'components/styled/Form';
+import ProductSelectBox from './ProductSelectBox';
 
 const Container = styled(PaddingContainer)`
   display: flex;
@@ -160,6 +161,8 @@ const Descriptions = styled(OriginDescriptions)`
   margin-bottom: 5rem;
 `;
 
+const ProductDetailContainer = styled.div``;
+
 // const RedStarIcon = styled.img``
 // const GreyStarIcon = styled.img``
 
@@ -184,6 +187,7 @@ const ProductDetail = () => {
     const result = await getUserProductDetail(numberProductId);
 
     if (result && result.data && result.status === 200) {
+      console.log('result.data.data', result.data.data);
       setProdcutDetail(result.data.data);
     } else {
       notification.error('통신 성공');
@@ -329,6 +333,8 @@ const ProductDetail = () => {
 
   console.log('productDetail', productDetail);
 
+  console.log('productDetail', JSON.stringify(productDetail.body));
+
   if (!productDetail && !productDetail.id) {
     return '로딩중';
   } else {
@@ -410,7 +416,8 @@ const ProductDetail = () => {
               <Border />
               <ProductSubInfoContainer>
                 <ProductSubTitle info>상품선택</ProductSubTitle>
-                <Select onChange={handleSelectChange} options={options} />
+                {/* <Select onChange={handleSelectChange} options={options} /> */}
+                <ProductSelectBox option={productDetail.option} />
               </ProductSubInfoContainer>
               <CountContainer>
                 <CountButton onClick={handleMinus}>-</CountButton>
@@ -435,6 +442,9 @@ const ProductDetail = () => {
             </TextInfoContainer>
           </ProductInfoContainer>
           <Border />
+          <ProductDetailContainer>
+            <div dangerouslySetInnerHTML={{ __html: productDetail.body }} />
+          </ProductDetailContainer>
 
           {/* <RelatedProducts list={[{}, {}]} /> */}
           <Descriptions jsondata={productDetail.jsondata} />
