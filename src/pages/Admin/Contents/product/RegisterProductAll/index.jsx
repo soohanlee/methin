@@ -54,7 +54,7 @@ const RegisterProductAll = () => {
 
   return (
     <div>
-      <Title dataList={tableDataState} />
+      <Title />
       <Table
         tableList={tableDataState}
         limit={limit}

@@ -97,12 +97,12 @@ export const getUserProductDetail = async (id) => {
   return await axios.get(`${userProductUrl}/${id}`);
 };
 
-export const getProductReviewDetail = async (id, data) => {
-  return await axios.get(`${userProductUrl}/${id}/review`, data);
+export const getProductReviewDetail = async (id) => {
+  return await axios.get(`${userProductUrl}/${id}/review`);
 };
 
-export const getProductDetailQNA = async (id, data) => {
-  return await axios.get(`${userProductUrl}/${id}/qna`, data);
+export const getProductDetailQNA = async (id) => {
+  return await axios.get(`${userProductUrl}/${id}/qna`);
 };
 
 export const registerUserProductQna = async (id, data) => {
