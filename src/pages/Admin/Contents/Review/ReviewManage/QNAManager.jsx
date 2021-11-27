@@ -121,20 +121,20 @@ const QNAManager = () => {
         };
       });
 
-      newData = [
-        {
-          product_id: 'product_id',
-          id: 'id',
-          question_title: 'question_title',
-          isLock: '미공개',
-          isAnswer: '답변완료',
-          name: 'name',
-          created_at: '2019-05-05',
-          question_body: 'question_body',
-          answer_title: 'answer_title',
-          answer_body: 'answer_body',
-        },
-      ];
+      // newData = [
+      //   {
+      //     product_id: 'product_id',
+      //     id: 'id',
+      //     question_title: 'question_title',
+      //     isLock: '미공개',
+      //     isAnswer: '답변완료',
+      //     name: 'name',
+      //     created_at: '2019-05-05',
+      //     question_body: 'question_body',
+      //     answer_title: 'answer_title',
+      //     answer_body: 'answer_body',
+      //   },
+      // ];
 
       notification.success('검색성공');
       setTableListState(newData);

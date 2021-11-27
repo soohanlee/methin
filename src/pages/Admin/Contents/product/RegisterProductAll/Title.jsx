@@ -23,7 +23,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const Title = ({ dataList }) => {
+const Title = () => {
   const [categoryVisibleState, setCategoryVisibleState] = useState(false);
   const [countryVisibleState, setCountryVisibleState] = useState(false);
   const [imageVisibleState, setImageVisibleState] = useState(false);
