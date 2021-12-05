@@ -2,23 +2,28 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Button, Badge } from 'antd';
 import BasicTextArea from 'pages/Admin/components/Form/BasicTextArea';
-import BasicTextInputBox from 'pages/Admin/components/Form/BasicTextInputBox';
 import { getProductQNA, answerQNA } from 'apis/product';
 import { notification } from 'utils/notification';
 import moment from 'moment';
 import { DateFormat } from 'configs/config';
-import { LockOutlined, UnlockOutlined } from '@ant-design/icons';
+import {
+  LockOutlined,
+  UnlockOutlined,
+  EditOutlined,
+  CloseOutlined,
+} from '@ant-design/icons';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const ItemContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-bottom: 3rem;
   border-bottom: 1px solid #e7e7e7;
+  padding-top: 3rem;
 `;
 
 const ItemInnerContainer = styled.div`
@@ -48,54 +53,69 @@ const Description = styled.div`
   margin-bottom: 1rem;
 `;
 
-const Img = styled.div`
+const ImgStyled = styled.img`
   width: 110px;
   min-width: 110px;
   height: 110px;
-  background: black;
   margin-right: 2rem;
 `;
 
 const AnswerContainer = styled.div`
-  margin-top: 1rem;
+  margin-top: 2rem;
+  background-color: #f3f3f3;
 `;
 
 const TextInnerContainer = styled.div`
   display: flex;
 `;
-
-const TitleTextAreaBox = styled(BasicTextInputBox)`
-  width: 110rem;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
-  margin-left: -1rem;
-`;
 const ButtonStyled = styled(Button)`
-  margin-bottom: 1rem;
+  height: 9.8rem;
+  width: 8rem;
 `;
 
 const TextAreaBox = styled(BasicTextArea)`
-  margin-top: 1rem;
   margin-bottom: 1rem;
-  margin-left: -0.3rem;
+  border-right: 0px;
+  width: 100%;
 `;
 
 const MyAnswerContainer = styled.div`
+  display: flex;
+  background-color: #f3f3f3;
+  padding-bottom: 1rem;
+`;
+
+const MyAnswerText = styled.div`
+  font-size: ${(props) => props.fontSize};
+  padding-bottom: 1rem;
+`;
+const MyAnswerMark = styled.div`
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid #acafb9;
+  border-width: 0 0 1px 1px;
+  margin-right: 1rem;
+  margin-left: 1rem;
+`;
+
+const Icon = styled.div`
   margin-top: 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
 `;
 
 const QNAManager = () => {
-  const [tableListState, setTableListState] = useState([]);
-  const [productOffset, setProductOffset] = useState(0);
+  const [answerListState, setAnswerListState] = useState([]);
 
-  const limit = 16;
-  const [isClickAnswer, setIsAnswer] = useState(false);
-  const textTitleAreaRef = useRef('');
+  const [modifyTextValue, setModifyTextValue] = useState(0);
+
+  const [isClickAnswer, setIsAnswer] = useState(-1);
+  const [isModifyAnswer, setIsModifyAnswer] = useState(-1);
   const textAreaRef = useRef('');
 
   useEffect(() => {
-    GetData(productOffset);
-  }, [productOffset]);
+    GetData();
+  }, []);
 
   useEffect(() => {
     async function fetchAndSetUser() {
@@ -104,11 +124,10 @@ const QNAManager = () => {
     fetchAndSetUser();
   }, []);
 
-  const GetData = async (offset = 0) => {
+  const GetData = async () => {
     try {
-      const result = await getProductQNA(offset);
+      const result = await getProductQNA();
       const list = result.data.data.list;
-      const count = result.data.data.count;
 
       let newData = list.map((item, index) => {
         let { isLock, isAnswer, created_at } = item;
@@ -120,41 +139,35 @@ const QNAManager = () => {
           key: index,
         };
       });
-
-      // newData = [
-      //   {
-      //     product_id: 'product_id',
-      //     id: 'id',
-      //     question_title: 'question_title',
-      //     isLock: '미공개',
-      //     isAnswer: '답변완료',
-      //     name: 'name',
-      //     created_at: '2019-05-05',
-      //     question_body: 'question_body',
-      //     answer_title: 'answer_title',
-      //     answer_body: 'answer_body',
-      //   },
-      // ];
-
       notification.success('검색성공');
-      setTableListState(newData);
+      setAnswerListState(newData);
     } catch (e) {
       notification.error('리뷰 정보를 가져오지 못했습니다.');
     }
   };
 
-  const handleAnswerButtonClick = () => {
-    setIsAnswer(!isClickAnswer);
+  const handleAnswerButtonClick = (key) => {
+    if (isClickAnswer == key) setIsAnswer(-1);
+    else setIsAnswer(key);
+    setIsModifyAnswer(-1);
   };
 
-  const handleAnswerRegitser = (product_id, qna_id) => {
+  const handleModifyAnswerButtonClick = (key) => {
+    if (isModifyAnswer == key) setIsModifyAnswer(-1);
+    else {
+      setIsModifyAnswer(key);
+      setModifyTextValue(answerListState[key].answer_body);
+    }
+  };
+
+  const handleAnswerRegitser = (product_id, qna_id, answer_body) => {
     let data = {
-      answer_title: textTitleAreaRef.current.state.value,
-      answer_body: textAreaRef.current.resizableTextArea.props.value,
+      answer_title: '',
+      answer_body: answer_body,
     };
     answerQNA(product_id, qna_id, data);
     GetData();
-    // setAnswer(textAreaRef.current.resizableTextArea.props.value);
+    setIsModifyAnswer(-1);
   };
 
   const lockIcon = (isLock) => {
@@ -163,6 +176,15 @@ const QNAManager = () => {
     } else {
       return <LockOutlined />;
     }
+  };
+
+  const handleModfiyTextAreaOnChange = (e) => {
+    setModifyTextValue(e.target.value);
+  };
+
+  const handleDeleteAnswer = () => {
+    alert('삭제되었습니다.');
+    GetData();
   };
 
   const renderItem = (
@@ -175,15 +197,17 @@ const QNAManager = () => {
       name,
       created_at,
       question_body,
-      answer_title,
       answer_body,
+      answer_registed,
+      main_image_url,
+      key,
     },
     index,
   ) => {
     return (
       <ItemContainer key={name + index}>
         <ItemInnerContainer>
-          <Img />
+          <ImgStyled src={main_image_url} alt="상품명" />
           <InfoContainer>
             <InfoTitle>
               <InfoAttribute fontSize="25px">{question_title}</InfoAttribute>
@@ -200,39 +224,83 @@ const QNAManager = () => {
               <InfoAttribute>{created_at}</InfoAttribute>
             </InfoClientContainer>
             <Description>{question_body}</Description>
-            <Button onClick={handleAnswerButtonClick}>답글</Button>
+            <Button
+              onClick={() => {
+                handleAnswerButtonClick(key);
+              }}
+            >
+              답글
+            </Button>
           </InfoContainer>
         </ItemInnerContainer>
-        {isClickAnswer && (
+        {isClickAnswer == key && (
           <AnswerContainer>
             <TextInnerContainer>
-              <div>
-                제목 <TitleTextAreaBox ref={textTitleAreaRef} />
-                내용 <TextAreaBox ref={textAreaRef} />
-                <ButtonStyled
-                  onClick={() => {
-                    handleAnswerRegitser(product_id, id);
-                  }}
-                >
-                  등록
-                </ButtonStyled>
-              </div>
+              <TextAreaBox label="답글을 입력해주세요" ref={textAreaRef} />
+              <ButtonStyled
+                onClick={() => {
+                  handleAnswerRegitser(
+                    product_id,
+                    id,
+                    textAreaRef.current.resizableTextArea.props.value,
+                  );
+                }}
+              >
+                등록
+              </ButtonStyled>
             </TextInnerContainer>
           </AnswerContainer>
         )}
-        {isClickAnswer && (
-          <>
-            <MyAnswerContainer>{'제목 : ' + answer_title}</MyAnswerContainer>
-            <MyAnswerContainer>{'내용 : ' + answer_body}</MyAnswerContainer>
-          </>
+        {isClickAnswer == key && (
+          <MyAnswerContainer>
+            <MyAnswerMark></MyAnswerMark>
+            <div>
+              <MyAnswerText fontSize="13px">{answer_registed}</MyAnswerText>
+              <MyAnswerText fontSize="18px">
+                {answer_body}
+                <Icon>
+                  <EditOutlined
+                    onClick={() => {
+                      handleModifyAnswerButtonClick(key);
+                    }}
+                  ></EditOutlined>
+                  <CloseOutlined onClick={handleDeleteAnswer}></CloseOutlined>
+                </Icon>
+              </MyAnswerText>
+            </div>
+          </MyAnswerContainer>
         )}
+        {renderModify(product_id, id, key)}
       </ItemContainer>
     );
   };
 
+  const renderModify = (product_id, id, key) => {
+    if (isModifyAnswer == key) {
+      return (
+        <AnswerContainer>
+          <TextInnerContainer>
+            <TextAreaBox
+              label="답글을 입력해주세요"
+              value={modifyTextValue}
+              onChange={handleModfiyTextAreaOnChange}
+            />
+            <ButtonStyled
+              onClick={() => {
+                handleAnswerRegitser(product_id, id, modifyTextValue);
+              }}
+            >
+              수정
+            </ButtonStyled>
+          </TextInnerContainer>
+        </AnswerContainer>
+      );
+    }
+  };
+
   const renderList = () => {
-    if (tableListState.length > 0) {
-      return tableListState.map((item, index) => {
+    if (answerListState.length > 0) {
+      return answerListState.map((item, index) => {
         return renderItem(item, index);
       });
     } else {

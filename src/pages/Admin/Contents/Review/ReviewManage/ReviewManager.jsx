@@ -35,10 +35,10 @@ const ReviewManager = () => {
     fetchAndSetUser();
   }, []);
 
-  const getApiReviewData = async (offset = 0) => {
+  const getApiReviewData = async () => {
     try {
       setLoading(true);
-      const result = await getProductReview(offset);
+      const result = await getProductReview();
       const list = result.data.data.list;
       const count = result.data.data.list.length;
 

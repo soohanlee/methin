@@ -15,12 +15,12 @@ export const getProductRelatedList = async (id) => {
   return await axios.get(`${productUrl}/${id}/related`);
 };
 
-export const getProductQNA = async (id) => {
-  return await axios.get(`${productUrl}/${id}/qna`);
+export const getProductQNA = async () => {
+  return await axios.get(`${productUrl}/qna`);
 };
 
 export const getProductReview = async (id) => {
-  return await axios.get(`${productUrl}/${id}/review`);
+  return await axios.get(`${productUrl}/review`);
 };
 
 export const registerProduct = async (data) => {
