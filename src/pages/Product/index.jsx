@@ -26,7 +26,6 @@ const Container = styled(PaddingContainer)`
   justify-content: center;
   @media screen and (max-width: ${BreakPoint.s}px) {
     padding: 0;
-    height: 100%;
   }
 `;
 
@@ -86,6 +85,9 @@ const ContentsBody = styled.div`
 const Row = styled(OriginRow)`
   row-gap: 1rem;
   height: 100%;
+  @media screen and (max-width: ${BreakPoint.s}px) {
+    padding: 4rem 1rem;
+  }
 `;
 
 const selectList = [
@@ -107,6 +109,7 @@ const Product = () => {
   const getList = useCallback(async () => {
     try {
       const result = await getUserProductList(menuId);
+      console.log('result.data.data.list', result.data.data.list);
       setProductList(result.data.data.list);
     } catch (e) {
       if (e.response && e.response.status === 404) {
@@ -180,6 +183,7 @@ const Product = () => {
   };
 
   const renderProductList = () => {
+    console.log('productList', productList);
     if (productList.length === 0) {
       return <EmptyContainer />;
     } else {
@@ -231,7 +235,13 @@ const Product = () => {
           />
         </ContentsHeader>
         <ContentsBody>
-          <Row style={{ rowGap: '1.6rem', columnGap: '1.4rem' }}>
+          <Row
+            style={
+              BreakPoint.s
+                ? { rowGap: '0.3rem', columnGap: '1.4rem' }
+                : { rowGap: '1.6rem', columnGap: '1.4rem' }
+            }
+          >
             {renderProductList()}
           </Row>
         </ContentsBody>
@@ -258,52 +268,4 @@ const filterList = [
   { key: 'test4', value: '저염수비드 무항생제', length: 21 },
   { key: 'test5', value: '저염수비드 무항생제', length: 21 },
   { key: 'test6', value: '저염수비드 무항생제', length: 21 },
-];
-
-const mocuupProductList = [
-  {
-    id: 13,
-    img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
-    catergory: '식품',
-    description: '마시썽',
-    beforePrice: '6000',
-    afterPrice: 19800,
-    salePercentage: '-15',
-  },
-  {
-    id: 14,
-    img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
-    catergory: '식품',
-    description: '마시썽',
-    beforePrice: '6000',
-    afterPrice: '19800',
-    salePercentage: '-15',
-  },
-  {
-    id: 15,
-    img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
-    catergory: '식품',
-    description: '마시썽',
-    beforePrice: '6000',
-    afterPrice: '19800',
-    salePercentage: '-15',
-  },
-  {
-    id: 16,
-    img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
-    catergory: '식품',
-    description: '마시썽',
-    beforePrice: '6000',
-    afterPrice: '19800',
-    salePercentage: '-15',
-  },
-  {
-    id: 17,
-    img: process.env.PUBLIC_URL + '/assets/images/치카 로고.png',
-    catergory: '식품',
-    description: '마시썽',
-    beforePrice: '6000',
-    afterPrice: '19800',
-    salePercentage: '-15',
-  },
 ];

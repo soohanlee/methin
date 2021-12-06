@@ -13,7 +13,7 @@ const Container = styled.div`
 
   @media screen and (max-width: ${BreakPoint.s}px) {
     width: unset;
-    width: 50%;
+    width: 48%;
     margin-bottom: 1rem;
   }
 `;
