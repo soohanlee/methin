@@ -234,6 +234,7 @@ const OrderManage = ({ shipCompanyDataState }) => {
         handleTableChange={handleTableChange}
         tableData={tableDataState}
         shipCompanyDataState={shipCompanyDataState}
+        getApiDeliveryData={getApiDeliveryData}
       />
     </div>
   );

@@ -67,11 +67,6 @@ const DirectReturnModal = (property) => {
   };
 
   const handleOkClick = () => {
-    console.log(tradeReasonTypeState);
-    console.log(tradeReasonInputRef.current.resizableTextArea.props.value);
-    console.log(tradecollectionTypeState);
-    console.log(tradePostTypeState);
-    console.log(tradePostcodeInputRef.current.state.value);
     property.onOk();
   };
 

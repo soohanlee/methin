@@ -88,7 +88,7 @@ const AddressModifyModal = (property) => {
 
     patchAdress(property.selectedTableRowsState[0].id, data);
 
-    property.onCancel();
+    property.onOk();
   };
 
   const handleInputBoxOnChange = (value, setState) => {
