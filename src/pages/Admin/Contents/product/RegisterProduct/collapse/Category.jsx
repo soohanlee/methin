@@ -46,35 +46,58 @@ const Category = () => {
   useEffect(() => {
     if (classificationdataState.length > 0) {
       const currentData = [...classificationdataState];
-
       setTreeItems(currentData);
-      setTree2Items(currentData[0].children);
-      setTree3Items(currentData[0].children[0].children);
       setSelectedFirstItemState(currentData[0]);
-      setSelectedSecondItemState(currentData[0].children[0]);
-      setSelectedThirdItemState(currentData[0].children[0].children[0]);
+      if (GetFirstDataCheck(currentData[0].children)) {
+        const currentChildData = [...currentData[0].children];
+        setTree2Items(currentChildData);
+        setSelectedSecondItemState(currentChildData[0]);
+        if (GetFirstDataCheck(...currentChildData[0].children)) {
+          const currentChildChildData = [...currentChildData[0].children];
+          setTree3Items(currentChildChildData);
+          setSelectedThirdItemState(currentChildChildData[0]);
+        }
+      }
     }
   }, [classificationdataState]);
 
   useEffect(() => {
-    if (selectedFirstItemState != undefined) {
-      setTree2Items(selectedFirstItemState.children);
-      setSelectedSecondItemState(selectedFirstItemState.children[0]);
-    } else {
-      setTree2Items([]);
-      setSelectedSecondItemState();
+    if (classificationdataState.length > 0) {
+      const currentData = [...classificationdataState];
+      console.log(classificationdataState);
+      console.log(currentData[0]);
+      if (GetFirstDataCheck(currentData[0].children)) {
+        const currentChildData = [...currentData[0].children];
+        setTree2Items(currentChildData);
+        setSelectedSecondItemState(currentChildData[0]);
+      } else {
+        setTree2Items([]);
+        setSelectedSecondItemState(-1);
+      }
     }
   }, [selectedFirstItemState]);
 
   useEffect(() => {
-    if (selectedSecondItemState != undefined) {
-      setTree3Items(selectedSecondItemState.children);
-      setSelectedThirdItemState(selectedSecondItemState.children[0]);
-    } else {
-      setTree3Items([]);
-      setSelectedThirdItemState();
+    if (classificationdataState.length > 0) {
+      if (selectedSecondItemState > 0) {
+        const currentData = [...classificationdataState];
+        const currentChildData = [...currentData[0].children];
+        if (GetFirstDataCheck(...currentChildData[0].children)) {
+          const currentChildChildData = [...currentChildData[0].children];
+          setTree3Items(currentChildChildData);
+          setSelectedThirdItemState(currentChildChildData[0]);
+        } else {
+          setTree3Items([]);
+          setSelectedThirdItemState(-1);
+        }
+      }
     }
   }, [selectedSecondItemState]);
+
+  const GetFirstDataCheck = (arr) => {
+    if (arr.length > 0) return true;
+    else return false;
+  };
 
   const handleFristItemClick = (value) => {
     setSelectedFirstItemState(value);
@@ -93,33 +116,6 @@ const Category = () => {
   } else {
     return (
       <CustomCollapse header="카테고리" extra={''}>
-        {/* <ButtonContainer>
-          <ButtonLine>
-            <Input
-              ref={primary_input}
-              // onChange={(e) => setInputFirstItem(e.target.value)}
-              addonAfter={
-                <AddButton onClick={handleAddFirstItemClick}>
-                  1차 분류 추가하기
-                </AddButton>
-              }
-              // value={inputFirstItem}
-            />
-          </ButtonLine>
-          <ButtonLine>
-            <Input
-              ref={secondary_input}
-              // onChange={(e) => setInputSecondItem(e.target.value)}
-              addonAfter={
-                <AddButton onClick={handleAddSecondItemClick}>
-                  2차 분류 추가하기
-                </AddButton>
-              }
-              // value={inputSecondItem}
-            />
-          </ButtonLine>
-        </ButtonContainer> */}
-
         <ItemContainerStyled>
           <SubContainerStyled>
             <ItemTitleStyled>1차 분류</ItemTitleStyled>
