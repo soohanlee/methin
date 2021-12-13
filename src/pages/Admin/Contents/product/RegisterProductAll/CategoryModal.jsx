@@ -81,61 +81,56 @@ const CategoryModal = ({ title, visible, setVisible }) => {
   useEffect(() => {
     if (classificationdataState.length > 0) {
       const currentData = [...classificationdataState];
-
       setTreeItems(currentData);
-      setTree2Items(currentData[0].children);
-      setTree3Items(currentData[0].children[0].children);
       setSelectedFirstItemState(currentData[0]);
-      setSelectedSecondItemState(currentData[0].children[0]);
-      setSelectedThirdItemState(currentData[0].children[0].children[0]);
-
-      const optionResult = currentData.map((item) => {
-        return optionDataSet(item);
-      });
-
-      setTreeOptions(optionResult);
+      if (GetFirstDataCheck(currentData[0].children)) {
+        const currentChildData = [...currentData[0].children];
+        setTree2Items(currentChildData);
+        setSelectedSecondItemState(currentChildData[0]);
+        if (GetFirstDataCheck(...currentChildData[0].children)) {
+          const currentChildChildData = [...currentChildData[0].children];
+          setTree3Items(currentChildChildData);
+          setSelectedThirdItemState(currentChildChildData[0]);
+        }
+      }
     }
   }, [classificationdataState]);
 
-  const optionDataSet = (_option) => {
-    const result = {
-      value: _option.name,
-      label: _option.name,
-      children: _option.children.map((item) => {
-        return {
-          value: item.name,
-          label: item.name,
-          children: item.children.map((_item) => {
-            return {
-              value: _item.name,
-              label: _item.name,
-            };
-          }),
-        };
-      }),
-    };
-    return result;
-  };
-
   useEffect(() => {
-    if (selectedFirstItemState != undefined) {
-      setTree2Items(selectedFirstItemState.children);
-      setSelectedSecondItemState(selectedFirstItemState.children[0]);
-    } else {
-      setTree2Items([]);
-      setSelectedSecondItemState();
+    if (classificationdataState.length > 0) {
+      const currentData = [...classificationdataState];
+      if (GetFirstDataCheck(currentData[0].children)) {
+        const currentChildData = [...currentData[0].children];
+        setTree2Items(currentChildData);
+        setSelectedSecondItemState(currentChildData[0]);
+      } else {
+        setTree2Items([]);
+        setSelectedSecondItemState(-1);
+      }
     }
   }, [selectedFirstItemState]);
 
   useEffect(() => {
-    if (selectedSecondItemState != undefined) {
-      setTree3Items(selectedSecondItemState.children);
-      setSelectedThirdItemState(selectedSecondItemState.children[0]);
-    } else {
-      setTree3Items([]);
-      setSelectedThirdItemState();
+    if (classificationdataState.length > 0) {
+      if (selectedSecondItemState > 0) {
+        const currentData = [...classificationdataState];
+        const currentChildData = [...currentData[0].children];
+        if (GetFirstDataCheck(...currentChildData[0].children)) {
+          const currentChildChildData = [...currentChildData[0].children];
+          setTree3Items(currentChildChildData);
+          setSelectedThirdItemState(currentChildChildData[0]);
+        } else {
+          setTree3Items([]);
+          setSelectedThirdItemState(-1);
+        }
+      }
     }
   }, [selectedSecondItemState]);
+
+  const GetFirstDataCheck = (arr) => {
+    if (arr.length > 0) return true;
+    else return false;
+  };
 
   const handleFristItemClick = (value) => {
     setSelectedFirstItemState(value);
