@@ -41,6 +41,7 @@ const Table = ({
   limit,
   handleTableChange,
   loading,
+  getApiDeliveryStatusData,
 }) => {
   const [directReturnVisibleState, setDirectReturnVisibleState] = useState(
     false,
@@ -112,6 +113,7 @@ const Table = ({
         visible={directReturnVisibleState}
         onOk={() => {
           setDirectReturnVisibleState(false);
+          getApiDeliveryStatusData();
         }}
         onCancel={() => {
           setDirectReturnVisibleState(false);
@@ -126,6 +128,7 @@ const Table = ({
         visible={directExchangeVisibleState}
         onOk={() => {
           setDirectExchangeVisibleState(false);
+          getApiDeliveryStatusData();
         }}
         onCancel={() => {
           setDirectExchangeVisibleState(false);
@@ -140,6 +143,7 @@ const Table = ({
         visible={modifyInvoiceVisibleState}
         onOk={() => {
           setModifyInvoiceVisibleState(false);
+          getApiDeliveryStatusData();
         }}
         onCancel={() => {
           setModifyInvoiceVisibleState(false);

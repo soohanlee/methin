@@ -154,6 +154,7 @@ const OrderCancel = ({ shipCompanyDataState }) => {
         handleTableChange={handleTableChange}
         loading={loading}
         shipCompanyDataState={shipCompanyDataState}
+        getApiDeliveryData={getApiDeliveryData}
       />
     </Container>
   );

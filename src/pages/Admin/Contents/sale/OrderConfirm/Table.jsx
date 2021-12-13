@@ -58,6 +58,7 @@ const Table = ({
   handleTableChange,
   loading,
   shipCompanyDataState,
+  getApiOrderConfirmData,
 }) => {
   //Visible
   const [
@@ -366,6 +367,7 @@ const Table = ({
           alert(
             `${allOrder}건 중 ${order}건의 발주확인 처리가 완료되었습니다.`,
           );
+          getApiOrderConfirmData();
         }
         break;
       }
@@ -377,7 +379,6 @@ const Table = ({
         } else {
           alert('배송정보를 선택해주세요.');
         }
-
         break;
       }
       case 'saleCancel': {
@@ -547,7 +548,8 @@ const Table = ({
         title="고객 배송지 정보수정"
         visible={adressModifyVisibleState}
         onOk={() => {
-          setAdressModifyVisibleState(true);
+          setAdressModifyVisibleState(false);
+          getApiOrderConfirmData();
         }}
         onCancel={() => {
           setAdressModifyVisibleState(false);
@@ -564,6 +566,7 @@ const Table = ({
         visible={saleCancelVisibleState}
         onOk={() => {
           setSaleCancelVisibleState(false);
+          getApiOrderConfirmData();
         }}
         onCancel={() => {
           setSaleCancelVisibleState(false);

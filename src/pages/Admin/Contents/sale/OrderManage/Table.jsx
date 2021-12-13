@@ -54,6 +54,7 @@ const Table = ({
   limit,
   handleTableChange,
   loading,
+  getApiDeliveryData,
 }) => {
   const invoiceNumber = useRef(null);
 
@@ -283,6 +284,7 @@ const Table = ({
             alert(
               `선택하신 ${allOrder}개의 주문 건 중 ${order}개를 발송처리했습니다.`,
             );
+            getApiDeliveryData();
           }
         } else {
           alert('배송정보를 선택해주세요.');
@@ -334,6 +336,7 @@ const Table = ({
             alert(
               `${allOrder}건 중 ${order}건의 집하취소 처리가 완료되었습니다.`,
             );
+            getApiDeliveryData();
           }
         } else {
           alert('배송정보를 선택해주세요.');
@@ -418,6 +421,7 @@ const Table = ({
         visible={packingVisibleState}
         onOk={() => {
           setPackingVisibleState(false);
+          getApiDeliveryData();
         }}
         onCancel={() => {
           setPackingVisibleState(false);
@@ -435,6 +439,7 @@ const Table = ({
         visible={orderSheetPrintVisalbleState}
         onOk={() => {
           setOrderSheetPrintVisualState(true);
+          getApiDeliveryData();
         }}
         onCancel={() => {
           setOrderSheetPrintVisualState(false);
@@ -526,6 +531,7 @@ const Table = ({
           <Button
             onClick={() => {
               PostMockupreset();
+              getApiDeliveryData();
             }}
           >
             목업리셋

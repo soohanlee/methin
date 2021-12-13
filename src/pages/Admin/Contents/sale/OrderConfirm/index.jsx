@@ -229,6 +229,7 @@ const OrderConfirm = ({ shipCompanyDataState }) => {
         handleTableChange={handleTableChange}
         loading={loading}
         shipCompanyDataState={shipCompanyDataState}
+        getApiOrderConfirmData={getApiOrderConfirmData}
       />
     </div>
   );

@@ -200,6 +200,7 @@ const DeliveryStatusManage = ({ shipCompanyDataState }) => {
         loading={loading}
         handleTableChange={handleTableChange}
         shipCompanyDataState={shipCompanyDataState}
+        getApiDeliveryStatusData={getApiDeliveryStatusData}
       />
     </Container>
   );

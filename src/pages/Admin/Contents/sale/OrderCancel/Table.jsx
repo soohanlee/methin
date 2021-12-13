@@ -40,6 +40,7 @@ const Table = ({
   limit,
   handleTableChange,
   loading,
+  getApiDeliveryData,
 }) => {
   //Table Select Key/ Data
   const [selectedTableKeysState, setSelectedTableKeysState] = useState([]);
@@ -87,6 +88,7 @@ const Table = ({
         alert(
           '선택하신 주문 건은 취소 완료처리가 불가합니다.\n취소 처리상태가 "취소요청"인 주문건만 취소 완료처리 가능합니다.\n취소 처리상태를 확인해 주세요.',
         );
+        getApiDeliveryData();
       }
     } else {
       alert('주문 건을 선택해주세요.');
@@ -112,6 +114,7 @@ const Table = ({
         alert(
           '선택하신 주문 건은 취소거부(취소철회)처리가 불가합니다.\n취소 처리상태가 "취소요청"인 주문건만 취소거부(취소철회) 처리 가능합니다.\n취소 처리상태를 확인해 주세요.',
         );
+        getApiDeliveryData();
       }
     } else {
       alert('취소정보를 하나만 선택해주세요.');
@@ -167,6 +170,7 @@ const Table = ({
         <Button
           onClick={() => {
             PostMockupreset();
+            getApiDeliveryData();
           }}
         >
           목업리셋
